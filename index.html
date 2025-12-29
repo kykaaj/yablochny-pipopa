@@ -5,586 +5,1865 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Личностный тест: Main 6</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+
         :root {
-            --bg-color: #202124;
-            --card-color: #2d2e33;
-            --text-color: #e8eaed;
-            --sub-text: #9aa0a6;
-            --accent: #8ab4f8;
-            --accent-hover: #aecbfa;
-            --border: #3c4043;
+            --apple-red: #c41e3a;
+            --apple-red-dark: #8b0000;
+            --apple-green: #4a7c23;
+            --apple-green-light: #7cb342;
+            --leaf-green: #2e5a1c;
+            --apple-cream: #fff8e7;
+            --apple-brown: #5d4037;
+            --card-bg: rgba(255, 252, 245, 0.95);
+            --text-dark: #3e2723;
+            --text-medium: #5d4037;
+            --text-light: #8d6e63;
+            --shadow: rgba(62, 39, 35, 0.2);
+            --glow: rgba(196, 30, 58, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
+            font-family: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #87ceeb 0%, #98d8c8 50%, #7cb342 100%);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
             padding: 20px;
-            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
         }
 
-        .container {
-            background-color: var(--card-color);
-            border-radius: 16px;
+        /* Interactive Apple Background */
+        .apple-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            max-width: 640px;
-            padding: 40px;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
         }
 
-        h1 { font-size: 1.8rem; text-align: center; margin-bottom: 10px; font-weight: 600; }
-        p.subtitle { text-align: center; color: var(--sub-text); margin-top: 0; margin-bottom: 40px; font-size: 0.95rem; }
+        .floating-apple {
+            position: absolute;
+            font-size: 2rem;
+            animation: floatApple linear infinite;
+            cursor: pointer;
+            pointer-events: auto;
+            transition: transform 0.3s ease, filter 0.3s ease;
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2));
+            user-select: none;
+        }
 
-        .progress-bar { width: 100%; height: 4px; background-color: var(--border); border-radius: 2px; margin-bottom: 30px; overflow: hidden; }
-        .progress-fill { height: 100%; background-color: var(--accent); width: 0%; transition: width 0.3s ease; }
+        .floating-apple:hover {
+            transform: scale(1.5) rotate(20deg) !important;
+            filter: drop-shadow(4px 8px 12px rgba(0,0,0,0.3)) brightness(1.1);
+        }
 
-        .question-text { font-size: 1.15rem; margin-bottom: 30px; font-weight: 500; }
-        .options { display: flex; flex-direction: column; gap: 12px; }
+        .floating-apple.clicked {
+            animation: popApple 0.5s ease forwards !important;
+        }
 
-        button {
-            background-color: transparent;
-            border: 1px solid var(--border);
-            color: var(--text-color);
-            padding: 16px 20px;
-            border-radius: 12px;
+        @keyframes floatApple {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(calc(100vh + 100px)) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes popApple {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.8); opacity: 0.8; }
+            100% { transform: scale(0); opacity: 0; }
+        }
+
+        @keyframes sway {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(30px); }
+        }
+
+        /* Decorative Elements */
+        .tree-branch {
+            position: fixed;
+            top: -20px;
+            right: -50px;
+            width: 300px;
+            height: 200px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200'%3E%3Cpath d='M250 0 Q200 50 150 80 Q100 110 50 100' stroke='%235d4037' stroke-width='12' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='60' cy='95' r='20' fill='%23c41e3a'/%3E%3Cellipse cx='58' cy='78' rx='8' ry='12' fill='%234a7c23' transform='rotate(-30 58 78)'/%3E%3Ccircle cx='120' cy='85' r='18' fill='%237cb342'/%3E%3Cellipse cx='118' cy='70' rx='7' ry='10' fill='%232e5a1c' transform='rotate(-20 118 70)'/%3E%3C/svg%3E") no-repeat;
+            opacity: 0.9;
+            z-index: 1;
+            animation: gentleSway 4s ease-in-out infinite;
+        }
+
+        .tree-branch-left {
+            position: fixed;
+            bottom: -30px;
+            left: -60px;
+            width: 250px;
+            height: 180px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 250 180'%3E%3Cpath d='M0 150 Q50 100 100 80 Q150 60 200 70' stroke='%235d4037' stroke-width='10' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='180' cy='65' r='22' fill='%23c41e3a'/%3E%3Cellipse cx='178' cy='46' rx='9' ry='13' fill='%234a7c23' transform='rotate(15 178 46)'/%3E%3C/svg%3E") no-repeat;
+            opacity: 0.8;
+            z-index: 1;
+            animation: gentleSway 5s ease-in-out infinite reverse;
+        }
+
+        @keyframes gentleSway {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(3deg); }
+        }
+
+        /* Language Toggle */
+        .lang-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            gap: 8px;
+        }
+
+        .lang-btn {
+            background: var(--card-bg);
+            border: 2px solid var(--apple-green);
+            color: var(--text-dark);
+            padding: 10px 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .lang-btn:hover {
+            background: var(--apple-green);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--shadow);
+        }
+
+        .lang-btn.active {
+            background: var(--apple-green);
+            color: white;
+        }
+
+        /* Main Container */
+        .container {
+            background: var(--card-bg);
+            border-radius: 30px;
+            width: 100%;
+            max-width: 680px;
+            padding: 45px;
+            box-shadow:
+                0 20px 60px var(--shadow),
+                0 0 0 1px rgba(255,255,255,0.5) inset,
+                0 -5px 20px rgba(255,255,255,0.3) inset;
+            position: relative;
+            z-index: 10;
+            overflow: hidden;
+            animation: containerAppear 0.8s ease-out;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .container::after {
+            content: '🍎';
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            font-size: 2rem;
+            opacity: 0.6;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes containerAppear {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Header */
+        h1 {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 10px;
+            font-weight: 800;
+            color: var(--text-dark);
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.5);
+            position: relative;
+        }
+
+        h1::after {
+            content: '🍏';
+            position: absolute;
+            right: calc(50% - 120px);
+            top: -5px;
+            font-size: 1.5rem;
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        p.subtitle {
+            text-align: center;
+            color: var(--text-light);
+            margin-top: 0;
+            margin-bottom: 35px;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: linear-gradient(to right, #e8d5b7, #d4c4a8);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--apple-green) 0%, var(--apple-green-light) 50%, var(--apple-red) 100%);
+            width: 0%;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+        }
+
+        .progress-apple {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.2));
+            z-index: 5;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 10px;
+            color: var(--text-medium);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Question */
+        .question-wrapper {
+            animation: slideIn 0.4s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .question-text {
+            font-size: 1.25rem;
+            margin-bottom: 25px;
+            font-weight: 700;
+            color: var(--text-dark);
+            line-height: 1.5;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(124, 179, 66, 0.1) 0%, rgba(196, 30, 58, 0.05) 100%);
+            border-radius: 20px;
+            border-left: 4px solid var(--apple-red);
+            position: relative;
+        }
+
+        /* Options */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-btn {
+            background: linear-gradient(135deg, #ffffff 0%, #faf7f0 100%);
+            border: 2px solid #e0d5c5;
+            color: var(--text-dark);
+            padding: 18px 24px;
+            border-radius: 16px;
             cursor: pointer;
             text-align: left;
-            transition: all 0.2s ease;
-            font-size: 0.95rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 1rem;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
         }
 
-        button:hover { background-color: rgba(138, 180, 248, 0.1); border-color: var(--accent); }
-        .hidden { display: none; }
+        .option-btn::before {
+            content: '🍎';
+            position: absolute;
+            left: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            transition: left 0.3s ease;
+            opacity: 0.8;
+        }
 
-        .result-box { text-align: center; animation: fadeIn 0.6s ease; }
-        .result-img { width: 100%; max-width: 280px; height: auto; border-radius: 12px; margin: 20px 0; }
-        .stats { text-align: left; margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 0.9rem; color: var(--sub-text); }
-        .stat-row { display: flex; justify-content: space-between; margin-bottom: 6px; }
-        .btn-restart { margin-top: 30px; width: 100%; text-align: center; background-color: var(--accent); color: var(--bg-color); font-weight: 600; border: none; }
+        .option-btn:hover {
+            background: linear-gradient(135deg, var(--apple-cream) 0%, #fff 100%);
+            border-color: var(--apple-red);
+            transform: translateX(8px);
+            box-shadow: 0 8px 25px var(--shadow), 0 0 0 3px rgba(196, 30, 58, 0.1);
+            padding-left: 45px;
+        }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .option-btn:hover::before {
+            left: 15px;
+        }
+
+        .option-btn:active {
+            transform: translateX(8px) scale(0.98);
+        }
+
+        /* Navigation */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, var(--apple-brown) 0%, #4a3228 100%);
+            color: var(--apple-cream);
+            border: none;
+            padding: 14px 28px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(93, 64, 55, 0.3);
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(93, 64, 55, 0.4);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .nav-btn.back-btn {
+            background: linear-gradient(135deg, #8d6e63 0%, #6d4c41 100%);
+        }
+
+        /* Hidden */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Results */
+        .result-box {
+            text-align: center;
+            animation: resultAppear 0.8s ease-out;
+        }
+
+        @keyframes resultAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .result-title {
+            font-size: 2rem;
+            color: var(--apple-red);
+            margin-bottom: 5px;
+            font-weight: 800;
+        }
+
+        .result-subtitle {
+            color: var(--text-light);
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        .result-img {
+            width: 100%;
+            max-width: 260px;
+            height: auto;
+            border-radius: 20px;
+            margin: 20px auto;
+            display: block;
+            box-shadow:
+                0 15px 40px var(--shadow),
+                0 0 0 5px var(--apple-cream),
+                0 0 0 8px var(--apple-red);
+            animation: imageFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes imageFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .result-desc {
+            text-align: left;
+            color: var(--text-medium);
+            line-height: 1.7;
+            font-size: 1.05rem;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(124, 179, 66, 0.1) 0%, rgba(196, 30, 58, 0.05) 100%);
+            border-radius: 20px;
+            margin: 20px 0;
+        }
+
+        /* Stats */
+        .stats {
+            text-align: left;
+            margin-top: 30px;
+            padding: 25px;
+            background: rgba(255,255,255,0.7);
+            border-radius: 20px;
+            border: 2px dashed var(--apple-green);
+        }
+
+        .stats-title {
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-medium);
+        }
+
+        .stat-bar-bg {
+            background: #e8d5b7;
+            height: 8px;
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+
+        .stat-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--apple-green) 0%, var(--apple-red) 100%);
+            border-radius: 10px;
+            transition: width 1s ease-out;
+        }
+
+        /* Restart Button */
+        .btn-restart {
+            margin-top: 25px;
+            width: 100%;
+            text-align: center;
+            background: linear-gradient(135deg, var(--apple-red) 0%, var(--apple-red-dark) 100%);
+            color: white;
+            font-weight: 700;
+            border: none;
+            padding: 18px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(196, 30, 58, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-restart:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(196, 30, 58, 0.4);
+        }
+
+        /* Apple decorations for result */
+        .apple-decoration {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            font-size: 2rem;
+        }
+
+        .apple-decoration span {
+            animation: decorBounce 0.6s ease infinite;
+        }
+
+        .apple-decoration span:nth-child(2) { animation-delay: 0.1s; }
+        .apple-decoration span:nth-child(3) { animation-delay: 0.2s; }
+        .apple-decoration span:nth-child(4) { animation-delay: 0.3s; }
+        .apple-decoration span:nth-child(5) { animation-delay: 0.4s; }
+
+        @keyframes decorBounce {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(10deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+                border-radius: 25px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            h1::after {
+                display: none;
+            }
+
+            .question-text {
+                font-size: 1.1rem;
+                padding: 15px;
+            }
+
+            .option-btn {
+                padding: 15px 18px;
+                font-size: 0.95rem;
+            }
+
+            .lang-toggle {
+                top: 10px;
+                right: 10px;
+            }
+
+            .lang-btn {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+
+            .tree-branch, .tree-branch-left {
+                opacity: 0.5;
+            }
+        }
+
+        /* Sparkle effect */
+        .sparkle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: radial-gradient(circle, #fff 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: sparkle 1s ease forwards;
+        }
+
+        @keyframes sparkle {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(3); opacity: 0; }
+        }
     </style>
 </head>
 <body>
 
+<!-- Interactive Apple Background -->
+<div class="apple-bg" id="apple-bg"></div>
+
+<!-- Decorative Branches -->
+<div class="tree-branch"></div>
+<div class="tree-branch-left"></div>
+
+<!-- Language Toggle -->
+<div class="lang-toggle">
+    <button class="lang-btn active" id="lang-ru" onclick="setLanguage('ru')">
+        🇷🇺 RU
+    </button>
+    <button class="lang-btn" id="lang-ua" onclick="setLanguage('ua')">
+        🇺🇦 UA
+    </button>
+</div>
+
 <div class="container" id="quiz-container">
-    <h1>Кто ты из Main 6?</h1>
-    <p class="subtitle">Психологический профиль через призму быта и интернета.</p>
-    
+    <h1 id="main-title">Кто ты из Main 6?</h1>
+    <p class="subtitle" id="main-subtitle">Психологический профиль через призму быта и интернета</p>
+
     <div id="quiz-ui">
-        <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
-        <div class="question-text" id="question">Загрузка...</div>
-        <div class="options" id="options"></div>
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress"></div>
+            </div>
+            <div class="progress-apple" id="progress-apple">🍎</div>
+            <div class="progress-text" id="progress-text">Вопрос 1 из 48</div>
+        </div>
+
+        <div class="question-wrapper" id="question-wrapper">
+            <div class="question-text" id="question">Загрузка...</div>
+            <div class="options" id="options"></div>
+        </div>
+
+        <div class="nav-buttons">
+            <button class="nav-btn back-btn" id="back-btn" onclick="goBack()" disabled>
+                ← <span id="back-text">Назад</span>
+            </button>
+            <div style="flex: 1;"></div>
+        </div>
     </div>
 
     <div id="result-ui" class="hidden result-box">
-        <h2 id="result-title"></h2>
+        <div class="apple-decoration">
+            <span>🍎</span>
+            <span>🍏</span>
+            <span>🍎</span>
+            <span>🍏</span>
+            <span>🍎</span>
+        </div>
+        <h2 class="result-title" id="result-title"></h2>
+        <p class="result-subtitle" id="result-you-are">Вот кто ты!</p>
         <img id="result-image" class="result-img" src="" alt="Result">
-        <p id="result-desc" style="text-align: left;"></p>
-        <div class="stats" id="stats-box"></div>
-        <button class="btn-restart" onclick="location.reload()">Пройти заново</button>
+        <p class="result-desc" id="result-desc"></p>
+        <div class="stats" id="stats-box">
+            <div class="stats-title">📊 <span id="compatibility-text">Ваша совместимость:</span></div>
+            <div id="stats-content"></div>
+        </div>
+        <button class="btn-restart" onclick="restartQuiz()">
+            🔄 <span id="restart-text">Пройти заново</span>
+        </button>
     </div>
 </div>
 
 <script>
-    const questions = [
-        // --- Блок Ролевых и SillyTavern ---
-        {
-            t: "Твой типичный пост в ролевой это...",
-            a: [
-                { text: "Полотно с анализом чувств и деталями окружения.", s: { RA: 3, TW: 1 } },
-                { text: "Краткое описание действия и четкая реплика.", s: { AJ: 3, RD: 1 } },
-                { text: "Пост, который двигает сюжет вперед, создавая экшен.", s: { RD: 3, PP: 1 } },
-                { text: "Мягкий, эмоциональный ответ, подстраивающийся под сорола.", s: { FL: 3 } }
-            ]
+    // Multilingual support
+    const translations = {
+        ru: {
+            title: "Кто ты из Main 6?",
+            subtitle: "Психологический профиль через призму быта и интернета",
+            back: "Назад",
+            restart: "Пройти заново",
+            youAre: "Вот кто ты!",
+            compatibility: "Ваша совместимость:",
+            questionOf: "Вопрос {current} из {total}"
         },
-        {
-            t: "Как ты выбираешь карточку персонажа для чата?",
-            a: [
-                { text: "Изучаю настройки, лор и примеры диалогов. Всё должно быть логично.", s: { TW: 3 } },
-                { text: "Смотрю только на арт. Если персонаж красивый — берем.", s: { RA: 3 } },
-                { text: "Ищу что-то веселое или необычное для фановых ситуаций.", s: { PP: 3 } },
-                { text: "Беру проверенных временем «классических» персонажей.", s: { AJ: 2, FL: 1 } }
-            ]
-        },
-        {
-            t: "Бот в Таверне выдал очень странный, нелогичный ответ.",
-            a: [
-                { text: "Иду в настройки (Regex, пресеты), чтобы вылечить это системно.", s: { TW: 3 } },
-                { text: "Руками редактирую его ответ до нужного состояния.", s: { RA: 2, AJ: 1 } },
-                { text: "Просто жму реролл, пока не выкинет что-то адекватное.", s: { RD: 2, PP: 1 } },
-                { text: "Принимаю как есть и пытаюсь обыграть это в сюжете.", s: { FL: 2, PP: 1 } }
-            ]
-        },
-        {
-            t: "Насколько важен «Лорбук» (World Info) в твоих чатах?",
-            a: [
-                { text: "Крайне важен. Без структуры мир развалится.", s: { TW: 3 } },
-                { text: "Заполняю только ключевые факты, чтобы не было путаницы.", s: { AJ: 2, TW: 1 } },
-                { text: "Почти не пользуюсь, полагаюсь на импровизацию.", s: { PP: 2, RD: 1 } },
-                { text: "Важен только для описания эстетики и атмосферы.", s: { RA: 2 } }
-            ]
-        },
-        {
-            t: "Твое отношение к NSFW контенту в ролевых?",
-            a: [
-                { text: "Это должно быть красиво, чувственно и с прелюдией.", s: { RA: 3, FL: 1 } },
-                { text: "Главное — физиология и реализм, без лишних соплей.", s: { AJ: 3, RD: 1 } },
-                { text: "Люблю эксперименты и необычные сценарии.", s: { PP: 2, RD: 2 } },
-                { text: "Важна психологическая связь персонажей.", s: { TW: 2, FL: 2 } }
-            ]
-        },
-        {
-            t: "Что тебя больше всего бесит в ролевом процессе?",
-            a: [
-                { text: "Когда бот или сорол забывает детали лора или ломает характер.", s: { TW: 3, AJ: 1 } },
-                { text: "Скука и отсутствие динамики в сюжете.", s: { RD: 3, PP: 1 } },
-                { text: "Безвкусные описания и отсутствие стиля.", s: { RA: 3 } },
-                { text: "Агрессивные или слишком жесткие повороты сюжета.", s: { FL: 3 } }
-            ]
-        },
-        {
-            t: "Как ты реагируешь на опечатки в ответах ИИ?",
-            a: [
-                { text: "Сразу исправляю, это мозолит глаза.", s: { RA: 2, TW: 2 } },
-                { text: "Игнорирую, если смысл понятен.", s: { AJ: 3, RD: 1 } },
-                { text: "Смеюсь, если опечатка создала забавный смысл.", s: { PP: 3 } },
-                { text: "Немного расстраиваюсь, это портит погружение.", s: { FL: 2 } }
-            ]
-        },
-        {
-            t: "Твоя любимая часть создания новой карточки персонажа?",
-            a: [
-                { text: "Написание сложного системного промпта.", s: { TW: 3 } },
-                { text: "Подбор идеального визуала и оформление.", s: { RA: 3 } },
-                { text: "Придумывание странных привычек и шуток персонажу.", s: { PP: 3 } },
-                { text: "Прописывание простой и понятной мотивации.", s: { AJ: 3 } }
-            ]
-        },
-        // --- Блок Телеграм и общение ---
-        {
-            t: "Как ты ведешь себя в больших групповых чатах?",
-            a: [
-                { text: "Больше читаю, анализирую обстановку.", s: { FL: 2, TW: 2 } },
-                { text: "Часто кидаю мемы и всякий треш.", s: { PP: 3, RD: 1 } },
-                { text: "Пишу только тогда, когда есть что сказать по делу.", s: { AJ: 3 } },
-                { text: "Стараюсь поддерживать активную беседу и быть в центре.", s: { RD: 2, RA: 1 } }
-            ]
-        },
-        {
-            t: "Твое отношение к кружочкам в ТГ?",
-            a: [
-                { text: "Обожаю! Это быстро и живо.", s: { PP: 2, RD: 2 } },
-                { text: "Записываю, только если выгляжу безупречно.", s: { RA: 3 } },
-                { text: "Почти не использую, текст надежнее.", s: { AJ: 2, TW: 1 } },
-                { text: "Стесняюсь своего голоса или вида в кружочках.", s: { FL: 3 } }
-            ]
-        },
-        {
-            t: "Если в чате начинается токсичный срач...",
-            a: [
-                { text: "Попытаюсь всех помирить или перевести в шутку.", s: { FL: 2, PP: 2 } },
-                { text: "Буду доказывать свою правоту фактами и логикой.", s: { TW: 3 } },
-                { text: "Подброшу дров в огонь, если мне весело.", s: { RD: 2, PP: 1 } },
-                { text: "Просто ливну из уведомлений, мне дорога моя нервная система.", s: { AJ: 2, RA: 1 } }
-            ]
-        },
-        {
-            t: "Твои закрепленные чаты (Pin). Что там?",
-            a: [
-                { text: "Рабочие/учебные чаты и важные каналы.", s: { TW: 3, AJ: 1 } },
-                { text: "Чаты с лучшими друзьями и мемами.", s: { PP: 2, RD: 1 } },
-                { text: "Личное «Избранное» с кучей эстетичных сохранёнок.", s: { RA: 3 } },
-                { text: "Там пусто или только один самый близкий человек.", s: { FL: 2, AJ: 1 } }
-            ]
-        },
-        {
-            t: "Как ты отвечаешь на сообщения?",
-            a: [
-                { text: "Мгновенно, если я онлайн. Терпеть не могу висящие уведомления.", s: { RD: 3, TW: 1 } },
-                { text: "Обдуманно, могу долго вынашивать идеальный ответ.", s: { TW: 2, RA: 2 } },
-                { text: "Могу прочитать и забыть ответить на пару дней.", s: { AJ: 2, FL: 1 } },
-                { text: "Заваливаю собеседника короткими сообщениями подряд.", s: { PP: 3 } }
-            ]
-        },
-        {
-            t: "Твой аватар в соцсетях.",
-            a: [
-                { text: "Стильный арт или очень удачное фото.", s: { RA: 3 } },
-                { text: "Что-то мемное, ироничное или дефолтная картинка.", s: { PP: 2, AJ: 2 } },
-                { text: "Персонаж, который мне сейчас близок по духу.", s: { FL: 2, TW: 1 } },
-                { text: "Что-то динамичное, агрессивное или яркое.", s: { RD: 3 } }
-            ]
-        },
-        {
-            t: "Стикерпаки, которые ты используешь чаще всего.",
-            a: [
-                { text: "Максимально странные, постироничные или локальные мемы.", s: { PP: 3 } },
-                { text: "Очень милые, уютные или с животными.", s: { FL: 3 } },
-                { text: "Эстетичные, с красивой рисовкой.", s: { RA: 3 } },
-                { text: "Стандартные эмодзи или классические паки.", s: { AJ: 3 } }
-            ]
-        },
-        {
-            t: "Ты заходишь в чат, а там 500+ непрочитанных сообщений.",
-            a: [
-                { text: "Прочитаю всё от корки до корки, чтобы быть в курсе.", s: { TW: 3 } },
-                { text: "Просто нажму «прочитать всё» и пойду дальше.", s: { RD: 3, AJ: 1 } },
-                { text: "Посмотрю последние 10 сообщений, чтобы понять суть.", s: { AJ: 2, PP: 1 } },
-                { text: "Поищу глазами упоминания своего ника или важные мемы.", s: { RA: 1, PP: 1 } }
-            ]
-        },
-        // --- Блок Жизнь и Быт (Перепроверенные баллы) ---
-        {
-            t: "Твой способ справляться со стрессом?",
-            a: [
-                { text: "Составление списков дел и наведение порядка.", s: { TW: 3, AJ: 1 } },
-                { text: "Сон, одиночество, тишина.", s: { FL: 3 } },
-                { text: "Физическая активность или видеоигры.", s: { RD: 3 } },
-                { text: "Шопинг или уход за собой.", s: { RA: 3 } },
-                { text: "Общение с друзьями и смех.", s: { PP: 3 } }
-            ]
-        },
-        {
-            t: "Как выглядит твое рабочее место (реальное или десктоп)?",
-            a: [
-                { text: "Всё по полочкам, ничего лишнего.", s: { TW: 3, AJ: 1 } },
-                { text: "Творческий беспорядок, но мне уютно.", s: { RA: 2, FL: 1 } },
-                { text: "Хаос, в котором я ориентируюсь на инстинктах.", s: { PP: 2, RD: 1 } },
-                { text: "Главное, чтобы техника была мощной и быстрой.", s: { RD: 3 } }
-            ]
-        },
-        {
-            t: "Ты в магазине и видишь классную, но дорогую вещь.",
-            a: [
-                { text: "Куплю, если она безумно красивая. Живем один раз.", s: { RA: 3, PP: 1 } },
-                { text: "Сначала оценю практичность и качество.", s: { AJ: 3, TW: 1 } },
-                { text: "Буду долго сомневаться и в итоге уйду без неё.", s: { FL: 2, TW: 1 } },
-                { text: "Возьму сразу, если она добавит мне статусности или крутости.", s: { RD: 2, RA: 1 } }
-            ]
-        },
-        {
-            t: "Твоя реакция на внезапное изменение планов.",
-            a: [
-                { text: "Раздражение. Я уже всё распланировал(а).", s: { TW: 3 } },
-                { text: "Спокойствие. Бывает, подстроимся.", s: { AJ: 3, FL: 1 } },
-                { text: "Азарт. Новые приключения!", s: { PP: 3, RD: 1 } },
-                { text: "Легкий стресс, нужно время привыкнуть.", s: { FL: 2, RA: 1 } }
-            ]
-        },
-        {
-            t: "В компании друзей ты обычно тот, кто...",
-            a: [
-                { text: "Организует встречу и выбирает место.", s: { TW: 3, RD: 1 } },
-                { text: "Слушает и поддерживает всех эмоционально.", s: { FL: 3 } },
-                { text: "Шутит и создает атмосферу праздника.", s: { PP: 3 } },
-                { text: "Трезво оценивает ситуацию и дает советы.", s: { AJ: 3 } }
-            ]
-        },
-        {
-            t: "Как ты относишься к критике в свой адрес?",
-            a: [
-                { text: "Анализирую, если она конструктивна — принимаю.", s: { TW: 2, AJ: 2 } },
-                { text: "Обижаюсь, даже если не показываю вида.", s: { FL: 3, RA: 1 } },
-                { text: "Спорю до последнего, защищая свою позицию.", s: { RD: 3 } },
-                { text: "Перевожу в иронию, чтобы не было больно.", s: { PP: 3 } }
-            ]
-        },
-        {
-            t: "Идеальный подарок для тебя это...",
-            a: [
-                { text: "Что-то полезное, что я давно хотел(а).", s: { AJ: 3, TW: 1 } },
-                { text: "Что-то очень красивое или статусное.", s: { RA: 3 } },
-                { text: "Впечатление: билет на концерт, поездка.", s: { PP: 3, RD: 1 } },
-                { text: "Что-то сделанное своими руками или очень личное.", s: { FL: 3 } }
-            ]
-        },
-        {
-            t: "Твое отношение к спорту/физическим нагрузкам?",
-            a: [
-                { text: "Люблю побеждать и соревноваться.", s: { RD: 3 } },
-                { text: "Занимаюсь для здоровья и дисциплины.", s: { TW: 2, AJ: 2 } },
-                { text: "Для меня это способ выглядеть лучше.", s: { RA: 3 } },
-                { text: "Спорт — это весело, если с друзьями.", s: { PP: 2 } },
-                { text: "Предпочитаю что-то спокойное, вроде йоги или прогулок.", s: { FL: 3 } }
-            ]
-        },
-        // --- Дополнительные 24 вопроса для точности ---
-        {
-            t: "Ты случайно разбил(а) любимую кружку.",
-            a: [
-                { text: "Очень расстроюсь, у неё была душа.", s: { FL: 3, RA: 1 } },
-                { text: "Соберу осколки и сразу куплю новую, еще лучше.", s: { RD: 2, RA: 2 } },
-                { text: "Просто уберу мусор. Это всего лишь вещь.", s: { AJ: 3 } },
-                { text: "Попробую склеить, если она была уникальной.", s: { TW: 2, RA: 1 } }
-            ]
-        },
-        {
-            t: "Как ты выбираешь фильм на вечер?",
-            a: [
-                { text: "Читаю рецензии и смотрю рейтинги.", s: { TW: 3 } },
-                { text: "Выбираю по эстетике трейлера или актерам.", s: { RA: 3 } },
-                { text: "Ткну в первый попавшийся экшен.", s: { RD: 2, PP: 1 } },
-                { text: "Пересмотрю что-то старое и уютное.", s: { FL: 2, AJ: 1 } }
-            ]
-        },
-        {
-            t: "Твоя реакция на несправедливость в сторону незнакомого человека?",
-            a: [
-                { text: "Вступлюсь, если чувствую в себе силы.", s: { RD: 3, AJ: 1 } },
-                { text: "Буду долго переживать внутри, но могу побояться вмешаться.", s: { FL: 3 } },
-                { text: "Постараюсь решить конфликт логическими доводами.", s: { TW: 3 } },
-                { text: "Привлеку внимание окружающих шумом или шутками.", s: { PP: 2 } }
-            ]
-        },
-        {
-            t: "Что ты сделаешь, если найдешь на улице кошелек с деньгами?",
-            a: [
-                { text: "Попробую найти владельца любой ценой.", s: { AJ: 3, FL: 1 } },
-                { text: "Отнесу в полицию, чтобы не брать ответственность.", s: { TW: 3 } },
-                { text: "Заберу себе, это подарок судьбы.", s: { RD: 2, PP: 1 } },
-                { text: "Подожду рядом какое-то время, вдруг за ним вернутся.", s: { FL: 2 } }
-            ]
-        },
-        {
-            t: "Как ты относишься к моде?",
-            a: [
-                { text: "Слежу за трендами и стараюсь им соответствовать.", s: { RA: 3 } },
-                { text: "Мне важно, чтобы одежда была удобной и качественной.", s: { AJ: 3 } },
-                { text: "Создаю свой уникальный и странный стиль.", s: { PP: 3 } },
-                { text: "Одеваюсь так, чтобы не привлекать лишнего внимания.", s: { FL: 3 } }
-            ]
-        },
-        {
-            t: "Твой идеальный отпуск?",
-            a: [
-                { text: "Поход в горы или активный тур.", s: { RD: 3, AJ: 1 } },
-                { text: "Тур по музеям и библиотекам Европы.", s: { TW: 3 } },
-                { text: "Пятизвездочный отель и спа.", s: { RA: 3 } },
-                { text: "Шумный фестиваль или Диснейленд.", s: { PP: 3 } },
-                { text: "Домик в лесу у озера.", s: { FL: 3 } }
-            ]
-        },
-        {
-            t: "Как ты ведешь себя, когда болеешь?",
-            a: [
-                { text: "Строго соблюдаю все рекомендации врачей.", s: { TW: 3 } },
-                { text: "Ною и требую к себе повышенного внимания.", s: { RA: 2, PP: 1 } },
-                { text: "Игнорирую симптомы и продолжаю работать/играть.", s: { RD: 3, AJ: 1 } },
-                { text: "Тихо лежу под одеялом и много сплю.", s: { FL: 3 } }
-            ]
-        },
-        {
-            t: "Твое отношение к животным?",
-            a: [
-                { text: "Обожаю всех, они лучше людей.", s: { FL: 3 } },
-                { text: "Люблю только породистых и красивых.", s: { RA: 3 } },
-                { text: "Животные должны приносить пользу (охранять, ловить мышей).", s: { AJ: 3 } },
-                { text: "Мне нравится с ними играть, но лень ухаживать.", s: { PP: 2, RD: 1 } }
-            ]
-        },
-        {
-            t: "Что ты выберешь: электронную книгу или бумажную?",
-            a: [
-                { text: "Бумажную. Обожаю запах и тактильность.", s: { RA: 2, FL: 1 } },
-                { text: "Электронную. Это практично и вместительно.", s: { TW: 3, AJ: 1 } },
-                { text: "Слушаю аудиокниги на х2 скорости.", s: { RD: 3, PP: 1 } },
-                { text: "Читаю только комиксы или мангу.", s: { PP: 2 } }
-            ]
-        },
-        {
-            t: "Как ты относишься к приготовлению еды?",
-            a: [
-                { text: "Готовлю строго по рецепту, взвешивая граммы.", s: { TW: 3 } },
-                { text: "Для меня это творчество, всегда импровизирую.", s: { PP: 3, RA: 1 } },
-                { text: "Готовлю быстро, просто чтобы не быть голодным.", s: { AJ: 3, RD: 1 } },
-                { text: "Люблю красиво сервировать стол, даже если ем один(а).", s: { RA: 3 } }
-            ]
-        },
-        {
-            t: "Твой стиль в видеоиграх?",
-            a: [
-                { text: "Исследую каждый угол и читаю все записки.", s: { TW: 3, FL: 1 } },
-                { text: "Лезу в самый центр драки, не глядя на ХП.", s: { RD: 3, PP: 1 } },
-                { text: "Играю в симуляторы жизни или фермы.", s: { AJ: 2, FL: 2 } },
-                { text: "Выбираю персонажа по внешности и скинам.", s: { RA: 3 } }
-            ]
-        },
-        {
-            t: "Ты выиграл(а) в лотерею крупную сумму. Что сделаешь?",
-            a: [
-                { text: "Инвестирую или положу в банк под проценты.", s: { TW: 3, AJ: 1 } },
-                { text: "Раздам долги и помогу семье/друзьям.", s: { AJ: 2, FL: 2 } },
-                { text: "Устрою грандиозную вечеринку.", s: { PP: 3 } },
-                { text: "Куплю всё то роскошное, о чем мечтал(а).", s: { RA: 3 } }
-            ]
-        },
-        {
-            t: "Как ты относишься к сплетням?",
-            a: [
-                { text: "Терпеть не могу, это низко.", s: { AJ: 3, TW: 1 } },
-                { text: "Иногда интересно послушать, но сам(а) не разношу.", s: { FL: 2, RA: 1 } },
-                { text: "Обожаю быть в курсе всех интриг.", s: { RA: 2, PP: 1 } },
-                { text: "Мне просто всё равно на чужую жизнь.", s: { RD: 3 } }
-            ]
-        },
-        {
-            t: "Твое отношение к порядку в ванной комнате?",
-            a: [
-                { text: "Куча баночек, кремов и парфюма в идеальном порядке.", s: { RA: 3 } },
-                { text: "Только мыло и зубная щетка. Минимализм.", s: { AJ: 3 } },
-                { text: "Постоянно что-то разлито или разбросано.", s: { PP: 2, RD: 1 } },
-                { text: "Всё расставлено по частоте использования.", s: { TW: 3 } }
-            ]
-        },
-        {
-            t: "Ты пришел(а) на вечеринку, где никого не знаешь.",
-            a: [
-                { text: "Буду стоять в углу с телефоном.", s: { FL: 3, TW: 1 } },
-                { text: "Пойду знакомиться первым(ой), я люблю людей.", s: { PP: 3, RD: 1 } },
-                { text: "Найду хозяина дома и буду общаться с ним.", s: { AJ: 2 } },
-                { text: "Оценю обстановку и выберу самую интересную группу людей.", s: { RA: 2, TW: 1 } }
-            ]
-        },
-        {
-            t: "Как ты ведешь споры?",
-            a: [
-                { text: "Засыпаю оппонента аргументами.", s: { TW: 3 } },
-                { text: "Начинаю злиться и переходить на крик.", s: { RD: 3 } },
-                { text: "Пытаюсь найти компромисс, чтобы никто не обиделся.", s: { FL: 3 } },
-                { text: "Иронизирую и высмеиваю позицию другого.", s: { PP: 2, RA: 1 } }
-            ]
-        },
-        {
-            t: "Твоя главная слабость?",
-            a: [
-                { text: "Излишняя тревожность и зацикленность.", s: { TW: 3, FL: 1 } },
-                { text: "Упрямство и нежелание слушать других.", s: { AJ: 3, RD: 1 } },
-                { text: "Вспыльчивость.", s: { RD: 3 } },
-                { text: "Зависимость от чужого мнения.", s: { RA: 3, FL: 1 } },
-                { text: "Легкомысленность.", s: { PP: 3 } }
-            ]
-        },
-        {
-            t: "Как ты выбираешь подарок другу?",
-            a: [
-                { text: "Спрошу напрямую, что ему нужно.", s: { AJ: 3 } },
-                { text: "Буду долго искать что-то со смыслом.", s: { TW: 2, FL: 2 } },
-                { text: "Куплю что-то эффектное и дорогое.", s: { RA: 3 } },
-                { text: "Выберу самую смешную штуку в магазине.", s: { PP: 3 } }
-            ]
-        },
-        {
-            t: "Твое отношение к уборке?",
-            a: [
-                { text: "Медитативный процесс, люблю чистоту.", s: { RA: 2, TW: 1 } },
-                { text: "Ненавижу, делаю только когда уже совсем грязно.", s: { RD: 3, PP: 1 } },
-                { text: "Убираюсь регулярно по графику.", s: { TW: 2, AJ: 2 } },
-                { text: "Уборка — это повод включить музыку и танцевать с шваброй.", s: { PP: 3 } }
-            ]
-        },
-        {
-            t: "Что ты сделаешь, если увидишь НЛО?",
-            a: [
-                { text: "Попробую сфотографировать и задокументировать.", s: { TW: 3, AJ: 1 } },
-                { text: "Испугаюсь и спрячусь.", s: { FL: 3 } },
-                { text: "Попробую выйти на контакт.", s: { PP: 3, RD: 1 } },
-                { text: "Подумаю, что это секретная разработка военных.", s: { AJ: 2, TW: 1 } }
-            ]
-        },
-        {
-            t: "Как ты относишься к старым вещам?",
-            a: [
-                { text: "Легко выбрасываю всё ненужное.", s: { RD: 3, AJ: 1 } },
-                { text: "Храню всё, что связано с воспоминаниями.", s: { FL: 3, RA: 1 } },
-                { text: "Пытаюсь найти им новое применение (апсайклинг).", s: { RA: 2, TW: 1 } },
-                { text: "У меня просто гора хлама, до которого не доходят руки.", s: { PP: 2 } }
-            ]
-        },
-        {
-            t: "Твоя реакция на комплименты?",
-            a: [
-                { text: "Смущаюсь и отрицаю.", s: { FL: 3 } },
-                { text: "Принимаю как должное.", s: { RA: 3, RD: 1 } },
-                { text: "Благодарю и говорю ответный комплимент.", s: { AJ: 2, TW: 1 } },
-                { text: "Отшучиваюсь.", s: { PP: 3 } }
-            ]
-        },
-        {
-            t: "Что тебя может заставить плакать?",
-            a: [
-                { text: "Грустный фильм или книга.", s: { FL: 3, RA: 1 } },
-                { text: "Собственное бессилие или провал.", s: { RD: 2, TW: 2 } },
-                { text: "Обида со стороны близкого человека.", s: { FL: 2, AJ: 2 } },
-                { text: "Ничего, я редко плачу.", s: { AJ: 3, RD: 1 } }
-            ]
-        },
-        {
-            t: "Твой девиз по жизни?",
-            a: [
-                { text: "Знание — сила.", s: { TW: 3 } },
-                { text: "Честность превыше всего.", s: { AJ: 3 } },
-                { text: "Быстрее, выше, сильнее.", s: { RD: 3 } },
-                { text: "Красота спасет мир.", s: { RA: 3 } },
-                { text: "Доброта — это магия.", s: { FL: 3 } },
-                { text: "Живи весело!", s: { PP: 3 } }
-            ]
+        ua: {
+            title: "Хто ти з Main 6?",
+            subtitle: "Психологічний профіль через призму побуту та інтернету",
+            back: "Назад",
+            restart: "Пройти знову",
+            youAre: "Ось хто ти!",
+            compatibility: "Ваша сумісність:",
+            questionOf: "Питання {current} з {total}"
         }
-    ];
+    };
 
-    const characters = {
-        TW: { name: "Твайлайт Спаркл", desc: "Ты — Аналитик и Организатор. Твой разум работает как часы. Ты ценишь структуру, логику и знания. В ролевых ты тот, кто следит за лором, а в жизни — тот, у кого всегда есть план на случай апокалипсиса. Твоя сила в интеллекте, но не забывай иногда давать себе право на ошибку.", img: "https://static.wikia.nocookie.net/mlp/images/5/5f/Twilight_Sparkle_ID_S4E11.png" },
-        AJ: { name: "Эпплджек", desc: "Ты — Реалист и Опора. Ты прямой, честный и надежный человек. Тебе чужды интриги и лишние украшательства. Ты ценишь труд и верность. В интернете ты лаконичен, а в жизни на тебя всегда можно положиться. Ты — тот самый здравый смысл, которого так не хватает окружающим.", img: "https://static.wikia.nocookie.net/mlp/images/d/d8/Applejack_S01E13_cropped.png" },
-        RD: { name: "Рэйнбоу Дэш", desc: "Ты — Двигатель и Игрок. Скорость, драйв и амбиции — это твоё. Ты не терпишь скуку и медлительность. Ты можешь быть вспыльчивым, но твоя преданность друзьям не знает границ. Ты всегда готов(а) к вызову и любишь быть первым(ой) во всем, за что берешься.", img: "https://static.wikia.nocookie.net/mlp/images/4/4b/Rainbow_Dash_Wonderbolt_fantasy_cropped_S1E3.png" },
-        RA: { name: "Рэрити", desc: "Ты — Эстет и Творец. Для тебя важно, чтобы мир вокруг был прекрасным. Ты обладаешь тонким вкусом и вниманием к деталям. Твое самовыражение проявляется во всем: от стиля письма до аватарок. Ты щедр(а) и любишь дарить красоту, хотя иногда бываешь слишком требователен(льна) к себе и другим.", img: "https://static.wikia.nocookie.net/mlp/images/d/d1/Rarity_standing_S1E19_CROPPED.png" },
-        FL: { name: "Флаттершай", desc: "Ты — Эмпат и Хранитель уюта. Ты чувствительный, добрый и тихий человек. Тебе важно душевное спокойствие — своё и окружающих. Ты избегаешь конфликтов и обладаешь огромным терпением. Твоя сила в тихой доброте, которая способна растопить даже самое холодное сердце.", img: "https://static.wikia.nocookie.net/mlp/images/0/0c/Fluttershy_ID_S1E17.png" },
-        PP: { name: "Пинки Пай", desc: "Ты — Энтузиаст и Оптимист. Твоя энергия заразительна, а фантазия не имеет границ. Ты видишь повод для смеха там, где другие его не замечают. Ты живешь моментом и любишь радовать людей. Твой хаос — созидательный, и без тебя этот мир был бы гораздо более серым местом.", img: "https://static.wikia.nocookie.net/mlp/images/b/b2/Pinkie_Pie_ID_S4E11.png" }
+    let currentLang = 'ru';
+
+    const questionsData = {
+        ru: [
+            // --- Блок Ролевых и SillyTavern ---
+            {
+                t: "Твой типичный пост в ролевой это...",
+                a: [
+                    { text: "Полотно с анализом чувств и деталями окружения.", s: { RA: 3, TW: 1 } },
+                    { text: "Краткое описание действия и четкая реплика.", s: { AJ: 3, RD: 1 } },
+                    { text: "Пост, который двигает сюжет вперед, создавая экшен.", s: { RD: 3, PP: 1 } },
+                    { text: "Мягкий, эмоциональный ответ, подстраивающийся под сорола.", s: { FL: 3 } }
+                ]
+            },
+            {
+                t: "Как ты выбираешь карточку персонажа для чата?",
+                a: [
+                    { text: "Изучаю настройки, лор и примеры диалогов. Всё должно быть логично.", s: { TW: 3 } },
+                    { text: "Смотрю только на арт. Если персонаж красивый — берем.", s: { RA: 3 } },
+                    { text: "Ищу что-то веселое или необычное для фановых ситуаций.", s: { PP: 3 } },
+                    { text: "Беру проверенных временем «классических» персонажей.", s: { AJ: 2, FL: 1 } }
+                ]
+            },
+            {
+                t: "Бот в Таверне выдал очень странный, нелогичный ответ.",
+                a: [
+                    { text: "Иду в настройки (Regex, пресеты), чтобы вылечить это системно.", s: { TW: 3 } },
+                    { text: "Руками редактирую его ответ до нужного состояния.", s: { RA: 2, AJ: 1 } },
+                    { text: "Просто жму реролл, пока не выкинет что-то адекватное.", s: { RD: 2, PP: 1 } },
+                    { text: "Принимаю как есть и пытаюсь обыграть это в сюжете.", s: { FL: 2, PP: 1 } }
+                ]
+            },
+            {
+                t: "Насколько важен «Лорбук» (World Info) в твоих чатах?",
+                a: [
+                    { text: "Крайне важен. Без структуры мир развалится.", s: { TW: 3 } },
+                    { text: "Заполняю только ключевые факты, чтобы не было путаницы.", s: { AJ: 2, TW: 1 } },
+                    { text: "Почти не пользуюсь, полагаюсь на импровизацию.", s: { PP: 2, RD: 1 } },
+                    { text: "Важен только для описания эстетики и атмосферы.", s: { RA: 2 } }
+                ]
+            },
+            {
+                t: "Твое отношение к NSFW контенту в ролевых?",
+                a: [
+                    { text: "Это должно быть красиво, чувственно и с прелюдией.", s: { RA: 3, FL: 1 } },
+                    { text: "Главное — физиология и реализм, без лишних соплей.", s: { AJ: 3, RD: 1 } },
+                    { text: "Люблю эксперименты и необычные сценарии.", s: { PP: 2, RD: 2 } },
+                    { text: "Важна психологическая связь персонажей.", s: { TW: 2, FL: 2 } }
+                ]
+            },
+            {
+                t: "Что тебя больше всего бесит в ролевом процессе?",
+                a: [
+                    { text: "Когда бот или сорол забывает детали лора или ломает характер.", s: { TW: 3, AJ: 1 } },
+                    { text: "Скука и отсутствие динамики в сюжете.", s: { RD: 3, PP: 1 } },
+                    { text: "Безвкусные описания и отсутствие стиля.", s: { RA: 3 } },
+                    { text: "Агрессивные или слишком жесткие повороты сюжета.", s: { FL: 3 } }
+                ]
+            },
+            {
+                t: "Как ты реагируешь на опечатки в ответах ИИ?",
+                a: [
+                    { text: "Сразу исправляю, это мозолит глаза.", s: { RA: 2, TW: 2 } },
+                    { text: "Игнорирую, если смысл понятен.", s: { AJ: 3, RD: 1 } },
+                    { text: "Смеюсь, если опечатка создала забавный смысл.", s: { PP: 3 } },
+                    { text: "Немного расстраиваюсь, это портит погружение.", s: { FL: 2 } }
+                ]
+            },
+            {
+                t: "Твоя любимая часть создания новой карточки персонажа?",
+                a: [
+                    { text: "Написание сложного системного промпта.", s: { TW: 3 } },
+                    { text: "Подбор идеального визуала и оформление.", s: { RA: 3 } },
+                    { text: "Придумывание странных привычек и шуток персонажу.", s: { PP: 3 } },
+                    { text: "Прописывание простой и понятной мотивации.", s: { AJ: 3 } }
+                ]
+            },
+            // --- Блок Телеграм и общение ---
+            {
+                t: "Как ты ведешь себя в больших групповых чатах?",
+                a: [
+                    { text: "Больше читаю, анализирую обстановку.", s: { FL: 2, TW: 2 } },
+                    { text: "Часто кидаю мемы и всякий треш.", s: { PP: 3, RD: 1 } },
+                    { text: "Пишу только тогда, когда есть что сказать по делу.", s: { AJ: 3 } },
+                    { text: "Стараюсь поддерживать активную беседу и быть в центре.", s: { RD: 2, RA: 1 } }
+                ]
+            },
+            {
+                t: "Твое отношение к кружочкам в ТГ?",
+                a: [
+                    { text: "Обожаю! Это быстро и живо.", s: { PP: 2, RD: 2 } },
+                    { text: "Записываю, только если выгляжу безупречно.", s: { RA: 3 } },
+                    { text: "Почти не использую, текст надежнее.", s: { AJ: 2, TW: 1 } },
+                    { text: "Стесняюсь своего голоса или вида в кружочках.", s: { FL: 3 } }
+                ]
+            },
+            {
+                t: "Если в чате начинается токсичный срач...",
+                a: [
+                    { text: "Попытаюсь всех помирить или перевести в шутку.", s: { FL: 2, PP: 2 } },
+                    { text: "Буду доказывать свою правоту фактами и логикой.", s: { TW: 3 } },
+                    { text: "Подброшу дров в огонь, если мне весело.", s: { RD: 2, PP: 1 } },
+                    { text: "Просто ливну из уведомлений, мне дорога моя нервная система.", s: { AJ: 2, RA: 1 } }
+                ]
+            },
+            {
+                t: "Твои закрепленные чаты (Pin). Что там?",
+                a: [
+                    { text: "Рабочие/учебные чаты и важные каналы.", s: { TW: 3, AJ: 1 } },
+                    { text: "Чаты с лучшими друзьями и мемами.", s: { PP: 2, RD: 1 } },
+                    { text: "Личное «Избранное» с кучей эстетичных сохранёнок.", s: { RA: 3 } },
+                    { text: "Там пусто или только один самый близкий человек.", s: { FL: 2, AJ: 1 } }
+                ]
+            },
+            {
+                t: "Как ты отвечаешь на сообщения?",
+                a: [
+                    { text: "Мгновенно, если я онлайн. Терпеть не могу висящие уведомления.", s: { RD: 3, TW: 1 } },
+                    { text: "Обдуманно, могу долго вынашивать идеальный ответ.", s: { TW: 2, RA: 2 } },
+                    { text: "Могу прочитать и забыть ответить на пару дней.", s: { AJ: 2, FL: 1 } },
+                    { text: "Заваливаю собеседника короткими сообщениями подряд.", s: { PP: 3 } }
+                ]
+            },
+            {
+                t: "Твой аватар в соцсетях.",
+                a: [
+                    { text: "Стильный арт или очень удачное фото.", s: { RA: 3 } },
+                    { text: "Что-то мемное, ироничное или дефолтная картинка.", s: { PP: 2, AJ: 2 } },
+                    { text: "Персонаж, который мне сейчас близок по духу.", s: { FL: 2, TW: 1 } },
+                    { text: "Что-то динамичное, агрессивное или яркое.", s: { RD: 3 } }
+                ]
+            },
+            {
+                t: "Стикерпаки, которые ты используешь чаще всего.",
+                a: [
+                    { text: "Максимально странные, постироничные или локальные мемы.", s: { PP: 3 } },
+                    { text: "Очень милые, уютные или с животными.", s: { FL: 3 } },
+                    { text: "Эстетичные, с красивой рисовкой.", s: { RA: 3 } },
+                    { text: "Стандартные эмодзи или классические паки.", s: { AJ: 3 } }
+                ]
+            },
+            {
+                t: "Ты заходишь в чат, а там 500+ непрочитанных сообщений.",
+                a: [
+                    { text: "Прочитаю всё от корки до корки, чтобы быть в курсе.", s: { TW: 3 } },
+                    { text: "Просто нажму «прочитать всё» и пойду дальше.", s: { RD: 3, AJ: 1 } },
+                    { text: "Посмотрю последние 10 сообщений, чтобы понять суть.", s: { AJ: 2, PP: 1 } },
+                    { text: "Поищу глазами упоминания своего ника или важные мемы.", s: { RA: 1, PP: 1 } }
+                ]
+            },
+            // --- Блок Жизнь и Быт ---
+            {
+                t: "Твой способ справляться со стрессом?",
+                a: [
+                    { text: "Составление списков дел и наведение порядка.", s: { TW: 3, AJ: 1 } },
+                    { text: "Сон, одиночество, тишина.", s: { FL: 3 } },
+                    { text: "Физическая активность или видеоигры.", s: { RD: 3 } },
+                    { text: "Шопинг или уход за собой.", s: { RA: 3 } },
+                    { text: "Общение с друзьями и смех.", s: { PP: 3 } }
+                ]
+            },
+            {
+                t: "Как выглядит твое рабочее место (реальное или десктоп)?",
+                a: [
+                    { text: "Всё по полочкам, ничего лишнего.", s: { TW: 3, AJ: 1 } },
+                    { text: "Творческий беспорядок, но мне уютно.", s: { RA: 2, FL: 1 } },
+                    { text: "Хаос, в котором я ориентируюсь на инстинктах.", s: { PP: 2, RD: 1 } },
+                    { text: "Главное, чтобы техника была мощной и быстрой.", s: { RD: 3 } }
+                ]
+            },
+            {
+                t: "Ты в магазине и видишь классную, но дорогую вещь.",
+                a: [
+                    { text: "Куплю, если она безумно красивая. Живем один раз.", s: { RA: 3, PP: 1 } },
+                    { text: "Сначала оценю практичность и качество.", s: { AJ: 3, TW: 1 } },
+                    { text: "Буду долго сомневаться и в итоге уйду без неё.", s: { FL: 2, TW: 1 } },
+                    { text: "Возьму сразу, если она добавит мне статусности или крутости.", s: { RD: 2, RA: 1 } }
+                ]
+            },
+            {
+                t: "Твоя реакция на внезапное изменение планов.",
+                a: [
+                    { text: "Раздражение. Я уже всё распланировал(а).", s: { TW: 3 } },
+                    { text: "Спокойствие. Бывает, подстроимся.", s: { AJ: 3, FL: 1 } },
+                    { text: "Азарт. Новые приключения!", s: { PP: 3, RD: 1 } },
+                    { text: "Легкий стресс, нужно время привыкнуть.", s: { FL: 2, RA: 1 } }
+                ]
+            },
+            {
+                t: "В компании друзей ты обычно тот, кто...",
+                a: [
+                    { text: "Организует встречу и выбирает место.", s: { TW: 3, RD: 1 } },
+                    { text: "Слушает и поддерживает всех эмоционально.", s: { FL: 3 } },
+                    { text: "Шутит и создает атмосферу праздника.", s: { PP: 3 } },
+                    { text: "Трезво оценивает ситуацию и дает советы.", s: { AJ: 3 } }
+                ]
+            },
+            {
+                t: "Как ты относишься к критике в свой адрес?",
+                a: [
+                    { text: "Анализирую, если она конструктивна — принимаю.", s: { TW: 2, AJ: 2 } },
+                    { text: "Обижаюсь, даже если не показываю вида.", s: { FL: 3, RA: 1 } },
+                    { text: "Спорю до последнего, защищая свою позицию.", s: { RD: 3 } },
+                    { text: "Перевожу в иронию, чтобы не было больно.", s: { PP: 3 } }
+                ]
+            },
+            {
+                t: "Идеальный подарок для тебя это...",
+                a: [
+                    { text: "Что-то полезное, что я давно хотел(а).", s: { AJ: 3, TW: 1 } },
+                    { text: "Что-то очень красивое или статусное.", s: { RA: 3 } },
+                    { text: "Впечатление: билет на концерт, поездка.", s: { PP: 3, RD: 1 } },
+                    { text: "Что-то сделанное своими руками или очень личное.", s: { FL: 3 } }
+                ]
+            },
+            {
+                t: "Твое отношение к спорту/физическим нагрузкам?",
+                a: [
+                    { text: "Люблю побеждать и соревноваться.", s: { RD: 3 } },
+                    { text: "Занимаюсь для здоровья и дисциплины.", s: { TW: 2, AJ: 2 } },
+                    { text: "Для меня это способ выглядеть лучше.", s: { RA: 3 } },
+                    { text: "Спорт — это весело, если с друзьями.", s: { PP: 2 } },
+                    { text: "Предпочитаю что-то спокойное, вроде йоги или прогулок.", s: { FL: 3 } }
+                ]
+            },
+            // --- Дополнительные вопросы ---
+            {
+                t: "Ты случайно разбил(а) любимую кружку.",
+                a: [
+                    { text: "Очень расстроюсь, у неё была душа.", s: { FL: 3, RA: 1 } },
+                    { text: "Соберу осколки и сразу куплю новую, еще лучше.", s: { RD: 2, RA: 2 } },
+                    { text: "Просто уберу мусор. Это всего лишь вещь.", s: { AJ: 3 } },
+                    { text: "Попробую склеить, если она была уникальной.", s: { TW: 2, RA: 1 } }
+                ]
+            },
+            {
+                t: "Как ты выбираешь фильм на вечер?",
+                a: [
+                    { text: "Читаю рецензии и смотрю рейтинги.", s: { TW: 3 } },
+                    { text: "Выбираю по эстетике трейлера или актерам.", s: { RA: 3 } },
+                    { text: "Ткну в первый попавшийся экшен.", s: { RD: 2, PP: 1 } },
+                    { text: "Пересмотрю что-то старое и уютное.", s: { FL: 2, AJ: 1 } }
+                ]
+            },
+            {
+                t: "Твоя реакция на несправедливость в сторону незнакомого человека?",
+                a: [
+                    { text: "Вступлюсь, если чувствую в себе силы.", s: { RD: 3, AJ: 1 } },
+                    { text: "Буду долго переживать внутри, но могу побояться вмешаться.", s: { FL: 3 } },
+                    { text: "Постараюсь решить конфликт логическими доводами.", s: { TW: 3 } },
+                    { text: "Привлеку внимание окружающих шумом или шутками.", s: { PP: 2 } }
+                ]
+            },
+            {
+                t: "Что ты сделаешь, если найдешь на улице кошелек с деньгами?",
+                a: [
+                    { text: "Попробую найти владельца любой ценой.", s: { AJ: 3, FL: 1 } },
+                    { text: "Отнесу в полицию, чтобы не брать ответственность.", s: { TW: 3 } },
+                    { text: "Заберу себе, это подарок судьбы.", s: { RD: 2, PP: 1 } },
+                    { text: "Подожду рядом какое-то время, вдруг за ним вернутся.", s: { FL: 2 } }
+                ]
+            },
+            {
+                t: "Как ты относишься к моде?",
+                a: [
+                    { text: "Слежу за трендами и стараюсь им соответствовать.", s: { RA: 3 } },
+                    { text: "Мне важно, чтобы одежда была удобной и качественной.", s: { AJ: 3 } },
+                    { text: "Создаю свой уникальный и странный стиль.", s: { PP: 3 } },
+                    { text: "Одеваюсь так, чтобы не привлекать лишнего внимания.", s: { FL: 3 } }
+                ]
+            },
+            {
+                t: "Твой идеальный отпуск?",
+                a: [
+                    { text: "Поход в горы или активный тур.", s: { RD: 3, AJ: 1 } },
+                    { text: "Тур по музеям и библиотекам Европы.", s: { TW: 3 } },
+                    { text: "Пятизвездочный отель и спа.", s: { RA: 3 } },
+                    { text: "Шумный фестиваль или Диснейленд.", s: { PP: 3 } },
+                    { text: "Домик в лесу у озера.", s: { FL: 3 } }
+                ]
+            },
+            {
+                t: "Как ты ведешь себя, когда болеешь?",
+                a: [
+                    { text: "Строго соблюдаю все рекомендации врачей.", s: { TW: 3 } },
+                    { text: "Ною и требую к себе повышенного внимания.", s: { RA: 2, PP: 1 } },
+                    { text: "Игнорирую симптомы и продолжаю работать/играть.", s: { RD: 3, AJ: 1 } },
+                    { text: "Тихо лежу под одеялом и много сплю.", s: { FL: 3 } }
+                ]
+            },
+            {
+                t: "Твое отношение к животным?",
+                a: [
+                    { text: "Обожаю всех, они лучше людей.", s: { FL: 3 } },
+                    { text: "Люблю только породистых и красивых.", s: { RA: 3 } },
+                    { text: "Животные должны приносить пользу (охранять, ловить мышей).", s: { AJ: 3 } },
+                    { text: "Мне нравится с ними играть, но лень ухаживать.", s: { PP: 2, RD: 1 } }
+                ]
+            },
+            {
+                t: "Что ты выберешь: электронную книгу или бумажную?",
+                a: [
+                    { text: "Бумажную. Обожаю запах и тактильность.", s: { RA: 2, FL: 1 } },
+                    { text: "Электронную. Это практично и вместительно.", s: { TW: 3, AJ: 1 } },
+                    { text: "Слушаю аудиокниги на х2 скорости.", s: { RD: 3, PP: 1 } },
+                    { text: "Читаю только комиксы или мангу.", s: { PP: 2 } }
+                ]
+            },
+            {
+                t: "Как ты относишься к приготовлению еды?",
+                a: [
+                    { text: "Готовлю строго по рецепту, взвешивая граммы.", s: { TW: 3 } },
+                    { text: "Для меня это творчество, всегда импровизирую.", s: { PP: 3, RA: 1 } },
+                    { text: "Готовлю быстро, просто чтобы не быть голодным.", s: { AJ: 3, RD: 1 } },
+                    { text: "Люблю красиво сервировать стол, даже если ем один(а).", s: { RA: 3 } }
+                ]
+            },
+            {
+                t: "Твой стиль в видеоиграх?",
+                a: [
+                    { text: "Исследую каждый угол и читаю все записки.", s: { TW: 3, FL: 1 } },
+                    { text: "Лезу в самый центр драки, не глядя на ХП.", s: { RD: 3, PP: 1 } },
+                    { text: "Играю в симуляторы жизни или фермы.", s: { AJ: 2, FL: 2 } },
+                    { text: "Выбираю персонажа по внешности и скинам.", s: { RA: 3 } }
+                ]
+            },
+            {
+                t: "Ты выиграл(а) в лотерею крупную сумму. Что сделаешь?",
+                a: [
+                    { text: "Инвестирую или положу в банк под проценты.", s: { TW: 3, AJ: 1 } },
+                    { text: "Раздам долги и помогу семье/друзьям.", s: { AJ: 2, FL: 2 } },
+                    { text: "Устрою грандиозную вечеринку.", s: { PP: 3 } },
+                    { text: "Куплю всё то роскошное, о чем мечтал(а).", s: { RA: 3 } }
+                ]
+            },
+            {
+                t: "Как ты относишься к сплетням?",
+                a: [
+                    { text: "Терпеть не могу, это низко.", s: { AJ: 3, TW: 1 } },
+                    { text: "Иногда интересно послушать, но сам(а) не разношу.", s: { FL: 2, RA: 1 } },
+                    { text: "Обожаю быть в курсе всех интриг.", s: { RA: 2, PP: 1 } },
+                    { text: "Мне просто всё равно на чужую жизнь.", s: { RD: 3 } }
+                ]
+            },
+            {
+                t: "Твое отношение к порядку в ванной комнате?",
+                a: [
+                    { text: "Куча баночек, кремов и парфюма в идеальном порядке.", s: { RA: 3 } },
+                    { text: "Только мыло и зубная щетка. Минимализм.", s: { AJ: 3 } },
+                    { text: "Постоянно что-то разлито или разбросано.", s: { PP: 2, RD: 1 } },
+                    { text: "Всё расставлено по частоте использования.", s: { TW: 3 } }
+                ]
+            },
+            {
+                t: "Ты пришел(а) на вечеринку, где никого не знаешь.",
+                a: [
+                    { text: "Буду стоять в углу с телефоном.", s: { FL: 3, TW: 1 } },
+                    { text: "Пойду знакомиться первым(ой), я люблю людей.", s: { PP: 3, RD: 1 } },
+                    { text: "Найду хозяина дома и буду общаться с ним.", s: { AJ: 2 } },
+                    { text: "Оценю обстановку и выберу самую интересную группу людей.", s: { RA: 2, TW: 1 } }
+                ]
+            },
+            {
+                t: "Как ты ведешь споры?",
+                a: [
+                    { text: "Засыпаю оппонента аргументами.", s: { TW: 3 } },
+                    { text: "Начинаю злиться и переходить на крик.", s: { RD: 3 } },
+                    { text: "Пытаюсь найти компромисс, чтобы никто не обиделся.", s: { FL: 3 } },
+                    { text: "Иронизирую и высмеиваю позицию другого.", s: { PP: 2, RA: 1 } }
+                ]
+            },
+            {
+                t: "Твоя главная слабость?",
+                a: [
+                    { text: "Излишняя тревожность и зацикленность.", s: { TW: 3, FL: 1 } },
+                    { text: "Упрямство и нежелание слушать других.", s: { AJ: 3, RD: 1 } },
+                    { text: "Вспыльчивость.", s: { RD: 3 } },
+                    { text: "Зависимость от чужого мнения.", s: { RA: 3, FL: 1 } },
+                    { text: "Легкомысленность.", s: { PP: 3 } }
+                ]
+            },
+            {
+                t: "Как ты выбираешь подарок другу?",
+                a: [
+                    { text: "Спрошу напрямую, что ему нужно.", s: { AJ: 3 } },
+                    { text: "Буду долго искать что-то со смыслом.", s: { TW: 2, FL: 2 } },
+                    { text: "Куплю что-то эффектное и дорогое.", s: { RA: 3 } },
+                    { text: "Выберу самую смешную штуку в магазине.", s: { PP: 3 } }
+                ]
+            },
+            {
+                t: "Твое отношение к уборке?",
+                a: [
+                    { text: "Медитативный процесс, люблю чистоту.", s: { RA: 2, TW: 1 } },
+                    { text: "Ненавижу, делаю только когда уже совсем грязно.", s: { RD: 3, PP: 1 } },
+                    { text: "Убираюсь регулярно по графику.", s: { TW: 2, AJ: 2 } },
+                    { text: "Уборка — это повод включить музыку и танцевать с шваброй.", s: { PP: 3 } }
+                ]
+            },
+            {
+                t: "Что ты сделаешь, если увидишь НЛО?",
+                a: [
+                    { text: "Попробую сфотографировать и задокументировать.", s: { TW: 3, AJ: 1 } },
+                    { text: "Испугаюсь и спрячусь.", s: { FL: 3 } },
+                    { text: "Попробую выйти на контакт.", s: { PP: 3, RD: 1 } },
+                    { text: "Подумаю, что это секретная разработка военных.", s: { AJ: 2, TW: 1 } }
+                ]
+            },
+            {
+                t: "Как ты относишься к старым вещам?",
+                a: [
+                    { text: "Легко выбрасываю всё ненужное.", s: { RD: 3, AJ: 1 } },
+                    { text: "Храню всё, что связано с воспоминаниями.", s: { FL: 3, RA: 1 } },
+                    { text: "Пытаюсь найти им новое применение (апсайклинг).", s: { RA: 2, TW: 1 } },
+                    { text: "У меня просто гора хлама, до которого не доходят руки.", s: { PP: 2 } }
+                ]
+            },
+            {
+                t: "Твоя реакция на комплименты?",
+                a: [
+                    { text: "Смущаюсь и отрицаю.", s: { FL: 3 } },
+                    { text: "Принимаю как должное.", s: { RA: 3, RD: 1 } },
+                    { text: "Благодарю и говорю ответный комплимент.", s: { AJ: 2, TW: 1 } },
+                    { text: "Отшучиваюсь.", s: { PP: 3 } }
+                ]
+            },
+            {
+                t: "Что тебя может заставить плакать?",
+                a: [
+                    { text: "Грустный фильм или книга.", s: { FL: 3, RA: 1 } },
+                    { text: "Собственное бессилие или провал.", s: { RD: 2, TW: 2 } },
+                    { text: "Обида со стороны близкого человека.", s: { FL: 2, AJ: 2 } },
+                    { text: "Ничего, я редко плачу.", s: { AJ: 3, RD: 1 } }
+                ]
+            },
+            // REPLACED LAST QUESTION - removed direct MLP reference
+            {
+                t: "Какая философия тебе ближе всего?",
+                a: [
+                    { text: "Истина в знаниях и постоянном развитии.", s: { TW: 3 } },
+                    { text: "Главное — быть честным с собой и другими.", s: { AJ: 3 } },
+                    { text: "Жизнь — это гонка, нужно быть первым.", s: { RD: 3 } },
+                    { text: "Красота и гармония — вот что важно.", s: { RA: 3 } },
+                    { text: "Забота о других делает мир лучше.", s: { FL: 3 } },
+                    { text: "Надо радоваться каждому дню!", s: { PP: 3 } }
+                ]
+            }
+        ],
+        ua: [
+            // Ukrainian translations of all questions
+            {
+                t: "Твій типовий пост у рольовій це...",
+                a: [
+                    { text: "Полотно з аналізом почуттів та деталями оточення.", s: { RA: 3, TW: 1 } },
+                    { text: "Короткий опис дії та чітка репліка.", s: { AJ: 3, RD: 1 } },
+                    { text: "Пост, який рухає сюжет вперед, створюючи екшен.", s: { RD: 3, PP: 1 } },
+                    { text: "М'яка, емоційна відповідь, що підлаштовується під сорола.", s: { FL: 3 } }
+                ]
+            },
+            {
+                t: "Як ти обираєш картку персонажа для чату?",
+                a: [
+                    { text: "Вивчаю налаштування, лор та приклади діалогів. Все має бути логічно.", s: { TW: 3 } },
+                    { text: "Дивлюсь тільки на арт. Якщо персонаж гарний — беремо.", s: { RA: 3 } },
+                    { text: "Шукаю щось веселе або незвичайне для фанових ситуацій.", s: { PP: 3 } },
+                    { text: "Беру перевірених часом «класичних» персонажів.", s: { AJ: 2, FL: 1 } }
+                ]
+            },
+            {
+                t: "Бот у Таверні видав дуже дивну, нелогічну відповідь.",
+                a: [
+                    { text: "Іду в налаштування (Regex, пресети), щоб вилікувати це системно.", s: { TW: 3 } },
+                    { text: "Руками редагую його відповідь до потрібного стану.", s: { RA: 2, AJ: 1 } },
+                    { text: "Просто тисну рерол, поки не викине щось адекватне.", s: { RD: 2, PP: 1 } },
+                    { text: "Приймаю як є і намагаюсь обіграти це в сюжеті.", s: { FL: 2, PP: 1 } }
+                ]
+            },
+            {
+                t: "Наскільки важливий «Лорбук» (World Info) у твоїх чатах?",
+                a: [
+                    { text: "Надзвичайно важливий. Без структури світ розвалиться.", s: { TW: 3 } },
+                    { text: "Заповнюю тільки ключові факти, щоб не було плутанини.", s: { AJ: 2, TW: 1 } },
+                    { text: "Майже не користуюсь, покладаюсь на імпровізацію.", s: { PP: 2, RD: 1 } },
+                    { text: "Важливий тільки для опису естетики та атмосфери.", s: { RA: 2 } }
+                ]
+            },
+            {
+                t: "Твоє ставлення до NSFW контенту в рольових?",
+                a: [
+                    { text: "Це має бути красиво, чуттєво і з прелюдією.", s: { RA: 3, FL: 1 } },
+                    { text: "Головне — фізіологія і реалізм, без зайвих соплів.", s: { AJ: 3, RD: 1 } },
+                    { text: "Люблю експерименти та незвичайні сценарії.", s: { PP: 2, RD: 2 } },
+                    { text: "Важливий психологічний зв'язок персонажів.", s: { TW: 2, FL: 2 } }
+                ]
+            },
+            {
+                t: "Що тебе найбільше дратує в рольовому процесі?",
+                a: [
+                    { text: "Коли бот або сорол забуває деталі лору або ламає характер.", s: { TW: 3, AJ: 1 } },
+                    { text: "Нудьга та відсутність динаміки в сюжеті.", s: { RD: 3, PP: 1 } },
+                    { text: "Несмачні описи та відсутність стилю.", s: { RA: 3 } },
+                    { text: "Агресивні або занадто жорсткі повороти сюжету.", s: { FL: 3 } }
+                ]
+            },
+            {
+                t: "Як ти реагуєш на друкарські помилки у відповідях ШІ?",
+                a: [
+                    { text: "Одразу виправляю, це мозолить очі.", s: { RA: 2, TW: 2 } },
+                    { text: "Ігнорую, якщо зміст зрозумілий.", s: { AJ: 3, RD: 1 } },
+                    { text: "Смієюся, якщо помилка створила кумедний зміст.", s: { PP: 3 } },
+                    { text: "Трохи засмучуюсь, це псує занурення.", s: { FL: 2 } }
+                ]
+            },
+            {
+                t: "Твоя улюблена частина створення нової картки персонажа?",
+                a: [
+                    { text: "Написання складного системного промпту.", s: { TW: 3 } },
+                    { text: "Підбір ідеального візуалу та оформлення.", s: { RA: 3 } },
+                    { text: "Придумування дивних звичок та жартів персонажу.", s: { PP: 3 } },
+                    { text: "Прописування простої та зрозумілої мотивації.", s: { AJ: 3 } }
+                ]
+            },
+            {
+                t: "Як ти поводишся у великих групових чатах?",
+                a: [
+                    { text: "Більше читаю, аналізую обстановку.", s: { FL: 2, TW: 2 } },
+                    { text: "Часто кидаю меми та всякий треш.", s: { PP: 3, RD: 1 } },
+                    { text: "Пишу тільки тоді, коли є що сказати по справі.", s: { AJ: 3 } },
+                    { text: "Намагаюсь підтримувати активну бесіду і бути в центрі.", s: { RD: 2, RA: 1 } }
+                ]
+            },
+            {
+                t: "Твоє ставлення до кружечків в ТГ?",
+                a: [
+                    { text: "Обожнюю! Це швидко і живо.", s: { PP: 2, RD: 2 } },
+                    { text: "Записую, тільки якщо виглядаю бездоганно.", s: { RA: 3 } },
+                    { text: "Майже не використовую, текст надійніший.", s: { AJ: 2, TW: 1 } },
+                    { text: "Соромлюсь свого голосу або вигляду в кружечках.", s: { FL: 3 } }
+                ]
+            },
+            {
+                t: "Якщо в чаті починається токсичний срач...",
+                a: [
+                    { text: "Спробую всіх помирити або перевести в жарт.", s: { FL: 2, PP: 2 } },
+                    { text: "Буду доводити свою правоту фактами і логікою.", s: { TW: 3 } },
+                    { text: "Підкину дров у вогонь, якщо мені весело.", s: { RD: 2, PP: 1 } },
+                    { text: "Просто вийду зі сповіщень, мені дорога моя нервова система.", s: { AJ: 2, RA: 1 } }
+                ]
+            },
+            {
+                t: "Твої закріплені чати (Pin). Що там?",
+                a: [
+                    { text: "Робочі/навчальні чати та важливі канали.", s: { TW: 3, AJ: 1 } },
+                    { text: "Чати з найкращими друзями та мемами.", s: { PP: 2, RD: 1 } },
+                    { text: "Особисте «Обране» з купою естетичних збережених.", s: { RA: 3 } },
+                    { text: "Там порожньо або тільки одна найближча людина.", s: { FL: 2, AJ: 1 } }
+                ]
+            },
+            {
+                t: "Як ти відповідаєш на повідомлення?",
+                a: [
+                    { text: "Миттєво, якщо я онлайн. Терпіти не можу висячі сповіщення.", s: { RD: 3, TW: 1 } },
+                    { text: "Обдумано, можу довго виношувати ідеальну відповідь.", s: { TW: 2, RA: 2 } },
+                    { text: "Можу прочитати і забути відповісти на пару днів.", s: { AJ: 2, FL: 1 } },
+                    { text: "Завалюю співрозмовника короткими повідомленнями підряд.", s: { PP: 3 } }
+                ]
+            },
+            {
+                t: "Твій аватар у соцмережах.",
+                a: [
+                    { text: "Стильний арт або дуже вдале фото.", s: { RA: 3 } },
+                    { text: "Щось мемне, іронічне або дефолтна картинка.", s: { PP: 2, AJ: 2 } },
+                    { text: "Персонаж, який мені зараз близький за духом.", s: { FL: 2, TW: 1 } },
+                    { text: "Щось динамічне, агресивне або яскраве.", s: { RD: 3 } }
+                ]
+            },
+            {
+                t: "Стікерпаки, які ти використовуєш найчастіше.",
+                a: [
+                    { text: "Максимально дивні, постіронічні або локальні меми.", s: { PP: 3 } },
+                    { text: "Дуже милі, затишні або з тваринами.", s: { FL: 3 } },
+                    { text: "Естетичні, з гарною рисовкою.", s: { RA: 3 } },
+                    { text: "Стандартні емодзі або класичні паки.", s: { AJ: 3 } }
+                ]
+            },
+            {
+                t: "Ти заходиш у чат, а там 500+ непрочитаних повідомлень.",
+                a: [
+                    { text: "Прочитаю все від корки до корки, щоб бути в курсі.", s: { TW: 3 } },
+                    { text: "Просто натисну «прочитати все» і піду далі.", s: { RD: 3, AJ: 1 } },
+                    { text: "Подивлюсь останні 10 повідомлень, щоб зрозуміти суть.", s: { AJ: 2, PP: 1 } },
+                    { text: "Пошукаю очима згадки свого ніку або важливі меми.", s: { RA: 1, PP: 1 } }
+                ]
+            },
+            {
+                t: "Твій спосіб справлятися зі стресом?",
+                a: [
+                    { text: "Складання списків справ і наведення порядку.", s: { TW: 3, AJ: 1 } },
+                    { text: "Сон, самотність, тиша.", s: { FL: 3 } },
+                    { text: "Фізична активність або відеоігри.", s: { RD: 3 } },
+                    { text: "Шопінг або догляд за собою.", s: { RA: 3 } },
+                    { text: "Спілкування з друзями і сміх.", s: { PP: 3 } }
+                ]
+            },
+            {
+                t: "Як виглядає твоє робоче місце (реальне або десктоп)?",
+                a: [
+                    { text: "Все по поличках, нічого зайвого.", s: { TW: 3, AJ: 1 } },
+                    { text: "Творчий безлад, але мені затишно.", s: { RA: 2, FL: 1 } },
+                    { text: "Хаос, в якому я орієнтуюсь на інстинктах.", s: { PP: 2, RD: 1 } },
+                    { text: "Головне, щоб техніка була потужною і швидкою.", s: { RD: 3 } }
+                ]
+            },
+            {
+                t: "Ти в магазині і бачиш класну, але дорогу річ.",
+                a: [
+                    { text: "Куплю, якщо вона шалено красива. Живемо один раз.", s: { RA: 3, PP: 1 } },
+                    { text: "Спочатку оціню практичність і якість.", s: { AJ: 3, TW: 1 } },
+                    { text: "Буду довго сумніватися і врешті-решт піду без неї.", s: { FL: 2, TW: 1 } },
+                    { text: "Візьму одразу, якщо вона додасть мені статусності або крутості.", s: { RD: 2, RA: 1 } }
+                ]
+            },
+            {
+                t: "Твоя реакція на раптову зміну планів.",
+                a: [
+                    { text: "Роздратування. Я вже все розпланував(ла).", s: { TW: 3 } },
+                    { text: "Спокій. Буває, підлаштуємось.", s: { AJ: 3, FL: 1 } },
+                    { text: "Азарт. Нові пригоди!", s: { PP: 3, RD: 1 } },
+                    { text: "Легкий стрес, потрібен час звикнути.", s: { FL: 2, RA: 1 } }
+                ]
+            },
+            {
+                t: "У компанії друзів ти зазвичай той, хто...",
+                a: [
+                    { text: "Організовує зустріч і обирає місце.", s: { TW: 3, RD: 1 } },
+                    { text: "Слухає і підтримує всіх емоційно.", s: { FL: 3 } },
+                    { text: "Жартує і створює атмосферу свята.", s: { PP: 3 } },
+                    { text: "Тверезо оцінює ситуацію і дає поради.", s: { AJ: 3 } }
+                ]
+            },
+            {
+                t: "Як ти ставишся до критики на свою адресу?",
+                a: [
+                    { text: "Аналізую, якщо вона конструктивна — приймаю.", s: { TW: 2, AJ: 2 } },
+                    { text: "Ображаюсь, навіть якщо не показую вигляду.", s: { FL: 3, RA: 1 } },
+                    { text: "Сперечаюсь до останнього, захищаючи свою позицію.", s: { RD: 3 } },
+                    { text: "Переводжу в іронію, щоб не було боляче.", s: { PP: 3 } }
+                ]
+            },
+            {
+                t: "Ідеальний подарунок для тебе це...",
+                a: [
+                    { text: "Щось корисне, що я давно хотів(ла).", s: { AJ: 3, TW: 1 } },
+                    { text: "Щось дуже гарне або статусне.", s: { RA: 3 } },
+                    { text: "Враження: квиток на концерт, поїздка.", s: { PP: 3, RD: 1 } },
+                    { text: "Щось зроблене своїми руками або дуже особисте.", s: { FL: 3 } }
+                ]
+            },
+            {
+                t: "Твоє ставлення до спорту/фізичних навантажень?",
+                a: [
+                    { text: "Люблю перемагати і змагатися.", s: { RD: 3 } },
+                    { text: "Займаюсь для здоров'я і дисципліни.", s: { TW: 2, AJ: 2 } },
+                    { text: "Для мене це спосіб виглядати краще.", s: { RA: 3 } },
+                    { text: "Спорт — це весело, якщо з друзями.", s: { PP: 2 } },
+                    { text: "Віддаю перевагу чомусь спокійному, типу йоги або прогулянок.", s: { FL: 3 } }
+                ]
+            },
+            {
+                t: "Ти випадково розбив(ла) улюблену кружку.",
+                a: [
+                    { text: "Дуже засмучусь, у неї була душа.", s: { FL: 3, RA: 1 } },
+                    { text: "Зберу осколки і одразу куплю нову, ще кращу.", s: { RD: 2, RA: 2 } },
+                    { text: "Просто приберу сміття. Це лише річ.", s: { AJ: 3 } },
+                    { text: "Спробую склеїти, якщо вона була унікальною.", s: { TW: 2, RA: 1 } }
+                ]
+            },
+            {
+                t: "Як ти обираєш фільм на вечір?",
+                a: [
+                    { text: "Читаю рецензії і дивлюсь рейтинги.", s: { TW: 3 } },
+                    { text: "Обираю за естетикою трейлера або акторами.", s: { RA: 3 } },
+                    { text: "Ткну в перший попавшийся екшен.", s: { RD: 2, PP: 1 } },
+                    { text: "Передивлюсь щось старе і затишне.", s: { FL: 2, AJ: 1 } }
+                ]
+            },
+            {
+                t: "Твоя реакція на несправедливість до незнайомої людини?",
+                a: [
+                    { text: "Вступлюсь, якщо відчуваю в собі сили.", s: { RD: 3, AJ: 1 } },
+                    { text: "Буду довго переживати всередині, але можу побоятися втрутитись.", s: { FL: 3 } },
+                    { text: "Постараюсь вирішити конфлікт логічними доводами.", s: { TW: 3 } },
+                    { text: "Приверну увагу оточуючих шумом або жартами.", s: { PP: 2 } }
+                ]
+            },
+            {
+                t: "Що ти зробиш, якщо знайдеш на вулиці гаманець з грошима?",
+                a: [
+                    { text: "Спробую знайти власника за будь-яку ціну.", s: { AJ: 3, FL: 1 } },
+                    { text: "Віднесу в поліцію, щоб не брати відповідальність.", s: { TW: 3 } },
+                    { text: "Заберу собі, це подарунок долі.", s: { RD: 2, PP: 1 } },
+                    { text: "Почекаю поруч якийсь час, раптом за ним повернуться.", s: { FL: 2 } }
+                ]
+            },
+            {
+                t: "Як ти ставишся до моди?",
+                a: [
+                    { text: "Слідкую за трендами і намагаюсь їм відповідати.", s: { RA: 3 } },
+                    { text: "Мені важливо, щоб одяг був зручним і якісним.", s: { AJ: 3 } },
+                    { text: "Створюю свій унікальний і дивний стиль.", s: { PP: 3 } },
+                    { text: "Одягаюсь так, щоб не привертати зайвої уваги.", s: { FL: 3 } }
+                ]
+            },
+            {
+                t: "Твоя ідеальна відпустка?",
+                a: [
+                    { text: "Похід у гори або активний тур.", s: { RD: 3, AJ: 1 } },
+                    { text: "Тур по музеях і бібліотеках Європи.", s: { TW: 3 } },
+                    { text: "П'ятизірковий готель і спа.", s: { RA: 3 } },
+                    { text: "Гучний фестиваль або Діснейленд.", s: { PP: 3 } },
+                    { text: "Будиночок у лісі біля озера.", s: { FL: 3 } }
+                ]
+            },
+            {
+                t: "Як ти поводишся, коли хворієш?",
+                a: [
+                    { text: "Строго дотримуюсь усіх рекомендацій лікарів.", s: { TW: 3 } },
+                    { text: "Ниюю і вимагаю до себе підвищеної уваги.", s: { RA: 2, PP: 1 } },
+                    { text: "Ігнорую симптоми і продовжую працювати/грати.", s: { RD: 3, AJ: 1 } },
+                    { text: "Тихо лежу під ковдрою і багато сплю.", s: { FL: 3 } }
+                ]
+            },
+            {
+                t: "Твоє ставлення до тварин?",
+                a: [
+                    { text: "Обожнюю всіх, вони кращі за людей.", s: { FL: 3 } },
+                    { text: "Люблю тільки породистих і гарних.", s: { RA: 3 } },
+                    { text: "Тварини повинні приносити користь (охороняти, ловити мишей).", s: { AJ: 3 } },
+                    { text: "Мені подобається з ними гратися, але лінь доглядати.", s: { PP: 2, RD: 1 } }
+                ]
+            },
+            {
+                t: "Що ти оберешь: електронну книгу чи паперову?",
+                a: [
+                    { text: "Паперову. Обожнюю запах і тактильність.", s: { RA: 2, FL: 1 } },
+                    { text: "Електронну. Це практично і місткісто.", s: { TW: 3, AJ: 1 } },
+                    { text: "Слухаю аудіокниги на х2 швидкості.", s: { RD: 3, PP: 1 } },
+                    { text: "Читаю тільки комікси або мангу.", s: { PP: 2 } }
+                ]
+            },
+            {
+                t: "Як ти ставишся до приготування їжі?",
+                a: [
+                    { text: "Готую строго за рецептом, зважуючи грами.", s: { TW: 3 } },
+                    { text: "Для мене це творчість, завжди імпровізую.", s: { PP: 3, RA: 1 } },
+                    { text: "Готую швидко, просто щоб не бути голодним.", s: { AJ: 3, RD: 1 } },
+                    { text: "Люблю гарно сервірувати стіл, навіть якщо їм один(одна).", s: { RA: 3 } }
+                ]
+            },
+            {
+                t: "Твій стиль у відеоіграх?",
+                a: [
+                    { text: "Досліджую кожен кут і читаю всі записки.", s: { TW: 3, FL: 1 } },
+                    { text: "Лізу в самий центр бійки, не дивлячись на ХП.", s: { RD: 3, PP: 1 } },
+                    { text: "Граю в симулятори життя або ферми.", s: { AJ: 2, FL: 2 } },
+                    { text: "Обираю персонажа за зовнішністю і скінами.", s: { RA: 3 } }
+                ]
+            },
+            {
+                t: "Ти виграв(ла) в лотерею велику суму. Що зробиш?",
+                a: [
+                    { text: "Інвестую або покладу в банк під відсотки.", s: { TW: 3, AJ: 1 } },
+                    { text: "Роздам борги і допоможу сім'ї/друзям.", s: { AJ: 2, FL: 2 } },
+                    { text: "Влаштую грандіозну вечірку.", s: { PP: 3 } },
+                    { text: "Куплю все те розкішне, про що мріяв(ла).", s: { RA: 3 } }
+                ]
+            },
+            {
+                t: "Як ти ставишся до пліток?",
+                a: [
+                    { text: "Терпіти не можу, це низько.", s: { AJ: 3, TW: 1 } },
+                    { text: "Іноді цікаво послухати, але сам(а) не розношу.", s: { FL: 2, RA: 1 } },
+                    { text: "Обожнюю бути в курсі всіх інтриг.", s: { RA: 2, PP: 1 } },
+                    { text: "Мені просто байдуже на чуже життя.", s: { RD: 3 } }
+                ]
+            },
+            {
+                t: "Твоє ставлення до порядку у ванній кімнаті?",
+                a: [
+                    { text: "Купа баночок, кремів і парфумів в ідеальному порядку.", s: { RA: 3 } },
+                    { text: "Тільки мило і зубна щітка. Мінімалізм.", s: { AJ: 3 } },
+                    { text: "Постійно щось розлито або розкидано.", s: { PP: 2, RD: 1 } },
+                    { text: "Все розставлено за частотою використання.", s: { TW: 3 } }
+                ]
+            },
+            {
+                t: "Ти прийшов(ла) на вечірку, де нікого не знаєш.",
+                a: [
+                    { text: "Буду стояти в кутку з телефоном.", s: { FL: 3, TW: 1 } },
+                    { text: "Піду знайомитись першим(ою), я люблю людей.", s: { PP: 3, RD: 1 } },
+                    { text: "Знайду господаря дому і буду спілкуватись з ним.", s: { AJ: 2 } },
+                    { text: "Оціню обстановку і оберу найцікавішу групу людей.", s: { RA: 2, TW: 1 } }
+                ]
+            },
+            {
+                t: "Як ти ведеш суперечки?",
+                a: [
+                    { text: "Засипаю опонента аргументами.", s: { TW: 3 } },
+                    { text: "Починаю злитися і переходити на крик.", s: { RD: 3 } },
+                    { text: "Намагаюсь знайти компроміс, щоб ніхто не образився.", s: { FL: 3 } },
+                    { text: "Іронізую і висміюю позицію іншого.", s: { PP: 2, RA: 1 } }
+                ]
+            },
+            {
+                t: "Твоя головна слабкість?",
+                a: [
+                    { text: "Надмірна тривожність і зацикленість.", s: { TW: 3, FL: 1 } },
+                    { text: "Впертість і небажання слухати інших.", s: { AJ: 3, RD: 1 } },
+                    { text: "Запальність.", s: { RD: 3 } },
+                    { text: "Залежність від чужої думки.", s: { RA: 3, FL: 1 } },
+                    { text: "Легковажність.", s: { PP: 3 } }
+                ]
+            },
+            {
+                t: "Як ти обираєш подарунок другу?",
+                a: [
+                    { text: "Запитаю напряму, що йому потрібно.", s: { AJ: 3 } },
+                    { text: "Буду довго шукати щось зі змістом.", s: { TW: 2, FL: 2 } },
+                    { text: "Куплю щось ефектне і дороге.", s: { RA: 3 } },
+                    { text: "Оберу найсмішнішу штуку в магазині.", s: { PP: 3 } }
+                ]
+            },
+            {
+                t: "Твоє ставлення до прибирання?",
+                a: [
+                    { text: "Медитативний процес, люблю чистоту.", s: { RA: 2, TW: 1 } },
+                    { text: "Ненавиджу, роблю тільки коли вже зовсім брудно.", s: { RD: 3, PP: 1 } },
+                    { text: "Прибираюсь регулярно за графіком.", s: { TW: 2, AJ: 2 } },
+                    { text: "Прибирання — це привід включити музику і танцювати з шваброю.", s: { PP: 3 } }
+                ]
+            },
+            {
+                t: "Що ти зробиш, якщо побачиш НЛО?",
+                a: [
+                    { text: "Спробую сфотографувати і задокументувати.", s: { TW: 3, AJ: 1 } },
+                    { text: "Злякаюсь і сховаюсь.", s: { FL: 3 } },
+                    { text: "Спробую вийти на контакт.", s: { PP: 3, RD: 1 } },
+                    { text: "Подумаю, що це секретна розробка військових.", s: { AJ: 2, TW: 1 } }
+                ]
+            },
+            {
+                t: "Як ти ставишся до старих речей?",
+                a: [
+                    { text: "Легко викидаю все непотрібне.", s: { RD: 3, AJ: 1 } },
+                    { text: "Зберігаю все, що пов'язане зі спогадами.", s: { FL: 3, RA: 1 } },
+                    { text: "Намагаюсь знайти їм нове застосування (апсайклінг).", s: { RA: 2, TW: 1 } },
+                    { text: "У мене просто гора мотлоху, до якого не доходять руки.", s: { PP: 2 } }
+                ]
+            },
+            {
+                t: "Твоя реакція на компліменти?",
+                a: [
+                    { text: "Соромлюсь і заперечую.", s: { FL: 3 } },
+                    { text: "Приймаю як належне.", s: { RA: 3, RD: 1 } },
+                    { text: "Дякую і кажу відповідний комплімент.", s: { AJ: 2, TW: 1 } },
+                    { text: "Відшучуюсь.", s: { PP: 3 } }
+                ]
+            },
+            {
+                t: "Що тебе може змусити плакати?",
+                a: [
+                    { text: "Сумний фільм або книга.", s: { FL: 3, RA: 1 } },
+                    { text: "Власне безсилля або провал.", s: { RD: 2, TW: 2 } },
+                    { text: "Образа з боку близької людини.", s: { FL: 2, AJ: 2 } },
+                    { text: "Нічого, я рідко плачу.", s: { AJ: 3, RD: 1 } }
+                ]
+            },
+            // REPLACED LAST QUESTION - Ukrainian version
+            {
+                t: "Яка філософія тобі найближча?",
+                a: [
+                    { text: "Істина в знаннях і постійному розвитку.", s: { TW: 3 } },
+                    { text: "Головне — бути чесним з собою та іншими.", s: { AJ: 3 } },
+                    { text: "Життя — це гонка, потрібно бути першим.", s: { RD: 3 } },
+                    { text: "Краса і гармонія — ось що важливо.", s: { RA: 3 } },
+                    { text: "Турбота про інших робить світ кращим.", s: { FL: 3 } },
+                    { text: "Треба радіти кожному дню!", s: { PP: 3 } }
+                ]
+            }
+        ]
+    };
+
+    const charactersData = {
+        ru: {
+            TW: { name: "Твайлайт Спаркл", desc: "Ты — Аналитик и Организатор. Твой разум работает как часы. Ты ценишь структуру, логику и знания. В ролевых ты тот, кто следит за лором, а в жизни — тот, у кого всегда есть план на случай апокалипсиса. Твоя сила в интеллекте, но не забывай иногда давать себе право на ошибку.", img: "https://static.wikia.nocookie.net/mlp/images/5/5f/Twilight_Sparkle_ID_S4E11.png" },
+            AJ: { name: "Эпплджек", desc: "Ты — Реалист и Опора. Ты прямой, честный и надежный человек. Тебе чужды интриги и лишние украшательства. Ты ценишь труд и верность. В интернете ты лаконичен, а в жизни на тебя всегда можно положиться. Ты — тот самый здравый смысл, которого так не хватает окружающим.", img: "https://static.wikia.nocookie.net/mlp/images/d/d8/Applejack_S01E13_cropped.png" },
+            RD: { name: "Рэйнбоу Дэш", desc: "Ты — Двигатель и Игрок. Скорость, драйв и амбиции — это твоё. Ты не терпишь скуку и медлительность. Ты можешь быть вспыльчивым, но твоя преданность друзьям не знает границ. Ты всегда готов(а) к вызову и любишь быть первым(ой) во всем, за что берешься.", img: "https://static.wikia.nocookie.net/mlp/images/4/4b/Rainbow_Dash_Wonderbolt_fantasy_cropped_S1E3.png" },
+            RA: { name: "Рэрити", desc: "Ты — Эстет и Творец. Для тебя важно, чтобы мир вокруг был прекрасным. Ты обладаешь тонким вкусом и вниманием к деталям. Твое самовыражение проявляется во всем: от стиля письма до аватарок. Ты щедр(а) и любишь дарить красоту, хотя иногда бываешь слишком требователен(льна) к себе и другим.", img: "https://static.wikia.nocookie.net/mlp/images/d/d1/Rarity_standing_S1E19_CROPPED.png" },
+            FL: { name: "Флаттершай", desc: "Ты — Эмпат и Хранитель уюта. Ты чувствительный, добрый и тихий человек. Тебе важно душевное спокойствие — своё и окружающих. Ты избегаешь конфликтов и обладаешь огромным терпением. Твоя сила в тихой доброте, которая способна растопить даже самое холодное сердце.", img: "https://static.wikia.nocookie.net/mlp/images/0/0c/Fluttershy_ID_S1E17.png" },
+            PP: { name: "Пинки Пай", desc: "Ты — Энтузиаст и Оптимист. Твоя энергия заразительна, а фантазия не имеет границ. Ты видишь повод для смеха там, где другие его не замечают. Ты живешь моментом и любишь радовать людей. Твой хаос — созидательный, и без тебя этот мир был бы гораздо более серым местом.", img: "https://static.wikia.nocookie.net/mlp/images/b/b2/Pinkie_Pie_ID_S4E11.png" }
+        },
+        ua: {
+            TW: { name: "Твайлайт Спаркл", desc: "Ти — Аналітик і Організатор. Твій розум працює як годинник. Ти цінуєш структуру, логіку та знання. В рольових ти той, хто слідкує за лором, а в житті — той, у кого завжди є план на випадок апокаліпсису. Твоя сила в інтелекті, але не забувай іноді давати собі право на помилку.", img: "https://static.wikia.nocookie.net/mlp/images/5/5f/Twilight_Sparkle_ID_S4E11.png" },
+            AJ: { name: "Епплджек", desc: "Ти — Реаліст і Опора. Ти прямий, чесний і надійний чоловік. Тобі чужі інтриги та зайві прикраси. Ти цінуєш працю і вірність. В інтернеті ти лаконічний, а в житті на тебе завжди можна покластися. Ти — той самий здоровий глузд, якого так не вистачає оточуючим.", img: "https://static.wikia.nocookie.net/mlp/images/d/d8/Applejack_S01E13_cropped.png" },
+            RD: { name: "Рейнбоу Деш", desc: "Ти — Двигун і Гравець. Швидкість, драйв і амбіції — це твоє. Ти не терпиш нудьгу і повільність. Ти можеш бути запальним, але твоя відданість друзям не знає меж. Ти завжди готовий(а) до виклику і любиш бути першим(ою) у всьому, за що береться.", img: "https://static.wikia.nocookie.net/mlp/images/4/4b/Rainbow_Dash_Wonderbolt_fantasy_cropped_S1E3.png" },
+            RA: { name: "Реріті", desc: "Ти — Естет і Творець. Для тебе важливо, щоб світ навколо був прекрасним. Ти володієш тонким смаком і увагою до деталей. Твоє самовираження проявляється у всьому: від стилю письма до аватарок. Ти щедрий(а) і любиш дарувати красу, хоча іноді буваєш занадто вимогливим(ою) до себе та інших.", img: "https://static.wikia.nocookie.net/mlp/images/d/d1/Rarity_standing_S1E19_CROPPED.png" },
+            FL: { name: "Флаттершай", desc: "Ти — Емпат і Охоронець затишку. Ти чутливий, добрий і тихий чоловік. Тобі важливий душевний спокій — свій і оточуючих. Ти уникаєш конфліктів і володієш величезним терпінням. Твоя сила в тихій доброті, яка здатна розтопити навіть найхолодніше серце.", img: "https://static.wikia.nocookie.net/mlp/images/0/0c/Fluttershy_ID_S1E17.png" },
+            PP: { name: "Пінкі Пай", desc: "Ти — Ентузіаст і Оптиміст. Твоя енергія заразна, а фантазія не має меж. Ти бачиш привід для сміху там, де інші його не помічають. Ти живеш моментом і любиш радувати людей. Твій хаос — творчий, і без тебе цей світ був би набагато більш сірим місцем.", img: "https://static.wikia.nocookie.net/mlp/images/b/b2/Pinkie_Pie_ID_S4E11.png" }
+        }
     };
 
     let currentQuestion = 0;
     let scores = { TW: 0, AJ: 0, RD: 0, RA: 0, FL: 0, PP: 0 };
+    let answerHistory = [];
+    let questions = questionsData[currentLang];
+    let characters = charactersData[currentLang];
 
-    function showQuestion() {
-        if (currentQuestion >= questions.length) { showResult(); return; }
+    // Create floating apples
+    function createFloatingApples() {
+        const appleBg = document.getElementById('apple-bg');
+        const appleEmojis = ['🍎', '🍏', '🍎', '🍏', '🍎', '🍎', '🍏'];
+
+        for (let i = 0; i < 15; i++) {
+            setTimeout(() => {
+                createApple(appleBg, appleEmojis);
+            }, i * 800);
+        }
+
+        // Continuously create new apples
+        setInterval(() => {
+            if (document.querySelectorAll('.floating-apple').length < 20) {
+                createApple(appleBg, appleEmojis);
+            }
+        }, 2000);
+    }
+
+    function createApple(container, emojis) {
+        const apple = document.createElement('div');
+        apple.className = 'floating-apple';
+        apple.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        apple.style.left = Math.random() * 100 + 'vw';
+        apple.style.animationDuration = (8 + Math.random() * 10) + 's';
+        apple.style.fontSize = (1.5 + Math.random() * 1.5) + 'rem';
+        apple.style.animationDelay = '0s';
+
+        apple.addEventListener('click', (e) => {
+            apple.classList.add('clicked');
+            createSparkles(e.clientX, e.clientY);
+            setTimeout(() => apple.remove(), 500);
+        });
+
+        apple.addEventListener('animationend', () => {
+            apple.remove();
+        });
+
+        container.appendChild(apple);
+    }
+
+    function createSparkles(x, y) {
+        for (let i = 0; i < 5; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = (x + (Math.random() - 0.5) * 50) + 'px';
+            sparkle.style.top = (y + (Math.random() - 0.5) * 50) + 'px';
+            document.body.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 1000);
+        }
+    }
+
+    function setLanguage(lang) {
+        currentLang = lang;
+        questions = questionsData[lang];
+        characters = charactersData[lang];
+
+        document.getElementById('lang-ru').classList.toggle('active', lang === 'ru');
+        document.getElementById('lang-ua').classList.toggle('active', lang === 'ua');
+
+        // Update UI text
+        const t = translations[lang];
+        document.getElementById('main-title').innerText = t.title;
+        document.getElementById('main-subtitle').innerText = t.subtitle;
+        document.getElementById('back-text').innerText = t.back;
+        document.getElementById('restart-text').innerText = t.restart;
+        document.getElementById('result-you-are').innerText = t.youAre;
+        document.getElementById('compatibility-text').innerText = t.compatibility;
+
+        // If quiz hasn't started or is in progress, refresh current question
+        if (!document.getElementById('quiz-ui').classList.contains('hidden')) {
+            updateProgressText();
+            if (currentQuestion < questions.length) {
+                showQuestion(false);
+            }
+        }
+    }
+
+    function updateProgressText() {
+        const t = translations[currentLang];
+        const text = t.questionOf
+            .replace('{current}', currentQuestion + 1)
+            .replace('{total}', questions.length);
+        document.getElementById('progress-text').innerText = text;
+    }
+
+    function showQuestion(animate = true) {
+        if (currentQuestion >= questions.length) {
+            showResult();
+            return;
+        }
+
         const q = questions[currentQuestion];
-        document.getElementById('question').innerText = `${currentQuestion + 1}/${questions.length}. ${q.t}`;
-        document.getElementById('progress').style.width = `${(currentQuestion / questions.length) * 100}%`;
+        const progressPercent = (currentQuestion / questions.length) * 100;
+
+        document.getElementById('progress').style.width = progressPercent + '%';
+        document.getElementById('progress-apple').style.left = `calc(${progressPercent}% - 12px)`;
+        updateProgressText();
+
+        const wrapper = document.getElementById('question-wrapper');
+        if (animate) {
+            wrapper.style.animation = 'none';
+            wrapper.offsetHeight; // Trigger reflow
+            wrapper.style.animation = 'slideIn 0.4s ease-out';
+        }
+
+        document.getElementById('question').innerText = q.t;
+
         const optsDiv = document.getElementById('options');
         optsDiv.innerHTML = '';
+
         const shuffled = [...q.a].sort(() => Math.random() - 0.5);
         shuffled.forEach(ans => {
             const btn = document.createElement('button');
+            btn.className = 'option-btn';
             btn.innerText = ans.text;
-            btn.onclick = () => { for (let k in ans.s) scores[k] += ans.s[k]; currentQuestion++; showQuestion(); };
+            btn.onclick = () => selectAnswer(ans);
             optsDiv.appendChild(btn);
         });
+
+        // Update back button state
+        document.getElementById('back-btn').disabled = currentQuestion === 0;
+    }
+
+    function selectAnswer(ans) {
+        // Store current state for going back
+        answerHistory.push({
+            question: currentQuestion,
+            scores: {...scores}
+        });
+
+        // Add new scores
+        for (let k in ans.s) {
+            scores[k] += ans.s[k];
+        }
+
+        currentQuestion++;
+        showQuestion();
+    }
+
+    function goBack() {
+        if (answerHistory.length > 0) {
+            const prev = answerHistory.pop();
+            scores = {...prev.scores};
+            currentQuestion = prev.question;
+            showQuestion();
+        }
     }
 
     function showResult() {
         document.getElementById('quiz-ui').classList.add('hidden');
         document.getElementById('result-ui').classList.remove('hidden');
+
         let max = -1, winner = 'TW';
-        for (let k in scores) if (scores[k] > max) { max = scores[k]; winner = k; }
+        for (let k in scores) {
+            if (scores[k] > max) {
+                max = scores[k];
+                winner = k;
+            }
+        }
+
         const char = characters[winner];
         document.getElementById('result-title').innerText = char.name;
         document.getElementById('result-image').src = char.img;
         document.getElementById('result-desc').innerText = char.desc;
-        
-        let statsHtml = '<strong>Ваша совместимость:</strong><br>';
-        Object.entries(scores).sort((a,b)=>b[1]-a[1]).forEach(([k, v]) => {
-            const pct = Math.round((v / max) * 100);
-            statsHtml += `<div class="stat-row"><span>${characters[k].name.split(' ')[0]}</span><span>${pct}%</span></div>
-            <div style="background:#444; height:4px; width:100%; margin-bottom:8px;"><div style="background:var(--accent); height:100%; width:${pct}%"></div></div>`;
-        });
-        document.getElementById('stats-box').innerHTML = statsHtml;
+
+        let statsHtml = '';
+        Object.entries(scores)
+            .sort((a, b) => b[1] - a[1])
+            .forEach(([k, v], i) => {
+                const pct = Math.round((v / max) * 100);
+                const delay = i * 0.1;
+                statsHtml += `
+                    <div class="stat-row">
+                        <span>${characters[k].name.split(' ')[0]}</span>
+                        <span>${pct}%</span>
+                    </div>
+                    <div class="stat-bar-bg">
+                        <div class="stat-bar-fill" style="width: 0%; transition-delay: ${delay}s;"></div>
+                    </div>
+                `;
+            });
+        document.getElementById('stats-content').innerHTML = statsHtml;
+
+        // Animate stat bars
+        setTimeout(() => {
+            const bars = document.querySelectorAll('.stat-bar-fill');
+            Object.entries(scores)
+                .sort((a, b) => b[1] - a[1])
+                .forEach(([k, v], i) => {
+                    const pct = Math.round((v / max) * 100);
+                    bars[i].style.width = pct + '%';
+                });
+        }, 100);
     }
 
-    showQuestion();
+    function restartQuiz() {
+        currentQuestion = 0;
+        scores = { TW: 0, AJ: 0, RD: 0, RA: 0, FL: 0, PP: 0 };
+        answerHistory = [];
+
+        document.getElementById('result-ui').classList.add('hidden');
+        document.getElementById('quiz-ui').classList.remove('hidden');
+
+        showQuestion();
+    }
+
+    // Initialize
+    createFloatingApples();
+    showQuestion(false);
 </script>
 </body>
 </html>
