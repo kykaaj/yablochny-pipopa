@@ -310,15 +310,14 @@
             padding: 4rem 2rem 2rem;
         }
 
-        .header-bg {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-image: url('header.mp4');
-            background-size: cover;
-            background-position: center;
-            z-index: 0;
-        }
+        .header-video {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
 
         .header-overlay {
             position: absolute;
@@ -1791,8 +1790,11 @@
     <div class="content-wrap">
         <!-- Header -->
         <header class="header" id="home">
-            <div class="header-bg"></div>
-            <div class="header-overlay"></div>
+    <video class="header-video" autoplay muted loop playsinline>
+        <source src="header.mp4" type="video/mp4">
+    </video>
+    <div class="header-overlay"></div>
+
             <canvas id="headerCanvas"></canvas>
             <button class="music-toggle" id="musicToggle" onclick="toggleMusic()">
     <span class="music-icon">🔇</span>
