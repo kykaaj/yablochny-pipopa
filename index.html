@@ -132,14 +132,15 @@
         }
 
         /* Language Toggle */
-        .lang-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 100;
-            display: flex;
-            gap: 8px;
-        }
+       .lang-toggle {
+    position: fixed;
+    bottom: 20px;   /* ← меняем на это */
+    right: 20px;
+    z-index: 100;
+    display: flex;
+    gap: 8px;
+}
+
 
         .lang-btn {
             background: var(--card-bg);
@@ -615,10 +616,11 @@
                 font-size: 0.95rem;
             }
 
-            .lang-toggle {
-                top: 10px;
-                right: 10px;
-            }
+.lang-toggle {
+    bottom: 10px;
+    right: 10px;
+}
+
 
             .lang-btn {
                 padding: 8px 12px;
