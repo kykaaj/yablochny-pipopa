@@ -2732,7 +2732,7 @@ tweaks language - просит следовать языку в тексте HTM
                 <!-- Hidden Game Link (Easter Egg) -->
                 <div style="text-align:center; margin-top: 2rem;">
                     <span class="easter-egg-link" onclick="openGame()">
-                        🎮 Секретная мини-игра (только ПК)
+                        🎮 Мини-игра (только ПК)
                     </span>
                 </div>
             </section>
@@ -3064,7 +3064,7 @@ function showOverlay(id) {
 
 function genLevel() {
     const groundY = G.canvas.height - 40;
-    const levelLength = 1500 + G.level * 500; // Длина уровня зависит от номера
+    const levelLength = 1200 + G.level * 300;
 
     G.platforms = [];
     G.collectibles = [];
@@ -3073,31 +3073,43 @@ function genLevel() {
     // Земля
     G.platforms.push({ x: 0, y: groundY, w: levelLength + 500, h: 50, type: 'ground' });
 
-    // Платформы
-    let px = 200;
-    const platformCount = 8 + G.level * 3;
+    // Платформы — СБАЛАНСИРОВАННЫЕ
+    let px = 150;
+    const platformCount = 10 + G.level * 2;
 
     for (let i = 0; i < platformCount; i++) {
-        const w = 80 + Math.random() * 100;
-        const y = groundY - 100 - Math.random() * 150;
-        G.platforms.push({ x: px, y, w, h: 18, type: 'platform' });
+        const w = 100 + Math.random() * 80; // Ширина 100-180
 
-        // Яблоки на платформах
-        if (Math.random() > 0.3) {
+        // Высота: чередуем низкие и средние платформы
+        let y;
+        if (i % 3 === 0) {
+            y = groundY - 60 - Math.random() * 40;  // Низкие (60-100)
+        } else if (i % 3 === 1) {
+            y = groundY - 90 - Math.random() * 50;  // Средние (90-140)
+        } else {
+            y = groundY - 70 - Math.random() * 60;  // Разные (70-130)
+        }
+
+        G.platforms.push({ x: px, y, w, h: 20, type: 'platform' });
+
+        // Яблоки
+        if (Math.random() > 0.25) {
             G.collectibles.push({ x: px + w/2 - 12, y: y - 35, collected: false });
         }
 
-        px += w + 80 + Math.random() * 100;
+        // Расстояние до следующей: 50-120 (легко перепрыгнуть)
+        px += w + 50 + Math.random() * 70;
     }
 
-    // Цель в конце уровня (отдельно от platforms!)
+    // Цель
     G.goal = {
-        x: px + 100,
+        x: px + 80,
         y: groundY - 60,
-        w: 60,
-        h: 60
+        w: 70,
+        h: 70
     };
 }
+
 
 function startGame() {
     if (G.running) return;
