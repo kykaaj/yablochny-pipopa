@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <title>🍎 Яблочный Пресет — Ренетт</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         :root {
             --red: #E63946;
@@ -44,6 +44,64 @@
             color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
+        }
+
+        /* ═══════════════════════════════════════
+           LOADER
+        ═══════════════════════════════════════ */
+        .loader {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: var(--bg);
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-apple {
+            font-size: 4rem;
+            animation: loaderBounce 1s ease-in-out infinite;
+        }
+
+        @keyframes loaderBounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.1); }
+        }
+
+        .loader-bar {
+            width: 200px;
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            margin-top: 2rem;
+            overflow: hidden;
+        }
+
+        .loader-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--green), var(--gold), var(--red));
+            border-radius: 2px;
+            animation: loaderFill 1.5s ease-out forwards;
+        }
+
+        @keyframes loaderFill {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        .loader-text {
+            margin-top: 1rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
 
         /* ═══════════════════════════════════════
@@ -116,7 +174,7 @@
         @media (max-width: 768px) { .cursor-glow { display: none; } }
 
         /* ═══════════════════════════════════════
-           LANG SWITCHER
+           LANG SWITCHER - MOBILE FIXED
         ═══════════════════════════════════════ */
         .lang-switch {
             position: fixed;
@@ -129,6 +187,19 @@
             padding: 0.4rem;
             border-radius: var(--radius);
             border: 1px solid var(--border);
+        }
+
+        @media (max-width: 768px) {
+            .lang-switch {
+                top: auto;
+                bottom: 80px;
+                right: 10px;
+                padding: 0.3rem;
+            }
+            .lang-btn {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.7rem;
+            }
         }
 
         .lang-btn {
@@ -151,7 +222,7 @@
         }
 
         /* ═══════════════════════════════════════
-           FIXED BUTTONS - GAME LEFT, SCROLL RIGHT
+           FIXED BUTTONS
         ═══════════════════════════════════════ */
         .game-trigger {
             position: fixed;
@@ -315,36 +386,12 @@
             50% { box-shadow: 0 0 0 10px transparent; }
         }
 
-        .header-hero { margin: 2rem 0; }
+        .header-hero { margin: 2rem 0; perspective: 1000px; }
 
-        .header-apple-wrap { position: relative; display: inline-block; }
-
-        .header-apple {
-            font-size: 6rem;
-            display: block;
-            filter: drop-shadow(0 0 50px var(--glow-red));
-            animation: appleFloat 4s ease-in-out infinite;
-        }
-
-        @keyframes appleFloat {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            25% { transform: translateY(-12px) rotate(-3deg); }
-            75% { transform: translateY(-6px) rotate(3deg); }
-        }
-
-        .header-apple-glow {
-            position: absolute;
-            top: 50%; left: 50%;
-            width: 150px; height: 150px;
-            background: radial-gradient(circle, var(--glow-red) 0%, transparent 70%);
-            transform: translate(-50%, -50%);
-            animation: glowPulse 3s ease-in-out infinite;
-            z-index: -1;
-        }
-
-        @keyframes glowPulse {
-            0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
-            50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.2); }
+        /* Parallax Title */
+        .parallax-title {
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
         }
 
         .header-title {
@@ -357,6 +404,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            text-shadow: none;
         }
 
         .header-subtitle {
@@ -424,8 +472,14 @@
             50% { transform: translateX(-50%) translateY(-10px); }
         }
 
+        @keyframes appleFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-12px) rotate(-3deg); }
+            75% { transform: translateY(-6px) rotate(3deg); }
+        }
+
         /* ═══════════════════════════════════════
-           NAV - IMPROVED WITH LABELS
+           NAV
         ═══════════════════════════════════════ */
         .nav {
             position: sticky;
@@ -461,7 +515,6 @@
 
         .nav-logo:hover { color: var(--green); }
 
-        /* Apple Navigation with Labels */
         .apple-nav {
             display: flex;
             gap: 0.3rem;
@@ -554,21 +607,24 @@
             color: var(--green);
         }
 
-        /* Mobile Nav */
         @media (max-width: 700px) {
             .apple-nav { display: none; }
-            .nav-mobile-btn { display: block !important; }
+            .nav-mobile-btn { display: flex !important; }
         }
 
         .nav-mobile-btn {
             display: none;
+            align-items: center;
+            justify-content: center;
             background: none;
             border: 1px solid var(--green);
             border-radius: var(--radius-sm);
             color: var(--green);
-            padding: 0.5rem 0.8rem;
+            padding: 0.6rem 1rem;
             cursor: pointer;
-            font-size: 1.1rem;
+            font-size: 1rem;
+            gap: 0.5rem;
+            font-weight: 600;
         }
 
         .nav-mobile-menu {
@@ -588,14 +644,19 @@
             display: flex;
             align-items: center;
             gap: 0.8rem;
-            padding: 0.8rem 1rem;
+            padding: 1rem;
             color: var(--text-muted);
             text-decoration: none;
             border-radius: var(--radius-sm);
             font-weight: 600;
+            font-size: 1rem;
+            background: var(--bg-card);
         }
-        .nav-mobile-menu a:hover { background: var(--bg-card); color: var(--green); }
-        .nav-mobile-menu .mob-icon { font-size: 1.2rem; }
+        .nav-mobile-menu a:hover, .nav-mobile-menu a:active {
+            background: var(--bg-elevated);
+            color: var(--green);
+        }
+        .nav-mobile-menu .mob-icon { font-size: 1.3rem; }
 
         /* ═══════════════════════════════════════
            MAIN
@@ -649,12 +710,25 @@
         }
 
         /* ═══════════════════════════════════════
-           CARDS
+           CARDS - MOBILE OPTIMIZED
         ═══════════════════════════════════════ */
         .cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 1.5rem;
+        }
+
+        @media (max-width: 600px) {
+            .cards {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .card {
+                padding: 1.2rem;
+            }
+            .card-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+            .card-title { font-size: 1rem; }
+            .card-text { font-size: 0.85rem; }
         }
 
         .card {
@@ -859,6 +933,7 @@
             color: var(--bg);
             font-weight: 900;
             font-size: 1.1rem;
+            flex-shrink: 0;
         }
 
         .cat-num.red { background: linear-gradient(135deg, var(--red), var(--red-dark)); }
@@ -955,6 +1030,264 @@
         }
 
         /* ═══════════════════════════════════════
+           THINGS SELECTOR
+        ═══════════════════════════════════════ */
+        .things-section {
+            background: var(--bg-card);
+            border: 2px solid var(--gold);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .things-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .things-title {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--gold);
+        }
+
+        .things-copy-btn {
+            padding: 0.6rem 1.2rem;
+            background: var(--gold);
+            border: none;
+            border-radius: var(--radius-sm);
+            color: var(--bg);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .things-copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px var(--glow-gold);
+        }
+
+        .things-copy-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .things-count {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-left: 0.5rem;
+        }
+
+        .things-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .things-group-title {
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dashed var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .things-group-title.mixable { color: var(--green); }
+        .things-group-title.exclusive { color: var(--pink); }
+        .things-group-title .hint {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            font-weight: 400;
+        }
+
+        .things-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.6rem;
+        }
+
+        .thing-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem 1rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.3s;
+            user-select: none;
+        }
+
+        .thing-item:hover {
+            border-color: var(--green);
+            background: var(--bg-elevated);
+        }
+
+        .thing-item.selected {
+            border-color: var(--green);
+            background: rgba(46, 204, 113, 0.1);
+        }
+
+        .thing-item.exclusive.selected {
+            border-color: var(--pink);
+            background: rgba(253, 167, 223, 0.1);
+        }
+
+        .thing-checkbox {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--border);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            flex-shrink: 0;
+        }
+
+        .thing-item.selected .thing-checkbox {
+            background: var(--green);
+            border-color: var(--green);
+        }
+
+        .thing-item.exclusive.selected .thing-checkbox {
+            background: var(--pink);
+            border-color: var(--pink);
+            border-radius: 50%;
+        }
+
+        .thing-checkbox::after {
+            content: '✓';
+            color: var(--bg);
+            font-size: 0.7rem;
+            font-weight: 900;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .thing-item.selected .thing-checkbox::after {
+            opacity: 1;
+        }
+
+        .thing-icon { font-size: 1.1rem; }
+        .thing-name { font-size: 0.85rem; font-weight: 600; flex: 1; }
+
+        .thing-actions {
+            display: flex;
+            gap: 0.3rem;
+        }
+
+        .thing-action-btn {
+            padding: 0.3rem 0.5rem;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text-dim);
+            font-size: 0.65rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .thing-action-btn:hover {
+            border-color: var(--green);
+            color: var(--green);
+        }
+
+        /* Thing Description Modal */
+        .thing-desc-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 10001;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .thing-desc-modal.active { display: flex; }
+
+        .thing-desc-box {
+            background: var(--bg-card);
+            border: 1px solid var(--green);
+            border-radius: var(--radius);
+            max-width: 500px;
+            width: 100%;
+            max-height: 80vh;
+            overflow: hidden;
+        }
+
+        .thing-desc-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .thing-desc-title {
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .thing-desc-close {
+            background: none;
+            border: 1px solid var(--red);
+            border-radius: var(--radius-sm);
+            color: var(--red);
+            width: 30px; height: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .thing-desc-close:hover {
+            background: var(--red);
+            color: #fff;
+        }
+
+        .thing-desc-content {
+            padding: 1.5rem;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .thing-desc-text {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .thing-desc-code {
+            background: var(--bg);
+            border-left: 3px solid var(--green);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            padding: 1rem;
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            white-space: pre-wrap;
+            color: var(--text-muted);
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        /* ═══════════════════════════════════════
            GUIDES
         ═══════════════════════════════════════ */
         .guide {
@@ -1008,35 +1341,6 @@
         .step-content h4 { color: var(--green); margin-bottom: 0.3rem; }
         .step-content p { color: var(--text-muted); font-size: 0.9rem; }
 
-        /* Step Screenshot */
-        .step-screenshot {
-            margin-top: 1rem;
-            border-radius: var(--radius-sm);
-            overflow: hidden;
-            border: 1px solid var(--border);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .step-screenshot:hover {
-            border-color: var(--green);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-        }
-
-        .step-screenshot img {
-            width: 100%;
-            display: block;
-        }
-
-        .step-screenshot-caption {
-            padding: 0.5rem;
-            background: var(--bg-card);
-            font-size: 0.75rem;
-            color: var(--text-dim);
-            text-align: center;
-        }
-
-        /* Glossary */
         .glossary-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -1062,60 +1366,7 @@
         }
 
         /* ═══════════════════════════════════════
-           LIGHTBOX
-        ═══════════════════════════════════════ */
-        .lightbox {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 100000;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-        }
-
-        .lightbox.active { display: flex; }
-
-        .lightbox-content {
-            position: relative;
-            max-width: 90%;
-            max-height: 90%;
-        }
-
-        .lightbox-content img {
-            max-width: 100%;
-            max-height: 85vh;
-            border-radius: var(--radius);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-        }
-
-        .lightbox-close {
-            position: absolute;
-            top: -40px;
-            right: 0;
-            background: none;
-            border: 1px solid var(--red);
-            border-radius: var(--radius-sm);
-            color: var(--red);
-            width: 36px; height: 36px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .lightbox-close:hover { background: var(--red); color: #fff; }
-
-        .lightbox-caption {
-            text-align: center;
-            color: var(--text-muted);
-            margin-top: 1rem;
-            font-size: 0.9rem;
-        }
-
-        /* ═══════════════════════════════════════
-           CONTACTS & THANKS
+           CONTACTS
         ═══════════════════════════════════════ */
         .contacts-grid {
             display: grid;
@@ -1263,6 +1514,28 @@
         .game-overlay-stats p { margin: 0.3rem 0; font-size: 1.1rem; }
         .game-overlay-stats strong { color: var(--green); }
 
+        /* Easter Egg Banner */
+        .easter-egg-banner {
+            background: linear-gradient(135deg, var(--pink), var(--purple));
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-sm);
+            margin-top: 1rem;
+            animation: bannerPop 0.5s ease-out;
+        }
+
+        @keyframes bannerPop {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .easter-egg-banner p {
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
         .game-controls {
             padding: 1rem;
             background: var(--bg-card);
@@ -1295,6 +1568,11 @@
            TOAST & FOOTER
         ═══════════════════════════════════════ */
         .toast-box { position: fixed; bottom: 90px; right: 20px; z-index: 9999; }
+
+        @media (max-width: 768px) {
+            .toast-box { bottom: 140px; right: 10px; left: 10px; }
+            .toast { font-size: 0.85rem; padding: 0.8rem 1rem; }
+        }
 
         .toast {
             padding: 1rem 1.5rem;
@@ -1340,6 +1618,13 @@
     </style>
 </head>
 <body>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="loader-apple">🍎</div>
+        <div class="loader-bar"><div class="loader-progress"></div></div>
+        <p class="loader-text">Загрузка яблочного сада...</p>
+    </div>
+
     <canvas id="bgCanvas"></canvas>
     <div class="leaves-container" id="leavesContainer"></div>
     <div class="cursor-glow" id="cursorGlow"></div>
@@ -1351,22 +1636,27 @@
         <a href="./uk/" class="lang-btn">UK</a>
     </div>
 
-    <!-- Game Trigger - LEFT -->
+    <!-- Game Trigger -->
     <div class="game-trigger" onclick="openGame()" title="Играть!">🍎</div>
 
-    <!-- Scroll to Top - RIGHT -->
+    <!-- Scroll to Top -->
     <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0})">
         <span>↑</span>
     </button>
 
     <div class="toast-box" id="toastBox"></div>
 
-    <!-- Lightbox -->
-    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-        <div class="lightbox-content" onclick="event.stopPropagation()">
-            <button class="lightbox-close" onclick="closeLightbox()">✕</button>
-            <img id="lightboxImg" src="" alt="">
-            <div class="lightbox-caption" id="lightboxCaption"></div>
+    <!-- Thing Description Modal -->
+    <div class="thing-desc-modal" id="thingDescModal">
+        <div class="thing-desc-box">
+            <div class="thing-desc-header">
+                <div class="thing-desc-title" id="thingDescTitle">📄 Название</div>
+                <button class="thing-desc-close" onclick="closeThingDesc()">✕</button>
+            </div>
+            <div class="thing-desc-content">
+                <p class="thing-desc-text" id="thingDescText">Описание...</p>
+                <div class="thing-desc-code" id="thingDescCode">Код...</div>
+            </div>
         </div>
     </div>
 
@@ -1397,7 +1687,10 @@
                         <p>Счёт: <strong id="finalScore">0</strong></p>
                         <p>Яблок: <strong id="finalApples">0</strong> 🍎</p>
                     </div>
-                    <button class="btn btn-fill" onclick="restartGame()">↺ Ещё раз</button>
+                    <div class="easter-egg-banner">
+                        <p>🌟 Секрет: Ренетт была яблоней 300 лет, пока не стала цифровым духом!</p>
+                    </div>
+                    <button class="btn btn-fill" onclick="restartGame()" style="margin-top:1rem">↺ Ещё раз</button>
                 </div>
                 <div class="game-overlay" id="gameLevelUp">
                     <div class="game-overlay-icon">⭐</div>
@@ -1429,12 +1722,11 @@
                 </div>
 
                 <div class="header-hero">
-                    <div class="header-apple-wrap">
-                        <div class="header-apple-glow"></div>
-                        <span class="header-apple">🍎</span>
+                    <!-- Parallax Title -->
+                    <div class="parallax-title" id="parallaxTitle">
+                        <h1 class="header-title">Яблочный Пресет</h1>
+                        <p class="header-subtitle">Модульный пресет для SillyTavern от <span>Ренетт</span></p>
                     </div>
-                    <h1 class="header-title">Яблочный Пресет</h1>
-                    <p class="header-subtitle">Модульный пресет для SillyTavern от <span>Ренетт</span></p>
                 </div>
 
                 <div class="header-stats">
@@ -1452,7 +1744,7 @@
             <div class="scroll-hint" onclick="document.getElementById('about').scrollIntoView()">▼</div>
         </header>
 
-        <!-- Nav with Labels -->
+        <!-- Nav -->
         <nav class="nav" id="nav">
             <div class="nav-inner">
                 <a href="#home" class="nav-logo">🍎 Яблочный</a>
@@ -1480,7 +1772,9 @@
                     </a>
                 </div>
 
-                <button class="nav-mobile-btn" onclick="toggleNav()">☰</button>
+                <button class="nav-mobile-btn" onclick="toggleNav()">
+                    <span>☰</span> Меню
+                </button>
                 <div class="nav-mobile-menu" id="navMobile">
                     <a href="#about" onclick="toggleNav()"><span class="mob-icon">🍏</span> О пресете</a>
                     <a href="#download" onclick="toggleNav()"><span class="mob-icon">⬇️</span> Скачать</a>
@@ -1502,17 +1796,17 @@
                     <div class="card">
                         <div class="card-icon">🍎</div>
                         <h3 class="card-title">◇ Модульная система</h3>
-                        <p class="card-text">9 категорий с тоглами для тонкой настройки. Включай только нужное.</p>
+                        <p class="card-text">9 категорий с тоглами для тонкой настройки.</p>
                     </div>
                     <div class="card">
                         <div class="card-icon">🍏</div>
                         <h3 class="card-title">◇ Ренетт ООС</h3>
-                        <p class="card-text">Цифровой дух-помощник. Раньше жила в яблоне, теперь — в интернете.</p>
+                        <p class="card-text">Цифровой дух-помощник.</p>
                     </div>
                     <div class="card">
                         <div class="card-icon">🍎</div>
                         <h3 class="card-title">◇ Оптимизировано</h3>
-                        <p class="card-text">Всего ~60 КБ! Эффективная работа с контекстом.</p>
+                        <p class="card-text">Всего ~60 КБ!</p>
                     </div>
                 </div>
             </section>
@@ -1581,6 +1875,7 @@
                     </div>
                 </div>
 
+                <!-- Categories 1-6 (same as before, keeping structure) -->
                 <!-- ① OOC -->
                 <div class="cat" data-cat="basic">
                     <div class="cat-head" onclick="toggleCat(this)">
@@ -1588,7 +1883,7 @@
                             <div class="cat-num">①</div>
                             <div>
                                 <div class="cat-title">◜︎OOC!◞︎</div>
-                                <div class="cat-desc">Ренетт — переделанный персонаж Селии. Яблочная девушка!</div>
+                                <div class="cat-desc">Ренетт — яблочная девушка!</div>
                             </div>
                         </div>
                         <span class="cat-arrow">▼</span>
@@ -1599,25 +1894,25 @@
                                 <div class="prompt-name"><span class="tag tag-one">✧</span> 🍎 Ренетт ООС</div>
                                 <div class="prompt-meta">
                                     <span class="prompt-default">★ Дефолт</span>
-                                    <button class="prompt-btn" onclick="event.stopPropagation();copy('[Сюда текст промпта Ренетт]')">Копировать</button>
+                                    <button class="prompt-btn" onclick="event.stopPropagation();copy('[RENETTE_OOC]')">Копировать</button>
                                 </div>
                             </div>
                             <div class="prompt-body"><div class="prompt-inner">
-                                <p class="prompt-desc">Основной ООС персонаж — Ренетт. Цифровой дух-помощник, раньше жившая в яблоне.</p>
-                                <div class="prompt-code">[Сюда текст промпта Ренетт]</div>
+                                <p class="prompt-desc">Основной ООС персонаж — Ренетт.</p>
+                                <div class="prompt-code">[RENETTE_OOC]</div>
                             </div></div>
                         </div>
                     </div></div>
                 </div>
 
-                <!-- ② Basic Prompts -->
+                <!-- ② Basic -->
                 <div class="cat" data-cat="basic">
                     <div class="cat-head" onclick="toggleCat(this)">
                         <div class="cat-info">
                             <div class="cat-num green">②</div>
                             <div>
                                 <div class="cat-title">◜︎Основные промпты для РП!◞︎</div>
-                                <div class="cat-desc">Язык, режим письма, темп, длина</div>
+                                <div class="cat-desc">Язык, режим, темп, длина</div>
                             </div>
                         </div>
                         <span class="cat-arrow">▼</span>
@@ -1638,31 +1933,6 @@
                             </div>
                             <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">[EN]</div></div></div>
                         </div>
-                        <div class="prompt">
-                            <div class="prompt-head" onclick="togglePrompt(this)">
-                                <div class="prompt-name"><span class="tag tag-one">✧</span> Українська</div>
-                                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[UK]')">Копировать</button></div>
-                            </div>
-                            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">[UK]</div></div></div>
-                        </div>
-
-                        <div class="subsec">◇ Режим (говорить за юзера?)</div>
-                        <div class="prompt">
-                            <div class="prompt-head" onclick="togglePrompt(this)">
-                                <div class="prompt-name"><span class="tag tag-one">✧</span> Не говорить за юзера</div>
-                                <div class="prompt-meta"><span class="prompt-default">★ Дефолт</span><button class="prompt-btn" onclick="event.stopPropagation();copy('[NO_SPEAK_USER]')">Копировать</button></div>
-                            </div>
-                            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">[NO_SPEAK_USER]</div></div></div>
-                        </div>
-
-                        <div class="subsec">◇ Темп / Длина</div>
-                        <div class="prompt">
-                            <div class="prompt-head" onclick="togglePrompt(this)">
-                                <div class="prompt-name"><span class="tag tag-multi">❖</span> Настройки темпа</div>
-                                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[PACE]')">Копировать</button></div>
-                            </div>
-                            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">[PACE]</div></div></div>
-                        </div>
                     </div></div>
                 </div>
 
@@ -1673,35 +1943,18 @@
                             <div class="cat-num gold">③</div>
                             <div>
                                 <div class="cat-title">◜︎Улучшение письма модели!◞︎</div>
-                                <div class="cat-desc">Стили прозы, речь, фокус на деталях/диалогах/мыслях, рандомизация</div>
+                                <div class="cat-desc">Стили, фокус, рандомизация</div>
                             </div>
                         </div>
                         <span class="cat-arrow">▼</span>
                     </div>
                     <div class="cat-body"><div class="cat-inner">
-                        <div class="subsec">◇ Стили прозы</div>
                         <div class="prompt">
                             <div class="prompt-head" onclick="togglePrompt(this)">
                                 <div class="prompt-name"><span class="tag tag-one">✧</span> Литературный стиль</div>
-                                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[PROSE_STYLE]')">Копировать</button></div>
+                                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[PROSE]')">Копировать</button></div>
                             </div>
-                            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">[PROSE_STYLE]</div></div></div>
-                        </div>
-                        <div class="subsec">◇ Фокус</div>
-                        <div class="prompt">
-                            <div class="prompt-head" onclick="togglePrompt(this)">
-                                <div class="prompt-name"><span class="tag tag-multi">❖</span> Фокус на деталях</div>
-                                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[FOCUS_DETAILS]')">Копировать</button></div>
-                            </div>
-                            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">[FOCUS_DETAILS]</div></div></div>
-                        </div>
-                        <div class="subsec">◇ Рандомизация</div>
-                        <div class="prompt">
-                            <div class="prompt-head" onclick="togglePrompt(this)">
-                                <div class="prompt-name"><span class="tag tag-one">✧</span> Рандомные события</div>
-                                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[RANDOM]')">Копировать</button></div>
-                            </div>
-                            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">[RANDOM]</div></div></div>
+                            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">[PROSE]</div></div></div>
                         </div>
                     </div></div>
                 </div>
@@ -1713,7 +1966,7 @@
                             <div class="cat-num purple">④</div>
                             <div>
                                 <div class="cat-title">◜︎Ветки!◞︎</div>
-                                <div class="cat-desc">NPC автономность, живой мир, улучшенная речь</div>
+                                <div class="cat-desc">NPC автономность, живой мир</div>
                             </div>
                         </div>
                         <span class="cat-arrow">▼</span>
@@ -1722,16 +1975,9 @@
                         <div class="prompt">
                             <div class="prompt-head" onclick="togglePrompt(this)">
                                 <div class="prompt-name"><span class="tag tag-one">✧</span> NPC автономность</div>
-                                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[NPC_AUTONOMY]')">Копировать</button></div>
+                                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[NPC]')">Копировать</button></div>
                             </div>
-                            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">[NPC_AUTONOMY]</div></div></div>
-                        </div>
-                        <div class="prompt">
-                            <div class="prompt-head" onclick="togglePrompt(this)">
-                                <div class="prompt-name"><span class="tag tag-one">✧</span> Живой мир</div>
-                                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[LIVING_WORLD]')">Копировать</button></div>
-                            </div>
-                            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">[LIVING_WORLD]</div></div></div>
+                            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">[NPC]</div></div></div>
                         </div>
                     </div></div>
                 </div>
@@ -1743,7 +1989,7 @@
                             <div class="cat-num red">⑤</div>
                             <div>
                                 <div class="cat-title">◜︎NSFW◞︎</div>
-                                <div class="cat-desc">Инструкции для NSFW и No Horny (Rogati)</div>
+                                <div class="cat-desc">NSFW и No Horny</div>
                             </div>
                         </div>
                         <span class="cat-arrow">▼</span>
@@ -1751,17 +1997,10 @@
                     <div class="cat-body"><div class="cat-inner">
                         <div class="prompt">
                             <div class="prompt-head" onclick="togglePrompt(this)">
-                                <div class="prompt-name"><span class="tag tag-one">✧</span> NSFW инструкции</div>
+                                <div class="prompt-name"><span class="tag tag-one">✧</span> NSFW</div>
                                 <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[NSFW]')">Копировать</button></div>
                             </div>
                             <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">[NSFW]</div></div></div>
-                        </div>
-                        <div class="prompt">
-                            <div class="prompt-head" onclick="togglePrompt(this)">
-                                <div class="prompt-name"><span class="tag tag-one">✧</span> No Horny (Rogati)</div>
-                                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[NO_HORNY]')">Копировать</button></div>
-                            </div>
-                            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">[NO_HORNY]</div></div></div>
                         </div>
                     </div></div>
                 </div>
@@ -1773,35 +2012,12 @@
                             <div class="cat-num blue">⑥</div>
                             <div>
                                 <div class="cat-title">◜︎Патчи!◞︎</div>
-                                <div class="cat-desc">Баны (EN/RU/UK), антиповтор, антиместоимения, тихий ход юзера</div>
+                                <div class="cat-desc">Баны, антиповтор</div>
                             </div>
                         </div>
                         <span class="cat-arrow">▼</span>
                     </div>
                     <div class="cat-body"><div class="cat-inner">
-                        <div class="subsec">◇ Баны</div>
-                        <div class="prompt">
-                            <div class="prompt-head" onclick="togglePrompt(this)">
-                                <div class="prompt-name"><span class="tag tag-one">✧</span> Бан RU</div>
-                                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[BAN_RU]')">Копировать</button></div>
-                            </div>
-                            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">[BAN_RU]</div></div></div>
-                        </div>
-                        <div class="prompt">
-                            <div class="prompt-head" onclick="togglePrompt(this)">
-                                <div class="prompt-name"><span class="tag tag-one">✧</span> Бан EN</div>
-                                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[BAN_EN]')">Копировать</button></div>
-                            </div>
-                            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">[BAN_EN]</div></div></div>
-                        </div>
-                        <div class="prompt">
-                            <div class="prompt-head" onclick="togglePrompt(this)">
-                                <div class="prompt-name"><span class="tag tag-one">✧</span> Бан UK</div>
-                                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[BAN_UK]')">Копировать</button></div>
-                            </div>
-                            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">[BAN_UK]</div></div></div>
-                        </div>
-                        <div class="subsec">◇ Фиксы</div>
                         <div class="prompt">
                             <div class="prompt-head" onclick="togglePrompt(this)">
                                 <div class="prompt-name"><span class="tag tag-one">✧</span> Антиповтор</div>
@@ -1809,66 +2025,323 @@
                             </div>
                             <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">[ANTI_REPEAT]</div></div></div>
                         </div>
-                        <div class="prompt">
-                            <div class="prompt-head" onclick="togglePrompt(this)">
-                                <div class="prompt-name"><span class="tag tag-one">✧</span> Антиместоимения</div>
-                                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[ANTI_PRONOUNS]')">Копировать</button></div>
-                            </div>
-                            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">[ANTI_PRONOUNS]</div></div></div>
-                        </div>
-                        <div class="prompt">
-                            <div class="prompt-head" onclick="togglePrompt(this)">
-                                <div class="prompt-name"><span class="tag tag-one">✧</span> Тихий ход юзера</div>
-                                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[SILENT_TURN]')">Копировать</button></div>
-                            </div>
-                            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">[SILENT_TURN]</div></div></div>
-                        </div>
                     </div></div>
                 </div>
 
-                <!-- ⑦ Tweaks -->
+                <!-- ⑦ THINGS - NEW SELECTOR SYSTEM -->
                 <div class="cat" data-cat="extra">
                     <div class="cat-head" onclick="toggleCat(this)">
                         <div class="cat-info">
                             <div class="cat-num pink">⑦</div>
                             <div>
-                                <div class="cat-title">◜︎Твики!◞︎</div>
-                                <div class="cat-desc">Цветные диалоги/акценты, HTML промпт + тема, things sample</div>
+                                <div class="cat-title">◜︎Штуки!◞︎</div>
+                                <div class="cat-desc">Выбери и скопируй нужные штуки для Things Sample</div>
                             </div>
                         </div>
                         <span class="cat-arrow">▼</span>
                     </div>
                     <div class="cat-body"><div class="cat-inner">
-                        <div class="prompt">
-                            <div class="prompt-head" onclick="togglePrompt(this)">
-                                <div class="prompt-name"><span class="tag tag-one">✧</span> Цветные диалоги</div>
-                                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[COLORED_DIALOGUE]')">Копировать</button></div>
+                        <div class="things-section">
+                            <div class="things-header">
+                                <div class="things-title">✎ Штуки (Шаблон) <span class="things-count">Выбрано: <span id="thingsCount">0</span></span></div>
+                                <button class="things-copy-btn" id="thingsCopyBtn" onclick="copySelectedThings()" disabled>
+                                    📋 Скопировать выбранное
+                                </button>
                             </div>
-                            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">[COLORED_DIALOGUE]</div></div></div>
-                        </div>
-                        <div class="prompt">
-                            <div class="prompt-head" onclick="togglePrompt(this)">
-                                <div class="prompt-name"><span class="tag tag-one">✧</span> HTML промпт</div>
-                                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[HTML_PROMPT]')">Копировать</button></div>
+
+                            <!-- По дефолту -->
+                            <div class="things-group">
+                                <div class="things-group-title">По дефолту:</div>
+                                <div class="things-grid">
+                                    <div class="thing-item selected" data-thing="stub" data-code="[ЗАГЛУШКА]">
+                                        <div class="thing-checkbox"></div>
+                                        <span class="thing-icon">📄</span>
+                                        <span class="thing-name">Заглушка</span>
+                                        <div class="thing-actions">
+                                            <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Заглушка','Пустой промпт-заглушка','[ЗАГЛУШКА]')">👁</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">[HTML_PROMPT]</div></div></div>
-                        </div>
-                        <div class="prompt">
-                            <div class="prompt-head" onclick="togglePrompt(this)">
-                                <div class="prompt-name"><span class="tag tag-one">✧</span> HTML тема</div>
-                                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[HTML_THEME]')">Копировать</button></div>
+
+                            <!-- Можно смешивать -->
+                            <div class="things-group">
+                                <div class="things-group-title mixable">◇ Можно смешивать: <span class="hint">(выбирай сколько хочешь)</span></div>
+                                <div class="things-grid" id="mixableThings">
+                                    <div class="thing-item" data-thing="flashbacks" data-code="[FLASHBACKS]" onclick="toggleThing(this)">
+                                        <div class="thing-checkbox"></div>
+                                        <span class="thing-icon">🕰️</span>
+                                        <span class="thing-name">Флешбеки</span>
+                                        <div class="thing-actions">
+                                            <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Флешбеки','Вставки флешбеков в историю','[FLASHBACKS]')">👁</button>
+                                        </div>
+                                    </div>
+                                    <div class="thing-item" data-thing="transitions" data-code="[TRANSITIONS]" onclick="toggleThing(this)">
+                                        <div class="thing-checkbox"></div>
+                                        <span class="thing-icon">⏩</span>
+                                        <span class="thing-name">Переходы</span>
+                                        <div class="thing-actions">
+                                            <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Переходы','Красивые переходы между сценами','[TRANSITIONS]')">👁</button>
+                                        </div>
+                                    </div>
+                                    <div class="thing-item" data-thing="realworld" data-code="[REAL_WORLD]" onclick="toggleThing(this)">
+                                        <div class="thing-checkbox"></div>
+                                        <span class="thing-icon">🌎</span>
+                                        <span class="thing-name">Реальный Мир</span>
+                                        <div class="thing-actions">
+                                            <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Реальный Мир','Вставки реального мира','[REAL_WORLD]')">👁</button>
+                                        </div>
+                                    </div>
+                                    <div class="thing-item" data-thing="webchapter" data-code="[WEB_CHAPTER]" onclick="toggleThing(this)">
+                                        <div class="thing-checkbox"></div>
+                                        <span class="thing-icon">✒️</span>
+                                        <span class="thing-name">Стиль веб-главы</span>
+                                        <div class="thing-actions">
+                                            <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Стиль веб-главы','Оформление как веб-новелла','[WEB_CHAPTER]')">👁</button>
+                                        </div>
+                                    </div>
+                                    <div class="thing-item" data-thing="interview" data-code="[INTERVIEW]" onclick="toggleThing(this)">
+                                        <div class="thing-checkbox"></div>
+                                        <span class="thing-icon">📢</span>
+                                        <span class="thing-name">Интервью с Актерами</span>
+                                        <div class="thing-actions">
+                                            <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Интервью с Актерами','Интервью персонажей','[INTERVIEW]')">👁</button>
+                                        </div>
+                                    </div>
+                                    <div class="thing-item" data-thing="meme" data-code="[MEME]" onclick="toggleThing(this)">
+                                        <div class="thing-checkbox"></div>
+                                        <span class="thing-icon">🖼️</span>
+                                        <span class="thing-name">MEME</span>
+                                        <div class="thing-actions">
+                                            <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('MEME','Мемные вставки','[MEME]')">👁</button>
+                                        </div>
+                                    </div>
+                                    <div class="thing-item" data-thing="typography" data-code="[TYPOGRAPHY]" onclick="toggleThing(this)">
+                                        <div class="thing-checkbox"></div>
+                                        <span class="thing-icon">🔰</span>
+                                        <span class="thing-name">Типографика</span>
+                                        <div class="thing-actions">
+                                            <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Типографика','Улучшенная типографика','[TYPOGRAPHY]')">👁</button>
+                                        </div>
+                                    </div>
+                                    <div class="thing-item" data-thing="music" data-code="[MUSIC_SUBS]" onclick="toggleThing(this)">
+                                        <div class="thing-checkbox"></div>
+                                        <span class="thing-icon">🎙️</span>
+                                        <span class="thing-name">Музыкальные Субтитры</span>
+                                        <div class="thing-actions">
+                                            <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Музыкальные Субтитры','Субтитры с музыкой','[MUSIC_SUBS]')">👁</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">[HTML_THEME]</div></div></div>
-                        </div>
-                        <div class="prompt">
-                            <div class="prompt-head" onclick="togglePrompt(this)">
-                                <div class="prompt-name"><span class="tag tag-multi">❖</span> Things Sample</div>
-                                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[THINGS_SAMPLE]')">Копировать</button></div>
+
+                            <!-- Эксклюзивные группы -->
+                            <div class="things-group">
+                                <div class="things-group-title exclusive">✧ Эксклюзивные: <span class="hint">(только ОДИН из группы)</span></div>
+
+                                <!-- Инфоблоки -->
+                                <p style="color:var(--text-muted);font-size:0.85rem;margin:0.5rem 0;">Инфоблоки (Выберите один)</p>
+                                <div class="things-grid">
+                                    <div class="thing-item exclusive" data-thing="info-renette" data-group="infoblocks" data-code="[INFO_RENETTE]" onclick="toggleExclusive(this,'infoblocks')">
+                                        <div class="thing-checkbox"></div>
+                                        <span class="thing-icon">✧🍎</span>
+                                        <span class="thing-name">Логи Ренетт</span>
+                                        <div class="thing-actions">
+                                            <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Логи Ренетт','Инфоблок в стиле Ренетт','[INFO_RENETTE]')">👁</button>
+                                        </div>
+                                    </div>
+                                    <div class="thing-item exclusive" data-thing="info-mini" data-group="infoblocks" data-code="[INFO_MINI]" onclick="toggleExclusive(this,'infoblocks')">
+                                        <div class="thing-checkbox"></div>
+                                        <span class="thing-icon">✧🗂️</span>
+                                        <span class="thing-name">Мини-Инфоблок</span>
+                                        <div class="thing-actions">
+                                            <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Мини-Инфоблок','Компактный инфоблок','[INFO_MINI]')">👁</button>
+                                        </div>
+                                    </div>
+                                    <div class="thing-item exclusive" data-thing="info-main" data-group="infoblocks" data-code="[INFO_MAIN]" onclick="toggleExclusive(this,'infoblocks')">
+                                        <div class="thing-checkbox"></div>
+                                        <span class="thing-icon">✧📝</span>
+                                        <span class="thing-name">Основной Инфоблок</span>
+                                        <div class="thing-actions">
+                                            <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Основной Инфоблок','Полный инфоблок','[INFO_MAIN]')">👁</button>
+                                        </div>
+                                    </div>
+                                    <div class="thing-item exclusive" data-thing="info-matrix" data-group="infoblocks" data-code="[INFO_MATRIX]" onclick="toggleExclusive(this,'infoblocks')">
+                                        <div class="thing-checkbox"></div>
+                                        <span class="thing-icon">✧💖</span>
+                                        <span class="thing-name">+Матрица отношений</span>
+                                        <div class="thing-actions">
+                                            <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('+Матрица отношений','Инфоблок с матрицей','[INFO_MATRIX]')">👁</button>
+                                        </div>
+                                    </div>
+                                    <div class="thing-item exclusive" data-thing="info-thoughts" data-group="infoblocks" data-code="[INFO_THOUGHTS]" onclick="toggleExclusive(this,'infoblocks')">
+                                        <div class="thing-checkbox"></div>
+                                        <span class="thing-icon">✧💭</span>
+                                        <span class="thing-name">+МатрОтн + Мысли</span>
+                                        <div class="thing-actions">
+                                            <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('+МатрОтн + Мысли','Матрица + мысли','[INFO_THOUGHTS]')">👁</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Режим -->
+                                <p style="color:var(--text-muted);font-size:0.85rem;margin:1rem 0 0.5rem;">Режим Настройки (Выберите один)</p>
+                                <div class="things-grid">
+                                    <div class="thing-item exclusive" data-thing="mode-claude" data-group="mode" data-code="[MODE_CLAUDE]" onclick="toggleExclusive(this,'mode')">
+                                        <div class="thing-checkbox"></div>
+                                        <span class="thing-icon">✧🎭</span>
+                                        <span class="thing-name">Claude Режим</span>
+                                        <div class="thing-actions">
+                                            <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Claude Режим','Настройки для Claude','[MODE_CLAUDE]')">👁</button>
+                                        </div>
+                                    </div>
+                                    <div class="thing-item exclusive" data-thing="mode-gemini" data-group="mode" data-code="[MODE_GEMINI]" onclick="toggleExclusive(this,'mode')">
+                                        <div class="thing-checkbox"></div>
+                                        <span class="thing-icon">✧🛠️</span>
+                                        <span class="thing-name">Gemini Режим</span>
+                                        <div class="thing-actions">
+                                            <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Gemini Режим','Настройки для Gemini','[MODE_GEMINI]')">👁</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- CYOA -->
+                                <p style="color:var(--text-muted);font-size:0.85rem;margin:1rem 0 0.5rem;">CYOA (Выберите один)</p>
+                                <div class="things-grid">
+                                    <div class="thing-item exclusive" data-thing="cyoa-macro" data-group="cyoa" data-code="[CYOA_MACRO]" onclick="toggleExclusive(this,'cyoa')">
+                                        <div class="thing-checkbox"></div>
+                                        <span class="thing-icon">✧🎲</span>
+                                        <span class="thing-name">CYOA - R-Macro</span>
+                                        <div class="thing-actions">
+                                            <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('CYOA - R-Macro','CYOA с макросами','[CYOA_MACRO]')">👁</button>
+                                        </div>
+                                    </div>
+                                    <div class="thing-item exclusive" data-thing="cyoa-nomacro" data-group="cyoa" data-code="[CYOA_NO_MACRO]" onclick="toggleExclusive(this,'cyoa')">
+                                        <div class="thing-checkbox"></div>
+                                        <span class="thing-icon">✧🕹️</span>
+                                        <span class="thing-name">CYOA - No R-Macro</span>
+                                        <div class="thing-actions">
+                                            <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('CYOA - No R-Macro','CYOA без макросов','[CYOA_NO_MACRO]')">👁</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Скрытые блоки -->
+                                <p style="color:var(--text-muted);font-size:0.85rem;margin:1rem 0 0.5rem;">Скрытые Блоки (Можно смешивать)</p>
+                                <div class="things-grid">
+                                    <div class="thing-item" data-thing="hidden-profiles" data-code="[HIDDEN_PROFILES]" onclick="toggleThing(this)">
+                                        <div class="thing-checkbox"></div>
+                                        <span class="thing-icon">👤</span>
+                                        <span class="thing-name">Скрытые Профили</span>
+                                        <div class="thing-actions">
+                                            <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Скрытые Профили','Раскрываемые профили','[HIDDEN_PROFILES]')">👁</button>
+                                        </div>
+                                    </div>
+                                    <div class="thing-item" data-thing="hidden-events" data-code="[HIDDEN_EVENTS]" onclick="toggleThing(this)">
+                                        <div class="thing-checkbox"></div>
+                                        <span class="thing-icon">📍</span>
+                                        <span class="thing-name">Закадровые События</span>
+                                        <div class="thing-actions">
+                                            <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Закадровые События','Скрытые события','[HIDDEN_EVENTS]')">👁</button>
+                                        </div>
+                                    </div>
+                                    <div class="thing-item" data-thing="hidden-plans" data-code="[HIDDEN_PLANS]" onclick="toggleThing(this)">
+                                        <div class="thing-checkbox"></div>
+                                        <span class="thing-icon">🗒️</span>
+                                        <span class="thing-name">Скрытые Планы</span>
+                                        <div class="thing-actions">
+                                            <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Скрытые Планы','Планы NPC','[HIDDEN_PLANS]')">👁</button>
+                                        </div>
+                                    </div>
+                                    <div class="thing-item" data-thing="hidden-dating" data-code="[HIDDEN_DATING]" onclick="toggleThing(this)">
+                                        <div class="thing-checkbox"></div>
+                                        <span class="thing-icon">💌</span>
+                                        <span class="thing-name">Скрытый DatingSim</span>
+                                        <div class="thing-actions">
+                                            <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Скрытый DatingSim','Дейтинг механика','[HIDDEN_DATING]')">👁</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Fancy UI -->
+                                <p style="color:var(--text-muted);font-size:0.85rem;margin:1rem 0 0.5rem;">Fancy UI (Выберите один)</p>
+                                <div class="things-grid">
+                                    <div class="thing-item exclusive" data-thing="fancy-full" data-group="fancy" data-code="[FANCY_FULL]" onclick="toggleExclusive(this,'fancy')">
+                                        <div class="thing-checkbox"></div>
+                                        <span class="thing-icon">✧🥂</span>
+                                        <span class="thing-name">Fancy UI</span>
+                                        <div class="thing-actions">
+                                            <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Fancy UI','Полный Fancy UI','[FANCY_FULL]')">👁</button>
+                                        </div>
+                                    </div>
+                                    <div class="thing-item exclusive" data-thing="fancy-base" data-group="fancy" data-code="[FANCY_BASE]" onclick="toggleExclusive(this,'fancy')">
+                                        <div class="thing-checkbox"></div>
+                                        <span class="thing-icon">✧🥂</span>
+                                        <span class="thing-name">Только Основа</span>
+                                        <div class="thing-actions">
+                                            <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Только Основа','Базовый Fancy','[FANCY_BASE]')">👁</button>
+                                        </div>
+                                    </div>
+                                    <div class="thing-item exclusive" data-thing="fancy-thoughts" data-group="fancy" data-code="[FANCY_THOUGHTS]" onclick="toggleExclusive(this,'fancy')">
+                                        <div class="thing-checkbox"></div>
+                                        <span class="thing-icon">✧🥂</span>
+                                        <span class="thing-name">Только Мысли</span>
+                                        <div class="thing-actions">
+                                            <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Только Мысли','Fancy мысли','[FANCY_THOUGHTS]')">👁</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Комментарии -->
+                                <p style="color:var(--text-muted);font-size:0.85rem;margin:1rem 0 0.5rem;">Комментарии (Выберите один)</p>
+                                <div class="things-grid">
+                                    <div class="thing-item exclusive" data-thing="comments-v1" data-group="comments" data-code="[COMMENTS_V1]" onclick="toggleExclusive(this,'comments')">
+                                        <div class="thing-checkbox"></div>
+                                        <span class="thing-icon">✧💬</span>
+                                        <span class="thing-name">Комменты V1</span>
+                                        <div class="thing-actions">
+                                            <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Комменты V1','Комментарии версия 1','[COMMENTS_V1]')">👁</button>
+                                        </div>
+                                    </div>
+                                    <div class="thing-item exclusive" data-thing="comments-v2" data-group="comments" data-code="[COMMENTS_V2]" onclick="toggleExclusive(this,'comments')">
+                                        <div class="thing-checkbox"></div>
+                                        <span class="thing-icon">✧💬</span>
+                                        <span class="thing-name">Комменты V2</span>
+                                        <div class="thing-actions">
+                                            <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Комменты V2','Комментарии версия 2','[COMMENTS_V2]')">👁</button>
+                                        </div>
+                                    </div>
+                                    <div class="thing-item exclusive" data-thing="comments-v3" data-group="comments" data-code="[COMMENTS_V3]" onclick="toggleExclusive(this,'comments')">
+                                        <div class="thing-checkbox"></div>
+                                        <span class="thing-icon">✧💬</span>
+                                        <span class="thing-name">Комменты V3</span>
+                                        <div class="thing-actions">
+                                            <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Комменты V3','Комментарии версия 3','[COMMENTS_V3]')">👁</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Хроники -->
+                                <p style="color:var(--text-muted);font-size:0.85rem;margin:1rem 0 0.5rem;">Хроники (Выберите один)</p>
+                                <div class="things-grid">
+                                    <div class="thing-item exclusive" data-thing="chronicles-light" data-group="chronicles" data-code="[CHRONICLES_LIGHT]" onclick="toggleExclusive(this,'chronicles')">
+                                        <div class="thing-checkbox"></div>
+                                        <span class="thing-icon">✧📜⬜️</span>
+                                        <span class="thing-name">Светлая Тема</span>
+                                        <div class="thing-actions">
+                                            <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Светлая Тема','Хроники светлые','[CHRONICLES_LIGHT]')">👁</button>
+                                        </div>
+                                    </div>
+                                    <div class="thing-item exclusive" data-thing="chronicles-dark" data-group="chronicles" data-code="[CHRONICLES_DARK]" onclick="toggleExclusive(this,'chronicles')">
+                                        <div class="thing-checkbox"></div>
+                                        <span class="thing-icon">✧📜⬛️</span>
+                                        <span class="thing-name">Тёмная Тема</span>
+                                        <div class="thing-actions">
+                                            <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Тёмная Тема','Хроники тёмные','[CHRONICLES_DARK]')">👁</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="prompt-body"><div class="prompt-inner">
-                                <p class="prompt-desc">Изначально пустой тогл — можно вставить свои промпты для доп. вещей с сайта: инфоблоки, переходы, fancy UI, скрытые блоки, CYOA и тонна другого!</p>
-                                <div class="prompt-code">[THINGS_SAMPLE]</div>
-                            </div></div>
                         </div>
                     </div></div>
                 </div>
@@ -1880,7 +2353,7 @@
                             <div class="cat-num gold">⑧</div>
                             <div>
                                 <div class="cat-title">◜︎COT◞︎</div>
-                                <div class="cat-desc">Кастомный сегментированный COT — можно отключать части для скорости</div>
+                                <div class="cat-desc">Сегментированный COT</div>
                             </div>
                         </div>
                         <span class="cat-arrow">▼</span>
@@ -1892,7 +2365,7 @@
                                 <div class="prompt-meta"><span class="prompt-default">★ Дефолт</span><button class="prompt-btn" onclick="event.stopPropagation();copy('[COT]')">Копировать</button></div>
                             </div>
                             <div class="prompt-body"><div class="prompt-inner">
-                                <p class="prompt-desc">Разбит на сегменты — можно отключать определённые части чтобы модель думала быстрее, или полностью отключить все свитчи.</p>
+                                <p class="prompt-desc">Можно отключать части для скорости.</p>
                                 <div class="prompt-code">[COT]</div>
                             </div></div>
                         </div>
@@ -1906,7 +2379,7 @@
                             <div class="cat-num green">⑨</div>
                             <div>
                                 <div class="cat-title">◜︎Prefill◞︎</div>
-                                <div class="cat-desc">Для Gemini и Claude. Для DeepSeek — отключить полностью!</div>
+                                <div class="cat-desc">Для Gemini/Claude. DeepSeek — отключить!</div>
                             </div>
                         </div>
                         <span class="cat-arrow">▼</span>
@@ -1914,11 +2387,15 @@
                     <div class="cat-body"><div class="cat-inner">
                         <div class="prompt">
                             <div class="prompt-head" onclick="togglePrompt(this)">
-                                <div class="prompt-name"><span class="tag tag-one">✧</span> Prefill (Claude/Gemini)</div>
-                                <div class="prompt-meta"><span class="prompt-default">★ Дефолт</span><button class="prompt-btn" onclick="event.stopPropagation();copy('[PREFILL]')">Копировать</button></div>
+                                <div class="prompt-name"><span class="tag tag-one">✧</span> Prefill</div>
+                                <div class="prompt-meta"><span class="prompt-default">★ Дефолт</span><button class="prompt-btn" onclick="event.stopPropagation();copy(`Initiate the START of the next turn with thinking section, before anything else! Prior planning and making sure to output <think> at the beginning and closing the note with </think> xml.
+Template:
+<think>
+[Thoughts]
+</think>`)">Копировать</button></div>
                             </div>
                             <div class="prompt-body"><div class="prompt-inner">
-                                <p class="prompt-desc">Запускает думалку в начале хода. Claude prefill подходит и для GPT.</p>
+                                <p class="prompt-desc">Запускает думалку. Claude prefill подходит для GPT.</p>
                                 <div class="prompt-code">Initiate the START of the next turn with thinking section, before anything else! Prior planning and making sure to output <think> at the beginning and closing the note with </think> xml.
 Template:
 <think>
@@ -1937,7 +2414,6 @@ Template:
                     <h2 class="section-title">Гайды</h2>
                 </div>
 
-                <!-- Glossary -->
                 <div class="guide">
                     <div class="guide-head" onclick="toggleGuide(this)">
                         <div class="guide-title">📖 Глоссарий</div>
@@ -1946,123 +2422,54 @@ Template:
                     <div class="guide-body"><div class="guide-inner">
                         <div class="glossary-grid">
                             <div class="glossary-item">
-                                <div class="glossary-term">COT (Chain of Thought)</div>
-                                <div class="glossary-def">«Думалка» — модель размышляет перед ответом в блоке <think></div>
+                                <div class="glossary-term">COT</div>
+                                <div class="glossary-def">«Думалка» — модель размышляет в <think></div>
                             </div>
                             <div class="glossary-item">
                                 <div class="glossary-term">Prefill</div>
-                                <div class="glossary-def">Текст, вставляемый в начало ответа модели до генерации</div>
+                                <div class="glossary-def">Текст в начале ответа модели</div>
                             </div>
                             <div class="glossary-item">
-                                <div class="glossary-term">OOC (Out of Character)</div>
-                                <div class="glossary-def">Внеролевые комментарии, общение «от автора»</div>
+                                <div class="glossary-term">OOC</div>
+                                <div class="glossary-def">Внеролевые комментарии</div>
                             </div>
                             <div class="glossary-item">
                                 <div class="glossary-term">Тогл</div>
-                                <div class="glossary-def">Переключатель промпта в пресете (вкл/выкл)</div>
+                                <div class="glossary-def">Переключатель промпта</div>
                             </div>
                             <div class="glossary-item">
                                 <div class="glossary-term">CYOA</div>
-                                <div class="glossary-def">Choose Your Own Adventure — варианты выбора в конце ответа</div>
-                            </div>
-                            <div class="glossary-item">
-                                <div class="glossary-term">Инфоблок</div>
-                                <div class="glossary-def">Визуальный блок с информацией (время, локация, статы)</div>
+                                <div class="glossary-def">Варианты выбора в конце</div>
                             </div>
                             <div class="glossary-item">
                                 <div class="glossary-term">Things Sample</div>
-                                <div class="glossary-def">Пустой тогл для кастомных промптов с сайта</div>
-                            </div>
-                            <div class="glossary-item">
-                                <div class="glossary-term">NPC</div>
-                                <div class="glossary-def">Non-Player Character — неигровой персонаж</div>
+                                <div class="glossary-def">Тогл для кастомных штук</div>
                             </div>
                         </div>
                     </div></div>
                 </div>
 
-                <!-- Installation -->
                 <div class="guide">
                     <div class="guide-head" onclick="toggleGuide(this)">
-                        <div class="guide-title">🍎 Установка пресета</div>
+                        <div class="guide-title">🍎 Установка</div>
                         <span class="cat-arrow">▼</span>
                     </div>
                     <div class="guide-body"><div class="guide-inner">
                         <div class="step">
                             <div class="step-num">1</div>
-                            <div class="step-content">
-                                <h4>Скачайте файл</h4>
-                                <p>Раздел «Скачать» → нажмите кнопку → сохраните JSON файл</p>
-                                <!-- Пример скриншота -->
-                                <!-- <div class="step-screenshot" onclick="openLightbox('screens/download.png', 'Кнопка скачивания')">
-                                    <img src="screens/download.png" alt="Скачивание">
-                                    <div class="step-screenshot-caption">Кликните для увеличения</div>
-                                </div> -->
-                            </div>
+                            <div class="step-content"><h4>Скачайте</h4><p>Раздел «Скачать» → кнопка → сохраните JSON</p></div>
                         </div>
                         <div class="step">
                             <div class="step-num">2</div>
-                            <div class="step-content">
-                                <h4>Проверьте API</h4>
-                                <p>Убедитесь что в настройках API стоит «Chat Completion»</p>
-                            </div>
+                            <div class="step-content"><h4>Проверьте API</h4><p>Настройки → «Chat Completion»</p></div>
                         </div>
                         <div class="step">
                             <div class="step-num">3</div>
-                            <div class="step-content">
-                                <h4>Импортируйте</h4>
-                                <p>SillyTavern → Пресеты → Импорт → выберите скачанный файл</p>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-num">4</div>
-                            <div class="step-content">
-                                <h4>Готово!</h4>
-                                <p>Пресет появится в списке. Выберите его и настройте тоглы по желанию.</p>
-                            </div>
+                            <div class="step-content"><h4>Импортируйте</h4><p>Пресеты → Импорт → выберите файл</p></div>
                         </div>
                     </div></div>
                 </div>
 
-                <!-- Features -->
-                <div class="guide">
-                    <div class="guide-head" onclick="toggleGuide(this)">
-                        <div class="guide-title">◇ Функции пресета</div>
-                        <span class="cat-arrow">▼</span>
-                    </div>
-                    <div class="guide-body"><div class="guide-inner">
-                        <div class="step">
-                            <div class="step-num">1</div>
-                            <div class="step-content">
-                                <h4>Модульность</h4>
-                                <p>Каждый тогл независим — включай/выключай по необходимости. Не нравится что-то? Просто выключи.</p>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-num">2</div>
-                            <div class="step-content">
-                                <h4>COT система</h4>
-                                <p>Сегментированная думалка — можно отключать части для скорости, или отключить полностью.</p>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-num">3</div>
-                            <div class="step-content">
-                                <h4>HTML темы</h4>
-                                <p>Красивое оформление ответов с инфоблоками, переходами и UI элементами.</p>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-num">4</div>
-                            <div class="step-content">
-                                <h4>Things Sample</h4>
-                                <p>Пустой тогл для кастомных промптов — бери с сайта и вставляй!</p>
-                            </div>
-                        </div>
-                    </div></div>
-                </div>
-
-                <!-- FAQ -->
                 <div class="guide">
                     <div class="guide-head" onclick="toggleGuide(this)">
                         <div class="guide-title">❓ FAQ</div>
@@ -2071,31 +2478,11 @@ Template:
                     <div class="guide-body"><div class="guide-inner">
                         <div class="step">
                             <div class="step-num q">?</div>
-                            <div class="step-content">
-                                <h4>Куда вставлять промпты с сайта?</h4>
-                                <p>Настройки пресета → найди нужный тогл → удали старый текст → вставь новый. Для extra промптов используй Things Sample.</p>
-                            </div>
+                            <div class="step-content"><h4>Куда вставлять штуки?</h4><p>В тогл Things Sample (⑦)</p></div>
                         </div>
                         <div class="step">
                             <div class="step-num q">?</div>
-                            <div class="step-content">
-                                <h4>Для DeepSeek работает?</h4>
-                                <p>Да, но отключи Prefill полностью — DeepSeek не поддерживает его.</p>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-num q">?</div>
-                            <div class="step-content">
-                                <h4>Модель не думает / нет <think></h4>
-                                <p>Проверь что Prefill включён и COT активен. Для некоторых моделей нужны оба.</p>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-num q">?</div>
-                            <div class="step-content">
-                                <h4>Ответы слишком короткие/длинные</h4>
-                                <p>Настрой темп и длину в категории ② или используй соответствующие промпты.</p>
-                            </div>
+                            <div class="step-content"><h4>DeepSeek?</h4><p>Отключи Prefill полностью</p></div>
                         </div>
                     </div></div>
                 </div>
@@ -2111,15 +2498,15 @@ Template:
                 <div class="contacts-grid">
                     <a href="https://t.me/YablochnyAI" target="_blank" class="contact-card">
                         <div class="contact-icon">◈</div>
-                        <div class="contact-info"><h4>Telegram Канал</h4><p>Новости и обновления</p></div>
+                        <div class="contact-info"><h4>Telegram Канал</h4><p>Новости</p></div>
                     </a>
                     <a href="https://t.me/YablochnyChat" target="_blank" class="contact-card">
                         <div class="contact-icon">◇</div>
-                        <div class="contact-info"><h4>Telegram Чат</h4><p>Общение и поддержка</p></div>
+                        <div class="contact-info"><h4>Telegram Чат</h4><p>Поддержка</p></div>
                     </a>
                     <a href="https://boosty.to/yablochny" target="_blank" class="contact-card">
                         <div class="contact-icon">♥</div>
-                        <div class="contact-info"><h4>Boosty</h4><p>Поддержать проект</p></div>
+                        <div class="contact-info"><h4>Boosty</h4><p>Поддержать</p></div>
                     </a>
                 </div>
 
@@ -2127,17 +2514,15 @@ Template:
                     <div class="thanks-section">
                         <div class="thanks-title">◇ Авторы промптов</div>
                         <div class="thanks-list">
-                            <span class="thanks-item"><a href="#" target="_blank">Шино</a></span>
-                            <span class="thanks-item"><a href="#" target="_blank">Минти</a></span>
+                            <span class="thanks-item"><a href="#">Шино</a></span>
+                            <span class="thanks-item"><a href="#">Минти</a></span>
                         </div>
                     </div>
-
                     <div class="thanks-section">
                         <div class="thanks-title">◇ Благодарности</div>
                         <div class="thanks-list">
                             <span class="thanks-item no-link">Настенька</span>
                             <span class="thanks-item no-link">Leafcanfly</span>
-                            <span class="thanks-item no-link">Пина-колада</span>
                         </div>
                     </div>
                 </div>
@@ -2150,15 +2535,38 @@ Template:
     </div>
 
     <script>
+        // Loader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 1800);
+        });
+
+        // Parallax Title
+        const parallaxTitle = document.getElementById('parallaxTitle');
+        const header = document.querySelector('.header');
+
+        header.addEventListener('mousemove', (e) => {
+            if (window.innerWidth < 768) return;
+            const rect = header.getBoundingClientRect();
+            const x = (e.clientX - rect.left - rect.width / 2) / rect.width;
+            const y = (e.clientY - rect.top - rect.height / 2) / rect.height;
+            parallaxTitle.style.transform = `translate(${x * -20}px, ${y * -15}px) rotateX(${y * 5}deg) rotateY(${x * -5}deg)`;
+        });
+
+        header.addEventListener('mouseleave', () => {
+            parallaxTitle.style.transform = 'translate(0, 0) rotateX(0) rotateY(0)';
+        });
+
         // Falling Leaves
         const leavesContainer = document.getElementById('leavesContainer');
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 15; i++) {
             const leaf = document.createElement('div');
             leaf.className = 'falling-leaf';
             leaf.style.left = Math.random() * 100 + '%';
-            leaf.style.animationDuration = (8 + Math.random() * 10) + 's';
+            leaf.style.animationDuration = (10 + Math.random() * 10) + 's';
             leaf.style.animationDelay = (Math.random() * 15) + 's';
-            leaf.style.transform = `rotate(${Math.random() * 360}deg) scale(${0.5 + Math.random() * 0.8})`;
+            leaf.style.transform = `rotate(${Math.random() * 360}deg) scale(${0.5 + Math.random() * 0.5})`;
             leavesContainer.appendChild(leaf);
         }
 
@@ -2204,7 +2612,7 @@ Template:
 
         function initParticles() {
             particles = [];
-            for (let i = 0; i < (canvas.width * canvas.height) / 15000; i++) particles.push(new Particle());
+            for (let i = 0; i < (canvas.width * canvas.height) / 20000; i++) particles.push(new Particle());
         }
 
         function animateBg() {
@@ -2215,7 +2623,7 @@ Template:
                     let dx = particles[a].x - particles[b].x, dy = particles[a].y - particles[b].y;
                     let dist = Math.sqrt(dx * dx + dy * dy);
                     if (dist < 100) {
-                        ctx.strokeStyle = `rgba(46,204,113,${0.12 - dist/900})`;
+                        ctx.strokeStyle = `rgba(46,204,113,${0.1 - dist/1000})`;
                         ctx.lineWidth = 0.5;
                         ctx.beginPath();
                         ctx.moveTo(particles[a].x, particles[a].y);
@@ -2232,15 +2640,15 @@ Template:
         initParticles();
         animateBg();
 
-        // Header Canvas - Sparkles
+        // Header Canvas
         const headerCanvas = document.getElementById('headerCanvas');
         const hctx = headerCanvas.getContext('2d');
         let sparkles = [];
 
         function resizeHeader() {
-            const header = document.querySelector('.header');
-            headerCanvas.width = header.offsetWidth;
-            headerCanvas.height = header.offsetHeight;
+            const h = document.querySelector('.header');
+            headerCanvas.width = h.offsetWidth;
+            headerCanvas.height = h.offsetHeight;
         }
         resizeHeader();
         window.addEventListener('resize', resizeHeader);
@@ -2250,8 +2658,8 @@ Template:
             reset() {
                 this.x = Math.random() * headerCanvas.width;
                 this.y = Math.random() * headerCanvas.height;
-                this.size = Math.random() * 3 + 1;
-                this.speedY = Math.random() * 0.5 + 0.2;
+                this.size = Math.random() * 2 + 1;
+                this.speedY = Math.random() * 0.3 + 0.1;
                 this.opacity = Math.random();
                 this.color = ['#2ECC71', '#F1C40F', '#E63946'][Math.floor(Math.random() * 3)];
             }
@@ -2266,14 +2674,14 @@ Template:
             }
             update() {
                 this.y += this.speedY;
-                this.opacity += (Math.random() - 0.5) * 0.05;
+                this.opacity += (Math.random() - 0.5) * 0.03;
                 if (this.opacity < 0.1) this.opacity = 0.1;
                 if (this.opacity > 1) this.opacity = 1;
                 if (this.y > headerCanvas.height) this.reset();
             }
         }
 
-        for (let i = 0; i < 50; i++) sparkles.push(new Sparkle());
+        for (let i = 0; i < 30; i++) sparkles.push(new Sparkle());
 
         function animateHeader() {
             hctx.clearRect(0, 0, headerCanvas.width, headerCanvas.height);
@@ -2335,22 +2743,56 @@ Template:
             setTimeout(() => t.remove(), 3000);
         }
 
-        // Lightbox
-        function openLightbox(src, caption) {
-            document.getElementById('lightboxImg').src = src;
-            document.getElementById('lightboxCaption').textContent = caption || '';
-            document.getElementById('lightbox').classList.add('active');
+        // Things Selector
+        function toggleThing(el) {
+            el.classList.toggle('selected');
+            updateThingsCount();
         }
 
-        function closeLightbox() {
-            document.getElementById('lightbox').classList.remove('active');
-        }
-
-        document.addEventListener('keydown', e => {
-            if (e.key === 'Escape') {
-                closeLightbox();
-                closeGame();
+        function toggleExclusive(el, group) {
+            const wasSelected = el.classList.contains('selected');
+            document.querySelectorAll(`.thing-item[data-group="${group}"]`).forEach(item => {
+                item.classList.remove('selected');
+            });
+            if (!wasSelected) {
+                el.classList.add('selected');
             }
+            updateThingsCount();
+        }
+
+        function updateThingsCount() {
+            const selected = document.querySelectorAll('.thing-item.selected:not([data-thing="stub"])');
+            const count = selected.length;
+            document.getElementById('thingsCount').textContent = count;
+            document.getElementById('thingsCopyBtn').disabled = count === 0;
+        }
+
+        function copySelectedThings() {
+            const selected = document.querySelectorAll('.thing-item.selected:not([data-thing="stub"])');
+            const codes = [];
+            selected.forEach(item => {
+                codes.push(item.dataset.code);
+            });
+            if (codes.length > 0) {
+                navigator.clipboard.writeText(codes.join('\n\n')).then(() => {
+                    showToast(`Скопировано ${codes.length} штук! 🍎`);
+                });
+            }
+        }
+
+        function showThingDesc(title, desc, code) {
+            document.getElementById('thingDescTitle').innerHTML = `📄 ${title}`;
+            document.getElementById('thingDescText').textContent = desc;
+            document.getElementById('thingDescCode').textContent = code;
+            document.getElementById('thingDescModal').classList.add('active');
+        }
+
+        function closeThingDesc() {
+            document.getElementById('thingDescModal').classList.remove('active');
+        }
+
+        document.getElementById('thingDescModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('thingDescModal')) closeThingDesc();
         });
 
         // Game
@@ -2499,6 +2941,13 @@ Template:
             document.getElementById('gameLevel').textContent = G.level;
             document.getElementById('gameApples').textContent = G.apples;
         }
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+                closeThingDesc();
+                closeGame();
+            }
+        });
     </script>
 </body>
 </html>
