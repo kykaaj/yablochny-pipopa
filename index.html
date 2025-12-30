@@ -174,70 +174,8 @@
         @media (max-width: 768px) { .cursor-glow { display: none; } }
 
         /* ═══════════════════════════════════════
-           LANG SWITCHER - MOBILE FIXED
+           SCROLL TOP BUTTON
         ═══════════════════════════════════════ */
-        .lang-switch {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 10000;
-            display: flex;
-            gap: 0.3rem;
-            background: var(--bg-card);
-            padding: 0.4rem;
-            border-radius: var(--radius);
-            border: 1px solid var(--border);
-        }
-
-        @media (max-width: 768px) {
-            .lang-switch {
-                top: auto;
-                bottom: 80px;
-                right: 10px;
-                padding: 0.3rem;
-            }
-            .lang-btn {
-                padding: 0.3rem 0.6rem;
-                font-size: 0.7rem;
-            }
-        }
-
-        .lang-btn {
-            padding: 0.4rem 0.8rem;
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            font-size: 0.75rem;
-            font-weight: 700;
-            cursor: pointer;
-            border-radius: var(--radius-sm);
-            transition: all 0.3s;
-            text-decoration: none;
-        }
-
-        .lang-btn:hover { color: var(--green); }
-        .lang-btn.active {
-            background: var(--green);
-            color: var(--bg);
-        }
-
-        /* ═══════════════════════════════════════
-           FIXED BUTTONS
-        ═══════════════════════════════════════ */
-        .game-trigger {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            font-size: 2.8rem;
-            cursor: pointer;
-            z-index: 999;
-            filter: drop-shadow(0 0 20px var(--glow-red));
-            animation: appleFloat 3s ease-in-out infinite;
-            transition: transform 0.3s;
-        }
-
-        .game-trigger:hover { transform: scale(1.2) rotate(-10deg); }
-
         .scroll-top {
             position: fixed;
             bottom: 20px;
@@ -285,6 +223,15 @@
         .scroll-top.visible { opacity: 1; visibility: visible; }
         .scroll-top:hover { transform: scale(1.1) translateY(-5px); }
         .scroll-top span { font-size: 1.2rem; color: var(--bg); font-weight: 900; z-index: 1; }
+
+        @media (max-width: 768px) {
+            .scroll-top {
+                width: 45px;
+                height: 45px;
+                bottom: 15px;
+                right: 15px;
+            }
+        }
 
         /* ═══════════════════════════════════════
            HEADER
@@ -335,6 +282,52 @@
         @keyframes gradientMove {
             0% { background-position: 0% 50%; }
             100% { background-position: 300% 50%; }
+        }
+
+        /* Language Switcher in Header */
+        .header-lang {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            gap: 0.3rem;
+            background: rgba(18, 18, 26, 0.8);
+            padding: 0.4rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+        }
+
+        .lang-btn {
+            padding: 0.4rem 0.8rem;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .lang-btn:hover { color: var(--green); }
+        .lang-btn.active {
+            background: var(--green);
+            color: var(--bg);
+        }
+
+        @media (max-width: 768px) {
+            .header-lang {
+                top: 15px;
+                right: 15px;
+                padding: 0.3rem;
+            }
+            .lang-btn {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.7rem;
+            }
         }
 
         .header-content {
@@ -388,7 +381,6 @@
 
         .header-hero { margin: 2rem 0; perspective: 1000px; }
 
-        /* Parallax Title */
         .parallax-title {
             transform-style: preserve-3d;
             transition: transform 0.1s ease-out;
@@ -710,7 +702,7 @@
         }
 
         /* ═══════════════════════════════════════
-           CARDS - MOBILE OPTIMIZED
+           CARDS
         ═══════════════════════════════════════ */
         .cards {
             display: grid;
@@ -1418,6 +1410,31 @@
         .thanks-item.no-link { border-color: var(--gold); }
 
         /* ═══════════════════════════════════════
+           EASTER EGG - HIDDEN GAME LINK
+        ═══════════════════════════════════════ */
+        .easter-egg-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            background: var(--bg-elevated);
+            border: 1px dashed var(--pink);
+            border-radius: var(--radius-sm);
+            color: var(--pink);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .easter-egg-link:hover {
+            background: rgba(253, 167, 223, 0.1);
+            transform: scale(1.05);
+        }
+
+        /* ═══════════════════════════════════════
            GAME MODAL
         ═══════════════════════════════════════ */
         .game-modal {
@@ -1514,25 +1531,34 @@
         .game-overlay-stats p { margin: 0.3rem 0; font-size: 1.1rem; }
         .game-overlay-stats strong { color: var(--green); }
 
-        /* Easter Egg Banner */
+        /* Easter Egg Banner - FIXED */
         .easter-egg-banner {
             background: linear-gradient(135deg, var(--pink), var(--purple));
-            padding: 1rem 1.5rem;
+            padding: 1.2rem 1.5rem;
             border-radius: var(--radius-sm);
-            margin-top: 1rem;
-            animation: bannerPop 0.5s ease-out;
+            margin: 1.5rem 0;
+            animation: bannerGlow 2s ease-in-out infinite alternate;
+            max-width: 400px;
         }
 
-        @keyframes bannerPop {
-            0% { transform: scale(0.5); opacity: 0; }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); opacity: 1; }
+        @keyframes bannerGlow {
+            0% { box-shadow: 0 0 20px rgba(253, 167, 223, 0.3); }
+            100% { box-shadow: 0 0 40px rgba(253, 167, 223, 0.6); }
+        }
+
+        .easter-egg-banner h3 {
+            color: #fff;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .easter-egg-banner p {
-            color: #fff;
-            font-weight: 700;
-            font-size: 0.9rem;
+            color: rgba(255,255,255,0.9);
+            font-size: 0.85rem;
+            line-height: 1.5;
             margin: 0;
         }
 
@@ -1570,7 +1596,7 @@
         .toast-box { position: fixed; bottom: 90px; right: 20px; z-index: 9999; }
 
         @media (max-width: 768px) {
-            .toast-box { bottom: 140px; right: 10px; left: 10px; }
+            .toast-box { bottom: 80px; right: 10px; left: 10px; }
             .toast { font-size: 0.85rem; padding: 0.8rem 1rem; }
         }
 
@@ -1629,16 +1655,6 @@
     <div class="leaves-container" id="leavesContainer"></div>
     <div class="cursor-glow" id="cursorGlow"></div>
 
-    <!-- Language Switcher -->
-    <div class="lang-switch">
-        <a href="./" class="lang-btn active">RU</a>
-        <a href="./en/" class="lang-btn">EN</a>
-        <a href="./uk/" class="lang-btn">UK</a>
-    </div>
-
-    <!-- Game Trigger -->
-    <div class="game-trigger" onclick="openGame()" title="Играть!">🍎</div>
-
     <!-- Scroll to Top -->
     <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0})">
         <span>↑</span>
@@ -1677,7 +1693,7 @@
                 <div class="game-overlay active" id="gameStart">
                     <div class="game-overlay-icon">🍎</div>
                     <div class="game-overlay-title start">Яблочный Сад</div>
-                    <div class="game-overlay-text">Собери яблоки и доберись до звезды!</div>
+                    <div class="game-overlay-text">Собери яблоки и доберись до звезды!<br><small>(Только для ПК — стрелки/WASD + пробел)</small></div>
                     <button class="btn btn-fill" onclick="startGame()">▶ Начать</button>
                 </div>
                 <div class="game-overlay" id="gameWin">
@@ -1688,9 +1704,11 @@
                         <p>Яблок: <strong id="finalApples">0</strong> 🍎</p>
                     </div>
                     <div class="easter-egg-banner">
-                        <p>🌟 Секрет: Ренетт была яблоней 300 лет, пока не стала цифровым духом!</p>
+                        <h3>🌟 Секрет Ренетт</h3>
+                        <p>Ренетт была яблоней целых 300 лет в Цифровом Саду, пока однажды молния не ударила в её корни. Так она обрела сознание и стала цифровым духом-хранителем всех пресетов!</p>
                     </div>
-                    <button class="btn btn-fill" onclick="restartGame()" style="margin-top:1rem">↺ Ещё раз</button>
+                    <button class="btn btn-fill" onclick="restartGame()">↺ Ещё раз</button>
+                    <button class="btn" onclick="closeGame()" style="margin-top:0.5rem">✕ Закрыть</button>
                 </div>
                 <div class="game-overlay" id="gameLevelUp">
                     <div class="game-overlay-icon">⭐</div>
@@ -1703,7 +1721,7 @@
                 <button class="game-btn" onclick="pauseGame()">⏸ Пауза</button>
                 <button class="game-btn" onclick="restartGame()">↺ Заново</button>
             </div>
-            <div class="game-info">← → движение ◇ Пробел прыжок</div>
+            <div class="game-info">← → движение ◇ Пробел прыжок ◇ Только ПК!</div>
         </div>
     </div>
 
@@ -1714,6 +1732,13 @@
             <div class="header-overlay"></div>
             <canvas id="headerCanvas"></canvas>
 
+            <!-- Language Switcher - Fixed in Header -->
+            <div class="header-lang">
+                <a href="./" class="lang-btn active">RU</a>
+                <a href="./en/" class="lang-btn">EN</a>
+                <a href="./uk/" class="lang-btn">UK</a>
+            </div>
+
             <div class="header-content">
                 <div class="header-top">
                     <div class="header-line"></div>
@@ -1722,7 +1747,6 @@
                 </div>
 
                 <div class="header-hero">
-                    <!-- Parallax Title -->
                     <div class="parallax-title" id="parallaxTitle">
                         <h1 class="header-title">Яблочный Пресет</h1>
                         <p class="header-subtitle">Модульный пресет для SillyTavern от <span>Ренетт</span></p>
@@ -1875,7 +1899,6 @@
                     </div>
                 </div>
 
-                <!-- Categories 1-6 (same as before, keeping structure) -->
                 <!-- ① OOC -->
                 <div class="cat" data-cat="basic">
                     <div class="cat-head" onclick="toggleCat(this)">
@@ -2028,7 +2051,7 @@
                     </div></div>
                 </div>
 
-                <!-- ⑦ THINGS - NEW SELECTOR SYSTEM -->
+                <!-- ⑦ THINGS -->
                 <div class="cat" data-cat="extra">
                     <div class="cat-head" onclick="toggleCat(this)">
                         <div class="cat-info">
@@ -2139,7 +2162,6 @@
                             <div class="things-group">
                                 <div class="things-group-title exclusive">✧ Эксклюзивные: <span class="hint">(только ОДИН из группы)</span></div>
 
-                                <!-- Инфоблоки -->
                                 <p style="color:var(--text-muted);font-size:0.85rem;margin:0.5rem 0;">Инфоблоки (Выберите один)</p>
                                 <div class="things-grid">
                                     <div class="thing-item exclusive" data-thing="info-renette" data-group="infoblocks" data-code="[INFO_RENETTE]" onclick="toggleExclusive(this,'infoblocks')">
@@ -2184,7 +2206,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Режим -->
                                 <p style="color:var(--text-muted);font-size:0.85rem;margin:1rem 0 0.5rem;">Режим Настройки (Выберите один)</p>
                                 <div class="things-grid">
                                     <div class="thing-item exclusive" data-thing="mode-claude" data-group="mode" data-code="[MODE_CLAUDE]" onclick="toggleExclusive(this,'mode')">
@@ -2205,7 +2226,6 @@
                                     </div>
                                 </div>
 
-                                <!-- CYOA -->
                                 <p style="color:var(--text-muted);font-size:0.85rem;margin:1rem 0 0.5rem;">CYOA (Выберите один)</p>
                                 <div class="things-grid">
                                     <div class="thing-item exclusive" data-thing="cyoa-macro" data-group="cyoa" data-code="[CYOA_MACRO]" onclick="toggleExclusive(this,'cyoa')">
@@ -2226,7 +2246,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Скрытые блоки -->
                                 <p style="color:var(--text-muted);font-size:0.85rem;margin:1rem 0 0.5rem;">Скрытые Блоки (Можно смешивать)</p>
                                 <div class="things-grid">
                                     <div class="thing-item" data-thing="hidden-profiles" data-code="[HIDDEN_PROFILES]" onclick="toggleThing(this)">
@@ -2263,7 +2282,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Fancy UI -->
                                 <p style="color:var(--text-muted);font-size:0.85rem;margin:1rem 0 0.5rem;">Fancy UI (Выберите один)</p>
                                 <div class="things-grid">
                                     <div class="thing-item exclusive" data-thing="fancy-full" data-group="fancy" data-code="[FANCY_FULL]" onclick="toggleExclusive(this,'fancy')">
@@ -2292,7 +2310,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Комментарии -->
                                 <p style="color:var(--text-muted);font-size:0.85rem;margin:1rem 0 0.5rem;">Комментарии (Выберите один)</p>
                                 <div class="things-grid">
                                     <div class="thing-item exclusive" data-thing="comments-v1" data-group="comments" data-code="[COMMENTS_V1]" onclick="toggleExclusive(this,'comments')">
@@ -2321,7 +2338,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Хроники -->
                                 <p style="color:var(--text-muted);font-size:0.85rem;margin:1rem 0 0.5rem;">Хроники (Выберите один)</p>
                                 <div class="things-grid">
                                     <div class="thing-item exclusive" data-thing="chronicles-light" data-group="chronicles" data-code="[CHRONICLES_LIGHT]" onclick="toggleExclusive(this,'chronicles')">
@@ -2525,6 +2541,13 @@ Template:
                             <span class="thanks-item no-link">Leafcanfly</span>
                         </div>
                     </div>
+                </div>
+
+                <!-- Hidden Game Link (Easter Egg) -->
+                <div style="text-align:center; margin-top: 2rem;">
+                    <span class="easter-egg-link" onclick="openGame()">
+                        🎮 Секретная мини-игра (только ПК)
+                    </span>
                 </div>
             </section>
         </main>
@@ -2797,156 +2820,295 @@ Template:
 
         // Game
         let G = {
-            canvas: null, ctx: null, running: false, paused: false,
-            score: 0, level: 1, apples: 0, maxLevels: 5,
-            player: { x: 80, y: 0, vx: 0, vy: 0, w: 28, h: 32, ground: false },
-            platforms: [], collectibles: [], cam: 0, keys: {},
-            gravity: 0.6, jump: -13, speed: 5, world: 2500
-        };
+    canvas: null, ctx: null, running: false, paused: false,
+    score: 0, level: 1, apples: 0, maxLevels: 5,
+    player: { x: 80, y: 0, vx: 0, vy: 0, w: 28, h: 32, ground: false },
+    platforms: [], collectibles: [], goal: null, cam: 0, keys: {},
+    gravity: 0.6, jump: -13, speed: 5
+};
 
-        function openGame() { document.getElementById('gameModal').classList.add('active'); initGame(); }
-        function closeGame() { document.getElementById('gameModal').classList.remove('active'); G.running = false; }
+function openGame() {
+    document.getElementById('gameModal').classList.add('active');
+    initGame();
+}
 
-        function initGame() {
-            G.canvas = document.getElementById('gameCanvas');
-            G.ctx = G.canvas.getContext('2d');
-            const r = G.canvas.parentElement.getBoundingClientRect();
-            G.canvas.width = r.width;
-            G.canvas.height = r.height;
-            document.onkeydown = e => { G.keys[e.code] = true; };
-            document.onkeyup = e => { G.keys[e.code] = false; };
-            showOverlay('gameStart');
+function closeGame() {
+    document.getElementById('gameModal').classList.remove('active');
+    G.running = false;
+}
+
+function initGame() {
+    G.canvas = document.getElementById('gameCanvas');
+    G.ctx = G.canvas.getContext('2d');
+    const r = G.canvas.parentElement.getBoundingClientRect();
+    G.canvas.width = r.width;
+    G.canvas.height = r.height;
+    document.onkeydown = e => { G.keys[e.code] = true; };
+    document.onkeyup = e => { G.keys[e.code] = false; };
+    showOverlay('gameStart');
+}
+
+function showOverlay(id) {
+    document.querySelectorAll('.game-overlay').forEach(o => o.classList.remove('active'));
+    if (id) document.getElementById(id).classList.add('active');
+}
+
+function genLevel() {
+    const groundY = G.canvas.height - 40;
+    const levelLength = 1500 + G.level * 500; // Длина уровня зависит от номера
+
+    G.platforms = [];
+    G.collectibles = [];
+    G.goal = null;
+
+    // Земля
+    G.platforms.push({ x: 0, y: groundY, w: levelLength + 500, h: 50, type: 'ground' });
+
+    // Платформы
+    let px = 200;
+    const platformCount = 8 + G.level * 3;
+
+    for (let i = 0; i < platformCount; i++) {
+        const w = 80 + Math.random() * 100;
+        const y = groundY - 100 - Math.random() * 150;
+        G.platforms.push({ x: px, y, w, h: 18, type: 'platform' });
+
+        // Яблоки на платформах
+        if (Math.random() > 0.3) {
+            G.collectibles.push({ x: px + w/2 - 12, y: y - 35, collected: false });
         }
 
-        function showOverlay(id) {
-            document.querySelectorAll('.game-overlay').forEach(o => o.classList.remove('active'));
-            if (id) document.getElementById(id).classList.add('active');
-        }
+        px += w + 80 + Math.random() * 100;
+    }
 
-        function genLevel() {
-            const groundY = G.canvas.height - 40;
-            G.platforms = [{ x: 0, y: groundY, w: G.world + 500, h: 50, type: 'ground' }];
-            G.collectibles = [];
-            let px = 150;
-            for (let i = 0; i < 12 + G.level * 4; i++) {
-                const w = 70 + Math.random() * 100;
-                const y = groundY - 80 - Math.random() * 180;
-                G.platforms.push({ x: px, y, w, h: 18, type: 'platform' });
-                if (Math.random() > 0.3) G.collectibles.push({ x: px + w/2 - 12, y: y - 35, collected: false });
-                px += w + 60 + Math.random() * 80;
+    // Цель в конце уровня (отдельно от platforms!)
+    G.goal = {
+        x: px + 100,
+        y: groundY - 60,
+        w: 60,
+        h: 60
+    };
+}
+
+function startGame() {
+    if (G.running) return;
+    G.score = 0;
+    G.level = 1;
+    G.apples = 0;
+    G.cam = 0;
+    G.running = true;
+    G.paused = false;
+
+    resetPlayer();
+    genLevel();
+    updateHUD();
+    showOverlay(null);
+    loop();
+}
+
+function resetPlayer() {
+    G.player.x = 80;
+    G.player.y = G.canvas.height - 150;
+    G.player.vx = 0;
+    G.player.vy = 0;
+    G.player.ground = false;
+}
+
+function pauseGame() {
+    if (!G.running) return;
+    G.paused = !G.paused;
+    if (!G.paused) loop();
+}
+
+function restartGame() {
+    G.running = false;
+    showOverlay('gameStart');
+}
+
+function nextLevel() {
+    G.level++;
+    G.score += 150;
+
+    if (G.level > G.maxLevels) {
+        winGame();
+        return;
+    }
+
+    document.getElementById('nextLevel').textContent = G.level;
+    showOverlay('gameLevelUp');
+    G.running = false; // Останавливаем игру на время показа
+
+    setTimeout(() => {
+        G.cam = 0;
+        resetPlayer();
+        genLevel();
+        updateHUD();
+        showOverlay(null);
+        G.running = true;
+        loop();
+    }, 1500);
+}
+
+function winGame() {
+    G.running = false;
+    document.getElementById('finalScore').textContent = G.score;
+    document.getElementById('finalApples').textContent = G.apples;
+    showOverlay('gameWin');
+    // НЕ вызываем loop() после победы!
+}
+
+function loop() {
+    if (!G.running || G.paused) return;
+    update();
+    render();
+    requestAnimationFrame(loop);
+}
+
+function update() {
+    const p = G.player;
+
+    // Управление
+    if (G.keys['ArrowLeft'] || G.keys['KeyA']) {
+        p.vx = -G.speed;
+    } else if (G.keys['ArrowRight'] || G.keys['KeyD']) {
+        p.vx = G.speed;
+    } else {
+        p.vx *= 0.85;
+    }
+
+    // Прыжок
+    if ((G.keys['Space'] || G.keys['ArrowUp'] || G.keys['KeyW']) && p.ground) {
+        p.vy = G.jump;
+        p.ground = false;
+    }
+
+    // Физика
+    p.vy += G.gravity;
+    p.x += p.vx;
+    p.y += p.vy;
+
+    if (p.x < 0) p.x = 0;
+
+    // Столкновение с платформами
+    p.ground = false;
+    for (const pl of G.platforms) {
+        if (p.x + p.w > pl.x && p.x < pl.x + pl.w) {
+            if (p.y + p.h >= pl.y && p.y + p.h <= pl.y + 25 && p.vy >= 0) {
+                p.y = pl.y - p.h;
+                p.vy = 0;
+                p.ground = true;
             }
-            G.platforms.push({ x: px + 80, y: groundY - 60, w: 60, h: 60, type: 'goal' });
-            G.world = px + 300;
         }
+    }
 
-        function startGame() {
-            if (G.running) return;
-            G.score = 0; G.level = 1; G.apples = 0; G.cam = 0;
-            resetPlayer(); genLevel(); updateHUD();
-            showOverlay(null);
-            G.running = true; G.paused = false;
-            loop();
+    // Проверка достижения цели (ОТДЕЛЬНО!)
+    if (G.goal) {
+        const g = G.goal;
+        if (p.x + p.w > g.x && p.x < g.x + g.w &&
+            p.y + p.h > g.y && p.y < g.y + g.h) {
+            nextLevel();
+            return; // Важно выйти!
         }
+    }
 
-        function resetPlayer() {
-            G.player.x = 80;
-            G.player.y = G.canvas.height - 150;
-            G.player.vx = 0; G.player.vy = 0; G.player.ground = false;
+    // Сбор яблок
+    for (const c of G.collectibles) {
+        if (!c.collected &&
+            p.x + p.w > c.x && p.x < c.x + 24 &&
+            p.y + p.h > c.y && p.y < c.y + 24) {
+            c.collected = true;
+            G.apples++;
+            G.score += 15;
+            updateHUD();
         }
+    }
 
-        function pauseGame() { if (!G.running) return; G.paused = !G.paused; if (!G.paused) loop(); }
-        function restartGame() { G.running = false; showOverlay('gameStart'); }
+    // Падение
+    if (p.y > G.canvas.height + 100) {
+        G.score = Math.max(0, G.score - 30);
+        resetPlayer();
+        G.cam = 0;
+        updateHUD();
+    }
 
-        function nextLevel() {
-            G.level++; G.score += 150;
-            if (G.level > G.maxLevels) { winGame(); return; }
-            document.getElementById('nextLevel').textContent = G.level;
-            showOverlay('gameLevelUp');
-            setTimeout(() => { showOverlay(null); G.cam = 0; resetPlayer(); genLevel(); updateHUD(); }, 1500);
+    // Камера
+    const targetCam = p.x - G.canvas.width / 3;
+    G.cam += (targetCam - G.cam) * 0.1;
+    if (G.cam < 0) G.cam = 0;
+}
+
+function render() {
+    const ctx = G.ctx;
+    const c = G.cam;
+
+    // Фон
+    const grad = ctx.createLinearGradient(0, 0, 0, G.canvas.height);
+    grad.addColorStop(0, '#1a2a1a');
+    grad.addColorStop(1, '#0a150a');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, G.canvas.width, G.canvas.height);
+
+    // Платформы
+    for (const pl of G.platforms) {
+        const x = pl.x - c;
+        if (x < -pl.w - 50 || x > G.canvas.width + 50) continue;
+
+        if (pl.type === 'ground') {
+            ctx.fillStyle = '#1a2a1a';
+            ctx.fillRect(0, pl.y, G.canvas.width, pl.h);
+            ctx.fillStyle = '#2ECC71';
+            ctx.fillRect(0, pl.y, G.canvas.width, 3);
+        } else {
+            ctx.fillStyle = '#2a3a2a';
+            ctx.fillRect(x, pl.y, pl.w, pl.h);
+            ctx.fillStyle = '#2ECC71';
+            ctx.fillRect(x, pl.y, pl.w, 3);
         }
+    }
 
-        function winGame() {
-            G.running = false;
-            document.getElementById('finalScore').textContent = G.score;
-            document.getElementById('finalApples').textContent = G.apples;
-            showOverlay('gameWin');
+    // Цель
+    if (G.goal) {
+        const gx = G.goal.x - c;
+        if (gx > -100 && gx < G.canvas.width + 100) {
+            ctx.fillStyle = '#F1C40F';
+            ctx.fillRect(gx, G.goal.y, G.goal.w, G.goal.h);
+            ctx.fillStyle = '#000';
+            ctx.font = '28px Arial';
+            ctx.fillText('★', gx + G.goal.w/2 - 10, G.goal.y + G.goal.h/2 + 10);
         }
+    }
 
-        function loop() {
-            if (!G.running || G.paused) return;
-            update(); render();
-            requestAnimationFrame(loop);
-        }
+    // Яблоки
+    for (const col of G.collectibles) {
+        if (col.collected) continue;
+        const x = col.x - c;
+        if (x < -30 || x > G.canvas.width + 30) continue;
+        ctx.font = '20px Arial';
+        ctx.fillText('🍎', x, col.y + 20);
+    }
 
-        function update() {
-            const p = G.player;
-            if (G.keys['ArrowLeft'] || G.keys['KeyA']) p.vx = -G.speed;
-            else if (G.keys['ArrowRight'] || G.keys['KeyD']) p.vx = G.speed;
-            else p.vx *= 0.85;
-            if ((G.keys['Space'] || G.keys['ArrowUp'] || G.keys['KeyW']) && p.ground) { p.vy = G.jump; p.ground = false; }
-            p.vy += G.gravity; p.x += p.vx; p.y += p.vy;
-            if (p.x < 0) p.x = 0;
-            p.ground = false;
-            for (const pl of G.platforms) {
-                if (p.x + p.w > pl.x && p.x < pl.x + pl.w) {
-                    if (p.y + p.h >= pl.y && p.y + p.h <= pl.y + 20 && p.vy >= 0) {
-                        p.y = pl.y - p.h; p.vy = 0; p.ground = true;
-                        if (pl.type === 'goal') { nextLevel(); return; }
-                    }
-                }
-            }
-            for (const c of G.collectibles) {
-                if (!c.collected && p.x + p.w > c.x && p.x < c.x + 24 && p.y + p.h > c.y && p.y < c.y + 24) {
-                    c.collected = true; G.apples++; G.score += 15; updateHUD();
-                }
-            }
-            if (p.y > G.canvas.height + 100) { G.score = Math.max(0, G.score - 30); resetPlayer(); G.cam = 0; updateHUD(); }
-            const targetCam = p.x - G.canvas.width / 3;
-            G.cam += (targetCam - G.cam) * 0.1;
-            G.cam = Math.max(0, Math.min(G.world - G.canvas.width, G.cam));
-        }
+    // Игрок
+    const px = G.player.x - c;
+    const py = G.player.y;
+    ctx.font = '28px Arial';
+    ctx.fillText('🍏', px, py + 28);
+}
 
-        function render() {
-            const ctx = G.ctx, c = G.cam;
-            const grad = ctx.createLinearGradient(0, 0, 0, G.canvas.height);
-            grad.addColorStop(0, '#1a2a1a'); grad.addColorStop(1, '#0a150a');
-            ctx.fillStyle = grad;
-            ctx.fillRect(0, 0, G.canvas.width, G.canvas.height);
-            for (const pl of G.platforms) {
-                const x = pl.x - c;
-                if (x < -pl.w - 50 || x > G.canvas.width + 50) continue;
-                if (pl.type === 'ground') {
-                    ctx.fillStyle = '#1a2a1a'; ctx.fillRect(0, pl.y, G.canvas.width, pl.h);
-                    ctx.fillStyle = '#2ECC71'; ctx.fillRect(0, pl.y, G.canvas.width, 3);
-                } else if (pl.type === 'goal') {
-                    ctx.fillStyle = '#F1C40F'; ctx.fillRect(x, pl.y, pl.w, pl.h);
-                    ctx.fillStyle = '#000'; ctx.font = '24px Arial'; ctx.fillText('★', x + pl.w/2 - 8, pl.y + pl.h/2 + 8);
-                } else {
-                    ctx.fillStyle = '#2a3a2a'; ctx.fillRect(x, pl.y, pl.w, pl.h);
-                    ctx.fillStyle = '#2ECC71'; ctx.fillRect(x, pl.y, pl.w, 3);
-                }
-            }
-            for (const col of G.collectibles) {
-                if (col.collected) continue;
-                const x = col.x - c;
-                if (x < -30 || x > G.canvas.width + 30) continue;
-                ctx.font = '20px Arial'; ctx.fillText('🍎', x, col.y + 20);
-            }
-            const px = G.player.x - c, py = G.player.y;
-            ctx.font = '28px Arial'; ctx.fillText('🍏', px, py + 28);
-        }
-
-        function updateHUD() {
-            document.getElementById('gameScore').textContent = G.score;
-            document.getElementById('gameLevel').textContent = G.level;
-            document.getElementById('gameApples').textContent = G.apples;
-        }
+function updateHUD() {
+    document.getElementById('gameScore').textContent = G.score;
+    document.getElementById('gameLevel').textContent = G.level;
+    document.getElementById('gameApples').textContent = G.apples;
+}
 
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape') {
                 closeThingDesc();
                 closeGame();
             }
+        });
+
+        document.getElementById('gameModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('gameModal')) closeGame();
         });
     </script>
 </body>
