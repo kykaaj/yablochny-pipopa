@@ -45,6 +45,69 @@
             line-height: 1.6;
             overflow-x: hidden;
         }
+/* ═══════════════════════════════════════
+   MUSIC PLAYER
+═══════════════════════════════════════ */
+.music-toggle {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(18, 18, 26, 0.8);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+    transition: all 0.3s;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.music-toggle:hover {
+    border-color: var(--green);
+    color: var(--green);
+}
+
+.music-toggle.playing {
+    border-color: var(--green);
+    background: rgba(46, 204, 113, 0.1);
+    color: var(--green);
+}
+
+.music-icon {
+    font-size: 1.2rem;
+    transition: transform 0.3s;
+}
+
+.music-toggle.playing .music-icon {
+    animation: musicPulse 1s ease-in-out infinite;
+}
+
+@keyframes musicPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+.music-label {
+    display: none;
+}
+
+@media (min-width: 500px) {
+    .music-label { display: inline; }
+}
+
+@media (max-width: 768px) {
+    .music-toggle {
+        top: 15px;
+        left: 15px;
+        padding: 0.4rem 0.8rem;
+    }
+}
 
         /* ═══════════════════════════════════════
            LOADER
@@ -1731,6 +1794,15 @@
             <div class="header-bg"></div>
             <div class="header-overlay"></div>
             <canvas id="headerCanvas"></canvas>
+            <button class="music-toggle" id="musicToggle" onclick="toggleMusic()">
+    <span class="music-icon">🔇</span>
+    <span class="music-label">Музыка</span>
+</button>
+
+<!-- Audio Element (скрытый) -->
+<audio id="bgMusic" loop preload="auto">
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
 
             <!-- Language Switcher - Fixed in Header -->
             <div class="header-lang">
@@ -2558,6 +2630,28 @@ Template:
     </div>
 
     <script>
+        // Music Player
+const bgMusic = document.getElementById('bgMusic');
+const musicToggle = document.getElementById('musicToggle');
+const musicIcon = musicToggle.querySelector('.music-icon');
+let musicPlaying = false;
+
+function toggleMusic() {
+    if (musicPlaying) {
+        bgMusic.pause();
+        musicIcon.textContent = '🔇';
+        musicToggle.classList.remove('playing');
+    } else {
+        bgMusic.volume = 0.3; // Громкость 30%
+        bgMusic.play().catch(e => {
+            console.log('Autoplay blocked:', e);
+        });
+        musicIcon.textContent = '🎵';
+        musicToggle.classList.add('playing');
+    }
+    musicPlaying = !musicPlaying;
+}
+
         // Loader
         window.addEventListener('load', () => {
             setTimeout(() => {
