@@ -24,10 +24,15 @@
         }
 
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
 
         body {
             font-family: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -389,8 +394,12 @@
         }
 
         .option-btn:active {
-            transform: translateX(8px) scale(0.98);
-        }
+    background: linear-gradient(135deg, var(--apple-green-light) 0%, var(--apple-green) 100%) !important;
+    color: white !important;
+    transform: translateX(8px) scale(0.97);
+    border-color: var(--apple-green) !important;
+}
+
 
         /* Navigation */
         .nav-buttons {
@@ -1750,7 +1759,8 @@
             const btn = document.createElement('button');
             btn.className = 'option-btn';
             btn.innerText = ans.text;
-            btn.onclick = () => selectAnswer(ans);
+            btn.onclick = function() { selectAnswer(ans, this); };
+
             optsDiv.appendChild(btn);
         });
 
@@ -1758,21 +1768,28 @@
         document.getElementById('back-btn').disabled = currentQuestion === 0;
     }
 
-    function selectAnswer(ans) {
-        // Store current state for going back
+    function selectAnswer(ans, btn) {
+    // Визуально показать выбор
+    btn.style.background = 'linear-gradient(135deg, #7cb342 0%, #4a7c23 100%)';
+    btn.style.color = 'white';
+    btn.style.borderColor = '#4a7c23';
+
+    // Задержка чтобы увидеть выбор
+    setTimeout(() => {
         answerHistory.push({
             question: currentQuestion,
             scores: {...scores}
         });
 
-        // Add new scores
         for (let k in ans.s) {
             scores[k] += ans.s[k];
         }
 
         currentQuestion++;
         showQuestion();
-    }
+    }, 200);
+}
+
 
     function goBack() {
         if (answerHistory.length > 0) {
