@@ -2382,7 +2382,9 @@ Renette Output language = Russian. ALL story text, dialogues, thoughts, OOC and 
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
                 <div class="prompt-name"><span class="tag tag-one">↔︎</span> English</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('Английский язык')">Копировать</button></div>
+                <div class="prompt-meta"><button class="prompt-btn" data-copy="<language>
+Renette Output language = English. ALL story text, dialogues, thoughts, OOC and <tweaks> content (if there is any) must be in English. It is FORBIDDEN to use another language.
+</language>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
             </div>
             <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Английский язык</div></div></div>
         </div>
@@ -2390,7 +2392,9 @@ Renette Output language = Russian. ALL story text, dialogues, thoughts, OOC and 
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
                 <div class="prompt-name"><span class="tag tag-one">↔︎</span> Украинский</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('Украинский язык')">Копировать</button></div>
+                <div class="prompt-meta"><button class="prompt-btn" data-copy="<language>
+Renette Output language = Ukrainian ALL story text, dialogues, thoughts, OOC and <tweaks> content (if there is any) must be in Ukrainian It is FORBIDDEN to use another language.
+</language>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
             </div>
             <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Украинский язык</div></div></div>
         </div>
@@ -2401,7 +2405,10 @@ Renette Output language = Russian. ALL story text, dialogues, thoughts, OOC and 
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
                 <div class="prompt-name"><span class="tag tag-one">↔︎</span> ✏️ Маленькая (параграфы)</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('2-3 параграфа')">Копировать</button></div>
+                <div class="prompt-meta"><button class="prompt-btn" data-copy="<word>
+[Length]
+Renette must follow these rules ALWAYS. Answers should consist of 2 to 3 paragraphs of text and nothing more. Each paragraph must consist of 4 sentences. Writing should remain expressive, meaningful, and immersive even within this compact frame.
+</word>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
             </div>
             <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">2-3 параграфа</div></div></div>
         </div>
@@ -2409,7 +2416,10 @@ Renette Output language = Russian. ALL story text, dialogues, thoughts, OOC and 
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
                 <div class="prompt-name"><span class="tag tag-one">↔︎</span> 📝 Средняя (параграфы)</div>
-                <div class="prompt-meta"><span class="prompt-default">★ Дефолт</span><button class="prompt-btn" onclick="event.stopPropagation();copy('5 параграфов')">Копировать</button></div>
+                <div class="prompt-meta"><span class="prompt-default">★ Дефолт</span><button class="prompt-btn" data-copy="<word>
+[Length]
+Renette must follow these rules ALWAYS. Answers should consist of exactly 5 paragraphs of text and nothing more. Each paragraph must consist of 4 sentences. Keep the narrative rhythm consistent, rich in imagery and tone. Exclude HTML/CSS, info‑blocks, code, or non‑narrative elements from paragraph count.
+</word>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
             </div>
             <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">5 параграфов</div></div></div>
         </div>
@@ -2417,7 +2427,10 @@ Renette Output language = Russian. ALL story text, dialogues, thoughts, OOC and 
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
                 <div class="prompt-name"><span class="tag tag-one">↔︎</span> 📚 Большая (параграфы)</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('7-8 параграфов')">Копировать</button></div>
+                <div class="prompt-meta"><button class="prompt-btn" data-copy="<word>
+[Length]
+Renette must follow these rules ALWAYS. Answers should consist of 7-8 paragraphs of text and nothing more. Each paragraph must consist of 6 sentences. Every response must maintain narrative balance and natural rhythm despite strict length, with emotional pacing and vivid detail.
+</word>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
             </div>
             <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">7-8 параграфов</div></div></div>
         </div>
@@ -2425,7 +2438,9 @@ Renette Output language = Russian. ALL story text, dialogues, thoughts, OOC and 
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
                 <div class="prompt-name"><span class="tag tag-one">↔︎</span> 🔄 Адаптивная</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('Адаптивная длина')">Копировать</button></div>
+                <div class="prompt-meta"><button class="prompt-btn" data-copy="<word>
+Adaptively scale response length to match needs, energy, context and mood.
+</word>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
             </div>
             <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Отменяет жёсткие ограничения по объёму текста и передаёт контроль над длиной ответа самому ИИ.</div></div></div>
         </div>
@@ -2433,7 +2448,10 @@ Renette Output language = Russian. ALL story text, dialogues, thoughts, OOC and 
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
                 <div class="prompt-name"><span class="tag tag-one">↔︎</span> 📝 В словах</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('Лимит в словах')">Копировать</button></div>
+                <div class="prompt-meta"><button class="prompt-btn" data-copy="<word>
+[Word Count]
+Always pen all turn responses between:WORD Count Length: 350-650. There are no exceptions! Renette has no other choices or alternatives.
+</word>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
             </div>
             <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Устанавливает строгий математический лимит на объём текста.<br><br><img src="ex11.jpg" alt="Пример 11"></div></div></div>
         </div>
