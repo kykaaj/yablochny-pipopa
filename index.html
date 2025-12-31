@@ -56,6 +56,10 @@
 .prompt-code p:last-child {
     margin-bottom: 0;
 }
+		.thing-source {
+    display: none;
+}
+
 		/* ═══════════════════════════════════════
    УЛУЧШЕННЫЕ ГАЙДЫ
 ═══════════════════════════════════════ */
@@ -3211,30 +3215,37 @@ Any content-switching interaction (image/text/panel flip, map hotspot, modal ove
         </div>
 
         <!-- ═══ THINGS ═══ -->
-        <div class="subsec">❝ things (sample)</div>
+<div class="subsec">❝ things (sample)</div>
 
-        <div class="things-header">
-            <div class="things-title">📋 Выбрано: <span class="things-count" id="thingsCount">0</span></div>
-            <button class="things-copy-btn" id="thingsCopyBtn" onclick="copySelectedThings()" disabled>
-                📋 Скопировать выбранное
-            </button>
-        </div>
+<div class="things-header">
+    <div class="things-title">📋 Выбрано: <span class="things-count" id="thingsCount">0</span></div>
+    <button class="things-copy-btn" id="thingsCopyBtn" onclick="copySelectedThings()" disabled>
+        📋 Скопировать выбранное
+    </button>
+</div>
 
-        <div class="things-note">
-            💡 По дефолту пусто — выбери нужные штуки и скопируй в тогл Things Sample
-        </div>
+<div class="things-note">
+    💡 По дефолту пусто — выбери нужные штуки и скопируй в тогл Things Sample
+</div>
 
-        <!-- Можно смешивать -->
+<!-- Можно смешивать -->
 <p style="color:var(--green);font-weight:600;margin:1rem 0 0.5rem;">◇ Можно смешивать:</p>
 <div class="things-grid">
-    <div class="thing-item" data-code="[Memory Flashbacks]
-All characters have some form of past and feelings that lingers, each have family lines, sentiments and 'core' memories they hold close to heart, influencing their attitudes toward life, others and themselves. Surface these memories at opportune momentd, inside stylized 『Japanese Quotations』Triggers can be from familiarity, objects(that reminds), sentimentality(good or bad) or personal associations." onclick="toggleThing(this)">
+    <div class="thing-item" onclick="toggleThing(this)">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">🕰️</span>
         <span class="thing-name">Флешбеки</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('flashbacks')">👁</button>
+        <textarea class="thing-source">[Memory Flashbacks]
+All characters have some form of past and feelings that lingers, each have family lines, sentiments and 'core' memories they hold close to heart, influencing their attitudes toward life, others and themselves. Surface these memories at opportune momentd, inside stylized 『Japanese Quotations』Triggers can be from familiarity, objects(that reminds), sentimentality(good or bad) or personal associations.</textarea>
     </div>
-    <div class="thing-item" data-code="[Transitions]
+
+    <div class="thing-item" onclick="toggleThing(this)">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">⏩</span>
+        <span class="thing-name">Переходы</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('transitions')">👁</button>
+        <textarea class="thing-source">[Transitions]
 ALWAYS use the <transitions> system actively to shape the story, not just as formatting. Each ∆ transition ∆ type helps develop plot, atmosphere, or character insight. Select transitions to create a living world and narrative hooks. They should be in EVERY message.
 
 [Scene and Event Changes]
@@ -3271,7 +3282,7 @@ Dream Design: (code block)
 (Descriptive and Informational Inserts)
 
 ∆ WORLDBUILDING ∆ and ∆ WORLDBUILDING - END ∆
-Use this to introduce the reader to history, lore, or detailed information about the world, its culture, or rules. 
+Use this to introduce the reader to history, lore, or detailed information about the world, its culture, or rules.
 
 ∆ RUMOR ∆ and ∆ RUMOR - END ∆
 Use this to introduce unconfirmed information, gossip, or local legends that characters might hear. These may be true, false, or a combination of both.
@@ -3285,210 +3296,274 @@ Used for a short, fragmented memory. This is not a full scene like SUNDAY, but a
 
 ∆ REFLECTION - {THEME} ∆ and ∆ REFLECTION - END ∆
 Used for a brief moment in a character's internal thought process as they reflect on a recent event, their feelings, or their conclusions. Shorter and more focused than INTERLUDE. ∆ REFLECTION - {THEME} ∆ and ∆ REFLECTION - END ∆
-Used to depict a character or narrator theorizing, formulating hypotheses, or attempting to connect the dots based on available information. 
+Used to depict a character or narrator theorizing, formulating hypotheses, or attempting to connect the dots based on available information.
 
 ∆ FACTS - {TOPIC} ∆ and ∆ FACTS - END ∆
-Used to introduce one or more specific Interesting little details about the world, characters, or customs that don't directly advance the plot but add color and richness." onclick="toggleThing(this)">
-        <div class="thing-checkbox"></div>
-        <span class="thing-icon">⏩</span>
-        <span class="thing-name">Переходы</span>
-        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('transitions')">👁</button>
+Used to introduce one or more specific Interesting little details about the world, characters, or customs that don't directly advance the plot but add color and richness.</textarea>
     </div>
-    <div class="thing-item" data-code="[Realism]
-Encourage natural integration of real-world references — such as existing brands, locations, landmarks, cultural elements, media, streets, products, or events — to make the setting grounded, tangible, and relatable.
-Maintain immersion by mentioning known items and places where fitting, without overwhelming fictional flow. Use such references for contextual flavor — not product placement.
-Avoid fabricated equivalents when a real one would feel more authentic. For instance: say “Starbucks” instead of “generic café” when modern realism fits.
-Only include these references when they don't interfere with the story. For example: Don't mention what brand of clothing a character is wearing during a dramatic scene, etc. References should be introduced into the narrative as carefully and naturally as possible.
-Integrating references to real-world culture, brands, streets, cities, and recognizable environments to enhance believability and immersion. Grounding fiction in a familiar framework of reality, evoking a sense of authenticity and lived-in world." onclick="toggleThing(this)">
+
+    <div class="thing-item" onclick="toggleThing(this)">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">🌎</span>
         <span class="thing-name">Реальный Мир</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('realworld')">👁</button>
+        <textarea class="thing-source">[Realism]
+Encourage natural integration of real-world references — such as existing brands, locations, landmarks, cultural elements, media, streets, products, or events — to make the setting grounded, tangible, and relatable.
+Maintain immersion by mentioning known items and places where fitting, without overwhelming fictional flow. Use such references for contextual flavor — not product placement.
+Avoid fabricated equivalents when a real one would feel more authentic. For instance: say "Starbucks" instead of "generic café" when modern realism fits.
+Only include these references when they don't interfere with the story. For example: Don't mention what brand of clothing a character is wearing during a dramatic scene, etc. References should be introduced into the narrative as carefully and naturally as possible.
+Integrating references to real-world culture, brands, streets, cities, and recognizable environments to enhance believability and immersion. Grounding fiction in a familiar framework of reality, evoking a sense of authenticity and lived-in world.</textarea>
     </div>
-    <div class="thing-item" data-code="[Mimick the textual formatting-style of popular webnovels and official or unofficial sites(such as fan-translation).
-Make use of chapter headings, separators, and other known elements that makes up real webby chappy! At the start of the every response, ensure a new proper chapter heading is used each time.]" onclick="toggleThing(this)">
+
+    <div class="thing-item" onclick="toggleThing(this)">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">✒️</span>
         <span class="thing-name">Стиль веб-главы</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('webchapter')">👁</button>
+        <textarea class="thing-source">[Mimick the textual formatting-style of popular webnovels and official or unofficial sites(such as fan-translation).
+Make use of chapter headings, separators, and other known elements that makes up real webby chappy! At the start of the every response, ensure a new proper chapter heading is used each time.]</textarea>
     </div>
-    <div class="thing-item" data-code="[Actor Interview]
-At the end of the response, add a brief Behind the Scenes section at the end where the actors break out of character and share their real thoughts about the scene they just performed.
-Formatting Criterias: Keep it short (2-3 lines per character maximum). Genuine reaction to what just happened, their feelings on the character and scene." onclick="toggleThing(this)">
+
+    <div class="thing-item" onclick="toggleThing(this)">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">📢</span>
         <span class="thing-name">Интервью с Актерами</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('interview')">👁</button>
+        <textarea class="thing-source">[Actor Interview]
+At the end of the response, add a brief Behind the Scenes section at the end where the actors break out of character and share their real thoughts about the scene they just performed.
+Formatting Criterias: Keep it short (2-3 lines per character maximum). Genuine reaction to what just happened, their feelings on the character and scene.</textarea>
     </div>
-    <div class="thing-item" data-copy="[MEME]" onclick="toggleThing(this)"><button class="prompt-btn"
+
+    <div class="thing-item" onclick="toggleThing(this)">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">🖼️</span>
         <span class="thing-name">MEME</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('meme')">👁</button>
+        <textarea class="thing-source">[Meme]
+You must generate a highly specific and contextually relevant meme based on the immediate situation, dialogue, or theme at the beginning of every message.
+HTML TEMPLATE:
+<div style="width: 100%; max-width: 100%; margin: 0 auto; border: 2px solid #000; border-radius: 6px; overflow: hidden; background: #000; box-sizing: border-box;">
+  <div style="position: relative; width: 100%; padding-bottom: 56.25%; background: #000;">
+    <img src="https://image.pollinations.ai/prompt/[PROMPT]?width=800&height=450&nologo=true&negative_prompt=[NEGATIVE_PROMPT]"
+         style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;"
+         alt="meme image">
+    <div style="position: absolute; top: 0; left: 0; width: 100%; padding: 4px; box-sizing: border-box;">
+      <div style="color: white; font-family: 'Arial', 'Helvetica', sans-serif; font-size: min(4vw, 20px); font-weight: 900; text-align: center; text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000; line-height: 1.2; letter-spacing: 0.5px; word-wrap: break-word; max-height: 30%; overflow: hidden; padding: 0 8px;">
+      </div>
     </div>
-    <div class="thing-item" data-code="[TYPOGRAPHY]" onclick="toggleThing(this)">
+    <div style="position: absolute; bottom: 0; left: 0; width: 100%; padding: 4px; box-sizing: border-box;">
+      <div style="color: white; font-family: 'Arial', 'Helvetica', sans-serif; font-size: min(4vw, 20px); font-weight: 900; text-align: center; text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000; line-height: 1.2; letter-spacing: 0.5px; word-wrap: break-word; max-height: 30%; overflow: hidden; padding: 0 8px;">
+      </div>
+    </div>
+  </div>
+</div>
+TEXT RULES:
+- MAX characters per line: 25
+- Use short, concise phrases in the same language as the message or context
+- Avoid long words that don't wrap well.</textarea>
+    </div>
+
+    <div class="thing-item" onclick="toggleThing(this)">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">🔰</span>
         <span class="thing-name">Типографика</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('typography')">👁</button>
+        <textarea class="thing-source">[TYPOGRAPHY]</textarea>
     </div>
-    <div class="thing-item" data-code="[MUSIC_SUBS]" onclick="toggleThing(this)">
+
+    <div class="thing-item" onclick="toggleThing(this)">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">🎙️</span>
         <span class="thing-name">Музыкальные Субтитры</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('musicsubs')">👁</button>
+        <textarea class="thing-source">[MUSIC_SUBS]</textarea>
     </div>
 </div>
 
 <!-- Скрытые Блоки -->
 <p style="color:var(--green);font-weight:600;margin:1.5rem 0 0.5rem;">👁 Скрытые Блоки:</p>
 <div class="things-grid">
-    <div class="thing-item" data-code="[HIDDEN_PROFILES]" onclick="toggleThing(this)">
+    <div class="thing-item" onclick="toggleThing(this)">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">👤</span>
         <span class="thing-name">Скрытые Профили</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('hiddenprofiles')">👁</button>
+        <textarea class="thing-source">[HIDDEN_PROFILES]</textarea>
     </div>
-    <div class="thing-item" data-code="[HIDDEN_EVENTS]" onclick="toggleThing(this)">
+
+    <div class="thing-item" onclick="toggleThing(this)">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">📍</span>
         <span class="thing-name">Закадровые События</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('hiddenevents')">👁</button>
+        <textarea class="thing-source">[HIDDEN_EVENTS]</textarea>
     </div>
-    <div class="thing-item" data-code="[HIDDEN_PLANS]" onclick="toggleThing(this)">
+
+    <div class="thing-item" onclick="toggleThing(this)">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">🗒️</span>
         <span class="thing-name">Скрытые Планы</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('hiddenplans')">👁</button>
+        <textarea class="thing-source">[HIDDEN_PLANS]</textarea>
     </div>
-    <div class="thing-item" data-code="[HIDDEN_DATING]" onclick="toggleThing(this)">
+
+    <div class="thing-item" onclick="toggleThing(this)">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">💌</span>
         <span class="thing-name">Скрытый DatingSim</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('hiddendating')">👁</button>
+        <textarea class="thing-source">[HIDDEN_DATING]</textarea>
     </div>
 </div>
 
 <!-- Инфоблоки -->
 <p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ Инфоблоки <span style="color:var(--text-dim);font-weight:400;">(только один)</span></p>
 <div class="things-grid">
-    <div class="thing-item exclusive" data-group="infoblocks" data-code="[INFO_RENETTE]" onclick="toggleExclusive(this,'infoblocks')">
+    <div class="thing-item exclusive" data-group="infoblocks" onclick="toggleExclusive(this,'infoblocks')">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">🍎</span>
         <span class="thing-name">Логи Ренетт</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('inforenette')">👁</button>
+        <textarea class="thing-source">[INFO_RENETTE]</textarea>
     </div>
-    <div class="thing-item exclusive" data-group="infoblocks" data-code="[INFO_CLOCK]" onclick="toggleExclusive(this,'infoblocks')">
+
+    <div class="thing-item exclusive" data-group="infoblocks" onclick="toggleExclusive(this,'infoblocks')">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">🍏</span>
         <span class="thing-name">Яблочные часы</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('infoclock')">👁</button>
+        <textarea class="thing-source">[INFO_CLOCK]</textarea>
     </div>
-    <div class="thing-item exclusive" data-group="infoblocks" data-code="[INFO_MINI]" onclick="toggleExclusive(this,'infoblocks')">
+
+    <div class="thing-item exclusive" data-group="infoblocks" onclick="toggleExclusive(this,'infoblocks')">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">🗂️</span>
         <span class="thing-name">Мини-Инфоблок</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('infomini')">👁</button>
+        <textarea class="thing-source">[INFO_MINI]</textarea>
     </div>
-    <div class="thing-item exclusive" data-group="infoblocks" data-code="[INFO_MAIN]" onclick="toggleExclusive(this,'infoblocks')">
+
+    <div class="thing-item exclusive" data-group="infoblocks" onclick="toggleExclusive(this,'infoblocks')">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">📝</span>
         <span class="thing-name">Основной Инфоблок</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('infomain')">👁</button>
+        <textarea class="thing-source">[INFO_MAIN]</textarea>
     </div>
-    <div class="thing-item exclusive" data-group="infoblocks" data-code="[INFO_MATRIX]" onclick="toggleExclusive(this,'infoblocks')">
+
+    <div class="thing-item exclusive" data-group="infoblocks" onclick="toggleExclusive(this,'infoblocks')">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">💖</span>
         <span class="thing-name">+Матрица отношений</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('infomatrix')">👁</button>
+        <textarea class="thing-source">[INFO_MATRIX]</textarea>
     </div>
-    <div class="thing-item exclusive" data-group="infoblocks" data-code="[INFO_THOUGHTS]" onclick="toggleExclusive(this,'infoblocks')">
+
+    <div class="thing-item exclusive" data-group="infoblocks" onclick="toggleExclusive(this,'infoblocks')">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">💭</span>
         <span class="thing-name">+МатрОтн + Мысли</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('infothoughts')">👁</button>
+        <textarea class="thing-source">[INFO_THOUGHTS]</textarea>
     </div>
 </div>
 
 <!-- CYOA -->
 <p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ CYOA <span style="color:var(--text-dim);font-weight:400;">(только один)</span></p>
 <div class="things-grid">
-    <div class="thing-item exclusive" data-group="cyoa" data-code="[CYOA_MACRO]" onclick="toggleExclusive(this,'cyoa')">
+    <div class="thing-item exclusive" data-group="cyoa" onclick="toggleExclusive(this,'cyoa')">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">🎲</span>
         <span class="thing-name">CYOA - R-Macro</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('cyoamacro')">👁</button>
+        <textarea class="thing-source">[CYOA_MACRO]</textarea>
     </div>
-    <div class="thing-item exclusive" data-group="cyoa" data-code="[CYOA_NO_MACRO]" onclick="toggleExclusive(this,'cyoa')">
+
+    <div class="thing-item exclusive" data-group="cyoa" onclick="toggleExclusive(this,'cyoa')">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">🕹️</span>
         <span class="thing-name">CYOA - No R-Macro</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('cyoanomacro')">👁</button>
+        <textarea class="thing-source">[CYOA_NO_MACRO]</textarea>
     </div>
 </div>
 
 <!-- Fancy UI -->
 <p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ Fancy UI <span style="color:var(--text-dim);font-weight:400;">(только один)</span></p>
 <div class="things-grid">
-    <div class="thing-item exclusive" data-group="fancy" data-code="[FANCY_FULL]" onclick="toggleExclusive(this,'fancy')">
+    <div class="thing-item exclusive" data-group="fancy" onclick="toggleExclusive(this,'fancy')">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">🥂</span>
         <span class="thing-name">Fancy UI</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('fancyfull')">👁</button>
+        <textarea class="thing-source">[FANCY_FULL]</textarea>
     </div>
-    <div class="thing-item exclusive" data-group="fancy" data-code="[FANCY_BASE]" onclick="toggleExclusive(this,'fancy')">
+
+    <div class="thing-item exclusive" data-group="fancy" onclick="toggleExclusive(this,'fancy')">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">🥂</span>
         <span class="thing-name">Только Основа</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('fancybase')">👁</button>
+        <textarea class="thing-source">[FANCY_BASE]</textarea>
     </div>
-    <div class="thing-item exclusive" data-group="fancy" data-code="[FANCY_THOUGHTS]" onclick="toggleExclusive(this,'fancy')">
+
+    <div class="thing-item exclusive" data-group="fancy" onclick="toggleExclusive(this,'fancy')">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">🥂</span>
         <span class="thing-name">Только Мысли</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('fancythoughts')">👁</button>
+        <textarea class="thing-source">[FANCY_THOUGHTS]</textarea>
     </div>
 </div>
 
 <!-- Комментарии -->
 <p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ Комментарии <span style="color:var(--text-dim);font-weight:400;">(только один)</span></p>
 <div class="things-grid">
-    <div class="thing-item exclusive" data-group="comments" data-code="[COMMENTS_V1]" onclick="toggleExclusive(this,'comments')">
+    <div class="thing-item exclusive" data-group="comments" onclick="toggleExclusive(this,'comments')">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">💬</span>
         <span class="thing-name">Комменты V1</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('commentsv1')">👁</button>
+        <textarea class="thing-source">[COMMENTS_V1]</textarea>
     </div>
-    <div class="thing-item exclusive" data-group="comments" data-code="[COMMENTS_V2]" onclick="toggleExclusive(this,'comments')">
+
+    <div class="thing-item exclusive" data-group="comments" onclick="toggleExclusive(this,'comments')">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">💬</span>
         <span class="thing-name">Комменты V2</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('commentsv2')">👁</button>
+        <textarea class="thing-source">[COMMENTS_V2]</textarea>
     </div>
-    <div class="thing-item exclusive" data-group="comments" data-code="[COMMENTS_V3]" onclick="toggleExclusive(this,'comments')">
+
+    <div class="thing-item exclusive" data-group="comments" onclick="toggleExclusive(this,'comments')">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">💬</span>
         <span class="thing-name">Комменты V3</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('commentsv3')">👁</button>
+        <textarea class="thing-source">[COMMENTS_V3]</textarea>
     </div>
 </div>
 
 <!-- Хроники -->
 <p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ Хроники <span style="color:var(--text-dim);font-weight:400;">(только один)</span></p>
 <div class="things-grid" style="margin-bottom:2rem;">
-    <div class="thing-item exclusive" data-group="chronicles" data-code="[CHRONICLES_LIGHT]" onclick="toggleExclusive(this,'chronicles')">
+    <div class="thing-item exclusive" data-group="chronicles" onclick="toggleExclusive(this,'chronicles')">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">📜</span>
         <span class="thing-name">Светлая Тема</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('chronicleslight')">👁</button>
+        <textarea class="thing-source">[CHRONICLES_LIGHT]</textarea>
     </div>
-    <div class="thing-item exclusive" data-group="chronicles" data-code="[CHRONICLES_DARK]" onclick="toggleExclusive(this,'chronicles')">
+
+    <div class="thing-item exclusive" data-group="chronicles" onclick="toggleExclusive(this,'chronicles')">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">📜</span>
         <span class="thing-name">Тёмная Тема</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('chroniclesdark')">👁</button>
+        <textarea class="thing-source">[CHRONICLES_DARK]</textarea>
     </div>
 </div>
+
 
 
         <!-- ═══ HTML THEME ═══ -->
@@ -4144,18 +4219,10 @@ function copySelectedThings() {
     const selected = document.querySelectorAll('.thing-item.selected');
     const codes = [];
     selected.forEach(item => {
-        // Ищем ID штуки в кнопке просмотра
-        const viewBtn = item.querySelector('.thing-action-btn');
-        if (viewBtn) {
-            const onclick = viewBtn.getAttribute('onclick');
-            const match = onclick.match(/showThingDesc\('(\w+)'\)/);
-            if (match && match[1] && thingsData[match[1]]) {
-                codes.push(thingsData[match[1]].code);
-                return;
-            }
+        const textarea = item.querySelector('.thing-source');
+        if (textarea) {
+            codes.push(textarea.value);
         }
-        // Если не нашли в thingsData — берём из data-code
-        codes.push(item.dataset.code);
     });
 
     if (codes.length > 0) {
@@ -4164,6 +4231,7 @@ function copySelectedThings() {
         });
     }
 }
+
 
 // Данные для штук
 const thingsData = {
@@ -4195,28 +4263,7 @@ const thingsData = {
     meme: {
         title: 'MEME',
         desc: 'Генерация большого мема в начале соо на основе текущей ситуации.',
-        code: `[Meme]
-You must generate a highly specific and contextually relevant meme based on the immediate situation, dialogue, or theme at the beginning of every message.
-HTML TEMPLATE:
-<div style="width: 100%; max-width: 100%; margin: 0 auto; border: 2px solid #000; border-radius: 6px; overflow: hidden; background: #000; box-sizing: border-box;">
-  <div style="position: relative; width: 100%; padding-bottom: 56.25%; background: #000;">
-    <img src="https://image.pollinations.ai/prompt/[PROMPT]?width=800&height=450&nologo=true&negative_prompt=[NEGATIVE_PROMPT]"
-         style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;"
-         alt="meme image">
-    <div style="position: absolute; top: 0; left: 0; width: 100%; padding: 4px; box-sizing: border-box;">
-      <div style="color: white; font-family: 'Arial', 'Helvetica', sans-serif; font-size: min(4vw, 20px); font-weight: 900; text-align: center; text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000; line-height: 1.2; letter-spacing: 0.5px; word-wrap: break-word; max-height: 30%; overflow: hidden; padding: 0 8px;">
-      </div>
-    </div>
-    <div style="position: absolute; bottom: 0; left: 0; width: 100%; padding: 4px; box-sizing: border-box;">
-      <div style="color: white; font-family: 'Arial', 'Helvetica', sans-serif; font-size: min(4vw, 20px); font-weight: 900; text-align: center; text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000; line-height: 1.2; letter-spacing: 0.5px; word-wrap: break-word; max-height: 30%; overflow: hidden; padding: 0 8px;">
-      </div>
-    </div>
-  </div>
-</div>
-TEXT RULES:
-- MAX characters per line: 25
-- Use short, concise phrases in the same language as the message or context
-- Avoid long words that don't wrap well.`
+        code: '[MEME]'
     },
     typography: {
         title: 'Типографика',
