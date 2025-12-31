@@ -4997,7 +4997,7 @@ function closeThingDesc() {
         });
 
 // ═══════════════════════════════════════
-// MINI-GAME: APPLE ADVENTURE
+// MINI-GAME: APPLE ADVENTURE (FIXED)
 // ═══════════════════════════════════════
 
 const G = {
@@ -5019,7 +5019,8 @@ const G = {
     score: 0,
     apples: 0,
     levelName: "",
-    particles: []
+    particles: [],
+    tick: 0
 };
 
 function openGame() {
@@ -5053,6 +5054,7 @@ function startGame() {
     G.level = 1;
     G.score = 0;
     G.apples = 0;
+    G.tick = 0;
     startLevel();
     showOverlay(null);
     G.running = true;
@@ -5064,6 +5066,7 @@ function restartGame() {
     G.level = 1;
     G.score = 0;
     G.apples = 0;
+    G.tick = 0;
     startLevel();
     showOverlay(null);
     G.running = true;
@@ -5085,10 +5088,11 @@ function startLevel() {
         onGround: false,
         jumpHeld: false,
         facingRight: true,
-        frameTime: 0
+        showTime: 0
     };
     G.camera.x = 0;
     G.particles = [];
+    G.tick = 0;
     genLevel();
     updateHUD();
 }
@@ -5108,163 +5112,163 @@ function genLevel() {
         1: {
             name: "🌱 Яблочный Сад",
             platforms: [
-                { x: 0, y: groundY, w: 300, h: 50 },
-                { x: 200, y: groundY - 80, w: 100, h: 20 },
-                { x: 380, y: groundY - 60, w: 100, h: 20 },
-                { x: 560, y: groundY, w: 200, h: 50 },
-                { x: 650, y: groundY - 100, w: 80, h: 20 },
-                { x: 840, y: groundY - 70, w: 120, h: 20 },
-                { x: 1040, y: groundY, w: 300, h: 50 },
+                { x: 0, y: groundY, w: 350, h: 50 },
+                { x: 250, y: groundY - 70, w: 100, h: 20 },
+                { x: 450, y: groundY - 50, w: 100, h: 20 },
+                { x: 650, y: groundY, w: 250, h: 50 },
+                { x: 750, y: groundY - 90, w: 80, h: 20 },
+                { x: 950, y: groundY - 60, w: 120, h: 20 },
+                { x: 1150, y: groundY, w: 350, h: 50 },
             ],
             apples: [
-                { x: 240, y: groundY - 115 },
-                { x: 420, y: groundY - 95 },
-                { x: 680, y: groundY - 140 },
-                { x: 890, y: groundY - 105 },
-                { x: 240, y: groundY - 35, secret: true },
+                { x: 290, y: groundY - 105 },
+                { x: 490, y: groundY - 85 },
+                { x: 780, y: groundY - 130 },
+                { x: 1000, y: groundY - 95 },
+                { x: 180, y: groundY - 35, secret: true },
             ],
             hazards: [],
             moving: [],
             fading: [],
             bouncy: [],
-            goalX: 1200
+            goalX: 1350
         },
         2: {
             name: "⚡ Прыжки Веры",
             platforms: [
-                { x: 0, y: groundY, w: 200, h: 50 },
-                { x: 320, y: groundY - 40, w: 80, h: 20 },
-                { x: 520, y: groundY - 80, w: 80, h: 20 },
-                { x: 720, y: groundY - 40, w: 80, h: 20 },
-                { x: 920, y: groundY, w: 150, h: 50 },
-                { x: 1150, y: groundY - 100, w: 100, h: 20 },
-                { x: 1350, y: groundY, w: 300, h: 50 },
+                { x: 0, y: groundY, w: 250, h: 50 },
+                { x: 380, y: groundY - 40, w: 100, h: 20 },
+                { x: 600, y: groundY - 70, w: 100, h: 20 },
+                { x: 820, y: groundY - 40, w: 100, h: 20 },
+                { x: 1020, y: groundY, w: 200, h: 50 },
+                { x: 1300, y: groundY - 90, w: 120, h: 20 },
+                { x: 1520, y: groundY, w: 350, h: 50 },
             ],
             apples: [
-                { x: 350, y: groundY - 75 },
-                { x: 550, y: groundY - 115 },
-                { x: 750, y: groundY - 75 },
-                { x: 1180, y: groundY - 135 },
+                { x: 420, y: groundY - 75 },
+                { x: 640, y: groundY - 105 },
+                { x: 860, y: groundY - 75 },
+                { x: 1350, y: groundY - 125 },
             ],
             hazards: [
-                { x: 250, y: groundY - 20, w: 50, h: 20 },
-                { x: 850, y: groundY - 20, w: 50, h: 20 },
+                { x: 300, y: groundY - 20, w: 50, h: 20 },
+                { x: 950, y: groundY - 20, w: 50, h: 20 },
             ],
             moving: [
-                { x: 600, y: groundY - 130, w: 80, h: 20, minX: 550, maxX: 700, speed: 1.5 },
+                { x: 700, y: groundY - 120, w: 80, h: 20, minX: 650, maxX: 800, speed: 0.8 },
             ],
             fading: [],
             bouncy: [],
-            goalX: 1500
+            goalX: 1700
         },
         3: {
             name: "🌀 Движущийся Хаос",
             platforms: [
-                { x: 0, y: groundY, w: 180, h: 50 },
-                { x: 400, y: groundY, w: 150, h: 50 },
-                { x: 750, y: groundY - 60, w: 100, h: 20 },
-                { x: 1100, y: groundY, w: 150, h: 50 },
-                { x: 1400, y: groundY, w: 300, h: 50 },
+                { x: 0, y: groundY, w: 200, h: 50 },
+                { x: 450, y: groundY, w: 180, h: 50 },
+                { x: 850, y: groundY - 50, w: 120, h: 20 },
+                { x: 1200, y: groundY, w: 180, h: 50 },
+                { x: 1550, y: groundY, w: 350, h: 50 },
             ],
             apples: [
-                { x: 300, y: groundY - 100 },
-                { x: 550, y: groundY - 80 },
-                { x: 900, y: groundY - 140 },
-                { x: 1050, y: groundY - 180, secret: true },
-                { x: 1200, y: groundY - 35 },
+                { x: 330, y: groundY - 90 },
+                { x: 580, y: groundY - 70 },
+                { x: 1000, y: groundY - 130 },
+                { x: 1150, y: groundY - 170, secret: true },
+                { x: 1320, y: groundY - 35 },
             ],
             hazards: [
-                { x: 600, y: groundY - 20, w: 80, h: 20 },
-                { x: 950, y: groundY - 20, w: 80, h: 20 },
+                { x: 680, y: groundY - 20, w: 80, h: 20 },
+                { x: 1050, y: groundY - 20, w: 80, h: 20 },
             ],
             moving: [
-                { x: 220, y: groundY - 60, w: 90, h: 20, minX: 200, maxX: 350, speed: 2 },
-                { x: 550, y: groundY - 120, w: 80, h: 20, minX: 500, maxX: 680, speed: 1.8 },
-                { x: 900, y: groundY - 100, w: 90, h: 20, minX: 850, maxX: 1050, speed: 2.2 },
+                { x: 250, y: groundY - 60, w: 100, h: 20, minX: 220, maxX: 400, speed: 1 },
+                { x: 650, y: groundY - 110, w: 90, h: 20, minX: 600, maxX: 780, speed: 0.9 },
+                { x: 1000, y: groundY - 90, w: 100, h: 20, minX: 950, maxX: 1150, speed: 1.1 },
             ],
             fading: [],
             bouncy: [
-                { x: 450, y: groundY - 15, w: 60, h: 15 },
+                { x: 500, y: groundY - 15, w: 60, h: 15 },
             ],
-            goalX: 1550
+            goalX: 1750
         },
         4: {
             name: "👻 Исчезающие Тропы",
             platforms: [
-                { x: 0, y: groundY, w: 150, h: 50 },
-                { x: 350, y: groundY - 50, w: 80, h: 20 },
-                { x: 700, y: groundY, w: 120, h: 50 },
-                { x: 1050, y: groundY - 80, w: 100, h: 20 },
-                { x: 1350, y: groundY, w: 300, h: 50 },
+                { x: 0, y: groundY, w: 180, h: 50 },
+                { x: 400, y: groundY - 45, w: 100, h: 20 },
+                { x: 800, y: groundY, w: 150, h: 50 },
+                { x: 1200, y: groundY - 70, w: 120, h: 20 },
+                { x: 1500, y: groundY, w: 350, h: 50 },
             ],
             apples: [
-                { x: 250, y: groundY - 110 },
-                { x: 500, y: groundY - 90 },
-                { x: 620, y: groundY - 160, secret: true },
-                { x: 850, y: groundY - 60 },
-                { x: 1100, y: groundY - 130 },
-                { x: 1200, y: groundY - 180, secret: true },
+                { x: 280, y: groundY - 100 },
+                { x: 550, y: groundY - 80 },
+                { x: 700, y: groundY - 150, secret: true },
+                { x: 950, y: groundY - 50 },
+                { x: 1250, y: groundY - 120 },
+                { x: 1350, y: groundY - 170, secret: true },
             ],
             hazards: [
-                { x: 550, y: groundY - 20, w: 100, h: 20 },
-                { x: 900, y: groundY - 20, w: 100, h: 20 },
+                { x: 620, y: groundY - 20, w: 100, h: 20 },
+                { x: 1000, y: groundY - 20, w: 100, h: 20 },
             ],
             moving: [
-                { x: 800, y: groundY - 110, w: 80, h: 20, minX: 750, maxX: 950, speed: 2.5 },
+                { x: 900, y: groundY - 100, w: 90, h: 20, minX: 850, maxX: 1050, speed: 1.2 },
             ],
             fading: [
-                { x: 180, y: groundY - 70, w: 90, h: 20, timer: 0, visible: true, interval: 120 },
-                { x: 480, y: groundY - 50, w: 90, h: 20, timer: 60, visible: true, interval: 120 },
-                { x: 580, y: groundY - 120, w: 70, h: 20, timer: 30, visible: true, interval: 100 },
-                { x: 1180, y: groundY - 140, w: 80, h: 20, timer: 0, visible: true, interval: 90 },
+                { x: 200, y: groundY - 65, w: 100, h: 20, timer: 0, visible: true, interval: 150 },
+                { x: 550, y: groundY - 45, w: 100, h: 20, timer: 75, visible: true, interval: 150 },
+                { x: 660, y: groundY - 110, w: 80, h: 20, timer: 40, visible: true, interval: 120 },
+                { x: 1350, y: groundY - 130, w: 90, h: 20, timer: 0, visible: true, interval: 120 },
             ],
             bouncy: [],
-            goalX: 1500
+            goalX: 1700
         },
         5: {
-            name: "🔥 Яблочный Ад",
+            name: "🔥 Яблочный Финал",
             platforms: [
-                { x: 0, y: groundY, w: 120, h: 50 },
-                { x: 500, y: groundY - 40, w: 80, h: 20 },
-                { x: 850, y: groundY, w: 100, h: 50 },
-                { x: 1200, y: groundY - 60, w: 80, h: 20 },
-                { x: 1550, y: groundY, w: 100, h: 50 },
-                { x: 1850, y: groundY, w: 300, h: 50 },
+                { x: 0, y: groundY, w: 150, h: 50 },
+                { x: 550, y: groundY - 35, w: 100, h: 20 },
+                { x: 950, y: groundY, w: 120, h: 50 },
+                { x: 1350, y: groundY - 55, w: 100, h: 20 },
+                { x: 1700, y: groundY, w: 120, h: 50 },
+                { x: 2050, y: groundY, w: 350, h: 50 },
             ],
             apples: [
-                { x: 300, y: groundY - 120 },
-                { x: 450, y: groundY - 180, secret: true },
-                { x: 650, y: groundY - 80 },
-                { x: 1000, y: groundY - 100 },
-                { x: 1100, y: groundY - 200, secret: true },
-                { x: 1350, y: groundY - 120 },
-                { x: 1650, y: groundY - 60 },
-                { x: 1750, y: groundY - 180, secret: true },
+                { x: 350, y: groundY - 110 },
+                { x: 500, y: groundY - 170, secret: true },
+                { x: 720, y: groundY - 70 },
+                { x: 1100, y: groundY - 90 },
+                { x: 1250, y: groundY - 190, secret: true },
+                { x: 1500, y: groundY - 110 },
+                { x: 1850, y: groundY - 55 },
+                { x: 1950, y: groundY - 170, secret: true },
             ],
             hazards: [
-                { x: 150, y: groundY - 20, w: 80, h: 20 },
-                { x: 380, y: groundY - 20, w: 80, h: 20 },
-                { x: 700, y: groundY - 20, w: 120, h: 20 },
-                { x: 1050, y: groundY - 20, w: 100, h: 20 },
-                { x: 1400, y: groundY - 20, w: 120, h: 20 },
+                { x: 200, y: groundY - 20, w: 80, h: 20 },
+                { x: 420, y: groundY - 20, w: 80, h: 20 },
+                { x: 780, y: groundY - 20, w: 100, h: 20 },
+                { x: 1150, y: groundY - 20, w: 100, h: 20 },
+                { x: 1550, y: groundY - 20, w: 100, h: 20 },
             ],
             moving: [
-                { x: 200, y: groundY - 80, w: 80, h: 20, minX: 150, maxX: 350, speed: 2.5 },
-                { x: 600, y: groundY - 130, w: 70, h: 20, minX: 550, maxX: 750, speed: 3 },
-                { x: 1000, y: groundY - 150, w: 80, h: 20, minX: 950, maxX: 1150, speed: 2.8 },
-                { x: 1350, y: groundY - 100, w: 70, h: 20, minX: 1280, maxX: 1480, speed: 3.2 },
-                { x: 1700, y: groundY - 130, w: 80, h: 20, minX: 1620, maxX: 1800, speed: 2.5 },
+                { x: 250, y: groundY - 70, w: 90, h: 20, minX: 180, maxX: 380, speed: 1.2 },
+                { x: 680, y: groundY - 120, w: 80, h: 20, minX: 620, maxX: 820, speed: 1.4 },
+                { x: 1100, y: groundY - 140, w: 90, h: 20, minX: 1050, maxX: 1250, speed: 1.3 },
+                { x: 1500, y: groundY - 90, w: 80, h: 20, minX: 1420, maxX: 1620, speed: 1.5 },
+                { x: 1850, y: groundY - 120, w: 90, h: 20, minX: 1780, maxX: 1980, speed: 1.2 },
             ],
             fading: [
-                { x: 400, y: groundY - 140, w: 70, h: 20, timer: 0, visible: true, interval: 80 },
-                { x: 1080, y: groundY - 160, w: 60, h: 20, timer: 40, visible: true, interval: 70 },
+                { x: 450, y: groundY - 130, w: 80, h: 20, timer: 0, visible: true, interval: 100 },
+                { x: 1230, y: groundY - 150, w: 70, h: 20, timer: 50, visible: true, interval: 90 },
             ],
             bouncy: [
-                { x: 250, y: groundY - 15, w: 50, h: 15 },
-                { x: 950, y: groundY - 15, w: 50, h: 15 },
-                { x: 1600, y: groundY - 15, w: 50, h: 15 },
+                { x: 300, y: groundY - 15, w: 50, h: 15 },
+                { x: 1050, y: groundY - 15, w: 50, h: 15 },
+                { x: 1750, y: groundY - 15, w: 50, h: 15 },
             ],
-            goalX: 2000
+            goalX: 2250
         }
     };
 
@@ -5278,10 +5282,21 @@ function genLevel() {
     lvl.fading.forEach(f => G.fadingPlatforms.push({ ...f }));
     lvl.bouncy.forEach(b => G.bouncePads.push({ ...b }));
 
-    for (let i = 0; i < lvl.goalX; i += 200) {
-        if (Math.random() > 0.5) G.decorations.push({ x: i + Math.random() * 100, type: 'tree' });
-        if (Math.random() > 0.6) G.decorations.push({ x: i + Math.random() * 150, type: 'bush' });
-    }
+    // Декорации ТОЛЬКО на земле
+    G.platforms.forEach(plat => {
+        if (plat.h >= 50) { // Это земля
+            const count = Math.floor(plat.w / 120);
+            for (let i = 0; i < count; i++) {
+                const dx = plat.x + 30 + i * 120 + Math.random() * 40;
+                if (Math.random() > 0.4) {
+                    G.decorations.push({ x: dx, y: plat.y, type: 'tree' });
+                }
+                if (Math.random() > 0.5) {
+                    G.decorations.push({ x: dx + 50, y: plat.y, type: 'bush' });
+                }
+            }
+        }
+    });
 
     G.goal = { x: lvl.goalX, y: groundY - 80 };
 }
@@ -5300,6 +5315,7 @@ function showOverlay(id) {
 function gameLoop() {
     if (!G.running) return;
     if (!G.paused) {
+        G.tick++;
         update();
         render();
     }
@@ -5310,18 +5326,20 @@ function update() {
     const p = G.player;
     const groundY = G.canvas.height - 40;
 
+    // Замедленное управление
     if (G.keys['ArrowLeft'] || G.keys['KeyA']) {
-        p.vx = -5;
+        p.vx = -3.5;
         p.facingRight = false;
     } else if (G.keys['ArrowRight'] || G.keys['KeyD']) {
-        p.vx = 5;
+        p.vx = 3.5;
         p.facingRight = true;
     } else {
-        p.vx *= 0.8;
+        p.vx *= 0.85;
     }
 
+    // Прыжок
     if ((G.keys['Space'] || G.keys['ArrowUp'] || G.keys['KeyW']) && p.onGround && !p.jumpHeld) {
-        p.vy = -14;
+        p.vy = -11;
         p.onGround = false;
         p.jumpHeld = true;
         spawnParticles(p.x + p.w/2, p.y + p.h, 'jump');
@@ -5330,19 +5348,22 @@ function update() {
         p.jumpHeld = false;
     }
 
-    p.vy += 0.7;
-    if (p.vy > 15) p.vy = 15;
+    // Гравитация
+    p.vy += 0.5;
+    if (p.vy > 12) p.vy = 12;
 
     p.x += p.vx;
     p.y += p.vy;
 
     p.onGround = false;
 
+    // Движущиеся платформы
     G.movingPlatforms.forEach(mp => {
         mp.x += mp.speed * mp.dir;
         if (mp.x <= mp.minX || mp.x >= mp.maxX) mp.dir *= -1;
     });
 
+    // Исчезающие платформы
     G.fadingPlatforms.forEach(fp => {
         fp.timer++;
         if (fp.timer >= fp.interval) {
@@ -5351,6 +5372,7 @@ function update() {
         }
     });
 
+    // Все платформы для коллизии
     const allPlatforms = [
         ...G.platforms,
         ...G.movingPlatforms,
@@ -5359,7 +5381,7 @@ function update() {
 
     allPlatforms.forEach(plat => {
         if (p.x < plat.x + plat.w && p.x + p.w > plat.x &&
-            p.y + p.h > plat.y && p.y + p.h < plat.y + plat.h + 15 && p.vy >= 0) {
+            p.y + p.h > plat.y && p.y + p.h < plat.y + plat.h + 12 && p.vy >= 0) {
             p.y = plat.y - p.h;
             p.vy = 0;
             p.onGround = true;
@@ -5367,25 +5389,28 @@ function update() {
         }
     });
 
+    // Батуты
     G.bouncePads.forEach(bp => {
         if (p.x < bp.x + bp.w && p.x + p.w > bp.x &&
-            p.y + p.h > bp.y && p.y + p.h < bp.y + bp.h + 15 && p.vy >= 0) {
-            p.vy = -20;
+            p.y + p.h > bp.y && p.y + p.h < bp.y + bp.h + 12 && p.vy >= 0) {
+            p.vy = -16;
             spawnParticles(p.x + p.w/2, bp.y, 'bounce');
         }
     });
 
+    // Шипы
     G.hazards.forEach(h => {
         if (p.x < h.x + h.w && p.x + p.w > h.x &&
             p.y + p.h > h.y && p.y < h.y + h.h) {
-            p.x -= 50;
-            p.vy = -8;
+            p.x = Math.max(50, p.x - 60);
+            p.vy = -6;
             G.score = Math.max(0, G.score - 50);
             spawnParticles(p.x + p.w/2, p.y + p.h/2, 'hurt');
             updateHUD();
         }
     });
 
+    // Сбор яблок
     G.collectibles.forEach(c => {
         if (!c.collected &&
             p.x < c.x + 20 && p.x + p.w > c.x &&
@@ -5398,19 +5423,23 @@ function update() {
         }
     });
 
+    // Падение
     if (p.y > G.canvas.height + 50) {
         p.x = 50;
         p.y = 100;
         p.vx = 0;
         p.vy = 0;
+        G.camera.x = 0;
         G.score = Math.max(0, G.score - 100);
         updateHUD();
     }
 
+    // Камера
     const targetCam = p.x - G.canvas.width / 3;
-    G.camera.x += (targetCam - G.camera.x) * 0.1;
+    G.camera.x += (targetCam - G.camera.x) * 0.08;
     if (G.camera.x < 0) G.camera.x = 0;
 
+    // Финиш
     if (p.x > G.goal.x && p.x < G.goal.x + 80 && p.y > G.goal.y - 20) {
         if (G.level < G.maxLevel) {
             G.level++;
@@ -5421,13 +5450,16 @@ function update() {
         }
     }
 
+    // Частицы
     G.particles = G.particles.filter(pt => {
         pt.x += pt.vx;
         pt.y += pt.vy;
-        pt.vy += 0.2;
+        pt.vy += 0.15;
         pt.life--;
         return pt.life > 0;
     });
+
+    p.showTime++;
 }
 
 function spawnParticles(x, y, type) {
@@ -5438,13 +5470,13 @@ function spawnParticles(x, y, type) {
         hurt: ['#FF5252', '#FF1744']
     };
     const c = colors[type] || ['#fff'];
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 6; i++) {
         G.particles.push({
             x, y,
-            vx: (Math.random() - 0.5) * 6,
-            vy: (Math.random() - 0.5) * 6 - 2,
+            vx: (Math.random() - 0.5) * 4,
+            vy: (Math.random() - 0.5) * 4 - 1.5,
             color: c[Math.floor(Math.random() * c.length)],
-            life: 20 + Math.random() * 15
+            life: 25 + Math.random() * 10
         });
     }
 }
@@ -5452,7 +5484,9 @@ function spawnParticles(x, y, type) {
 function render() {
     const ctx = G.ctx;
     const cam = G.camera.x;
+    const tick = G.tick;
 
+    // Небо
     const skyGrad = ctx.createLinearGradient(0, 0, 0, G.canvas.height);
     skyGrad.addColorStop(0, '#1a1a2e');
     skyGrad.addColorStop(0.5, '#16213e');
@@ -5460,31 +5494,36 @@ function render() {
     ctx.fillStyle = skyGrad;
     ctx.fillRect(0, 0, G.canvas.width, G.canvas.height);
 
+    // Звёзды
     ctx.fillStyle = 'rgba(255,255,255,0.5)';
-    for (let i = 0; i < 30; i++) {
-        const sx = ((i * 73 + 20) % 500) - (cam * 0.1) % 500;
-        const sy = (i * 37) % 150;
+    for (let i = 0; i < 25; i++) {
+        const sx = ((i * 73 + 20) % 500) - (cam * 0.05) % 500;
+        const sy = (i * 37) % 120;
         ctx.fillRect(sx, sy, 2, 2);
     }
 
+    // Декорации
     G.decorations.forEach(d => {
         const dx = d.x - cam;
         if (dx > -50 && dx < G.canvas.width + 50) {
-            if (d.type === 'tree') drawTree(ctx, dx, G.canvas.height - 40);
-            else drawBush(ctx, dx, G.canvas.height - 40);
+            if (d.type === 'tree') drawTree(ctx, dx, d.y);
+            else drawBush(ctx, dx, d.y);
         }
     });
 
+    // Платформы
     G.platforms.forEach(pl => {
         const px = pl.x - cam;
         if (px > -pl.w && px < G.canvas.width) drawPlatform(ctx, px, pl.y, pl.w, pl.h, 'normal');
     });
 
+    // Движущиеся платформы
     G.movingPlatforms.forEach(mp => {
         const px = mp.x - cam;
         if (px > -mp.w && px < G.canvas.width) drawPlatform(ctx, px, mp.y, mp.w, mp.h, 'moving');
     });
 
+    // Исчезающие платформы
     G.fadingPlatforms.forEach(fp => {
         if (!fp.visible) return;
         const px = fp.x - cam;
@@ -5494,27 +5533,33 @@ function render() {
         }
     });
 
+    // Батуты
     G.bouncePads.forEach(bp => {
         const px = bp.x - cam;
-        if (px > -bp.w && px < G.canvas.width) drawBouncePad(ctx, px, bp.y, bp.w, bp.h);
+        if (px > -bp.w && px < G.canvas.width) drawBouncePad(ctx, px, bp.y, bp.w, bp.h, tick);
     });
 
+    // Шипы
     G.hazards.forEach(h => {
         const hx = h.x - cam;
         if (hx > -h.w && hx < G.canvas.width) drawSpikes(ctx, hx, h.y, h.w);
     });
 
+    // Яблоки
     G.collectibles.forEach(c => {
         if (c.collected) return;
         const cx = c.x - cam;
-        if (cx > -30 && cx < G.canvas.width + 30) drawApple(ctx, cx, c.y, c.secret);
+        if (cx > -30 && cx < G.canvas.width + 30) drawApple(ctx, cx, c.y, c.secret, tick);
     });
 
+    // Финиш
     const gx = G.goal.x - cam;
-    if (gx > -100 && gx < G.canvas.width + 100) drawGoalPortal(ctx, gx, G.goal.y);
+    if (gx > -100 && gx < G.canvas.width + 100) drawGoalPortal(ctx, gx, G.goal.y, tick);
 
-    drawPlayer(ctx, G.player.x - cam, G.player.y);
+    // Игрок
+    drawPlayer(ctx, G.player.x - cam, G.player.y, tick);
 
+    // Частицы
     G.particles.forEach(pt => {
         ctx.globalAlpha = pt.life / 35;
         ctx.fillStyle = pt.color;
@@ -5524,12 +5569,12 @@ function render() {
     });
     ctx.globalAlpha = 1;
 
-    if (G.player.frameTime < 120) {
-        G.player.frameTime++;
+    // Название уровня
+    if (G.player.showTime < 120) {
         ctx.fillStyle = 'rgba(0,0,0,0.7)';
         ctx.fillRect(0, G.canvas.height / 2 - 30, G.canvas.width, 60);
         ctx.fillStyle = '#fff';
-        ctx.font = 'bold 20px Nunito, sans-serif';
+        ctx.font = 'bold 20px Montserrat, sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText(G.levelName, G.canvas.width / 2, G.canvas.height / 2 + 7);
     }
@@ -5545,40 +5590,33 @@ function drawPlatform(ctx, x, y, w, h, type, alpha = 1) {
     const c = colors[type];
 
     ctx.fillStyle = c.top;
-    ctx.beginPath();
-    ctx.roundRect(x, y, w, 10, [5, 5, 0, 0]);
-    ctx.fill();
+    ctx.fillRect(x, y, w, 8);
 
     ctx.fillStyle = c.side;
-    ctx.fillRect(x, y + 10, w, h - 10);
+    ctx.fillRect(x, y + 8, w, h - 8);
 
     ctx.fillStyle = c.dark;
-    for (let i = 0; i < w; i += 20) {
-        ctx.fillRect(x + i + 5, y + 15, 8, 4);
+    for (let i = 0; i < w; i += 25) {
+        ctx.fillRect(x + i + 8, y + 14, 10, 4);
     }
     ctx.globalAlpha = 1;
 }
 
-function drawBouncePad(ctx, x, y, w, h) {
-    const time = Date.now() / 200;
-    const squish = Math.sin(time) * 2;
+function drawBouncePad(ctx, x, y, w, h, tick) {
+    const squish = Math.sin(tick * 0.1) * 2;
     ctx.fillStyle = '#E040FB';
     ctx.beginPath();
-    ctx.ellipse(x + w/2, y + h/2 + squish, w/2, h/2 - squish, 0, 0, Math.PI * 2);
+    ctx.ellipse(x + w/2, y + h/2 + squish, w/2, h/2 - squish/2, 0, 0, Math.PI * 2);
     ctx.fill();
     ctx.fillStyle = '#F8BBD9';
     ctx.beginPath();
     ctx.ellipse(x + w/2, y + h/2 - 2 + squish, w/3, h/3, 0, 0, Math.PI * 2);
     ctx.fill();
-    ctx.fillStyle = '#fff';
-    ctx.font = '10px Arial';
-    ctx.textAlign = 'center';
-    ctx.fillText('▲▲', x + w/2, y - 2);
 }
 
 function drawSpikes(ctx, x, y, w) {
     ctx.fillStyle = '#FF5252';
-    const spikeW = 12;
+    const spikeW = 14;
     const count = Math.floor(w / spikeW);
     for (let i = 0; i < count; i++) {
         const sx = x + i * spikeW;
@@ -5588,26 +5626,22 @@ function drawSpikes(ctx, x, y, w) {
         ctx.lineTo(sx + spikeW, y + 20);
         ctx.fill();
     }
-    ctx.fillStyle = '#FF8A80';
-    for (let i = 0; i < count; i++) {
-        ctx.fillRect(x + i * spikeW + spikeW/2 - 2, y + 5, 3, 6);
-    }
 }
 
-function drawApple(ctx, x, y, isSecret) {
-    const bob = Math.sin(Date.now() / 300 + x) * 3;
+function drawApple(ctx, x, y, isSecret, tick) {
+    const bob = Math.sin(tick * 0.05 + x * 0.01) * 3;
     const ay = y + bob;
 
     if (isSecret) {
-        ctx.fillStyle = 'rgba(255, 215, 0, 0.3)';
+        ctx.fillStyle = 'rgba(255, 215, 0, 0.25)';
         ctx.beginPath();
         ctx.arc(x + 10, ay + 10, 18, 0, Math.PI * 2);
         ctx.fill();
     }
 
-    ctx.fillStyle = 'rgba(0,0,0,0.3)';
+    ctx.fillStyle = 'rgba(0,0,0,0.25)';
     ctx.beginPath();
-    ctx.ellipse(x + 10, ay + 22, 8, 3, 0, 0, Math.PI * 2);
+    ctx.ellipse(x + 10, ay + 22, 7, 3, 0, 0, Math.PI * 2);
     ctx.fill();
 
     ctx.fillStyle = isSecret ? '#FFD700' : '#FF6B6B';
@@ -5615,14 +5649,14 @@ function drawApple(ctx, x, y, isSecret) {
     ctx.arc(x + 10, ay + 12, 10, 0, Math.PI * 2);
     ctx.fill();
 
-    ctx.fillStyle = 'rgba(255,255,255,0.4)';
+    ctx.fillStyle = 'rgba(255,255,255,0.35)';
     ctx.beginPath();
     ctx.arc(x + 6, ay + 8, 4, 0, Math.PI * 2);
     ctx.fill();
 
     ctx.fillStyle = '#8BC34A';
     ctx.beginPath();
-    ctx.ellipse(x + 14, ay + 2, 5, 3, 0.5, 0, Math.PI * 2);
+    ctx.ellipse(x + 14, ay + 2, 5, 3, 0.5, 0, 0, Math.PI * 2);
     ctx.fill();
 
     ctx.strokeStyle = '#795548';
@@ -5633,45 +5667,28 @@ function drawApple(ctx, x, y, isSecret) {
     ctx.stroke();
 }
 
-function drawGoalPortal(ctx, x, y) {
-    const time = Date.now() / 500;
-
+function drawGoalPortal(ctx, x, y, tick) {
     const glow = ctx.createRadialGradient(x + 40, y + 40, 10, x + 40, y + 40, 60);
-    glow.addColorStop(0, 'rgba(139, 195, 74, 0.8)');
-    glow.addColorStop(0.5, 'rgba(139, 195, 74, 0.3)');
+    glow.addColorStop(0, 'rgba(139, 195, 74, 0.7)');
+    glow.addColorStop(0.5, 'rgba(139, 195, 74, 0.25)');
     glow.addColorStop(1, 'rgba(139, 195, 74, 0)');
     ctx.fillStyle = glow;
     ctx.fillRect(x - 20, y - 20, 120, 120);
 
     ctx.strokeStyle = '#8BC34A';
-    ctx.lineWidth = 6;
+    ctx.lineWidth = 5;
     ctx.beginPath();
-    ctx.arc(x + 40, y + 80, 40, Math.PI, 0);
+    ctx.arc(x + 40, y + 80, 38, Math.PI, 0);
     ctx.stroke();
 
     ctx.fillStyle = '#689F38';
-    ctx.fillRect(x, y + 40, 12, 50);
-    ctx.fillRect(x + 68, y + 40, 12, 50);
-
-    ctx.fillStyle = '#8BC34A';
-    ctx.beginPath();
-    ctx.arc(x + 6, y + 50, 5, 0, Math.PI * 2);
-    ctx.arc(x + 74, y + 50, 5, 0, Math.PI * 2);
-    ctx.fill();
+    ctx.fillRect(x + 2, y + 42, 10, 48);
+    ctx.fillRect(x + 68, y + 42, 10, 48);
 
     ctx.fillStyle = '#fff';
-    for (let i = 0; i < 5; i++) {
-        const sx = x + 20 + Math.sin(time + i) * 15;
-        const sy = y + 50 + Math.cos(time * 1.5 + i) * 20;
-        ctx.beginPath();
-        ctx.arc(sx, sy, 2, 0, Math.PI * 2);
-        ctx.fill();
-    }
-
-    ctx.fillStyle = '#fff';
-    ctx.font = 'bold 10px Nunito, sans-serif';
+    ctx.font = 'bold 10px Montserrat, sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText('✦ FINISH ✦', x + 40, y + 15);
+    ctx.fillText('✦ FINISH ✦', x + 40, y + 18);
 }
 
 function drawTree(ctx, x, y) {
@@ -5679,29 +5696,29 @@ function drawTree(ctx, x, y) {
     ctx.fillRect(x + 10, y - 40, 10, 40);
     ctx.fillStyle = '#2E7D32';
     ctx.beginPath();
-    ctx.arc(x + 15, y - 50, 25, 0, Math.PI * 2);
+    ctx.arc(x + 15, y - 50, 22, 0, Math.PI * 2);
     ctx.fill();
     ctx.fillStyle = '#388E3C';
     ctx.beginPath();
-    ctx.arc(x + 5, y - 40, 15, 0, Math.PI * 2);
+    ctx.arc(x + 7, y - 42, 12, 0, Math.PI * 2);
     ctx.fill();
 }
 
 function drawBush(ctx, x, y) {
     ctx.fillStyle = '#388E3C';
     ctx.beginPath();
-    ctx.arc(x, y - 10, 12, 0, Math.PI * 2);
-    ctx.arc(x + 15, y - 8, 10, 0, Math.PI * 2);
+    ctx.arc(x, y - 8, 10, 0, Math.PI * 2);
+    ctx.arc(x + 12, y - 6, 8, 0, Math.PI * 2);
     ctx.fill();
 }
 
-function drawPlayer(ctx, x, y) {
+function drawPlayer(ctx, x, y, tick) {
     const p = G.player;
-    const bounce = p.onGround ? Math.sin(Date.now() / 150) * 1 : 0;
+    const bounce = p.onGround ? Math.sin(tick * 0.15) * 1.5 : 0;
 
-    ctx.fillStyle = 'rgba(0,0,0,0.3)';
+    ctx.fillStyle = 'rgba(0,0,0,0.25)';
     ctx.beginPath();
-    ctx.ellipse(x + p.w/2, y + p.h + 2, 12, 4, 0, 0, Math.PI * 2);
+    ctx.ellipse(x + p.w/2, y + p.h + 2, 10, 4, 0, 0, Math.PI * 2);
     ctx.fill();
 
     ctx.fillStyle = '#FF6B6B';
@@ -5711,12 +5728,12 @@ function drawPlayer(ctx, x, y) {
 
     ctx.fillStyle = '#FF8A80';
     ctx.beginPath();
-    ctx.arc(x + 5, y + p.h/2 + 4 + bounce, 4, 0, Math.PI * 2);
-    ctx.arc(x + p.w - 5, y + p.h/2 + 4 + bounce, 4, 0, Math.PI * 2);
+    ctx.arc(x + 6, y + p.h/2 + 4 + bounce, 4, 0, Math.PI * 2);
+    ctx.arc(x + p.w - 6, y + p.h/2 + 4 + bounce, 4, 0, Math.PI * 2);
     ctx.fill();
 
     ctx.fillStyle = '#fff';
-    const eyeX = p.facingRight ? 3 : -3;
+    const eyeX = p.facingRight ? 2 : -2;
     ctx.beginPath();
     ctx.arc(x + p.w/2 - 5 + eyeX, y + p.h/2 - 3 + bounce, 4, 0, Math.PI * 2);
     ctx.arc(x + p.w/2 + 5 + eyeX, y + p.h/2 - 3 + bounce, 4, 0, Math.PI * 2);
@@ -5730,13 +5747,13 @@ function drawPlayer(ctx, x, y) {
 
     ctx.fillStyle = '#8BC34A';
     ctx.beginPath();
-    ctx.ellipse(x + p.w/2 + 5, y + 2 + bounce, 6, 4, 0.5, 0, Math.PI * 2);
+    ctx.ellipse(x + p.w/2 + 5, y + 2 + bounce, 5, 3, 0.5, 0, Math.PI * 2);
     ctx.fill();
 
     ctx.strokeStyle = '#795548';
     ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.moveTo(x + p.w/2, y + 5 + bounce);
+    ctx.moveTo(x + p.w/2, y + 4 + bounce);
     ctx.lineTo(x + p.w/2, y - 2 + bounce);
     ctx.stroke();
 }
@@ -5748,11 +5765,11 @@ function winGame() {
 
     const secrets = {
         0: { title: "🍂 Пустые Ветви", text: "Ты прошёл весь путь, не сорвав ни одного яблока..." },
-        5: { title: "🌱 Первые Ростки", text: "Немного яблок — немного историй. Ренетт шепчет: «Цифровой Сад помнит каждого»." },
-        12: { title: "🍎 Яблочный Подмастерье", text: "Неплохой урожай! Секрет: «Каждый пресет — это семечко»." },
-        18: { title: "🌳 Хранитель Сада", text: "Отличный сбор! «Я была яблоней 300 лет, пока молния не ударила в мои корни»." },
+        5: { title: "🌱 Первые Ростки", text: "Немного яблок — немного историй. «Цифровой Сад помнит каждого»." },
+        12: { title: "🍎 Яблочный Подмастерье", text: "Неплохой урожай! «Каждый пресет — это семечко»." },
+        18: { title: "🌳 Хранитель Сада", text: "Отличный сбор! «Я была яблоней 300 лет...»" },
         24: { title: "✨ Мастер Урожая", text: "Почти всё! «Золотые яблоки — осколки моих снов»." },
-        999: { title: "🌟 Легенда Сада", text: "ВСЕ яблоки! «Цифровой Сад существует между строк кода. А я... яблоня, которая научилась мечтать»." }
+        999: { title: "🌟 Легенда Сада", text: "ВСЕ яблоки! «Цифровой Сад существует между строк кода»." }
     };
 
     const maxApples = 28;
@@ -5767,8 +5784,7 @@ function winGame() {
     document.getElementById('secretText').textContent = secrets[secretKey].text;
     showOverlay('gameWin');
 }
-
-
+		
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape') {
                 closeThingDesc();
