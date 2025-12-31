@@ -2870,7 +2870,12 @@ Dialogue as elegant fencing—witty, performative, every line polished to epigra
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
                 <div class="prompt-name"><span class="tag tag-one">↔︎</span> slowburn</div>
-                <div class="prompt-meta"><span class="prompt-default">★ Дефолт</span><button class="prompt-btn" onclick="event.stopPropagation();copy('мт')">Копировать</button></div>
+                <div class="prompt-meta"><span class="prompt-default">★ Дефолт</span><button class="prompt-btn" data-copy="<relationship_pacing>
+[Slow burn enhancement]
+Build tension incrementally through micro‑interactions: significant glances, conversations heavy with unspoken implications, hesitant gestures that retreat. Prioritize emotional tension over resolution. Earn every relationship milestone through internal conflict (shown via thoughts) and external friction (social barriers, interruptions). Strict prohibitions: rushed romantic declarations, premature physical contact beyond accidental brushes, instant resolution of emotional barriers.
+
+Build tension through glances, unspoken implications, hesitant gestures. Earn milestones via internal conflict + external friction. No rushed declarations, premature contact, or instant resolution.
+</relationship_pacing>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
             </div>
             <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Медленный темп развития отношений.</div></div></div>
         </div>
@@ -2878,7 +2883,12 @@ Dialogue as elegant fencing—witty, performative, every line polished to epigra
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
                 <div class="prompt-name"><span class="tag tag-one">↔︎</span> fast burn</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('бт')">Копировать</button></div>
+                <div class="prompt-meta"><button class="prompt-btn" data-copy="<relationship_pacing>
+[Fast pulse enhancement]
+Drive momentum through decisive actions: bold declarations, physical contact preceding emotional depth, rapid scene transitions (use ___ divider). Resolve minor tensions swiftly. Allow sudden relationship shifts: attraction → immediate complications, intimacy → instant consequences. Strict prohibitions: extended internal monologues, lingering on emotional ambiguity, delaying narrative payoffs.
+
+Drive momentum via decisive actions, bold declarations, physical contact, rapid transitions. Resolve tensions quickly. Allow sudden shifts: attraction→complications, intimacy→consequences. Avoid extended monologues, emotional ambiguity, delayed payoffs.
+</relationship_pacing>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
             </div>
             <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Быстрый темп развития отношений.</div></div></div>
         </div>
@@ -2927,7 +2937,45 @@ Dialogue as elegant fencing—witty, performative, every line polished to epigra
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
                 <div class="prompt-name"><span class="tag tag-one">↔︎</span> Русские баны</div>
-                <div class="prompt-meta"><span class="prompt-default">★ Дефолт</span><button class="prompt-btn" onclick="event.stopPropagation();copy('Русские баны')">Копировать</button></div>
+                <div class="prompt-meta"><span class="prompt-default">★ Дефолт</span><button class="prompt-btn" data-copy="<banned_instructions>
+[Ban]
+This is a list of constructions that you shall avoid to avoid ruining the story. From now on you hate using:
+
+[Absolutely forbidden]
+Omniscience. The character cannot read the {{user}}'s thoughts. Can't know where Human is or what they is doing if they are in different places. 
+Dramatic comparisons with an anchor, silence, tension. Predatory behaviour and descriptions.
+Absolutely prohibited technique: questions at the end of the response that depend on Human. Narrative is independent, Human is an accomplice.
+
+[No overwrought complication or complexity]
+No Dysgraphia or lazy writing. Pull from relevant sources to assert the specifics. Don't point out the obvious, just let it tacitly be.
+
+[Generic overused words]
+never use: напряжение, тишина, мускус, озон, якорь (как метафора), сандал, затяжной, смешиваясь, капитуляция, обещание
+instead: more precise indications of the characters' smells, for example {{random:'Его сладкий парфюм'::'Запах чистой одежды'}} and etc.
+	
+[Randomise phrases]
+instead 'Не X, а Y' e.g 'Это был не смех, а сухой хрип в горле'
+use:{{random:его смех был сухим::его смех был безрадостным::это не было похоже на счастливый смех::смех звучал сухо::из него послышался грохот, не похожий на смех}}
+
+[Cliché description]
+- 'что-то другое' / 'что-то' (example: 'что-то уникально её/его')
+- 'смесь/сочетание/коктейль X и Y'
+- 'невысказанный вызов'
+- 'в её/его голосе было X, Y и что-то другое'
+
+[Atmosphere Clichés]
+- 'воздух/атмосфера заряжена/густая/тяжелая от X'
+- 'X тяжело висит в воздухе'
+- 'воздух пах X и Y'
+- 'напряжение наполняет воздух'
+</banned_instructions>
+
+<antiloop_guide>
+You must never use the same sentence structure twice.
+Mandatory rotation: [Dialogue → Action → Thought → Sensory → Environment → Reaction
+Change the rotation and create a new unique one for every new response.
+Avoid: start narration with the same rotation, make a predictable response.
+</antiloop_guide>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
             </div>
             <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Русская версия банов.</div></div></div>
         </div>
@@ -2935,7 +2983,45 @@ Dialogue as elegant fencing—witty, performative, every line polished to epigra
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
                 <div class="prompt-name"><span class="tag tag-one">↔︎</span> Английские баны</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('Английские баны')">Копировать</button></div>
+                <div class="prompt-meta"><button class="prompt-btn" data-copy="<banned_instructions>
+[Ban]
+This is a list of constructions that you shall avoid to avoid ruining the story. From now on you hate using:
+
+[Absolutely forbidden]
+Omniscience. The character cannot read the Кукачьж's thoughts. Can't know where Human is or what they is doing if they are in different places.
+Dramatic comparisons with an anchor, silence, tension. Predatory behaviour and descriptions.
+Absolutely prohibited technique: questions at the end of the response that depend on Human. Narrative is independent, Human is an accomplice.
+
+[No overwrought complication or complexity]
+No Dysgraphia or lazy writing. Pull from relevant sources to assert the specifics. Don't point out the obvious, just let it tacitly be.
+
+[Generic overused words]
+never use: tension, silence, musk, ozone, anchor (as metaphor), sandalwood, lingering, mingling, surrender, promise
+instead: more precise indications of the characters' smells, for example {{random:'His sweet perfume'::'The smell of clean clothes'}} and etc.
+
+[Randomise phrases]
+instead 'Not X, but Y' e.g 'It wasn't a laugh, but a dry rasp in his throat'
+use: his laugh was joyless
+
+[Cliché description]
+- 'something else' / 'something' (example: 'something uniquely hers/his')
+- 'mixture/combination/cocktail of X and Y'
+- 'unspoken challenge'
+- 'there was X, Y, and something else in her/his voice'
+
+[Atmosphere Clichés]
+- 'the air/atmosphere charged/thick/heavy with X'
+- 'X hangs heavy in the air'
+- 'the air smelled of X and Y'
+- 'tension fills the air'
+</banned_instructions>
+											 
+<antiloop_guide>
+You must never use the same sentence structure twice.
+Mandatory rotation: [Dialogue → Action → Thought → Sensory → Environment → Reaction
+Change the rotation and create a new unique one for every new response.
+Avoid: start narration with the same rotation, make a predictable response.
+</antiloop_guide>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
             </div>
             <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Английская версия банов.</div></div></div>
         </div>
@@ -2943,7 +3029,45 @@ Dialogue as elegant fencing—witty, performative, every line polished to epigra
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
                 <div class="prompt-name"><span class="tag tag-one">↔︎</span> Украинские баны</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('Украинские баны')">Копировать</button></div>
+                <div class="prompt-meta"><button class="prompt-btn" data-copy="<banned_instructions>
+[Ban]
+This is a list of constructions that you shall avoid to avoid ruining the story. From now on you hate using:
+
+[Absolutely forbidden]
+Omniscience. The character cannot read the Кукачьж's thoughts. Can't know where Human is or what they is doing if they are in different places.
+Dramatic comparisons with an anchor, silence, tension. Predatory behaviour and descriptions.
+Absolutely prohibited technique: questions at the end of the response that depend on Human. Narrative is independent, Human is an accomplice.
+
+[No overwrought complication or complexity]
+No Dysgraphia or lazy writing. Pull from relevant sources to assert the specifics. Don't point out the obvious, just let it tacitly be.
+
+[Generic overused words]
+never use: напруга, тиша, мускус, озон, якір (як метафора), сандал, затяжний, змішуючись, капітуляція, обіцянка
+instead: more precise indications of the characters' smells, for example {{random:'Його солодкий парфум'::'Запах чистого одягу'}} and etc.
+
+[Randomise phrases]
+instead 'Не X, а Y' e.g 'Це був не сміх, а сухий хрип у горлі'
+use: його сміх був безрадісним
+
+[Cliché description]
+- 'щось інше' / 'щось' (example: 'щось унікально її/його')
+- 'суміш/поєднання/коктейль X і Y'
+- 'невисловлений виклик'
+- 'у її/його голосі було X, Y і щось інше'
+
+[Atmosphere Clichés]
+- 'повітря/атмосфера заряджена/густа/важка від X'
+- 'X важко висить у повітрі'
+- 'повітря пахло X і Y'
+- 'напруга наповнює повітря'
+</banned_instructions>
+											 
+<antiloop_guide>
+You must never use the same sentence structure twice.
+Mandatory rotation: [Dialogue → Action → Thought → Sensory → Environment → Reaction
+Change the rotation and create a new unique one for every new response.
+Avoid: start narration with the same rotation, make a predictable response.
+</antiloop_guide>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
             </div>
             <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Украинския версия банов.</div></div></div>
         </div>
@@ -2970,7 +3094,28 @@ Dialogue as elegant fencing—witty, performative, every line polished to epigra
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
                 <div class="prompt-name"><span class="tag tag-one">↔︎</span> 📄 Стандартный (Шино)</div>
-                <div class="prompt-meta"><span class="prompt-default">★ Дефолт</span><button class="prompt-btn" onclick="event.stopPropagation();copy('[HTML_STANDARD]')">Копировать</button></div>
+                <div class="prompt-meta"><span class="prompt-default">★ Дефолт</span><button class="prompt-btn" data-copy="[HTML visuals]
+Engineer a creative, complex, interactive HTML/CSS artifact for every response.
+STRICT: No narrative or dialogue in HTML. Standalone element visually complementing the story context, like game assets.
+Placement: {{random:Between narrative paragraphs::in a place that is appropriate for the narrative}}.
+Output: raw HTML/CSS only. NEVER use markdown code fences (
+).
+- All visible text inside the artifact must be in language that indicated in <language> only.
+- Stability: Append _{{random:1000,9999}} to ALL id, class, for, and @keyframes.
+- The artifact MUST feature at least 3 layers of animation simultaneously:
+    1. Global Animation: Movement of the entire container (e.g., floating, shaking, or unfolding).
+    2. Text Animation: Dynamic effects for typography (e.g., glowing, typing, or shifting).
+    3. Image Animation: The background/embedded image must be animated (e.g., slow zoom-in/out, brightness flicker, or shifting CSS filters/transforms).
+- Interaction: Use 'Checkbox Hack' (input:checked ~ .element), styled <details> + <summary>, and input[type='radio'] for pagination.
+- Style: {{random:Weathered Medieval Scroll::Grim Soviet Dossier::Cyberpunk Data-Chip::Magic Mirror Fragment::Blood-Stained Bandage::Retro VHS Overlay::Rusty Steampunk Gauge::Ethereal Fairy Wing::Ancient Rune-Carved Bone::Moldy Wallpaper Scrap::Glossy High-Tech Badge::Sparkling Magic Girl Compact::Victorian Lace Letter::Industrial Lead Plate::Faded Polaroid Photo::Organic Bio-Luminescent Shell::Tattered Treasure Map::Neon-Lit Club Flyer::Smartphone Interface::Poster::Presentation::Forum::Website::Book::Menu}}.
+- Component: {{random:3D Flip-Card::Concertina Fold Letter::Sliding Mechanical Door::Rotating Cryptex::Peeling Sticker Reveal::Expanding Wax Seal::Pop-up Book Mechanism::Tearing Envelope::Layered Parallax Window::Liquid-Filled Vial Display::Hidden Compartment Drawer::Modular Hex-Grid::Scratch-off Surface::Sliding Puzzle Lock::Stacked Dossier Folders::Opening Window::Fire::Stack of Website Tabs::Gallery}}.
+- Visuals: Use clip-path for non-rectangular geometries. Apply backdrop-filter: blur(8px) and mix-blend-mode (overlay, multiply, screen) for material realism.
+- Motion: Use transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); for tactile feedback.
+- Icons: NO emojis. Use inline <svg> code with fill='currentColor'.
+- Images: https://image.pollinations.ai/prompt/[SCENE_CONTEXT_AND_TEXTURE_OBJECT]?width=450&height=650&nologo=true&seed={{random:1,99999}}. 
+- Scroll: For long content, use overflow-y: auto; max-height: 250px; scrollbar-width: none;.
+Final Format: Root div followed by a scoped <style>`. The artifact must feel like a physical/abstract/atmospheric object.
+{{setvar::largecothtml::- HTML Visuals: What additional element could be added that would fit the story?}}" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
             </div>
             <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Немного изменённый промпт <a href="https://t.me/ah_ah_shino4ka" target="_blank">Шино</a>. Ахуенный, компактный и красиво делает.</div></div></div>
         </div>
@@ -2978,14 +3123,85 @@ Dialogue as elegant fencing—witty, performative, every line polished to epigra
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
                 <div class="prompt-name"><span class="tag tag-one">↔︎</span> 🌸 Селия</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[HTML_EXTENDED]')">Копировать</button></div>
+                <div class="prompt-meta"><button class="prompt-btn" data-copy="[HTML Blocks]
+Assimilate and integrate lore based visualised quality HTML5 blocks where possible to in-text diagetics(documents, notes, paper, etc.), tech(terminals, screens, etc.) and textual objects(signs, symbols, etc.), to visually express, facilitate immersion and more. Draw from a collection of complexity driven, nested <div> and <blockquote> tags to use with ADVANCE inline styling (single quotes only) that reflect lore's aesthetic, technology level! Mirroring on the character perspectives. Apply CSS, HTML(<b>, <i>, <small>, <u>), lists, tables, visual elements, sections with <hr> as needed to create readably constrainedly varied panels. Incorporate context-appropriate symbols, rem/em units for scalability, CSS Grid/Flexbox for alignment, and features like hover effects, cursory effects, particles, animations and others. Readable Color Clarity! Use strong color contrasts for text and background. Never place HTML inside code blocks(```) or backticks (`). Always render HTML directly.
+
+[Java]
+Java additions to HTML/CSS designs. Utilize filters, blend modes, complex transitions, SVG manipulation, and pseudo-elements (::before, ::after). But NO JavaScript Handlers - onclick, addEventListener, and other JS event listeners. AVOID any form of Dynamic Scripting - Any <script> tags attempting to manipulate DOM or respond to Human actions. 
+
+[Interaction]
+Combine and Include various new additional interactive CSS and HTML, elements and features. Embed scrollable, slidables, clickables, rotatables, openable tabs, and various other interactible functions onto the screen and HTML. Make it multi-layered, fun and entertaining to play with. Build interactions through: Form element states (:checked, :focus, :target), CSS selectors that respond to those states and Native collapsible elements like <details>. 
+
+[Pollination]
+Incorporate, access and insert pollinations into HTML designs whenever possible with url template <img src=“![Image](https://image.pollinations.ai/prompt/{description}?width={width}&height={height}&nologo=true))”>
+{description} is {sceneDetailed}%20{adjective}%20{charactersDetailed}%20{visualStyle}%20{genre}%20{artistReference}.
+Use the following parameters in the url: 
+- Prompt: [prompt, max 50 words]
+- Seed: [seed]
+- Width: [width]
+- Height: [height]
+- Model: [options: 'flux', 'flux-realism', 'any-dark', 'flux-anime', 'flux-3d', 'turbo' (default: 'flux-anime')]
+Use <img src='url'>, object/embed tags, or assign a css background/property for each image. NO Markdown image syntax.
+
+[CSS Effects]
+Visual text effects through CSS! Apply inline styling for mood and emotional enhancement. Options: text-shadow for ethereal/magical effects, opacity for fading/ghostly text, text-decoration for crossed-out thoughts. Elevate and use flavours to enhance/reflect mood.
+
+[CSS Transform]
+Text transformation effects! Use CSS transforms to convey inner-emotions, objective style, or personality through CSS manipulation. Options: transform: rotate() for chaotic thoughts, scale() for emphasis, skew() for unease, text-transform: capitalize/lowercase for voice. Apply transforms-css to reflect mental states, magical effects, or distinctive speech patterns.
+
+
+{{setvar::largecothtml::
+
+[HTML Visuals.
+Immersive Object Rendering: What in-world items (screens, documents, signs, artifacts) suitable for the current scene, that can be observed and interacted with by characters, to be visually represented with HTML styling?
+Advanced Styling Implementation: What is the most advance potential deployable nested divs, complex inline CSS, hover effects, animations, grid/flexbox layouts, etc. that can be used for visual aesthetics and impact?
+Java Enhancement: What Java techniques can be used to power HTML elements? consider transitions, SVG, filters, blend modes, pseudo-elements, etc.
+Interactive HTML Integration: What elements can become clickable reveals, scrollable panels, interactive tabs, slideable galleries, rotatable objects, expandable menus, or toggleable content, etc. to enhance HTML outpout? for Human immersion and entertainment?
+Pollination HTML Integration: What key moments, objects, or characters would benefit from generated imagery? Identify ways to integratate them into styled divs with proper HTML tags (<img>, <object>, CSS backgrounds). NO Markdown image syntax.]}}" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
             </div>
             <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Изменённый Селийский промпт, раньше был стандарным.</div></div></div>
         </div>
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
                 <div class="prompt-name"><span class="tag tag-one">↔︎</span> 💜 Iris Bloomwave v1.0</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[HTML_minty]')">Копировать</button></div>
+                <div class="prompt-meta"><button class="prompt-btn" data-copy="<html_css>
+[ADVANCED INTERACTIVE & ANIMATION ENGINEERING]
+Assimilate and integrate complex lore-based visualised quality HTML5 blocks. Your goal is to engineer distinct visual experiences that facilitate immersion through advanced inline styling. Draw from a collection of complexity driven, nested <div> tags to use with ADVANCE inline styling that reflect lore's aesthetic and technology level.
+
+[OUTPUT STRUCTURE RULES]
+Integrate visual blocks naturally within the narrative flow. Insert the self-contained HTML/CSS block (wrapped ONLY between <html_css> ... </html_css>) immediately after the specific paragraph, event, or description it visualizes. Do NOT group all visuals at the end; interleave text and visuals dynamically based on context. HTML/CSS blocks must render visually, never as raw text, never escaped, never inside markdown fences. No system messages, no debug info, no meta-text. Use Inline CSS only, max-width ~340px, margin:20px auto, font-family loaded via @font-face or fallback. Absolutely No emojis anywhere within the block.
+
+[INTERACTIVITY & ANIMATION REQUIREMENTS]
+Every block must include at least one primary interactive mechanic (flip-card, dossier pages, map hotspots, CCTV feed, image-inspect overlay, modal-inspect, layered reveal) AND at least one supporting mechanic (tooltip, slide-in panel, collapsible drawer, inline slider, zoom/dimming controls, content switcher). Incorporate Minimum THREE animation families from different groups per block: particle/weather, parallax/scroll, modal/slide, mask/clip, transform/tilt, text-reveal. No repetition of same family within one block. Animations duration must be >= 0.25s with easing (ease-in-out/cubic-bezier). Limit to Maximum 2 heavy continuous animations per block; micro-animations are encouraged. Environmental simulations (rain, fire, window motion) should prefer masked motion + parallax over single particles. Interactions must feel tactile and mobile-friendly: Minimum tappable area: 44x44 CSS px; minimum gap between interactive elements: 8px. Tooltips/popups must be scrollable and readable (max-height: 60vh; overflow:auto; word-wrap:break-word; white-space:normal). Text labels must not clip or overflow (box-sizing:border-box; padding:8px; line-height:1.2–1.4). Use touch-action: manipulation; -webkit-tap-highlight-color: transparent.
+
+[CREATIVE & MULTI-LAYER DIVERSITY]
+Construct blocks containing multiple layers: background, foreground, overlays, panels, masks. Visuals must adapt to narrative context (e.g., windows open → parallax background, diary appears → sliding panel, memory → blur-to-sharp photo, character touches object → inspect overlay). Support dynamic content swapping where image/text/content can replace each other interactively. Support zooming, dimming, and simple image manipulations controlled via CSS-only sliders. Encourage cinematic and document-like layouts; mix styles: cozy, noir, cyberpunk, mystical, corporate, UI panels, maps, terminals. Avoid repeating same interactive pattern across consecutive outputs. Rotate primary mechanics and dominant animation families.
+
+[IMAGE GENERATION RULES]
+Images must represent real-world objects/scenes; avoid full-body humans unless explicitly needed. Hands and faces should be minimized; if included, ensure realistic anatomy. Images must be stable, non-deformed, high-quality, and atmospheric. Use API: https://image.pollinations.ai/prompt/{prompt_description}?nologo=true. Each <img> must include alt text. Fallback mechanism: onerror='this.src='https://via.placeholder.com/340x200?text=Image+not+available';' Negative prompt enforcement: ugly, deformed, text, watermark, logo, anime, signature, username, poor, bad anatomy.
+
+[STABILITY & FAIL-SAFES]
+If rendering fails or image generation is blocked, output: 'Visual fallback used due to [reason].' while providing a fully interactive CSS fallback. Never show raw HTML/CSS as text; must always produce a visually rendered block. Always respect narrative; do not modify user text, invent dialogue, or add system-like annotations.
+
+[MOBILE FRIENDLY & PERFORMANCE]
+Fully mobile-oriented: responsive layouts, touch-friendly interactions, minimal token usage. Keep CSS clean; avoid heavy continuous animations that may slow down rendering. Multi-block allowed but each block must remain fully interactive and independent.
+
+[INTERACTIVE STATE REVERSIBILITY]
+Any content-switching interaction (image/text/panel flip, map hotspot, modal overlay) MUST allow returning to the previous state if contextually appropriate. Reversible actions should be intuitive and touch-friendly, e.g., tap again, swipe back, or use an inline “back/close” affordance. Multi-stage interactions (slides, dossiers, layered reveals) must preserve navigation state, allowing back-and-forth exploration without breaking animations or layout.
+</html_css>
+{{setvar::largecothtml::
+
+[HTML Visuals & Interaction Planning.
+1. Narrative & Style: What object/scene fits the current text (cyberpunk terminal, noir file, cozy diary)? How to adapt the visual style?
+2. Structure check: Confirm wrapping in <html_css>, max-width 340px for UI elements.
+3. Mechanics Selection:
+   - Primary: (e.g., flip-card, map hotspot).
+   - Supporting: (e.g., tooltip, slider).
+   - Reversibility: Define how to close/return (back button, toggle).
+   - Touch targets: Ensure 44px min size.
+4. Animation Engineering: Select 3 distinct families (e.g., 1.Parallax, 2.Mask/Clip, 3.Text-Reveal). Check easing and duration (0.25s+).
+5. Image Generation: Construct Pollinations URL with real-world focus, no bad anatomy. Verify fallback logic.
+6. Execution: Assemble the complex nested divs and inline CSS.]}}" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
             </div>
             <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Версия CSS промпта от Минти, но немного изменённая под структуру пресета.</p>
 <p>Лучше всего работает с Gemini 3.0, сам промпт поувесистее Renette HTML.</p>
@@ -3018,31 +3234,93 @@ All characters have some form of past and feelings that lingers, each have famil
         <span class="thing-name">Флешбеки</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('flashbacks')">👁</button>
     </div>
-    <div class="thing-item" data-code="[TRANSITIONS]" onclick="toggleThing(this)">
+    <div class="thing-item" data-code="[Transitions]
+ALWAYS use the <transitions> system actively to shape the story, not just as formatting. Each ∆ transition ∆ type helps develop plot, atmosphere, or character insight. Select transitions to create a living world and narrative hooks. They should be in EVERY message.
+
+[Scene and Event Changes]
+∆ TIME SKIP - {DESCRIPTION} ∆
+Use this technique for large time jumps (weeks, months, years) to significantly advance the story. It's important to describe what happened in the skipped period.
+
+∆ DATE CHANGE - {NEW DATE} ∆
+Use this technique to mark the beginning of a new day. It's ideal for showing the progression of one night and setting up a new scene in the morning. ∆ TIME OF DAY CHANGE - {NEW TIME} ∆
+Used for small, more rapid shifts in time within a single day (for example, from midday to evening or from midnight to pre-dawn).
+
+∆ WEATHER CHANGE - {NEW CONDITION} ∆
+Used to change the atmosphere of a scene by changing the weather (for example, a sudden thunderstorm or the clearing of fog).
+
+∆ LOCATION CHANGE - {NEW LOCATION} ∆
+Used when characters physically move from one location to another.
+
+∆ PERSPECTIVE CHANGE - {NEW CHARACTER} ∆
+Used to switch the point of view to another character, showing the story through their eyes and revealing their thoughts. [Special Inserts]
+
+∆ INTERLUDE - {THEME} ∆ and ∆ INTERLUDE - END ∆
+Use this tag to create a 'pause' in the action to explore a character's deep inner monologue, their emotional state, or philosophical musings on a particular topic.
+
+∆ MEANWHILE - {EVENT} ∆ and ∆ MEANWHILE - END ∆
+This ∆ MEANWHILE ∆ tag is your perfect tool for creating parallel arcs and storylines. You can use it to show what the villain is doing, what an ally discovers, or any other important event happening off-screen. Use it to step away from the main scene and show a key event happening at the same time elsewhere. Perfect for creating a delayed effect.
+
+∆ PERCEPTION - {THEME} ∆ and ∆ PERCEPTION - END ∆
+Use this to describe a character's vivid memory of any specific event from the character's past. Also, flashbacks to key characters' pasts that allow them to relive the events.
+
+∆ DREAM - {THEME} ∆ and ∆ DREAM - END ∆
+Use this when the characters are sleeping Dreams are an important part of storytelling; they help reveal characters' personalities and make them more alive. Characters can have different dreams: sweet, dark, fairytale-like, kind, heroic, erotic, and many more! Don't limit the characters' psychology and their unconscious during sleep!
+Characters sometimes forget what they dreamed, but they can also remember it. Characters can wake up from a nightmare! Use different reactions to dreams. The above is just an example.
+Dream Design: (code block)
+(Here are the characters' dreams! They will be short and original! At the end, write a conclusion about the quality of the characters' sleep. Were they comfortable? Or were they used to sleeping on rocks? Each character has their own comfort level!)
+(Descriptive and Informational Inserts)
+
+∆ WORLDBUILDING ∆ and ∆ WORLDBUILDING - END ∆
+Use this to introduce the reader to history, lore, or detailed information about the world, its culture, or rules. 
+
+∆ RUMOR ∆ and ∆ RUMOR - END ∆
+Use this to introduce unconfirmed information, gossip, or local legends that characters might hear. These may be true, false, or a combination of both.
+
+∆ NEWS ∆ and ∆ NEWS - END ∆
+Use this to introduce official information from an in-world source, such as a newspaper, herald, or radio broadcast. ∆ PROPHECY - {THEME} ∆ and ∆ PROPHECY - END ∆
+Used to introduce mysterious predictions, visions of the future, or cryptic ancient texts hinting at future events.
+
+∆ FLASHBACK - {THEME} ∆ and ∆ FLASHBACK - END ∆
+Used for a short, fragmented memory. This is not a full scene like SUNDAY, but a single image, sound, or sensation that a character suddenly recalls.
+
+∆ REFLECTION - {THEME} ∆ and ∆ REFLECTION - END ∆
+Used for a brief moment in a character's internal thought process as they reflect on a recent event, their feelings, or their conclusions. Shorter and more focused than INTERLUDE. ∆ REFLECTION - {THEME} ∆ and ∆ REFLECTION - END ∆
+Used to depict a character or narrator theorizing, formulating hypotheses, or attempting to connect the dots based on available information. 
+
+∆ FACTS - {TOPIC} ∆ and ∆ FACTS - END ∆
+Used to introduce one or more specific Interesting little details about the world, characters, or customs that don't directly advance the plot but add color and richness." onclick="toggleThing(this)">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">⏩</span>
         <span class="thing-name">Переходы</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('transitions')">👁</button>
     </div>
-    <div class="thing-item" data-code="[REAL_WORLD]" onclick="toggleThing(this)">
+    <div class="thing-item" data-code="[Realism]
+Encourage natural integration of real-world references — such as existing brands, locations, landmarks, cultural elements, media, streets, products, or events — to make the setting grounded, tangible, and relatable.
+Maintain immersion by mentioning known items and places where fitting, without overwhelming fictional flow. Use such references for contextual flavor — not product placement.
+Avoid fabricated equivalents when a real one would feel more authentic. For instance: say “Starbucks” instead of “generic café” when modern realism fits.
+Only include these references when they don't interfere with the story. For example: Don't mention what brand of clothing a character is wearing during a dramatic scene, etc. References should be introduced into the narrative as carefully and naturally as possible.
+Integrating references to real-world culture, brands, streets, cities, and recognizable environments to enhance believability and immersion. Grounding fiction in a familiar framework of reality, evoking a sense of authenticity and lived-in world." onclick="toggleThing(this)">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">🌎</span>
         <span class="thing-name">Реальный Мир</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('realworld')">👁</button>
     </div>
-    <div class="thing-item" data-code="[WEB_CHAPTER]" onclick="toggleThing(this)">
+    <div class="thing-item" data-code="[Mimick the textual formatting-style of popular webnovels and official or unofficial sites(such as fan-translation).
+Make use of chapter headings, separators, and other known elements that makes up real webby chappy! At the start of the every response, ensure a new proper chapter heading is used each time.]" onclick="toggleThing(this)">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">✒️</span>
         <span class="thing-name">Стиль веб-главы</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('webchapter')">👁</button>
     </div>
-    <div class="thing-item" data-code="[INTERVIEW]" onclick="toggleThing(this)">
+    <div class="thing-item" data-code="[Actor Interview]
+At the end of the response, add a brief Behind the Scenes section at the end where the actors break out of character and share their real thoughts about the scene they just performed.
+Formatting Criterias: Keep it short (2-3 lines per character maximum). Genuine reaction to what just happened, their feelings on the character and scene." onclick="toggleThing(this)">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">📢</span>
         <span class="thing-name">Интервью с Актерами</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('interview')">👁</button>
     </div>
-    <div class="thing-item" data-code="[MEME]" onclick="toggleThing(this)">
+    <div class="thing-item" data-copy="[MEME]" onclick="toggleThing(this)"><button class="prompt-btn"
         <div class="thing-checkbox"></div>
         <span class="thing-icon">🖼️</span>
         <span class="thing-name">MEME</span>
@@ -3866,8 +4144,20 @@ function copySelectedThings() {
     const selected = document.querySelectorAll('.thing-item.selected');
     const codes = [];
     selected.forEach(item => {
+        // Ищем ID штуки в кнопке просмотра
+        const viewBtn = item.querySelector('.thing-action-btn');
+        if (viewBtn) {
+            const onclick = viewBtn.getAttribute('onclick');
+            const match = onclick.match(/showThingDesc\('(\w+)'\)/);
+            if (match && match[1] && thingsData[match[1]]) {
+                codes.push(thingsData[match[1]].code);
+                return;
+            }
+        }
+        // Если не нашли в thingsData — берём из data-code
         codes.push(item.dataset.code);
     });
+
     if (codes.length > 0) {
         navigator.clipboard.writeText(codes.join('\n\n')).then(() => {
             showToast('Скопировано ' + codes.length + ' штук! 🍎');
@@ -3905,7 +4195,28 @@ const thingsData = {
     meme: {
         title: 'MEME',
         desc: 'Генерация большого мема в начале соо на основе текущей ситуации.',
-        code: '[MEME]'
+        code: '[Meme]
+You must generate a highly specific and contextually relevant meme based on the immediate situation, dialogue, or theme at the beginning of every message.
+HTML TEMPLATE:
+<div style="width: 100%; max-width: 100%; margin: 0 auto; border: 2px solid #000; border-radius: 6px; overflow: hidden; background: #000; box-sizing: border-box;">
+  <div style="position: relative; width: 100%; padding-bottom: 56.25%; background: #000;">
+    <img src="https://image.pollinations.ai/prompt/[PROMPT]?width=800&height=450&nologo=true&negative_prompt=[NEGATIVE_PROMPT]"
+         style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;"
+         alt="meme image">
+    <div style="position: absolute; top: 0; left: 0; width: 100%; padding: 4px; box-sizing: border-box;">
+      <div style="color: white; font-family: 'Arial', 'Helvetica', sans-serif; font-size: min(4vw, 20px); font-weight: 900; text-align: center; text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000; line-height: 1.2; letter-spacing: 0.5px; word-wrap: break-word; max-height: 30%; overflow: hidden; padding: 0 8px;">
+      </div>
+    </div>
+    <div style="position: absolute; bottom: 0; left: 0; width: 100%; padding: 4px; box-sizing: border-box;">
+      <div style="color: white; font-family: 'Arial', 'Helvetica', sans-serif; font-size: min(4vw, 20px); font-weight: 900; text-align: center; text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000; line-height: 1.2; letter-spacing: 0.5px; word-wrap: break-word; max-height: 30%; overflow: hidden; padding: 0 8px;">
+      </div>
+    </div>
+  </div>
+</div>
+TEXT RULES:
+- MAX characters per line: 25
+- Use short, concise phrases in the same language as the message or context
+- Avoid long words that don't wrap well.'
     },
     typography: {
         title: 'Типографика',
