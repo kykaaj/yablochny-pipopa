@@ -5128,235 +5128,226 @@ function genLevel() {
         1: {
             name: "🌱 Яблочный Сад",
             platforms: [
-                { x: 0, y: groundY, w: 500, h: 50 },
-                { x: 280, y: groundY - 70, w: 100, h: 20 },
-                { x: 600, y: groundY, w: 250, h: 50 },
-                { x: 650, y: groundY - 80, w: 80, h: 20 },
-                { x: 950, y: groundY, w: 300, h: 50 },
-                { x: 1000, y: groundY - 90, w: 100, h: 20 },
-                { x: 1350, y: groundY, w: 400, h: 50 },
+                { x: 0, y: groundY, w: 600, h: 50 },
+                { x: 700, y: groundY, w: 400, h: 50 },
+                { x: 1200, y: groundY, w: 500, h: 50 },
             ],
             apples: [
-                { x: 320, y: groundY - 105 },
-                { x: 680, y: groundY - 115 },
-                { x: 1040, y: groundY - 130 },
-                { x: 200, y: groundY - 35, secret: true },
+                { x: 200, y: groundY - 35 },
+                { x: 450, y: groundY - 35 },
+                { x: 850, y: groundY - 35 },
+                { x: 1400, y: groundY - 35, secret: true },
             ],
             coins: [
                 { x: 100, y: groundY - 35 },
-                { x: 400, y: groundY - 35 },
+                { x: 300, y: groundY - 35 },
                 { x: 750, y: groundY - 35 },
-                { x: 1100, y: groundY - 35 },
+                { x: 1000, y: groundY - 35 },
+                { x: 1300, y: groundY - 35 },
             ],
             hazards: [],
             moving: [],
             fading: [],
             bouncy: [
-                { x: 520, y: groundY - 15, w: 50, h: 15 },
+                { x: 550, y: groundY, w: 40, h: 12 },
             ],
             enemies: [],
             signs: [
-                { x: 80, y: groundY, text: "← → для движения\nПробел — прыжок!" },
-                { x: 480, y: groundY, text: "Это батут!\nПрыгай выше!" },
-                { x: 1400, y: groundY, text: "Беги к финишу!\n★ →" },
+                { x: 50, y: groundY, text: "← → движение\nПробел — прыжок!" },
+                { x: 520, y: groundY, text: "Батут!\nПрыгай выше!" },
+                { x: 1500, y: groundY, text: "К финишу! ★" },
             ],
             goalX: 1600
         },
         2: {
-            name: "⚡ Прыжки Веры",
+            name: "⚡ Первые Шипы",
             platforms: [
-                { x: 0, y: groundY, w: 350, h: 50 },
-                { x: 450, y: groundY - 40, w: 100, h: 20 },
-                { x: 650, y: groundY - 70, w: 100, h: 20 },
-                { x: 850, y: groundY - 40, w: 100, h: 20 },
-                { x: 1050, y: groundY, w: 250, h: 50 },
+                { x: 0, y: groundY, w: 400, h: 50 },
+                { x: 500, y: groundY, w: 300, h: 50 },
+                { x: 900, y: groundY, w: 400, h: 50 },
                 { x: 1400, y: groundY, w: 400, h: 50 },
             ],
             apples: [
-                { x: 490, y: groundY - 75 },
-                { x: 690, y: groundY - 105 },
-                { x: 890, y: groundY - 75 },
-                { x: 1150, y: groundY - 35, secret: true },
+                { x: 200, y: groundY - 35 },
+                { x: 600, y: groundY - 35 },
+                { x: 1050, y: groundY - 35 },
+                { x: 1550, y: groundY - 35, secret: true },
             ],
             coins: [
-                { x: 150, y: groundY - 35 },
-                { x: 280, y: groundY - 35 },
-                { x: 560, y: groundY - 55 },
+                { x: 100, y: groundY - 35 },
+                { x: 350, y: groundY - 35 },
+                { x: 700, y: groundY - 35 },
+                { x: 1000, y: groundY - 35 },
                 { x: 1200, y: groundY - 35 },
                 { x: 1500, y: groundY - 35 },
             ],
             hazards: [
-                { x: 200, y: groundY - 18, w: 60, onPlatform: true },
-                { x: 1100, y: groundY - 18, w: 60, onPlatform: true },
+                { x: 300, y: groundY, w: 40 },
+                { x: 1100, y: groundY, w: 40 },
             ],
-            moving: [
-                { x: 750, y: groundY - 120, w: 80, h: 20, minX: 700, maxX: 850, speed: 0.5 },
-            ],
-            fading: [],
-            bouncy: [],
-            enemies: [
-                { x: 1450, y: groundY - 24, minX: 1420, maxX: 1600, speed: 0.7 },
-            ],
-            signs: [
-                { x: 60, y: groundY, text: "Осторожно!\nШипы на земле!" },
-                { x: 1350, y: groundY, text: "Слайм!\nПрыгни на него!" },
-            ],
-            goalX: 1650
-        },
-        3: {
-            name: "🌀 Движущийся Хаос",
-            platforms: [
-                { x: 0, y: groundY, w: 250, h: 50 },
-                { x: 400, y: groundY, w: 200, h: 50 },
-                { x: 750, y: groundY, w: 180, h: 50 },
-                { x: 1100, y: groundY, w: 200, h: 50 },
-                { x: 1450, y: groundY, w: 400, h: 50 },
-            ],
-            apples: [
-                { x: 300, y: groundY - 90 },
-                { x: 550, y: groundY - 100 },
-                { x: 950, y: groundY - 130 },
-                { x: 1250, y: groundY - 35, secret: true },
-            ],
-            coins: [
-                { x: 100, y: groundY - 35 },
-                { x: 480, y: groundY - 35 },
-                { x: 650, y: groundY - 80 },
-                { x: 850, y: groundY - 35 },
-                { x: 1180, y: groundY - 35 },
-                { x: 1550, y: groundY - 35 },
-            ],
-            hazards: [
-                { x: 450, y: groundY - 18, w: 50, onPlatform: true },
-                { x: 800, y: groundY - 18, w: 50, onPlatform: true },
-            ],
-            moving: [
-                { x: 270, y: groundY - 60, w: 100, h: 20, minX: 250, maxX: 380, speed: 0.6 },
-                { x: 620, y: groundY - 100, w: 90, h: 20, minX: 580, maxX: 720, speed: 0.7 },
-                { x: 950, y: groundY - 90, w: 100, h: 20, minX: 900, maxX: 1080, speed: 0.8 },
-            ],
+            moving: [],
             fading: [],
             bouncy: [
-                { x: 500, y: groundY - 15, w: 50, h: 15 },
+                { x: 450, y: groundY, w: 40, h: 12 },
+                { x: 850, y: groundY, w: 40, h: 12 },
             ],
-            enemies: [
-                { x: 450, y: groundY - 24, minX: 420, maxX: 560, speed: 0.6 },
-                { x: 1500, y: groundY - 24, minX: 1470, maxX: 1650, speed: 0.9 },
-            ],
+            enemies: [],
             signs: [
-                { x: 50, y: groundY, text: "Платформы движутся!\nНе промахнись!" },
+                { x: 50, y: groundY, text: "Осторожно шипы!\nПерепрыгни!" },
+                { x: 1450, y: groundY, text: "Молодец! ★" },
             ],
             goalX: 1700
         },
-        4: {
-            name: "👻 Исчезающие Тропы",
+        3: {
+            name: "🌀 Движущиеся Платформы",
             platforms: [
-                { x: 0, y: groundY, w: 200, h: 50 },
-                { x: 500, y: groundY - 45, w: 100, h: 20 },
-                { x: 800, y: groundY, w: 180, h: 50 },
-                { x: 1150, y: groundY, w: 180, h: 50 },
-                { x: 1500, y: groundY, w: 400, h: 50 },
+                { x: 0, y: groundY, w: 300, h: 50 },
+                { x: 500, y: groundY, w: 250, h: 50 },
+                { x: 950, y: groundY, w: 300, h: 50 },
+                { x: 1450, y: groundY, w: 400, h: 50 },
             ],
             apples: [
-                { x: 300, y: groundY - 100 },
-                { x: 640, y: groundY - 120, secret: true },
-                { x: 900, y: groundY - 35 },
-                { x: 1250, y: groundY - 100 },
-            ],
-            coins: [
-                { x: 100, y: groundY - 35 },
-                { x: 380, y: groundY - 80 },
-                { x: 550, y: groundY - 80 },
-                { x: 880, y: groundY - 35 },
-                { x: 1220, y: groundY - 35 },
-                { x: 1600, y: groundY - 35 },
-            ],
-            hazards: [
-                { x: 850, y: groundY - 18, w: 50, onPlatform: true },
-                { x: 1200, y: groundY - 18, w: 50, onPlatform: true },
-            ],
-            moving: [
-                { x: 900, y: groundY - 100, w: 90, h: 20, minX: 850, maxX: 1050, speed: 0.9 },
-            ],
-            fading: [
-                { x: 220, y: groundY - 65, w: 100, h: 20, timer: 0, visible: true, interval: 120, baseX: 220 },
-                { x: 370, y: groundY - 45, w: 80, h: 20, timer: 60, visible: true, interval: 120, baseX: 370 },
-                { x: 620, y: groundY - 80, w: 80, h: 20, timer: 30, visible: true, interval: 100, baseX: 620 },
-                { x: 1300, y: groundY - 80, w: 90, h: 20, timer: 0, visible: true, interval: 100, baseX: 1300 },
-            ],
-            bouncy: [],
-            enemies: [
-                { x: 850, y: groundY - 24, minX: 810, maxX: 950, speed: 0.5 },
-                { x: 1550, y: groundY - 24, minX: 1520, maxX: 1700, speed: 0.8 },
-            ],
-            signs: [
-                { x: 50, y: groundY, text: "Платформы мигают!\nУспей перепрыгнуть!" },
-                { x: 760, y: groundY, text: "Не упади!" },
-            ],
-            goalX: 1750
-        },
-        5: {
-            name: "🔥 Яблочный Финал",
-            platforms: [
-                { x: 0, y: groundY, w: 200, h: 50 },
-                { x: 350, y: groundY, w: 150, h: 50 },
-                { x: 700, y: groundY, w: 150, h: 50 },
-                { x: 1050, y: groundY, w: 150, h: 50 },
-                { x: 1400, y: groundY, w: 150, h: 50 },
-                { x: 1750, y: groundY, w: 400, h: 50 },
-            ],
-            apples: [
-                { x: 250, y: groundY - 110 },
-                { x: 550, y: groundY - 130 },
-                { x: 900, y: groundY - 140, secret: true },
-                { x: 1250, y: groundY - 110 },
-                { x: 1600, y: groundY - 130 },
-                { x: 1900, y: groundY - 35, secret: true },
+                { x: 150, y: groundY - 35 },
+                { x: 400, y: groundY - 100 },
+                { x: 600, y: groundY - 35 },
+                { x: 850, y: groundY - 100 },
+                { x: 1100, y: groundY - 35 },
+                { x: 1600, y: groundY - 35, secret: true },
             ],
             coins: [
                 { x: 80, y: groundY - 35 },
-                { x: 400, y: groundY - 35 },
-                { x: 550, y: groundY - 70 },
-                { x: 750, y: groundY - 35 },
-                { x: 1100, y: groundY - 35 },
-                { x: 1300, y: groundY - 70 },
-                { x: 1450, y: groundY - 35 },
-                { x: 1850, y: groundY - 35 },
+                { x: 250, y: groundY - 35 },
+                { x: 550, y: groundY - 35 },
+                { x: 700, y: groundY - 35 },
+                { x: 1000, y: groundY - 35 },
+                { x: 1200, y: groundY - 35 },
+                { x: 1550, y: groundY - 35 },
             ],
             hazards: [
-                { x: 100, y: groundY - 18, w: 50, onPlatform: true },
-                { x: 400, y: groundY - 18, w: 50, onPlatform: true },
-                { x: 750, y: groundY - 18, w: 50, onPlatform: true },
-                { x: 1100, y: groundY - 18, w: 50, onPlatform: true },
-                { x: 1450, y: groundY - 18, w: 50, onPlatform: true },
+                { x: 200, y: groundY, w: 40 },
+                { x: 1050, y: groundY, w: 40 },
             ],
             moving: [
-                { x: 220, y: groundY - 70, w: 90, h: 20, minX: 200, maxX: 320, speed: 0.9 },
-                { x: 520, y: groundY - 90, w: 80, h: 20, minX: 480, maxX: 640, speed: 1.0 },
-                { x: 870, y: groundY - 100, w: 90, h: 20, minX: 830, maxX: 1000, speed: 1.1 },
-                { x: 1220, y: groundY - 80, w: 80, h: 20, minX: 1180, maxX: 1340, speed: 0.9 },
-                { x: 1570, y: groundY - 90, w: 90, h: 20, minX: 1530, maxX: 1700, speed: 1.2 },
+                { x: 320, y: groundY - 60, w: 100, h: 20, minX: 300, maxX: 480, speed: 0.4 },
+                { x: 770, y: groundY - 60, w: 100, h: 20, minX: 750, maxX: 930, speed: 0.5 },
+                { x: 1270, y: groundY - 60, w: 100, h: 20, minX: 1250, maxX: 1430, speed: 0.4 },
             ],
+            fading: [],
+            bouncy: [],
+            enemies: [],
+            signs: [
+                { x: 50, y: groundY, text: "Платформы едут!\nЗапрыгивай!" },
+            ],
+            goalX: 1750
+        },
+        4: {
+            name: "👻 Мигающие Платформы",
+            platforms: [
+                { x: 0, y: groundY, w: 250, h: 50 },
+                { x: 550, y: groundY, w: 200, h: 50 },
+                { x: 1050, y: groundY, w: 250, h: 50 },
+                { x: 1500, y: groundY, w: 400, h: 50 },
+            ],
+            apples: [
+                { x: 100, y: groundY - 35 },
+                { x: 350, y: groundY - 80 },
+                { x: 620, y: groundY - 35 },
+                { x: 850, y: groundY - 80 },
+                { x: 1150, y: groundY - 35 },
+                { x: 1650, y: groundY - 35, secret: true },
+            ],
+            coins: [
+                { x: 50, y: groundY - 35 },
+                { x: 200, y: groundY - 35 },
+                { x: 450, y: groundY - 70 },
+                { x: 600, y: groundY - 35 },
+                { x: 700, y: groundY - 35 },
+                { x: 1100, y: groundY - 35 },
+                { x: 1600, y: groundY - 35 },
+            ],
+            hazards: [
+                { x: 150, y: groundY, w: 40 },
+                { x: 1200, y: groundY, w: 40 },
+            ],
+            moving: [],
             fading: [
-                { x: 420, y: groundY - 130, w: 70, h: 20, timer: 0, visible: true, interval: 80, baseX: 420 },
-                { x: 1120, y: groundY - 130, w: 70, h: 20, timer: 40, visible: true, interval: 80, baseX: 1120 },
+                { x: 270, y: groundY - 50, w: 100, h: 20, timer: 0, visible: true, interval: 150, baseX: 270 },
+                { x: 420, y: groundY - 50, w: 100, h: 20, timer: 75, visible: true, interval: 150, baseX: 420 },
+                { x: 770, y: groundY - 50, w: 100, h: 20, timer: 0, visible: true, interval: 150, baseX: 770 },
+                { x: 920, y: groundY - 50, w: 100, h: 20, timer: 75, visible: true, interval: 150, baseX: 920 },
+                { x: 1320, y: groundY - 50, w: 100, h: 20, timer: 0, visible: true, interval: 150, baseX: 1320 },
             ],
             bouncy: [
-                { x: 140, y: groundY - 15, w: 40, h: 15 },
-                { x: 790, y: groundY - 15, w: 40, h: 15 },
-                { x: 1490, y: groundY - 15, w: 40, h: 15 },
+                { x: 500, y: groundY, w: 40, h: 12 },
+                { x: 1000, y: groundY, w: 40, h: 12 },
             ],
-            enemies: [
-                { x: 380, y: groundY - 24, minX: 360, maxX: 480, speed: 0.7 },
-                { x: 730, y: groundY - 24, minX: 710, maxX: 830, speed: 0.8 },
-                { x: 1080, y: groundY - 24, minX: 1060, maxX: 1180, speed: 0.9 },
-                { x: 1800, y: groundY - 24, minX: 1770, maxX: 1950, speed: 1.0 },
-            ],
+            enemies: [],
             signs: [
-                { x: 30, y: groundY, text: "Финальный уровень!\nУдачи!" },
-                { x: 1780, y: groundY, text: "Почти там!\n★ Финиш близко!" },
+                { x: 30, y: groundY, text: "Платформы мигают!\nУспей!" },
             ],
-            goalX: 2050
+            goalX: 1800
+        },
+        5: {
+            name: "🔥 Финал",
+            platforms: [
+                { x: 0, y: groundY, w: 300, h: 50 },
+                { x: 400, y: groundY, w: 200, h: 50 },
+                { x: 700, y: groundY, w: 200, h: 50 },
+                { x: 1000, y: groundY, w: 200, h: 50 },
+                { x: 1300, y: groundY, w: 200, h: 50 },
+                { x: 1600, y: groundY, w: 400, h: 50 },
+            ],
+            apples: [
+                { x: 150, y: groundY - 35 },
+                { x: 350, y: groundY - 90 },
+                { x: 480, y: groundY - 35 },
+                { x: 650, y: groundY - 90 },
+                { x: 780, y: groundY - 35 },
+                { x: 950, y: groundY - 90 },
+                { x: 1080, y: groundY - 35 },
+                { x: 1800, y: groundY - 35, secret: true },
+            ],
+            coins: [
+                { x: 80, y: groundY - 35 },
+                { x: 250, y: groundY - 35 },
+                { x: 450, y: groundY - 35 },
+                { x: 550, y: groundY - 35 },
+                { x: 750, y: groundY - 35 },
+                { x: 850, y: groundY - 35 },
+                { x: 1050, y: groundY - 35 },
+                { x: 1150, y: groundY - 35 },
+                { x: 1350, y: groundY - 35 },
+                { x: 1450, y: groundY - 35 },
+                { x: 1700, y: groundY - 35 },
+            ],
+            hazards: [
+                { x: 200, y: groundY, w: 40 },
+                { x: 500, y: groundY, w: 40 },
+                { x: 800, y: groundY, w: 40 },
+                { x: 1100, y: groundY, w: 40 },
+                { x: 1400, y: groundY, w: 40 },
+            ],
+            moving: [
+                { x: 310, y: groundY - 60, w: 80, h: 20, minX: 300, maxX: 390, speed: 0.5 },
+                { x: 610, y: groundY - 60, w: 80, h: 20, minX: 600, maxX: 690, speed: 0.5 },
+                { x: 910, y: groundY - 60, w: 80, h: 20, minX: 900, maxX: 990, speed: 0.5 },
+                { x: 1210, y: groundY - 60, w: 80, h: 20, minX: 1200, maxX: 1290, speed: 0.5 },
+                { x: 1510, y: groundY - 60, w: 80, h: 20, minX: 1500, maxX: 1590, speed: 0.5 },
+            ],
+            fading: [],
+            bouncy: [
+                { x: 260, y: groundY, w: 35, h: 12 },
+                { x: 560, y: groundY, w: 35, h: 12 },
+                { x: 860, y: groundY, w: 35, h: 12 },
+                { x: 1160, y: groundY, w: 35, h: 12 },
+                { x: 1460, y: groundY, w: 35, h: 12 },
+            ],
+            enemies: [],
+            signs: [
+                { x: 30, y: groundY, text: "Финал!\nУдачи!" },
+                { x: 1650, y: groundY, text: "Почти! ★" },
+            ],
+            goalX: 1900
         }
     };
 
@@ -5366,53 +5357,39 @@ function genLevel() {
     lvl.platforms.forEach(p => G.platforms.push({ ...p }));
     lvl.apples.forEach(a => G.collectibles.push({ ...a, collected: false, baseX: a.x }));
     lvl.coins.forEach(c => G.coins.push({ ...c, collected: false, baseX: c.x }));
-    lvl.hazards.forEach(h => G.hazards.push({ x: h.x, y: h.y, w: h.w, h: 18 }));
+    lvl.hazards.forEach(h => G.hazards.push({ x: h.x, y: h.y, w: h.w, h: 16 }));
     lvl.moving.forEach(m => G.movingPlatforms.push({ ...m, dir: 1 }));
     lvl.fading.forEach(f => G.fadingPlatforms.push({ ...f }));
     lvl.bouncy.forEach(b => G.bouncePads.push({ ...b }));
     lvl.enemies.forEach(e => G.enemies.push({ ...e, dir: 1, frame: 0 }));
     lvl.signs.forEach(s => G.signs.push({ ...s }));
 
-    // Декорации на платформах
+    // Декорации ТОЛЬКО на больших платформах
     G.platforms.forEach(plat => {
-        if (plat.h >= 50) {
-            const count = Math.floor(plat.w / 120);
+        if (plat.h >= 50 && plat.w > 150) {
+            const count = Math.floor(plat.w / 150);
             for (let i = 0; i < count; i++) {
-                const dx = plat.x + 50 + i * 120 + Math.random() * 20;
-                if (Math.random() > 0.4) {
+                const dx = plat.x + 60 + i * 150;
+                if (Math.random() > 0.5) {
                     G.decorations.push({ x: dx, y: plat.y, type: 'tree', baseX: dx });
                 }
-                if (Math.random() > 0.5) {
-                    G.decorations.push({ x: dx + 50, y: plat.y, type: 'bush', baseX: dx + 50 });
-                }
                 if (Math.random() > 0.6) {
-                    G.decorations.push({ x: dx + 25, y: plat.y, type: 'flower', baseX: dx + 25 });
+                    G.decorations.push({ x: dx + 70, y: plat.y, type: 'bush', baseX: dx + 70 });
                 }
             }
         }
     });
 
-    // Животные
-    const worldWidth = lvl.goalX + 200;
-    for (let i = 0; i < 6; i++) {
-        const ax = Math.random() * worldWidth;
-        const ay = 30 + Math.random() * 80;
-        G.animals.push({ x: ax, y: ay, type: 'bird', vx: 0.3 + Math.random() * 0.3, phase: Math.random() * Math.PI * 2, baseX: ax });
+    // Птицы на фоне
+    for (let i = 0; i < 4; i++) {
+        const ax = Math.random() * (lvl.goalX + 200);
+        const ay = 30 + Math.random() * 60;
+        G.animals.push({ x: ax, y: ay, type: 'bird', vx: 0.2 + Math.random() * 0.2, phase: Math.random() * Math.PI * 2, baseX: ax });
     }
-    for (let i = 0; i < 5; i++) {
-        const ax = Math.random() * worldWidth;
-        const ay = 50 + Math.random() * 100;
-        G.animals.push({ x: ax, y: ay, type: 'butterfly', phase: Math.random() * Math.PI * 2, baseX: ax, baseY: ay });
-    }
-    G.platforms.forEach(plat => {
-        if (plat.h >= 50 && Math.random() > 0.7) {
-            const bx = plat.x + 30 + Math.random() * (plat.w - 60);
-            G.animals.push({ x: bx, y: plat.y, type: 'bunny', frame: 0, baseX: bx });
-        }
-    });
 
     G.goal = { x: lvl.goalX, y: groundY - 80 };
 }
+
 
 function updateHUD() {
     document.getElementById('gameLevel').textContent = G.level;
