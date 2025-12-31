@@ -2158,19 +2158,41 @@
                     </div></div>
                 </div>
 
-                <!-- ⑦ THINGS -->
+                <!-- ⑦ Tweaks -->
 <div class="cat" data-cat="extra">
     <div class="cat-head" onclick="toggleCat(this)">
         <div class="cat-info">
             <div class="cat-num pink">⑦</div>
             <div>
-                <div class="cat-title">◜︎Штуки!◞︎</div>
-                <div class="cat-desc">Выбери и скопируй нужные штуки для Things Sample</div>
+                <div class="cat-title">◜︎Tweaks!◞︎</div>
+                <div class="cat-desc">HTML промпты, штуки и темы</div>
             </div>
         </div>
         <span class="cat-arrow">▼</span>
     </div>
     <div class="cat-body"><div class="cat-inner">
+
+        <!-- ═══ HTML PROMPT ═══ -->
+        <div class="subsec">❝ HTML Prompt</div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> 📄 Стандартный</div>
+                <div class="prompt-meta"><span class="prompt-default">★ Дефолт</span><button class="prompt-btn" onclick="event.stopPropagation();copy('[HTML_STANDARD]')">Копировать</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">[HTML_STANDARD]</div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> 📄 Расширенный</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[HTML_EXTENDED]')">Копировать</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">[HTML_EXTENDED]</div></div></div>
+        </div>
+
+        <!-- ═══ THINGS ═══ -->
+        <div class="subsec">❝ Things Sample</div>
 
         <div class="things-header">
             <div class="things-title">📋 Выбрано: <span class="things-count" id="thingsCount">0</span></div>
@@ -2184,7 +2206,7 @@
         </div>
 
         <!-- Можно смешивать -->
-        <div class="subsec">◇ Можно смешивать <span style="color:var(--text-dim);font-weight:400;">(выбирай сколько хочешь)</span></div>
+        <p style="color:var(--green);font-weight:600;margin:1rem 0 0.5rem;">◇ Можно смешивать:</p>
         <div class="things-grid">
             <div class="thing-item" data-code="[FLASHBACKS]" onclick="toggleThing(this)">
                 <div class="thing-checkbox"></div>
@@ -2237,7 +2259,7 @@
         </div>
 
         <!-- Скрытые Блоки -->
-        <div class="subsec">👁 Скрытые Блоки <span style="color:var(--text-dim);font-weight:400;">(можно смешивать)</span></div>
+        <p style="color:var(--green);font-weight:600;margin:1.5rem 0 0.5rem;">👁 Скрытые Блоки:</p>
         <div class="things-grid">
             <div class="thing-item" data-code="[HIDDEN_PROFILES]" onclick="toggleThing(this)">
                 <div class="thing-checkbox"></div>
@@ -2266,7 +2288,7 @@
         </div>
 
         <!-- Инфоблоки -->
-        <div class="subsec">✧ Инфоблоки <span style="color:var(--text-dim);font-weight:400;">(только ОДИН)</span></div>
+        <p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ Инфоблоки <span style="color:var(--text-dim);font-weight:400;">(только один)</span></p>
         <div class="things-grid">
             <div class="thing-item exclusive" data-group="infoblocks" data-code="[INFO_RENETTE]" onclick="toggleExclusive(this,'infoblocks')">
                 <div class="thing-checkbox"></div>
@@ -2301,7 +2323,7 @@
         </div>
 
         <!-- CYOA -->
-        <div class="subsec">✧ CYOA <span style="color:var(--text-dim);font-weight:400;">(только ОДИН)</span></div>
+        <p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ CYOA <span style="color:var(--text-dim);font-weight:400;">(только один)</span></p>
         <div class="things-grid">
             <div class="thing-item exclusive" data-group="cyoa" data-code="[CYOA_MACRO]" onclick="toggleExclusive(this,'cyoa')">
                 <div class="thing-checkbox"></div>
@@ -2318,7 +2340,7 @@
         </div>
 
         <!-- Fancy UI -->
-        <div class="subsec">✧ Fancy UI <span style="color:var(--text-dim);font-weight:400;">(только ОДИН)</span></div>
+        <p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ Fancy UI <span style="color:var(--text-dim);font-weight:400;">(только один)</span></p>
         <div class="things-grid">
             <div class="thing-item exclusive" data-group="fancy" data-code="[FANCY_FULL]" onclick="toggleExclusive(this,'fancy')">
                 <div class="thing-checkbox"></div>
@@ -2341,7 +2363,7 @@
         </div>
 
         <!-- Комментарии -->
-        <div class="subsec">✧ Комментарии <span style="color:var(--text-dim);font-weight:400;">(только ОДИН)</span></div>
+        <p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ Комментарии <span style="color:var(--text-dim);font-weight:400;">(только один)</span></p>
         <div class="things-grid">
             <div class="thing-item exclusive" data-group="comments" data-code="[COMMENTS_V1]" onclick="toggleExclusive(this,'comments')">
                 <div class="thing-checkbox"></div>
@@ -2364,8 +2386,8 @@
         </div>
 
         <!-- Хроники -->
-        <div class="subsec">✧ Хроники <span style="color:var(--text-dim);font-weight:400;">(только ОДИН)</span></div>
-        <div class="things-grid">
+        <p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ Хроники <span style="color:var(--text-dim);font-weight:400;">(только один)</span></p>
+        <div class="things-grid" style="margin-bottom:2rem;">
             <div class="thing-item exclusive" data-group="chronicles" data-code="[CHRONICLES_LIGHT]" onclick="toggleExclusive(this,'chronicles')">
                 <div class="thing-checkbox"></div>
                 <span class="thing-icon">📜</span>
@@ -2380,8 +2402,28 @@
             </div>
         </div>
 
+        <!-- ═══ HTML THEME ═══ -->
+        <div class="subsec">❝ HTML Theme</div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> 🎨 Тёмная тема</div>
+                <div class="prompt-meta"><span class="prompt-default">★ Дефолт</span><button class="prompt-btn" onclick="event.stopPropagation();copy('[THEME_DARK]')">Копировать</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">[THEME_DARK]</div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> 🎨 Светлая тема</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[THEME_LIGHT]')">Копировать</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">[THEME_LIGHT]</div></div></div>
+        </div>
+
     </div></div>
 </div>
+
 
 
 
