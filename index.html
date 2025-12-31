@@ -59,6 +59,10 @@
 		.thing-source {
     display: none;
 }
+		.prompt-source {
+    display: none;
+}
+
 
 		/* ═══════════════════════════════════════
    УЛУЧШЕННЫЕ ГАЙДЫ
@@ -2935,16 +2939,17 @@ Drive momentum via decisive actions, bold declarations, physical contact, rapid 
     </div>
     <div class="cat-body"><div class="cat-inner">
 
-        <!-- ═══ ПОДРАЗДЕЛ 1: БАНЫ ═══ -->
         <div class="subsec">❝ bans</div>
 
+        <!-- Русские баны -->
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
                 <div class="prompt-name"><span class="tag tag-one">↔︎</span> Русские баны</div>
                 <div class="prompt-meta">
                     <span class="prompt-default">★ Дефолт</span>
                     <button class="prompt-btn" onclick="event.stopPropagation();copyPrompt(this)">Копировать</button>
-                    <textarea class="prompt-source"><banned_instructions>
+                </div>
+<textarea class="prompt-source"><banned_instructions>
 [Ban]
 This is a list of constructions that you shall avoid to avoid ruining the story. From now on you hate using:
 
@@ -2983,17 +2988,18 @@ Mandatory rotation: [Dialogue → Action → Thought → Sensory → Environment
 Change the rotation and create a new unique one for every new response.
 Avoid: start narration with the same rotation, make a predictable response.
 </antiloop_guide></textarea>
-                </div>
             </div>
             <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Русская версия банов.</div></div></div>
         </div>
 
+        <!-- Английские баны -->
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
                 <div class="prompt-name"><span class="tag tag-one">↔︎</span> Английские баны</div>
                 <div class="prompt-meta">
                     <button class="prompt-btn" onclick="event.stopPropagation();copyPrompt(this)">Копировать</button>
-                    <textarea class="prompt-source"><banned_instructions>
+                </div>
+<textarea class="prompt-source"><banned_instructions>
 [Ban]
 This is a list of constructions that you shall avoid to avoid ruining the story. From now on you hate using:
 
@@ -3032,17 +3038,18 @@ Mandatory rotation: [Dialogue → Action → Thought → Sensory → Environment
 Change the rotation and create a new unique one for every new response.
 Avoid: start narration with the same rotation, make a predictable response.
 </antiloop_guide></textarea>
-                </div>
             </div>
             <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Английская версия банов.</div></div></div>
         </div>
 
+        <!-- Украинские баны -->
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
                 <div class="prompt-name"><span class="tag tag-one">↔︎</span> Украинские баны</div>
                 <div class="prompt-meta">
                     <button class="prompt-btn" onclick="event.stopPropagation();copyPrompt(this)">Копировать</button>
-                    <textarea class="prompt-source"><banned_instructions>
+                </div>
+<textarea class="prompt-source"><banned_instructions>
 [Ban]
 This is a list of constructions that you shall avoid to avoid ruining the story. From now on you hate using:
 
@@ -3081,7 +3088,6 @@ Mandatory rotation: [Dialogue → Action → Thought → Sensory → Environment
 Change the rotation and create a new unique one for every new response.
 Avoid: start narration with the same rotation, make a predictable response.
 </antiloop_guide></textarea>
-                </div>
             </div>
             <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Украинская версия банов.</div></div></div>
         </div>
@@ -3945,6 +3951,14 @@ TEXT RULES:
     </div>
 
     <script>
+		function copyPrompt(btn) {
+    const head = btn.closest('.prompt-head');
+    const textarea = head.querySelector('.prompt-source');
+    if (textarea) {
+        navigator.clipboard.writeText(textarea.value).then(() => showToast('Скопировано! 🍎'));
+    }
+}
+
 		// Lightbox
 function openLightbox(src) {
     document.getElementById('lightboxImg').src = src;
