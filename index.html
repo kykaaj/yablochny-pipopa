@@ -54,6 +54,128 @@
 .prompt-code p:last-child {
     margin-bottom: 0;
 }
+		/* Changelog */
+.changelog-item {
+    padding: 1rem 0;
+    border-bottom: 1px dashed var(--border);
+}
+
+.changelog-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.changelog-item:first-child {
+    padding-top: 0;
+}
+
+.changelog-ver {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+}
+
+.changelog-badge {
+    padding: 0.3rem 0.8rem;
+    background: var(--green);
+    color: var(--bg);
+    font-weight: 800;
+    font-size: 0.85rem;
+    border-radius: var(--radius-sm);
+}
+
+.changelog-badge.old {
+    background: var(--bg-elevated);
+    color: var(--text-muted);
+}
+
+.changelog-date {
+    color: var(--text-dim);
+    font-size: 0.8rem;
+}
+
+.changelog-list {
+    margin: 0;
+    padding-left: 1.5rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.changelog-list li {
+    margin: 0.3rem 0;
+}
+
+.changelog-list li::marker {
+    color: var(--green);
+}
+
+/* Lightbox */
+.lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 10002;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    cursor: zoom-out;
+}
+
+.lightbox.active {
+    display: flex;
+}
+
+.lightbox-img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: var(--radius);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+    cursor: default;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: var(--bg-card);
+    border: 1px solid var(--red);
+    border-radius: var(--radius-sm);
+    color: var(--red);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.lightbox-close:hover {
+    background: var(--red);
+    color: #fff;
+}
+
+/* Картинки в тексте — кликабельные */
+.prompt-code img,
+.prompt-desc img,
+.guide-inner img {
+    max-width: 100%;
+    border-radius: var(--radius-sm);
+    margin: 0.5rem 0;
+    cursor: zoom-in;
+    transition: all 0.3s;
+    border: 1px solid var(--border);
+}
+
+.prompt-code img:hover,
+.prompt-desc img:hover,
+.guide-inner img:hover {
+    border-color: var(--green);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
 
         /* Links in text */
 .prompt-code a,
@@ -1922,6 +2044,54 @@
                         <p class="card-text">Всего ~70 КБ!</p>
                     </div>
                 </div>
+				<!-- Changelog -->
+<div class="guide">
+    <div class="guide-head" onclick="toggleGuide(this)">
+        <div class="guide-title">📋 Changelog</div>
+        <span class="cat-arrow">▼</span>
+    </div>
+    <div class="guide-body"><div class="guide-inner">
+
+        <div class="changelog-item">
+            <div class="changelog-ver">
+                <span class="changelog-badge">V1.7</span>
+                <span class="changelog-date">14.06.2025</span>
+            </div>
+            <ul class="changelog-list">
+                <li>Добавлены стили письма (18 авторов)</li>
+                <li>Добавлены стили речи (6 авторов)</li>
+                <li>Переработан раздел Tweaks</li>
+                <li>Новые HTML темы</li>
+            </ul>
+        </div>
+
+        <div class="changelog-item">
+            <div class="changelog-ver">
+                <span class="changelog-badge old">V1.6</span>
+                <span class="changelog-date">01.06.2025</span>
+            </div>
+            <ul class="changelog-list">
+                <li>Добавлен модульный COT</li>
+                <li>Новые инфоблоки</li>
+                <li>Фиксы для Gemini</li>
+            </ul>
+        </div>
+
+        <div class="changelog-item">
+            <div class="changelog-ver">
+                <span class="changelog-badge old">V1.5</span>
+                <span class="changelog-date">15.05.2025</span>
+            </div>
+            <ul class="changelog-list">
+                <li>Первая публичная версия</li>
+                <li>9 категорий промптов</li>
+                <li>Ренетт ООС</li>
+            </ul>
+        </div>
+
+    </div></div>
+</div>
+
             </section>
 
             <!-- Download -->
@@ -2808,7 +2978,7 @@
 <p>Второе лицо - 2nd-person perspective</p>
 <p>Прошедшее время - past tense</p>
 <p>Будущее время - future tense</p>
-(скрин)
+<img src="ex10.jpg" alt="ex10" class="step-image">
 <p>prose style - выбор велик (не ролик) и я его пополняю (можете и своего автора добавить). От стиля прозы очень зависит ответ и его стиль, можете попробовать другие варианты, их описание (да и вообще все описания промптов) есть во вкладке промптов на сайте.</p><p>(часть из гайда <a href="https://t.me/dearfawwn" target="_blank">Фавн</a>)</p><p>"Четыре чубрика, которых я вообще не советую мешать, если они основные авторы:</p>
 <p>— СЭЛИНДЖЕР. он сожрёт своим стилем всё, что есть. вы не можете отнять у него диалоги/мысли/юмор. он этим живёт.</p>
 <p>— дженни лоусон. то же самое, что и сэлинджер. КРАСНОЕ ПРЕДУПРЕЖДЕНИЕ не мешать.</p>
@@ -2937,6 +3107,32 @@
     </div>
 
     <script>
+		// Lightbox
+function openLightbox(src) {
+    document.getElementById('lightboxImg').src = src;
+    document.getElementById('lightbox').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// Делаем все картинки кликабельными
+document.addEventListener('click', (e) => {
+    if (e.target.matches('.prompt-code img, .prompt-desc img, .guide-inner img')) {
+        openLightbox(e.target.src);
+    }
+});
+
+// Закрытие по Escape
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closeLightbox();
+    }
+});
+
         // Music Player
 const bgMusic = document.getElementById('bgMusic');
 const musicToggle = document.getElementById('musicToggle');
@@ -3526,5 +3722,11 @@ function updateHUD() {
             if (e.target === document.getElementById('gameModal')) closeGame();
         });
     </script>
+	<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+    <img class="lightbox-img" id="lightboxImg" src="" alt="">
+</div>
+
 </body>
 </html>
