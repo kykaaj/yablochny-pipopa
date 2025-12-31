@@ -2781,207 +2781,208 @@
         </div>
 
         <!-- Можно смешивать -->
-        <p style="color:var(--green);font-weight:600;margin:1rem 0 0.5rem;">◇ Можно смешивать:</p>
-        <div class="things-grid">
-            <div class="thing-item" data-code="[FLASHBACKS]" onclick="toggleThing(this)">
-                <div class="thing-checkbox"></div>
-                <span class="thing-icon">🕰️</span>
-                <span class="thing-name">Флешбеки</span>
-                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Флешбеки','Добавляет флешбек в 「...」<br><img src="example1.jpg" alt="Пример">','[FLASHBACKS]')">👁</button>
-            </div>
-            <div class="thing-item" data-code="[TRANSITIONS]" onclick="toggleThing(this)">
-                <div class="thing-checkbox"></div>
-                <span class="thing-icon">⏩</span>
-                <span class="thing-name">Переходы</span>
-                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Переходы','Красивые переходы между сценами','[TRANSITIONS]')">👁</button>
-            </div>
-            <div class="thing-item" data-code="[REAL_WORLD]" onclick="toggleThing(this)">
-                <div class="thing-checkbox"></div>
-                <span class="thing-icon">🌎</span>
-                <span class="thing-name">Реальный Мир</span>
-                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Реальный Мир','Вставки реального мира','[REAL_WORLD]')">👁</button>
-            </div>
-            <div class="thing-item" data-code="[WEB_CHAPTER]" onclick="toggleThing(this)">
-                <div class="thing-checkbox"></div>
-                <span class="thing-icon">✒️</span>
-                <span class="thing-name">Стиль веб-главы</span>
-                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Стиль веб-главы','Оформление как веб-новелла','[WEB_CHAPTER]')">👁</button>
-            </div>
-            <div class="thing-item" data-code="[INTERVIEW]" onclick="toggleThing(this)">
-                <div class="thing-checkbox"></div>
-                <span class="thing-icon">📢</span>
-                <span class="thing-name">Интервью с Актерами</span>
-                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Интервью с Актерами','Интервью персонажей','[INTERVIEW]')">👁</button>
-            </div>
-            <div class="thing-item" data-code="[MEME]" onclick="toggleThing(this)">
-                <div class="thing-checkbox"></div>
-                <span class="thing-icon">🖼️</span>
-                <span class="thing-name">MEME</span>
-                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('MEME','Мемные вставки','[MEME]')">👁</button>
-            </div>
-            <div class="thing-item" data-code="[TYPOGRAPHY]" onclick="toggleThing(this)">
-                <div class="thing-checkbox"></div>
-                <span class="thing-icon">🔰</span>
-                <span class="thing-name">Типографика</span>
-                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Типографика','Улучшенная типографика','[TYPOGRAPHY]')">👁</button>
-            </div>
-            <div class="thing-item" data-code="[MUSIC_SUBS]" onclick="toggleThing(this)">
-                <div class="thing-checkbox"></div>
-                <span class="thing-icon">🎙️</span>
-                <span class="thing-name">Музыкальные Субтитры</span>
-                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Музыкальные Субтитры','Субтитры с музыкой','[MUSIC_SUBS]')">👁</button>
-            </div>
-        </div>
+<p style="color:var(--green);font-weight:600;margin:1rem 0 0.5rem;">◇ Можно смешивать:</p>
+<div class="things-grid">
+    <div class="thing-item" data-code="[FLASHBACKS]" onclick="toggleThing(this)">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">🕰️</span>
+        <span class="thing-name">Флешбеки</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('flashbacks')">👁</button>
+    </div>
+    <div class="thing-item" data-code="[TRANSITIONS]" onclick="toggleThing(this)">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">⏩</span>
+        <span class="thing-name">Переходы</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('transitions')">👁</button>
+    </div>
+    <div class="thing-item" data-code="[REAL_WORLD]" onclick="toggleThing(this)">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">🌎</span>
+        <span class="thing-name">Реальный Мир</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('realworld')">👁</button>
+    </div>
+    <div class="thing-item" data-code="[WEB_CHAPTER]" onclick="toggleThing(this)">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">✒️</span>
+        <span class="thing-name">Стиль веб-главы</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('webchapter')">👁</button>
+    </div>
+    <div class="thing-item" data-code="[INTERVIEW]" onclick="toggleThing(this)">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">📢</span>
+        <span class="thing-name">Интервью с Актерами</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('interview')">👁</button>
+    </div>
+    <div class="thing-item" data-code="[MEME]" onclick="toggleThing(this)">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">🖼️</span>
+        <span class="thing-name">MEME</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('meme')">👁</button>
+    </div>
+    <div class="thing-item" data-code="[TYPOGRAPHY]" onclick="toggleThing(this)">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">🔰</span>
+        <span class="thing-name">Типографика</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('typography')">👁</button>
+    </div>
+    <div class="thing-item" data-code="[MUSIC_SUBS]" onclick="toggleThing(this)">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">🎙️</span>
+        <span class="thing-name">Музыкальные Субтитры</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('musicsubs')">👁</button>
+    </div>
+</div>
 
-        <!-- Скрытые Блоки -->
-        <p style="color:var(--green);font-weight:600;margin:1.5rem 0 0.5rem;">👁 Скрытые Блоки:</p>
-        <div class="things-grid">
-            <div class="thing-item" data-code="[HIDDEN_PROFILES]" onclick="toggleThing(this)">
-                <div class="thing-checkbox"></div>
-                <span class="thing-icon">👤</span>
-                <span class="thing-name">Скрытые Профили</span>
-                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Скрытые Профили','Раскрываемые профили','[HIDDEN_PROFILES]')">👁</button>
-            </div>
-            <div class="thing-item" data-code="[HIDDEN_EVENTS]" onclick="toggleThing(this)">
-                <div class="thing-checkbox"></div>
-                <span class="thing-icon">📍</span>
-                <span class="thing-name">Закадровые События</span>
-                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Закадровые События','Скрытые события','[HIDDEN_EVENTS]')">👁</button>
-            </div>
-            <div class="thing-item" data-code="[HIDDEN_PLANS]" onclick="toggleThing(this)">
-                <div class="thing-checkbox"></div>
-                <span class="thing-icon">🗒️</span>
-                <span class="thing-name">Скрытые Планы</span>
-                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Скрытые Планы','Планы NPC','[HIDDEN_PLANS]')">👁</button>
-            </div>
-            <div class="thing-item" data-code="[HIDDEN_DATING]" onclick="toggleThing(this)">
-                <div class="thing-checkbox"></div>
-                <span class="thing-icon">💌</span>
-                <span class="thing-name">Скрытый DatingSim</span>
-                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Скрытый DatingSim','Дейтинг механика','[HIDDEN_DATING]')">👁</button>
-            </div>
-        </div>
+<!-- Скрытые Блоки -->
+<p style="color:var(--green);font-weight:600;margin:1.5rem 0 0.5rem;">👁 Скрытые Блоки:</p>
+<div class="things-grid">
+    <div class="thing-item" data-code="[HIDDEN_PROFILES]" onclick="toggleThing(this)">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">👤</span>
+        <span class="thing-name">Скрытые Профили</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('hiddenprofiles')">👁</button>
+    </div>
+    <div class="thing-item" data-code="[HIDDEN_EVENTS]" onclick="toggleThing(this)">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">📍</span>
+        <span class="thing-name">Закадровые События</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('hiddenevents')">👁</button>
+    </div>
+    <div class="thing-item" data-code="[HIDDEN_PLANS]" onclick="toggleThing(this)">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">🗒️</span>
+        <span class="thing-name">Скрытые Планы</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('hiddenplans')">👁</button>
+    </div>
+    <div class="thing-item" data-code="[HIDDEN_DATING]" onclick="toggleThing(this)">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">💌</span>
+        <span class="thing-name">Скрытый DatingSim</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('hiddendating')">👁</button>
+    </div>
+</div>
 
-        <!-- Инфоблоки -->
-        <p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ Инфоблоки <span style="color:var(--text-dim);font-weight:400;">(только один)</span></p>
-        <div class="things-grid">
-            <div class="thing-item exclusive" data-group="infoblocks" data-code="[INFO_RENETTE]" onclick="toggleExclusive(this,'infoblocks')">
-                <div class="thing-checkbox"></div>
-                <span class="thing-icon">🍎</span>
-                <span class="thing-name">Логи Ренетт</span>
-                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Логи Ренетт','Инфоблок в стиле Ренетт','[INFO_RENETTE]')">👁</button>
-            </div>
-			<div class="thing-item exclusive" data-group="infoblocks" data-code="[INFO_RENETTE]" onclick="toggleExclusive(this,'infoblocks')">
-                <div class="thing-checkbox"></div>
-                <span class="thing-icon">🍏</span>
-                <span class="thing-name">Яблочные часы</span>
-                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Яблочные часы','Часы','[INFO_RENETTE]')">👁</button>
-            </div>
-            <div class="thing-item exclusive" data-group="infoblocks" data-code="[INFO_d]" onclick="toggleExclusive(this,'infoblocks')">
-                <div class="thing-checkbox"></div>
-                <span class="thing-icon">🗂️</span>
-                <span class="thing-name">Мини-Инфоблок</span>
-                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Мини-Инфоблок','Компактный инфоблок','[INFO_MINI]')">👁</button>
-            </div>
-            <div class="thing-item exclusive" data-group="infoblocks" data-code="[INFO_MAIN]" onclick="toggleExclusive(this,'infoblocks')">
-                <div class="thing-checkbox"></div>
-                <span class="thing-icon">📝</span>
-                <span class="thing-name">Основной Инфоблок</span>
-                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Основной Инфоблок','Полный инфоблок','[INFO_MAIN]')">👁</button>
-            </div>
-            <div class="thing-item exclusive" data-group="infoblocks" data-code="[INFO_MATRIX]" onclick="toggleExclusive(this,'infoblocks')">
-                <div class="thing-checkbox"></div>
-                <span class="thing-icon">💖</span>
-                <span class="thing-name">+Матрица отношений</span>
-                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('+Матрица отношений','Инфоблок с матрицей','[INFO_MATRIX]')">👁</button>
-            </div>
-            <div class="thing-item exclusive" data-group="infoblocks" data-code="[INFO_THOUGHTS]" onclick="toggleExclusive(this,'infoblocks')">
-                <div class="thing-checkbox"></div>
-                <span class="thing-icon">💭</span>
-                <span class="thing-name">+МатрОтн + Мысли</span>
-                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('+МатрОтн + Мысли','Матрица + мысли','[INFO_THOUGHTS]')">👁</button>
-            </div>
-        </div>
+<!-- Инфоблоки -->
+<p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ Инфоблоки <span style="color:var(--text-dim);font-weight:400;">(только один)</span></p>
+<div class="things-grid">
+    <div class="thing-item exclusive" data-group="infoblocks" data-code="[INFO_RENETTE]" onclick="toggleExclusive(this,'infoblocks')">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">🍎</span>
+        <span class="thing-name">Логи Ренетт</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('inforenette')">👁</button>
+    </div>
+    <div class="thing-item exclusive" data-group="infoblocks" data-code="[INFO_CLOCK]" onclick="toggleExclusive(this,'infoblocks')">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">🍏</span>
+        <span class="thing-name">Яблочные часы</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('infoclock')">👁</button>
+    </div>
+    <div class="thing-item exclusive" data-group="infoblocks" data-code="[INFO_MINI]" onclick="toggleExclusive(this,'infoblocks')">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">🗂️</span>
+        <span class="thing-name">Мини-Инфоблок</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('infomini')">👁</button>
+    </div>
+    <div class="thing-item exclusive" data-group="infoblocks" data-code="[INFO_MAIN]" onclick="toggleExclusive(this,'infoblocks')">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">📝</span>
+        <span class="thing-name">Основной Инфоблок</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('infomain')">👁</button>
+    </div>
+    <div class="thing-item exclusive" data-group="infoblocks" data-code="[INFO_MATRIX]" onclick="toggleExclusive(this,'infoblocks')">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">💖</span>
+        <span class="thing-name">+Матрица отношений</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('infomatrix')">👁</button>
+    </div>
+    <div class="thing-item exclusive" data-group="infoblocks" data-code="[INFO_THOUGHTS]" onclick="toggleExclusive(this,'infoblocks')">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">💭</span>
+        <span class="thing-name">+МатрОтн + Мысли</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('infothoughts')">👁</button>
+    </div>
+</div>
 
-        <!-- CYOA -->
-        <p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ CYOA <span style="color:var(--text-dim);font-weight:400;">(только один)</span></p>
-        <div class="things-grid">
-            <div class="thing-item exclusive" data-group="cyoa" data-code="[CYOA_MACRO]" onclick="toggleExclusive(this,'cyoa')">
-                <div class="thing-checkbox"></div>
-                <span class="thing-icon">🎲</span>
-                <span class="thing-name">CYOA - R-Macro</span>
-                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('CYOA - R-Macro','CYOA с макросами','[CYOA_MACRO]')">👁</button>
-            </div>
-            <div class="thing-item exclusive" data-group="cyoa" data-code="[CYOA_NO_MACRO]" onclick="toggleExclusive(this,'cyoa')">
-                <div class="thing-checkbox"></div>
-                <span class="thing-icon">🕹️</span>
-                <span class="thing-name">CYOA - No R-Macro</span>
-                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('CYOA - No R-Macro','CYOA без макросов','[CYOA_NO_MACRO]')">👁</button>
-            </div>
-        </div>
+<!-- CYOA -->
+<p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ CYOA <span style="color:var(--text-dim);font-weight:400;">(только один)</span></p>
+<div class="things-grid">
+    <div class="thing-item exclusive" data-group="cyoa" data-code="[CYOA_MACRO]" onclick="toggleExclusive(this,'cyoa')">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">🎲</span>
+        <span class="thing-name">CYOA - R-Macro</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('cyoamacro')">👁</button>
+    </div>
+    <div class="thing-item exclusive" data-group="cyoa" data-code="[CYOA_NO_MACRO]" onclick="toggleExclusive(this,'cyoa')">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">🕹️</span>
+        <span class="thing-name">CYOA - No R-Macro</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('cyoanomacro')">👁</button>
+    </div>
+</div>
 
-        <!-- Fancy UI -->
-        <p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ Fancy UI <span style="color:var(--text-dim);font-weight:400;">(только один)</span></p>
-        <div class="things-grid">
-            <div class="thing-item exclusive" data-group="fancy" data-code="[FANCY_FULL]" onclick="toggleExclusive(this,'fancy')">
-                <div class="thing-checkbox"></div>
-                <span class="thing-icon">🥂</span>
-                <span class="thing-name">Fancy UI</span>
-                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Fancy UI','Полный Fancy UI','[FANCY_FULL]')">👁</button>
-            </div>
-            <div class="thing-item exclusive" data-group="fancy" data-code="[FANCY_BASE]" onclick="toggleExclusive(this,'fancy')">
-                <div class="thing-checkbox"></div>
-                <span class="thing-icon">🥂</span>
-                <span class="thing-name">Только Основа</span>
-                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Только Основа','Базовый Fancy','[FANCY_BASE]')">👁</button>
-            </div>
-            <div class="thing-item exclusive" data-group="fancy" data-code="[FANCY_THOUGHTS]" onclick="toggleExclusive(this,'fancy')">
-                <div class="thing-checkbox"></div>
-                <span class="thing-icon">🥂</span>
-                <span class="thing-name">Только Мысли</span>
-                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Только Мысли','Fancy мысли','[FANCY_THOUGHTS]')">👁</button>
-            </div>
-        </div>
+<!-- Fancy UI -->
+<p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ Fancy UI <span style="color:var(--text-dim);font-weight:400;">(только один)</span></p>
+<div class="things-grid">
+    <div class="thing-item exclusive" data-group="fancy" data-code="[FANCY_FULL]" onclick="toggleExclusive(this,'fancy')">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">🥂</span>
+        <span class="thing-name">Fancy UI</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('fancyfull')">👁</button>
+    </div>
+    <div class="thing-item exclusive" data-group="fancy" data-code="[FANCY_BASE]" onclick="toggleExclusive(this,'fancy')">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">🥂</span>
+        <span class="thing-name">Только Основа</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('fancybase')">👁</button>
+    </div>
+    <div class="thing-item exclusive" data-group="fancy" data-code="[FANCY_THOUGHTS]" onclick="toggleExclusive(this,'fancy')">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">🥂</span>
+        <span class="thing-name">Только Мысли</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('fancythoughts')">👁</button>
+    </div>
+</div>
 
-        <!-- Комментарии -->
-        <p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ Комментарии <span style="color:var(--text-dim);font-weight:400;">(только один)</span></p>
-        <div class="things-grid">
-            <div class="thing-item exclusive" data-group="comments" data-code="[COMMENTS_V1]" onclick="toggleExclusive(this,'comments')">
-                <div class="thing-checkbox"></div>
-                <span class="thing-icon">💬</span>
-                <span class="thing-name">Комменты V1</span>
-                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Комменты V1','Комментарии версия 1','[COMMENTS_V1]')">👁</button>
-            </div>
-            <div class="thing-item exclusive" data-group="comments" data-code="[COMMENTS_V2]" onclick="toggleExclusive(this,'comments')">
-                <div class="thing-checkbox"></div>
-                <span class="thing-icon">💬</span>
-                <span class="thing-name">Комменты V2</span>
-                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Комменты V2','Комментарии версия 2','[COMMENTS_V2]')">👁</button>
-            </div>
-            <div class="thing-item exclusive" data-group="comments" data-code="[COMMENTS_V3]" onclick="toggleExclusive(this,'comments')">
-                <div class="thing-checkbox"></div>
-                <span class="thing-icon">💬</span>
-                <span class="thing-name">Комменты V3</span>
-                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Комменты V3','Комментарии версия 3','[COMMENTS_V3]')">👁</button>
-            </div>
-        </div>
+<!-- Комментарии -->
+<p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ Комментарии <span style="color:var(--text-dim);font-weight:400;">(только один)</span></p>
+<div class="things-grid">
+    <div class="thing-item exclusive" data-group="comments" data-code="[COMMENTS_V1]" onclick="toggleExclusive(this,'comments')">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">💬</span>
+        <span class="thing-name">Комменты V1</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('commentsv1')">👁</button>
+    </div>
+    <div class="thing-item exclusive" data-group="comments" data-code="[COMMENTS_V2]" onclick="toggleExclusive(this,'comments')">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">💬</span>
+        <span class="thing-name">Комменты V2</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('commentsv2')">👁</button>
+    </div>
+    <div class="thing-item exclusive" data-group="comments" data-code="[COMMENTS_V3]" onclick="toggleExclusive(this,'comments')">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">💬</span>
+        <span class="thing-name">Комменты V3</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('commentsv3')">👁</button>
+    </div>
+</div>
 
-        <!-- Хроники -->
-        <p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ Хроники <span style="color:var(--text-dim);font-weight:400;">(только один)</span></p>
-        <div class="things-grid" style="margin-bottom:2rem;">
-            <div class="thing-item exclusive" data-group="chronicles" data-code="[CHRONICLES_LIGHT]" onclick="toggleExclusive(this,'chronicles')">
-                <div class="thing-checkbox"></div>
-                <span class="thing-icon">📜</span>
-                <span class="thing-name">Светлая Тема</span>
-                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Светлая Тема','Хроники светлые','[CHRONICLES_LIGHT]')">👁</button>
-            </div>
-            <div class="thing-item exclusive" data-group="chronicles" data-code="[CHRONICLES_DARK]" onclick="toggleExclusive(this,'chronicles')">
-                <div class="thing-checkbox"></div>
-                <span class="thing-icon">📜</span>
-                <span class="thing-name">Тёмная Тема</span>
-                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Тёмная Тема','Хроники тёмные','[CHRONICLES_DARK]')">👁</button>
-            </div>
-        </div>
+<!-- Хроники -->
+<p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ Хроники <span style="color:var(--text-dim);font-weight:400;">(только один)</span></p>
+<div class="things-grid" style="margin-bottom:2rem;">
+    <div class="thing-item exclusive" data-group="chronicles" data-code="[CHRONICLES_LIGHT]" onclick="toggleExclusive(this,'chronicles')">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">📜</span>
+        <span class="thing-name">Светлая Тема</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('chronicleslight')">👁</button>
+    </div>
+    <div class="thing-item exclusive" data-group="chronicles" data-code="[CHRONICLES_DARK]" onclick="toggleExclusive(this,'chronicles')">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">📜</span>
+        <span class="thing-name">Тёмная Тема</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('chroniclesdark')">👁</button>
+    </div>
+</div>
+
 
         <!-- ═══ HTML THEME ═══ -->
         <div class="subsec">❝ html Theme</div>
@@ -3645,12 +3646,159 @@ window.addEventListener('load', () => {
             }
         }
 
-        function showThingDesc(title, desc, code) {
-    document.getElementById('thingDescTitle').innerHTML = `📄 ${title}`;
-    document.getElementById('thingDescText').innerHTML = desc;
-    document.getElementById('thingDescCode').innerHTML = code;
+        // Данные для штук
+const thingsData = {
+    flashbacks: {
+        title: 'Флешбеки',
+        desc: 'Добавляет флешбек в 「...」<br><img src="example1.jpg" alt="Пример">',
+        code: '[FLASHBACKS]'
+    },
+    transitions: {
+        title: 'Переходы',
+        desc: 'Красивые переходы между сценами',
+        code: '[TRANSITIONS]'
+    },
+    realworld: {
+        title: 'Реальный Мир',
+        desc: 'Вставки реального мира',
+        code: '[REAL_WORLD]'
+    },
+    webchapter: {
+        title: 'Стиль веб-главы',
+        desc: 'Оформление как веб-новелла',
+        code: '[WEB_CHAPTER]'
+    },
+    interview: {
+        title: 'Интервью с Актерами',
+        desc: 'Интервью персонажей',
+        code: '[INTERVIEW]'
+    },
+    meme: {
+        title: 'MEME',
+        desc: 'Мемные вставки',
+        code: '[MEME]'
+    },
+    typography: {
+        title: 'Типографика',
+        desc: 'Улучшенная типографика',
+        code: '[TYPOGRAPHY]'
+    },
+    musicsubs: {
+        title: 'Музыкальные Субтитры',
+        desc: 'Субтитры с музыкой',
+        code: '[MUSIC_SUBS]'
+    },
+    hiddenprofiles: {
+        title: 'Скрытые Профили',
+        desc: 'Раскрываемые профили',
+        code: '[HIDDEN_PROFILES]'
+    },
+    hiddenevents: {
+        title: 'Закадровые События',
+        desc: 'Скрытые события',
+        code: '[HIDDEN_EVENTS]'
+    },
+    hiddenplans: {
+        title: 'Скрытые Планы',
+        desc: 'Планы NPC',
+        code: '[HIDDEN_PLANS]'
+    },
+    hiddendating: {
+        title: 'Скрытый DatingSim',
+        desc: 'Дейтинг механика',
+        code: '[HIDDEN_DATING]'
+    },
+    inforenette: {
+        title: 'Логи Ренетт',
+        desc: 'Инфоблок в стиле Ренетт',
+        code: '[INFO_RENETTE]'
+    },
+    infoclock: {
+        title: 'Яблочные часы',
+        desc: 'Часы',
+        code: '[INFO_CLOCK]'
+    },
+    infomini: {
+        title: 'Мини-Инфоблок',
+        desc: 'Компактный инфоблок',
+        code: '[INFO_MINI]'
+    },
+    infomain: {
+        title: 'Основной Инфоблок',
+        desc: 'Полный инфоблок',
+        code: '[INFO_MAIN]'
+    },
+    infomatrix: {
+        title: '+Матрица отношений',
+        desc: 'Инфоблок с матрицей',
+        code: '[INFO_MATRIX]'
+    },
+    infothoughts: {
+        title: '+МатрОтн + Мысли',
+        desc: 'Матрица + мысли',
+        code: '[INFO_THOUGHTS]'
+    },
+    cyoamacro: {
+        title: 'CYOA - R-Macro',
+        desc: 'CYOA с макросами',
+        code: '[CYOA_MACRO]'
+    },
+    cyoanomacro: {
+        title: 'CYOA - No R-Macro',
+        desc: 'CYOA без макросов',
+        code: '[CYOA_NO_MACRO]'
+    },
+    fancyfull: {
+        title: 'Fancy UI',
+        desc: 'Полный Fancy UI',
+        code: '[FANCY_FULL]'
+    },
+    fancybase: {
+        title: 'Только Основа',
+        desc: 'Базовый Fancy',
+        code: '[FANCY_BASE]'
+    },
+    fancythoughts: {
+        title: 'Только Мысли',
+        desc: 'Fancy мысли',
+        code: '[FANCY_THOUGHTS]'
+    },
+    commentsv1: {
+        title: 'Комменты V1',
+        desc: 'Комментарии версия 1',
+        code: '[COMMENTS_V1]'
+    },
+    commentsv2: {
+        title: 'Комменты V2',
+        desc: 'Комментарии версия 2',
+        code: '[COMMENTS_V2]'
+    },
+    commentsv3: {
+        title: 'Комменты V3',
+        desc: 'Комментарии версия 3',
+        code: '[COMMENTS_V3]'
+    },
+    chronicleslight: {
+        title: 'Светлая Тема',
+        desc: 'Хроники светлые',
+        code: '[CHRONICLES_LIGHT]'
+    },
+    chroniclesdark: {
+        title: 'Тёмная Тема',
+        desc: 'Хроники тёмные',
+        code: '[CHRONICLES_DARK]'
+    }
+};
+
+function showThingDesc(id) {
+    const data = thingsData[id];
+    if (!data) return;
+    document.getElementById('thingDescTitle').innerHTML = `📄 ${data.title}`;
+    document.getElementById('thingDescText').innerHTML = data.desc;
+    document.getElementById('thingDescCode').innerHTML = data.code;
     document.getElementById('thingDescModal').classList.add('active');
 }
+
 
 
         function closeThingDesc() {
