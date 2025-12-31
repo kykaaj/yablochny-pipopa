@@ -45,6 +45,27 @@
             line-height: 1.6;
             overflow-x: hidden;
         }
+        /* Links in text */
+.prompt-code a,
+.prompt-desc a,
+.things-note a,
+.guide-inner a,
+.prompts-desc a {
+    color: var(--green);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--green);
+    transition: all 0.3s;
+}
+
+.prompt-code a:hover,
+.prompt-desc a:hover,
+.things-note a:hover,
+.guide-inner a:hover,
+.prompts-desc a:hover {
+    color: var(--gold);
+    border-color: var(--gold);
+}
+
 /* ═══════════════════════════════════════
    MUSIC PLAYER
 ═══════════════════════════════════════ */
@@ -2164,7 +2185,7 @@
         <div class="cat-info">
             <div class="cat-num pink">⑦</div>
             <div>
-                <div class="cat-title">◜︎Tweaks!◞︎</div>
+                <div class="cat-title">◜︎tweaks◞︎</div>
                 <div class="cat-desc">HTML промпты, штуки и темы</div>
             </div>
         </div>
@@ -2173,26 +2194,41 @@
     <div class="cat-body"><div class="cat-inner">
 
         <!-- ═══ HTML PROMPT ═══ -->
-        <div class="subsec">❝ HTML Prompt</div>
+        <div class="subsec">❝ html prompt</div>
 
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="tag tag-one">↔︎</span> 📄 Стандартный</div>
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> 📄 Стандартный (Шино)</div>
                 <div class="prompt-meta"><span class="prompt-default">★ Дефолт</span><button class="prompt-btn" onclick="event.stopPropagation();copy('[HTML_STANDARD]')">Копировать</button></div>
             </div>
-            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">[HTML_STANDARD]</div></div></div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Немного изменённый промпт <a href="https://t.me/ah_ah_shino4ka" target="_blank">Шино</a>. Ахуенный, компактный и красиво делает.</div></div></div>
         </div>
 
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="tag tag-one">↔︎</span> 📄 Расширенный</div>
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> 🌸 Селия</div>
                 <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[HTML_EXTENDED]')">Копировать</button></div>
             </div>
-            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">[HTML_EXTENDED]</div></div></div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Изменённый Селийский промпт, раньше был стандарным</div></div></div>
+        </div>
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> 💜 Iris Bloomwave v1.0</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[HTML_minty]')">Копировать</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Версия CSS промпта от Минти, но немного изменённая под структуру пресета. 
+									<br><br>
+									Лучше всего работает с Gemini 3.0, сам промпт поувесистее Renette HTML.
+									<br><br>
+									Можете почитать про сам промпт и все предостережения в <a href="https://teletype.in/@loliluna_ai/iris_bloomwave_css_for_st" target="_blank">статье</a>
+ автора.
+									<br><br>
+									Так же ссылка на её <a href="https://t.me/loliluna_ai" target="_blank">тгк</a>
+.</div></div></div>
         </div>
 
         <!-- ═══ THINGS ═══ -->
-        <div class="subsec">❝ Things Sample</div>
+        <div class="subsec">❝ things (sample)</div>
 
         <div class="things-header">
             <div class="things-title">📋 Выбрано: <span class="things-count" id="thingsCount">0</span></div>
@@ -2208,7 +2244,7 @@
         <!-- Можно смешивать -->
         <p style="color:var(--green);font-weight:600;margin:1rem 0 0.5rem;">◇ Можно смешивать:</p>
         <div class="things-grid">
-            <div class="thing-item" data-code="[FLASHBACKS]" onclick="toggleThing(this)">
+            <div class="thing-item" data-code="[FLASSHBACKS]" onclick="toggleThing(this)">
                 <div class="thing-checkbox"></div>
                 <span class="thing-icon">🕰️</span>
                 <span class="thing-name">Флешбеки</span>
@@ -2403,14 +2439,14 @@
         </div>
 
         <!-- ═══ HTML THEME ═══ -->
-        <div class="subsec">❝ HTML Theme</div>
+        <div class="subsec">❝ html Theme</div>
 
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
                 <div class="prompt-name"><span class="tag tag-one">↔︎</span> 🎨 Тёмная тема</div>
                 <div class="prompt-meta"><span class="prompt-default">★ Дефолт</span><button class="prompt-btn" onclick="event.stopPropagation();copy('[THEME_DARK]')">Копировать</button></div>
             </div>
-            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">[THEME_DARK]</div></div></div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Тёмная тема HTML блоков</div></div></div>
         </div>
 
         <div class="prompt">
@@ -2418,7 +2454,7 @@
                 <div class="prompt-name"><span class="tag tag-one">↔︎</span> 🎨 Светлая тема</div>
                 <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[THEME_LIGHT]')">Копировать</button></div>
             </div>
-            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">[THEME_LIGHT]</div></div></div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Светлая тема HTML блоков</div></div></div>
         </div>
 
     </div></div>
@@ -2608,13 +2644,14 @@ length - по дефолту: Средняя в параграфах. Есть �
 <br><br>
 prose style - выбор велик (не ролик) и я его пополняю (можете и своего автора добавить). От стиля прозы очень зависит ответ и его стиль, можете попробовать другие варианты, их описание (да и вообще все описания промптов) есть во вкладке промптов на сайте.
 <br><br>
-speech style - Идея фавн (ссылка). Стили диалогов персонажей по сути, почитать их варианты так же можете в разделе библиотеки промптов
+speech style - Идея <a href="https://t.me/dearfawwn" target="_blank">Фавн</a>
+. Стили диалогов персонажей по сути, почитать их варианты так же можете в разделе библиотеки промптов
 <br><br>
 Фокусы - три варианта, можно выбрать только один. Как сказать?.. Делает акцент на одном из аспектов: детали мира, диалоги персонажей, мысли персонажей</p></div>
                         </div>
                         <div class="step">
                             <div class="step-num">4</div>
-                            <div class="step-content"><h4>◜branches◞</h4><p>Промпты были нагло спизжены у <a href="https://t.me/dearfawwn">фавн</a>
+                            <div class="step-content"><h4>◜branches◞</h4><p>Промпты были нагло спизжены у <a href="https://t.me/dearfawwn" target="_blank">Фавн</a>
                                 <br><br>
                                 world engine - его задача - делать мир живым и заставлять сюжет двигаться вперед, даже если игрок бездействует.
 <br><br>
