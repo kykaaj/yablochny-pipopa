@@ -2787,7 +2787,7 @@
                 <div class="thing-checkbox"></div>
                 <span class="thing-icon">🕰️</span>
                 <span class="thing-name">Флешбеки</span>
-                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Флешбеки','Добавляет флешбек в 「...」',<img src="example1.jpg" alt="Пример1">)">👁</button>
+                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Флешбеки','Добавляет флешбек в 「...」<br><img src="example1.jpg" alt="Пример">','[FLASHBACKS]')">👁</button>
             </div>
             <div class="thing-item" data-code="[TRANSITIONS]" onclick="toggleThing(this)">
                 <div class="thing-checkbox"></div>
@@ -3646,11 +3646,12 @@ window.addEventListener('load', () => {
         }
 
         function showThingDesc(title, desc, code) {
-            document.getElementById('thingDescTitle').innerHTML = `📄 ${title}`;
-            document.getElementById('thingDescText').textContent = desc;
-            document.getElementById('thingDescCode').textContent = code;
-            document.getElementById('thingDescModal').classList.add('active');
-        }
+    document.getElementById('thingDescTitle').innerHTML = `📄 ${title}`;
+    document.getElementById('thingDescText').innerHTML = desc;
+    document.getElementById('thingDescCode').innerHTML = code;
+    document.getElementById('thingDescModal').classList.add('active');
+}
+
 
         function closeThingDesc() {
             document.getElementById('thingDescModal').classList.remove('active');
