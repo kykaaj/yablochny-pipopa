@@ -4997,7 +4997,7 @@ function closeThingDesc() {
         });
 
 // ═══════════════════════════════════════
-// MINI-GAME: APPLE ADVENTURE v2.0
+// MINI-GAME: APPLE ADVENTURE v2.1
 // ═══════════════════════════════════════
 
 const G = {
@@ -5025,7 +5025,9 @@ const G = {
     coinCount: 0,
     levelName: "",
     particles: [],
-    tick: 0
+    tick: 0,
+    activeSign: null,
+    signTimer: 0
 };
 
 function openGame() {
@@ -5101,6 +5103,8 @@ function startLevel() {
     G.camera.x = 0;
     G.particles = [];
     G.tick = 0;
+    G.activeSign = null;
+    G.signTimer = 0;
     genLevel();
     updateHUD();
 }
@@ -5124,88 +5128,88 @@ function genLevel() {
         1: {
             name: "🌱 Яблочный Сад",
             platforms: [
-                { x: 0, y: groundY, w: 400, h: 50 },
+                { x: 0, y: groundY, w: 500, h: 50 },
                 { x: 280, y: groundY - 70, w: 100, h: 20 },
-                { x: 500, y: groundY, w: 200, h: 50 },
-                { x: 550, y: groundY - 80, w: 80, h: 20 },
-                { x: 800, y: groundY, w: 250, h: 50 },
-                { x: 850, y: groundY - 90, w: 100, h: 20 },
-                { x: 1150, y: groundY, w: 400, h: 50 },
+                { x: 600, y: groundY, w: 250, h: 50 },
+                { x: 650, y: groundY - 80, w: 80, h: 20 },
+                { x: 950, y: groundY, w: 300, h: 50 },
+                { x: 1000, y: groundY - 90, w: 100, h: 20 },
+                { x: 1350, y: groundY, w: 400, h: 50 },
             ],
             apples: [
                 { x: 320, y: groundY - 105 },
-                { x: 580, y: groundY - 115 },
-                { x: 890, y: groundY - 130 },
+                { x: 680, y: groundY - 115 },
+                { x: 1040, y: groundY - 130 },
                 { x: 200, y: groundY - 35, secret: true },
             ],
             coins: [
-                { x: 150, y: groundY - 35 },
-                { x: 450, y: groundY - 50 },
-                { x: 700, y: groundY - 35 },
-                { x: 1000, y: groundY - 35 },
+                { x: 100, y: groundY - 35 },
+                { x: 400, y: groundY - 35 },
+                { x: 750, y: groundY - 35 },
+                { x: 1100, y: groundY - 35 },
             ],
             hazards: [],
             moving: [],
             fading: [],
             bouncy: [
-                { x: 420, y: groundY - 15, w: 50, h: 15 },
+                { x: 520, y: groundY - 15, w: 50, h: 15 },
             ],
             enemies: [],
             signs: [
-                { x: 80, y: groundY, text: "← → двигаться" },
-                { x: 380, y: groundY, text: "Батут! ↑" },
-                { x: 1200, y: groundY, text: "К финишу! →" },
+                { x: 80, y: groundY, text: "← → для движения\nПробел — прыжок!" },
+                { x: 480, y: groundY, text: "Это батут!\nПрыгай выше!" },
+                { x: 1400, y: groundY, text: "Беги к финишу!\n★ →" },
             ],
-            goalX: 1400
+            goalX: 1600
         },
         2: {
             name: "⚡ Прыжки Веры",
             platforms: [
-                { x: 0, y: groundY, w: 250, h: 50 },
-                { x: 380, y: groundY - 40, w: 100, h: 20 },
-                { x: 600, y: groundY - 70, w: 100, h: 20 },
-                { x: 820, y: groundY - 40, w: 100, h: 20 },
-                { x: 1020, y: groundY, w: 200, h: 50 },
-                { x: 1350, y: groundY, w: 400, h: 50 },
+                { x: 0, y: groundY, w: 350, h: 50 },
+                { x: 450, y: groundY - 40, w: 100, h: 20 },
+                { x: 650, y: groundY - 70, w: 100, h: 20 },
+                { x: 850, y: groundY - 40, w: 100, h: 20 },
+                { x: 1050, y: groundY, w: 250, h: 50 },
+                { x: 1400, y: groundY, w: 400, h: 50 },
             ],
             apples: [
-                { x: 420, y: groundY - 75 },
-                { x: 640, y: groundY - 105 },
-                { x: 860, y: groundY - 75 },
-                { x: 1100, y: groundY - 35, secret: true },
+                { x: 490, y: groundY - 75 },
+                { x: 690, y: groundY - 105 },
+                { x: 890, y: groundY - 75 },
+                { x: 1150, y: groundY - 35, secret: true },
             ],
             coins: [
-                { x: 180, y: groundY - 35 },
-                { x: 520, y: groundY - 55 },
-                { x: 750, y: groundY - 55 },
-                { x: 1150, y: groundY - 35 },
-                { x: 1450, y: groundY - 35 },
+                { x: 150, y: groundY - 35 },
+                { x: 280, y: groundY - 35 },
+                { x: 560, y: groundY - 55 },
+                { x: 1200, y: groundY - 35 },
+                { x: 1500, y: groundY - 35 },
             ],
             hazards: [
-                { x: 300, y: groundY, w: 50 },
-                { x: 950, y: groundY, w: 50 },
+                { x: 200, y: groundY - 18, w: 60, onPlatform: true },
+                { x: 1100, y: groundY - 18, w: 60, onPlatform: true },
             ],
             moving: [
-                { x: 700, y: groundY - 120, w: 80, h: 20, minX: 650, maxX: 800, speed: 0.6 },
+                { x: 750, y: groundY - 120, w: 80, h: 20, minX: 700, maxX: 850, speed: 0.5 },
             ],
             fading: [],
             bouncy: [],
             enemies: [
-                { x: 1400, y: groundY - 24, minX: 1370, maxX: 1550, speed: 0.8 },
+                { x: 1450, y: groundY - 24, minX: 1420, maxX: 1600, speed: 0.7 },
             ],
             signs: [
-                { x: 60, y: groundY, text: "Осторожно, шипы!" },
-                { x: 1300, y: groundY, text: "Слайм! ◉" },
+                { x: 60, y: groundY, text: "Осторожно!\nШипы на земле!" },
+                { x: 1350, y: groundY, text: "Слайм!\nПрыгни на него!" },
             ],
-            goalX: 1600
+            goalX: 1650
         },
         3: {
             name: "🌀 Движущийся Хаос",
             platforms: [
-                { x: 0, y: groundY, w: 200, h: 50 },
-                { x: 400, y: groundY, w: 180, h: 50 },
-                { x: 750, y: groundY, w: 150, h: 50 },
-                { x: 1100, y: groundY, w: 180, h: 50 },
+                { x: 0, y: groundY, w: 250, h: 50 },
+                { x: 400, y: groundY, w: 200, h: 50 },
+                { x: 750, y: groundY, w: 180, h: 50 },
+                { x: 1100, y: groundY, w: 200, h: 50 },
                 { x: 1450, y: groundY, w: 400, h: 50 },
             ],
             apples: [
@@ -5223,82 +5227,82 @@ function genLevel() {
                 { x: 1550, y: groundY - 35 },
             ],
             hazards: [
-                { x: 620, y: groundY, w: 80 },
-                { x: 980, y: groundY, w: 80 },
+                { x: 450, y: groundY - 18, w: 50, onPlatform: true },
+                { x: 800, y: groundY - 18, w: 50, onPlatform: true },
             ],
             moving: [
-                { x: 220, y: groundY - 60, w: 100, h: 20, minX: 200, maxX: 350, speed: 0.7 },
-                { x: 600, y: groundY - 110, w: 90, h: 20, minX: 550, maxX: 700, speed: 0.8 },
-                { x: 930, y: groundY - 90, w: 100, h: 20, minX: 880, maxX: 1050, speed: 0.9 },
+                { x: 270, y: groundY - 60, w: 100, h: 20, minX: 250, maxX: 380, speed: 0.6 },
+                { x: 620, y: groundY - 100, w: 90, h: 20, minX: 580, maxX: 720, speed: 0.7 },
+                { x: 950, y: groundY - 90, w: 100, h: 20, minX: 900, maxX: 1080, speed: 0.8 },
             ],
             fading: [],
             bouncy: [
                 { x: 500, y: groundY - 15, w: 50, h: 15 },
             ],
             enemies: [
-                { x: 450, y: groundY - 24, minX: 410, maxX: 560, speed: 0.7 },
-                { x: 1500, y: groundY - 24, minX: 1460, maxX: 1650, speed: 1 },
+                { x: 450, y: groundY - 24, minX: 420, maxX: 560, speed: 0.6 },
+                { x: 1500, y: groundY - 24, minX: 1470, maxX: 1650, speed: 0.9 },
             ],
             signs: [
-                { x: 50, y: groundY, text: "Платформы едут!" },
+                { x: 50, y: groundY, text: "Платформы движутся!\nНе промахнись!" },
             ],
             goalX: 1700
         },
         4: {
             name: "👻 Исчезающие Тропы",
             platforms: [
-                { x: 0, y: groundY, w: 180, h: 50 },
-                { x: 450, y: groundY - 45, w: 100, h: 20 },
-                { x: 750, y: groundY, w: 150, h: 50 },
-                { x: 1100, y: groundY, w: 150, h: 50 },
-                { x: 1400, y: groundY, w: 400, h: 50 },
+                { x: 0, y: groundY, w: 200, h: 50 },
+                { x: 500, y: groundY - 45, w: 100, h: 20 },
+                { x: 800, y: groundY, w: 180, h: 50 },
+                { x: 1150, y: groundY, w: 180, h: 50 },
+                { x: 1500, y: groundY, w: 400, h: 50 },
             ],
             apples: [
-                { x: 280, y: groundY - 100 },
-                { x: 600, y: groundY - 120, secret: true },
+                { x: 300, y: groundY - 100 },
+                { x: 640, y: groundY - 120, secret: true },
                 { x: 900, y: groundY - 35 },
-                { x: 1200, y: groundY - 100 },
+                { x: 1250, y: groundY - 100 },
             ],
             coins: [
                 { x: 100, y: groundY - 35 },
-                { x: 350, y: groundY - 80 },
-                { x: 550, y: groundY - 65 },
-                { x: 850, y: groundY - 35 },
-                { x: 1180, y: groundY - 35 },
-                { x: 1500, y: groundY - 35 },
+                { x: 380, y: groundY - 80 },
+                { x: 550, y: groundY - 80 },
+                { x: 880, y: groundY - 35 },
+                { x: 1220, y: groundY - 35 },
+                { x: 1600, y: groundY - 35 },
             ],
             hazards: [
-                { x: 650, y: groundY, w: 60 },
-                { x: 950, y: groundY, w: 60 },
+                { x: 850, y: groundY - 18, w: 50, onPlatform: true },
+                { x: 1200, y: groundY - 18, w: 50, onPlatform: true },
             ],
             moving: [
-                { x: 850, y: groundY - 100, w: 90, h: 20, minX: 800, maxX: 1000, speed: 1 },
+                { x: 900, y: groundY - 100, w: 90, h: 20, minX: 850, maxX: 1050, speed: 0.9 },
             ],
             fading: [
-                { x: 200, y: groundY - 65, w: 100, h: 20, timer: 0, visible: true, interval: 120 },
-                { x: 350, y: groundY - 45, w: 80, h: 20, timer: 60, visible: true, interval: 120 },
-                { x: 580, y: groundY - 80, w: 80, h: 20, timer: 30, visible: true, interval: 100 },
-                { x: 1250, y: groundY - 80, w: 90, h: 20, timer: 0, visible: true, interval: 100 },
+                { x: 220, y: groundY - 65, w: 100, h: 20, timer: 0, visible: true, interval: 120, baseX: 220 },
+                { x: 370, y: groundY - 45, w: 80, h: 20, timer: 60, visible: true, interval: 120, baseX: 370 },
+                { x: 620, y: groundY - 80, w: 80, h: 20, timer: 30, visible: true, interval: 100, baseX: 620 },
+                { x: 1300, y: groundY - 80, w: 90, h: 20, timer: 0, visible: true, interval: 100, baseX: 1300 },
             ],
             bouncy: [],
             enemies: [
-                { x: 800, y: groundY - 24, minX: 760, maxX: 880, speed: 0.6 },
-                { x: 1450, y: groundY - 24, minX: 1410, maxX: 1600, speed: 0.9 },
+                { x: 850, y: groundY - 24, minX: 810, maxX: 950, speed: 0.5 },
+                { x: 1550, y: groundY - 24, minX: 1520, maxX: 1700, speed: 0.8 },
             ],
             signs: [
-                { x: 50, y: groundY, text: "Платформы мигают!" },
-                { x: 720, y: groundY, text: "Не упади!" },
+                { x: 50, y: groundY, text: "Платформы мигают!\nУспей перепрыгнуть!" },
+                { x: 760, y: groundY, text: "Не упади!" },
             ],
-            goalX: 1650
+            goalX: 1750
         },
         5: {
             name: "🔥 Яблочный Финал",
             platforms: [
-                { x: 0, y: groundY, w: 150, h: 50 },
-                { x: 350, y: groundY, w: 120, h: 50 },
-                { x: 700, y: groundY, w: 120, h: 50 },
-                { x: 1050, y: groundY, w: 120, h: 50 },
-                { x: 1400, y: groundY, w: 120, h: 50 },
+                { x: 0, y: groundY, w: 200, h: 50 },
+                { x: 350, y: groundY, w: 150, h: 50 },
+                { x: 700, y: groundY, w: 150, h: 50 },
+                { x: 1050, y: groundY, w: 150, h: 50 },
+                { x: 1400, y: groundY, w: 150, h: 50 },
                 { x: 1750, y: groundY, w: 400, h: 50 },
             ],
             apples: [
@@ -5320,39 +5324,39 @@ function genLevel() {
                 { x: 1850, y: groundY - 35 },
             ],
             hazards: [
-                { x: 200, y: groundY, w: 80 },
-                { x: 520, y: groundY, w: 80 },
-                { x: 870, y: groundY, w: 80 },
-                { x: 1220, y: groundY, w: 80 },
-                { x: 1570, y: groundY, w: 80 },
+                { x: 100, y: groundY - 18, w: 50, onPlatform: true },
+                { x: 400, y: groundY - 18, w: 50, onPlatform: true },
+                { x: 750, y: groundY - 18, w: 50, onPlatform: true },
+                { x: 1100, y: groundY - 18, w: 50, onPlatform: true },
+                { x: 1450, y: groundY - 18, w: 50, onPlatform: true },
             ],
             moving: [
-                { x: 180, y: groundY - 70, w: 90, h: 20, minX: 150, maxX: 300, speed: 1 },
-                { x: 500, y: groundY - 90, w: 80, h: 20, minX: 450, maxX: 620, speed: 1.1 },
-                { x: 850, y: groundY - 100, w: 90, h: 20, minX: 800, maxX: 980, speed: 1.2 },
-                { x: 1200, y: groundY - 80, w: 80, h: 20, minX: 1150, maxX: 1320, speed: 1 },
-                { x: 1550, y: groundY - 90, w: 90, h: 20, minX: 1500, maxX: 1680, speed: 1.3 },
+                { x: 220, y: groundY - 70, w: 90, h: 20, minX: 200, maxX: 320, speed: 0.9 },
+                { x: 520, y: groundY - 90, w: 80, h: 20, minX: 480, maxX: 640, speed: 1.0 },
+                { x: 870, y: groundY - 100, w: 90, h: 20, minX: 830, maxX: 1000, speed: 1.1 },
+                { x: 1220, y: groundY - 80, w: 80, h: 20, minX: 1180, maxX: 1340, speed: 0.9 },
+                { x: 1570, y: groundY - 90, w: 90, h: 20, minX: 1530, maxX: 1700, speed: 1.2 },
             ],
             fading: [
-                { x: 400, y: groundY - 130, w: 70, h: 20, timer: 0, visible: true, interval: 80 },
-                { x: 1100, y: groundY - 130, w: 70, h: 20, timer: 40, visible: true, interval: 80 },
+                { x: 420, y: groundY - 130, w: 70, h: 20, timer: 0, visible: true, interval: 80, baseX: 420 },
+                { x: 1120, y: groundY - 130, w: 70, h: 20, timer: 40, visible: true, interval: 80, baseX: 1120 },
             ],
             bouncy: [
-                { x: 100, y: groundY - 15, w: 40, h: 15 },
-                { x: 750, y: groundY - 15, w: 40, h: 15 },
-                { x: 1450, y: groundY - 15, w: 40, h: 15 },
+                { x: 140, y: groundY - 15, w: 40, h: 15 },
+                { x: 790, y: groundY - 15, w: 40, h: 15 },
+                { x: 1490, y: groundY - 15, w: 40, h: 15 },
             ],
             enemies: [
-                { x: 400, y: groundY - 24, minX: 360, maxX: 450, speed: 0.8 },
-                { x: 750, y: groundY - 24, minX: 710, maxX: 800, speed: 0.9 },
-                { x: 1100, y: groundY - 24, minX: 1060, maxX: 1150, speed: 1 },
-                { x: 1800, y: groundY - 24, minX: 1760, maxX: 1950, speed: 1.1 },
+                { x: 380, y: groundY - 24, minX: 360, maxX: 480, speed: 0.7 },
+                { x: 730, y: groundY - 24, minX: 710, maxX: 830, speed: 0.8 },
+                { x: 1080, y: groundY - 24, minX: 1060, maxX: 1180, speed: 0.9 },
+                { x: 1800, y: groundY - 24, minX: 1770, maxX: 1950, speed: 1.0 },
             ],
             signs: [
-                { x: 30, y: groundY, text: "Финальный уровень!" },
-                { x: 1780, y: groundY, text: "Почти там! ★" },
+                { x: 30, y: groundY, text: "Финальный уровень!\nУдачи!" },
+                { x: 1780, y: groundY, text: "Почти там!\n★ Финиш близко!" },
             ],
-            goalX: 2000
+            goalX: 2050
         }
     };
 
@@ -5360,8 +5364,8 @@ function genLevel() {
     G.levelName = lvl.name;
 
     lvl.platforms.forEach(p => G.platforms.push({ ...p }));
-    lvl.apples.forEach(a => G.collectibles.push({ ...a, collected: false }));
-    lvl.coins.forEach(c => G.coins.push({ ...c, collected: false }));
+    lvl.apples.forEach(a => G.collectibles.push({ ...a, collected: false, baseX: a.x }));
+    lvl.coins.forEach(c => G.coins.push({ ...c, collected: false, baseX: c.x }));
     lvl.hazards.forEach(h => G.hazards.push({ x: h.x, y: h.y, w: h.w, h: 18 }));
     lvl.moving.forEach(m => G.movingPlatforms.push({ ...m, dir: 1 }));
     lvl.fading.forEach(f => G.fadingPlatforms.push({ ...f }));
@@ -5369,40 +5373,41 @@ function genLevel() {
     lvl.enemies.forEach(e => G.enemies.push({ ...e, dir: 1, frame: 0 }));
     lvl.signs.forEach(s => G.signs.push({ ...s }));
 
-    // Декорации на земле
+    // Декорации на платформах
     G.platforms.forEach(plat => {
         if (plat.h >= 50) {
-            const count = Math.floor(plat.w / 100);
+            const count = Math.floor(plat.w / 120);
             for (let i = 0; i < count; i++) {
-                const dx = plat.x + 40 + i * 100 + Math.random() * 30;
+                const dx = plat.x + 50 + i * 120 + Math.random() * 20;
+                if (Math.random() > 0.4) {
+                    G.decorations.push({ x: dx, y: plat.y, type: 'tree', baseX: dx });
+                }
                 if (Math.random() > 0.5) {
-                    G.decorations.push({ x: dx, y: plat.y, type: 'tree' });
+                    G.decorations.push({ x: dx + 50, y: plat.y, type: 'bush', baseX: dx + 50 });
                 }
                 if (Math.random() > 0.6) {
-                    G.decorations.push({ x: dx + 40, y: plat.y, type: 'bush' });
-                }
-                if (Math.random() > 0.7) {
-                    G.decorations.push({ x: dx + 20, y: plat.y, type: 'flower' });
+                    G.decorations.push({ x: dx + 25, y: plat.y, type: 'flower', baseX: dx + 25 });
                 }
             }
         }
     });
 
-    // Животные на фоне
+    // Животные
     const worldWidth = lvl.goalX + 200;
-    for (let i = 0; i < 8; i++) {
-        const ax = Math.random() * worldWidth;
-        const ay = 30 + Math.random() * 80;
-        G.animals.push({ x: ax, y: ay, type: 'bird', vx: 0.3 + Math.random() * 0.4, phase: Math.random() * Math.PI * 2 });
-    }
     for (let i = 0; i < 6; i++) {
         const ax = Math.random() * worldWidth;
+        const ay = 30 + Math.random() * 80;
+        G.animals.push({ x: ax, y: ay, type: 'bird', vx: 0.3 + Math.random() * 0.3, phase: Math.random() * Math.PI * 2, baseX: ax });
+    }
+    for (let i = 0; i < 5; i++) {
+        const ax = Math.random() * worldWidth;
         const ay = 50 + Math.random() * 100;
-        G.animals.push({ x: ax, y: ay, type: 'butterfly', phase: Math.random() * Math.PI * 2 });
+        G.animals.push({ x: ax, y: ay, type: 'butterfly', phase: Math.random() * Math.PI * 2, baseX: ax, baseY: ay });
     }
     G.platforms.forEach(plat => {
-        if (plat.h >= 50 && Math.random() > 0.6) {
-            G.animals.push({ x: plat.x + 20 + Math.random() * (plat.w - 40), y: plat.y, type: 'bunny', frame: 0 });
+        if (plat.h >= 50 && Math.random() > 0.7) {
+            const bx = plat.x + 30 + Math.random() * (plat.w - 60);
+            G.animals.push({ x: bx, y: plat.y, type: 'bunny', frame: 0, baseX: bx });
         }
     });
 
@@ -5432,14 +5437,13 @@ function gameLoop() {
 
 function update() {
     const p = G.player;
-    const groundY = G.canvas.height - 40;
 
     // Управление
     if (G.keys['ArrowLeft'] || G.keys['KeyA']) {
-        p.vx = -3.2;
+        p.vx = -3.0;
         p.facingRight = false;
     } else if (G.keys['ArrowRight'] || G.keys['KeyD']) {
-        p.vx = 3.2;
+        p.vx = 3.0;
         p.facingRight = true;
     } else {
         p.vx *= 0.85;
@@ -5447,7 +5451,7 @@ function update() {
 
     // Прыжок
     if ((G.keys['Space'] || G.keys['ArrowUp'] || G.keys['KeyW']) && p.onGround && !p.jumpHeld) {
-        p.vy = -10.5;
+        p.vy = -10.0;
         p.onGround = false;
         p.jumpHeld = true;
         spawnParticles(p.x + p.w/2, p.y + p.h, 'jump');
@@ -5457,8 +5461,8 @@ function update() {
     }
 
     // Гравитация
-    p.vy += 0.45;
-    if (p.vy > 11) p.vy = 11;
+    p.vy += 0.42;
+    if (p.vy > 10) p.vy = 10;
 
     p.x += p.vx;
     p.y += p.vy;
@@ -5489,15 +5493,13 @@ function update() {
         en.frame++;
     });
 
-    // Животные
+    // Животные (используем baseX/baseY для стабильной анимации)
     G.animals.forEach(an => {
         if (an.type === 'bird') {
-            an.x += an.vx;
+            an.baseX += an.vx;
             an.phase += 0.08;
         } else if (an.type === 'butterfly') {
-            an.phase += 0.05;
-            an.x += Math.sin(an.phase) * 0.5;
-            an.y += Math.cos(an.phase * 0.7) * 0.3;
+            an.phase += 0.04;
         } else if (an.type === 'bunny') {
             an.frame++;
         }
@@ -5524,7 +5526,7 @@ function update() {
     G.bouncePads.forEach(bp => {
         if (p.x < bp.x + bp.w && p.x + p.w > bp.x &&
             p.y + p.h > bp.y && p.y + p.h < bp.y + bp.h + 10 && p.vy >= 0) {
-            p.vy = -14;
+            p.vy = -13;
             spawnParticles(p.x + p.w/2, bp.y, 'bounce');
         }
     });
@@ -5548,10 +5550,9 @@ function update() {
         if (p.invincible <= 0 &&
             p.x < en.x + 24 && p.x + p.w > en.x &&
             p.y + p.h > en.y && p.y < en.y + 24) {
-            // Прыжок на врага?
             if (p.vy > 0 && p.y + p.h < en.y + 12) {
                 p.vy = -8;
-                en.x = -1000; // убрать врага
+                en.x = -1000;
                 G.score += 100;
                 spawnParticles(en.x + 12, en.y + 12, 'collect');
             } else {
@@ -5568,12 +5569,12 @@ function update() {
     // Яблоки
     G.collectibles.forEach(c => {
         if (!c.collected &&
-            p.x < c.x + 20 && p.x + p.w > c.x &&
+            p.x < c.baseX + 20 && p.x + p.w > c.baseX &&
             p.y < c.y + 20 && p.y + p.h > c.y) {
             c.collected = true;
             G.apples++;
             G.score += c.secret ? 200 : 100;
-            spawnParticles(c.x + 10, c.y + 10, 'collect');
+            spawnParticles(c.baseX + 10, c.y + 10, 'collect');
             updateHUD();
         }
     });
@@ -5581,15 +5582,26 @@ function update() {
     // Монеты
     G.coins.forEach(c => {
         if (!c.collected &&
-            p.x < c.x + 16 && p.x + p.w > c.x &&
+            p.x < c.baseX + 16 && p.x + p.w > c.baseX &&
             p.y < c.y + 16 && p.y + p.h > c.y) {
             c.collected = true;
             G.coinCount++;
             G.score += 25;
-            spawnParticles(c.x + 8, c.y + 8, 'coin');
+            spawnParticles(c.baseX + 8, c.y + 8, 'coin');
             updateHUD();
         }
     });
+
+    // Таблички - проверка близости
+    G.activeSign = null;
+    G.signs.forEach(s => {
+        const dist = Math.abs(p.x - s.x);
+        if (dist < 60) {
+            G.activeSign = s;
+            G.signTimer = 120;
+        }
+    });
+    if (G.signTimer > 0) G.signTimer--;
 
     // Падение
     if (p.y > G.canvas.height + 50) {
@@ -5604,7 +5616,7 @@ function update() {
 
     // Камера
     const targetCam = p.x - G.canvas.width / 3;
-    G.camera.x += (targetCam - G.camera.x) * 0.07;
+    G.camera.x += (targetCam - G.camera.x) * 0.06;
     if (G.camera.x < 0) G.camera.x = 0;
 
     // Финиш
@@ -5622,7 +5634,7 @@ function update() {
     G.particles = G.particles.filter(pt => {
         pt.x += pt.vx;
         pt.y += pt.vy;
-        pt.vy += 0.12;
+        pt.vy += 0.1;
         pt.life--;
         return pt.life > 0;
     });
@@ -5639,13 +5651,13 @@ function spawnParticles(x, y, type) {
         coin: ['#FFD700', '#FFA000', '#FFEC8B']
     };
     const c = colors[type] || ['#fff'];
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 5; i++) {
         G.particles.push({
             x, y,
-            vx: (Math.random() - 0.5) * 3.5,
-            vy: (Math.random() - 0.5) * 3.5 - 1.5,
+            vx: (Math.random() - 0.5) * 3,
+            vy: (Math.random() - 0.5) * 3 - 1,
             color: c[Math.floor(Math.random() * c.length)],
-            life: 22 + Math.random() * 10
+            life: 20 + Math.random() * 8
         });
     }
 }
@@ -5663,37 +5675,44 @@ function render() {
     ctx.fillStyle = skyGrad;
     ctx.fillRect(0, 0, G.canvas.width, G.canvas.height);
 
-    // Звёзды
+    // Звёзды (статичные)
     ctx.fillStyle = 'rgba(255,255,255,0.4)';
-    for (let i = 0; i < 30; i++) {
-        const sx = ((i * 73 + 20) % 600) - (cam * 0.03) % 600 + 600;
+    for (let i = 0; i < 25; i++) {
+        const sx = ((i * 73 + 20) % G.canvas.width);
         const sy = (i * 37) % 100 + 10;
-        ctx.fillRect(sx % G.canvas.width, sy, 2, 2);
+        ctx.fillRect(sx, sy, 2, 2);
     }
 
-    // Животные на фоне (за всем)
+    // Животные на фоне
     G.animals.forEach(an => {
-        const ax = an.x - cam * 0.5;
-        if (ax > -50 && ax < G.canvas.width + 50) {
-            if (an.type === 'bird') drawBird(ctx, ax, an.y, an.phase);
-            else if (an.type === 'butterfly') drawButterfly(ctx, ax, an.y, an.phase);
+        if (an.type === 'bird') {
+            const ax = an.baseX - cam * 0.4;
+            if (ax > -50 && ax < G.canvas.width + 50) {
+                drawBird(ctx, ax, an.y, an.phase);
+            }
+        } else if (an.type === 'butterfly') {
+            const ax = an.baseX + Math.sin(an.phase) * 15 - cam * 0.5;
+            const ay = an.baseY + Math.cos(an.phase * 0.7) * 10;
+            if (ax > -50 && ax < G.canvas.width + 50) {
+                drawButterfly(ctx, ax, ay, an.phase);
+            }
         }
     });
 
-    // Декорации
+    // Декорации (используем baseX)
     G.decorations.forEach(d => {
-        const dx = d.x - cam;
+        const dx = d.baseX - cam;
         if (dx > -60 && dx < G.canvas.width + 60) {
             if (d.type === 'tree') drawTree(ctx, dx, d.y);
             else if (d.type === 'bush') drawBush(ctx, dx, d.y);
-            else if (d.type === 'flower') drawFlower(ctx, dx, d.y, tick);
+            else if (d.type === 'flower') drawFlower(ctx, dx, d.y, tick, d.baseX);
         }
     });
 
-    // Кролики на земле
+    // Кролики
     G.animals.forEach(an => {
         if (an.type === 'bunny') {
-            const ax = an.x - cam;
+            const ax = an.baseX - cam;
             if (ax > -30 && ax < G.canvas.width + 30) {
                 drawBunny(ctx, ax, an.y, an.frame);
             }
@@ -5715,7 +5734,7 @@ function render() {
     // Исчезающие платформы
     G.fadingPlatforms.forEach(fp => {
         if (!fp.visible) return;
-        const px = fp.x - cam;
+        const px = fp.baseX - cam;
         if (px > -fp.w && px < G.canvas.width) {
             const alpha = 0.4 + 0.6 * (1 - fp.timer / fp.interval);
             drawPlatform(ctx, px, fp.y, fp.w, fp.h, 'fading', alpha);
@@ -5737,7 +5756,7 @@ function render() {
     // Таблички
     G.signs.forEach(s => {
         const sx = s.x - cam;
-        if (sx > -80 && sx < G.canvas.width + 80) drawSign(ctx, sx, s.y, s.text);
+        if (sx > -50 && sx < G.canvas.width + 50) drawSign(ctx, sx, s.y);
     });
 
     // Враги
@@ -5746,18 +5765,18 @@ function render() {
         if (ex > -30 && ex < G.canvas.width + 30) drawEnemy(ctx, ex, en.y, en.frame, en.dir);
     });
 
-    // Монеты
+    // Монеты (используем baseX)
     G.coins.forEach(c => {
         if (c.collected) return;
-        const cx = c.x - cam;
-        if (cx > -20 && cx < G.canvas.width + 20) drawCoin(ctx, cx, c.y, tick);
+        const cx = c.baseX - cam;
+        if (cx > -20 && cx < G.canvas.width + 20) drawCoin(ctx, cx, c.y, tick, c.baseX);
     });
 
-    // Яблоки
+    // Яблоки (используем baseX)
     G.collectibles.forEach(c => {
         if (c.collected) return;
-        const cx = c.x - cam;
-        if (cx > -30 && cx < G.canvas.width + 30) drawApple(ctx, cx, c.y, c.secret, tick);
+        const cx = c.baseX - cam;
+        if (cx > -30 && cx < G.canvas.width + 30) drawApple(ctx, cx, c.y, c.secret, tick, c.baseX);
     });
 
     // Финиш
@@ -5772,7 +5791,7 @@ function render() {
 
     // Частицы
     G.particles.forEach(pt => {
-        ctx.globalAlpha = pt.life / 32;
+        ctx.globalAlpha = pt.life / 28;
         ctx.fillStyle = pt.color;
         ctx.beginPath();
         ctx.arc(pt.x - cam, pt.y, 3, 0, Math.PI * 2);
@@ -5780,18 +5799,23 @@ function render() {
     });
     ctx.globalAlpha = 1;
 
+    // Popup от таблички
+    if (G.activeSign && G.signTimer > 0) {
+        drawSignPopup(ctx, G.activeSign.text);
+    }
+
     // Название уровня
     if (G.player.showTime < 100) {
-        ctx.fillStyle = 'rgba(0,0,0,0.7)';
-        ctx.fillRect(0, G.canvas.height / 2 - 25, G.canvas.width, 50);
+        ctx.fillStyle = 'rgba(0,0,0,0.75)';
+        ctx.fillRect(0, G.canvas.height / 2 - 30, G.canvas.width, 60);
         ctx.fillStyle = '#fff';
-        ctx.font = 'bold 18px Montserrat, sans-serif';
+        ctx.font = 'bold 20px Montserrat, sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText(G.levelName, G.canvas.width / 2, G.canvas.height / 2 + 6);
+        ctx.fillText(G.levelName, G.canvas.width / 2, G.canvas.height / 2 + 7);
     }
 }
 
-// ═══ ОТРИСОВКА ОБЪЕКТОВ ═══
+// ═══ ОТРИСОВКА ═══
 
 function drawPlatform(ctx, x, y, w, h, type, alpha = 1) {
     ctx.globalAlpha = alpha;
@@ -5804,15 +5828,12 @@ function drawPlatform(ctx, x, y, w, h, type, alpha = 1) {
 
     ctx.fillStyle = c.top;
     ctx.fillRect(x, y, w, 8);
-
     ctx.fillStyle = c.side;
     ctx.fillRect(x, y + 8, w, h - 8);
 
-    // Текстура только внутри границ
     ctx.fillStyle = c.dark;
-    const lineW = 8;
-    for (let i = 12; i < w - 12; i += 22) {
-        ctx.fillRect(x + i, y + 14, lineW, 3);
+    for (let i = 14; i < w - 14; i += 24) {
+        ctx.fillRect(x + i, y + 14, 10, 3);
     }
     ctx.globalAlpha = 1;
 }
@@ -5830,54 +5851,80 @@ function drawBouncePad(ctx, x, y, w, h, tick) {
 }
 
 function drawSpikes(ctx, x, y, w) {
-    // Шипы на полу (основание на y)
-    ctx.fillStyle = '#FF5252';
     const spikeW = 12;
-    const spikeH = 16;
+    const spikeH = 14;
     const count = Math.floor(w / spikeW);
+
+    // Шипы растут ВВЕРХ от y
+    ctx.fillStyle = '#FF5252';
     for (let i = 0; i < count; i++) {
         const sx = x + i * spikeW;
         ctx.beginPath();
         ctx.moveTo(sx, y);
         ctx.lineTo(sx + spikeW/2, y - spikeH);
         ctx.lineTo(sx + spikeW, y);
+        ctx.closePath();
         ctx.fill();
     }
-    // База
+    // База под шипами
     ctx.fillStyle = '#B71C1C';
-    ctx.fillRect(x, y, w, 4);
+    ctx.fillRect(x, y - 3, w, 3);
 }
 
-function drawSign(ctx, x, y, text) {
+function drawSign(ctx, x, y) {
     // Столб
     ctx.fillStyle = '#5D4037';
-    ctx.fillRect(x + 22, y - 50, 6, 50);
+    ctx.fillRect(x + 12, y - 45, 6, 45);
     // Табличка
     ctx.fillStyle = '#8D6E63';
-    ctx.fillRect(x, y - 70, 50, 25);
+    ctx.fillRect(x, y - 62, 30, 20);
     ctx.fillStyle = '#D7CCC8';
-    ctx.fillRect(x + 2, y - 68, 46, 21);
-    // Текст
-    ctx.fillStyle = '#3E2723';
-    ctx.font = '8px Montserrat, sans-serif';
+    ctx.fillRect(x + 2, y - 60, 26, 16);
+    // Три точки
+    ctx.fillStyle = '#5D4037';
+    ctx.font = 'bold 10px sans-serif';
     ctx.textAlign = 'center';
-    const lines = text.split(' ');
-    if (lines.length <= 2) {
-        ctx.fillText(text, x + 25, y - 54);
-    } else {
-        ctx.fillText(lines.slice(0, 2).join(' '), x + 25, y - 60);
-        ctx.fillText(lines.slice(2).join(' '), x + 25, y - 50);
-    }
+    ctx.fillText('...', x + 15, y - 49);
+}
+
+function drawSignPopup(ctx, text) {
+    const lines = text.split('\n');
+    const lineH = 22;
+    const padX = 20;
+    const padY = 12;
+    const boxW = 200;
+    const boxH = lines.length * lineH + padY * 2;
+    const boxX = (G.canvas.width - boxW) / 2;
+    const boxY = 40;
+
+    // Фон
+    ctx.fillStyle = 'rgba(0,0,0,0.85)';
+    ctx.beginPath();
+    ctx.roundRect(boxX, boxY, boxW, boxH, 10);
+    ctx.fill();
+
+    // Рамка
+    ctx.strokeStyle = '#8BC34A';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.roundRect(boxX, boxY, boxW, boxH, 10);
+    ctx.stroke();
+
+    // Текст
+    ctx.fillStyle = '#fff';
+    ctx.font = '14px Montserrat, sans-serif';
+    ctx.textAlign = 'center';
+    lines.forEach((line, i) => {
+        ctx.fillText(line, G.canvas.width / 2, boxY + padY + 16 + i * lineH);
+    });
 }
 
 function drawEnemy(ctx, x, y, frame, dir) {
-    // Слайм
     const squish = Math.sin(frame * 0.1) * 2;
     ctx.fillStyle = '#7CB342';
     ctx.beginPath();
     ctx.ellipse(x + 12, y + 12 + squish, 12 + squish, 12 - squish, 0, 0, Math.PI * 2);
     ctx.fill();
-    // Глаза
     ctx.fillStyle = '#fff';
     ctx.beginPath();
     ctx.arc(x + 7, y + 8, 4, 0, Math.PI * 2);
@@ -5891,15 +5938,13 @@ function drawEnemy(ctx, x, y, frame, dir) {
     ctx.fill();
 }
 
-function drawCoin(ctx, x, y, tick) {
-    const bob = Math.sin(tick * 0.08 + x * 0.02) * 2;
+function drawCoin(ctx, x, y, tick, baseX) {
+    const bob = Math.sin(tick * 0.06 + baseX * 0.01) * 2;
     const cy = y + bob;
-    // Свечение
     ctx.fillStyle = 'rgba(255, 215, 0, 0.2)';
     ctx.beginPath();
     ctx.arc(x + 8, cy + 8, 12, 0, Math.PI * 2);
     ctx.fill();
-    // Монета
     ctx.fillStyle = '#FFD700';
     ctx.beginPath();
     ctx.arc(x + 8, cy + 8, 7, 0, Math.PI * 2);
@@ -5910,8 +5955,8 @@ function drawCoin(ctx, x, y, tick) {
     ctx.fill();
 }
 
-function drawApple(ctx, x, y, isSecret, tick) {
-    const bob = Math.sin(tick * 0.04 + x * 0.01) * 2.5;
+function drawApple(ctx, x, y, isSecret, tick, baseX) {
+    const bob = Math.sin(tick * 0.04 + baseX * 0.005) * 2;
     const ay = y + bob;
 
     if (isSecret) {
@@ -5921,31 +5966,26 @@ function drawApple(ctx, x, y, isSecret, tick) {
         ctx.fill();
     }
 
-    // Тень
     ctx.fillStyle = 'rgba(0,0,0,0.2)';
     ctx.beginPath();
     ctx.ellipse(x + 10, ay + 22, 6, 2, 0, 0, Math.PI * 2);
     ctx.fill();
 
-    // Яблоко
     ctx.fillStyle = isSecret ? '#FFD700' : '#FF6B6B';
     ctx.beginPath();
     ctx.arc(x + 10, ay + 12, 9, 0, Math.PI * 2);
     ctx.fill();
 
-    // Блик
     ctx.fillStyle = 'rgba(255,255,255,0.3)';
     ctx.beginPath();
     ctx.arc(x + 6, ay + 8, 3, 0, Math.PI * 2);
     ctx.fill();
 
-    // Листик
     ctx.fillStyle = '#8BC34A';
     ctx.beginPath();
     ctx.ellipse(x + 14, ay + 3, 4, 2.5, 0.5, 0, Math.PI * 2);
     ctx.fill();
 
-    // Веточка
     ctx.strokeStyle = '#795548';
     ctx.lineWidth = 2;
     ctx.beginPath();
@@ -5955,7 +5995,6 @@ function drawApple(ctx, x, y, isSecret, tick) {
 }
 
 function drawGoalPortal(ctx, x, y, tick) {
-    // Свечение
     const pulse = Math.sin(tick * 0.05) * 0.15 + 0.85;
     const glow = ctx.createRadialGradient(x + 40, y + 40, 10, x + 40, y + 40, 55 * pulse);
     glow.addColorStop(0, 'rgba(139, 195, 74, 0.6)');
@@ -5964,23 +6003,20 @@ function drawGoalPortal(ctx, x, y, tick) {
     ctx.fillStyle = glow;
     ctx.fillRect(x - 20, y - 20, 120, 120);
 
-    // Арка
     ctx.strokeStyle = '#8BC34A';
     ctx.lineWidth = 5;
     ctx.beginPath();
     ctx.arc(x + 40, y + 80, 36, Math.PI, 0);
     ctx.stroke();
 
-    // Столбы
     ctx.fillStyle = '#689F38';
     ctx.fillRect(x + 4, y + 44, 8, 46);
     ctx.fillRect(x + 68, y + 44, 8, 46);
 
-    // Текст
     ctx.fillStyle = '#fff';
-    ctx.font = 'bold 9px Montserrat, sans-serif';
+    ctx.font = 'bold 10px Montserrat, sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText('✦ ФИНИШ ✦', x + 40, y + 20);
+    ctx.fillText('✦ ФИНИШ ✦', x + 40, y + 22);
 }
 
 function drawTree(ctx, x, y) {
@@ -6004,37 +6040,34 @@ function drawBush(ctx, x, y) {
     ctx.fill();
 }
 
-function drawFlower(ctx, x, y, tick) {
-    const sway = Math.sin(tick * 0.03 + x) * 2;
-    // Стебель
+function drawFlower(ctx, dx, y, tick, baseX) {
+    // Используем baseX для стабильной анимации
+    const sway = Math.sin(tick * 0.025 + baseX * 0.01) * 1.5;
     ctx.strokeStyle = '#689F38';
     ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.moveTo(x, y);
-    ctx.lineTo(x + sway, y - 12);
+    ctx.moveTo(dx, y);
+    ctx.lineTo(dx + sway, y - 12);
     ctx.stroke();
-    // Лепестки
     ctx.fillStyle = '#FF80AB';
     for (let i = 0; i < 5; i++) {
         const angle = (i / 5) * Math.PI * 2;
         ctx.beginPath();
-        ctx.arc(x + sway + Math.cos(angle) * 4, y - 12 + Math.sin(angle) * 4, 3, 0, Math.PI * 2);
+        ctx.arc(dx + sway + Math.cos(angle) * 4, y - 12 + Math.sin(angle) * 4, 3, 0, Math.PI * 2);
         ctx.fill();
     }
     ctx.fillStyle = '#FFEB3B';
     ctx.beginPath();
-    ctx.arc(x + sway, y - 12, 3, 0, Math.PI * 2);
+    ctx.arc(dx + sway, y - 12, 3, 0, Math.PI * 2);
     ctx.fill();
 }
 
 function drawBird(ctx, x, y, phase) {
     ctx.fillStyle = 'rgba(255,255,255,0.5)';
     const wingUp = Math.sin(phase) * 4;
-    // Тело
     ctx.beginPath();
     ctx.ellipse(x, y, 6, 4, 0, 0, Math.PI * 2);
     ctx.fill();
-    // Крылья
     ctx.beginPath();
     ctx.moveTo(x - 3, y);
     ctx.lineTo(x - 8, y - 5 + wingUp);
@@ -6050,15 +6083,12 @@ function drawBird(ctx, x, y, phase) {
 function drawButterfly(ctx, x, y, phase) {
     const wingFlap = Math.sin(phase * 3) * 0.3;
     ctx.fillStyle = 'rgba(255, 183, 77, 0.6)';
-    // Левое крыло
     ctx.beginPath();
     ctx.ellipse(x - 5, y, 5 * (1 - wingFlap), 7, -0.3, 0, Math.PI * 2);
     ctx.fill();
-    // Правое крыло
     ctx.beginPath();
     ctx.ellipse(x + 5, y, 5 * (1 - wingFlap), 7, 0.3, 0, Math.PI * 2);
     ctx.fill();
-    // Тело
     ctx.fillStyle = 'rgba(100, 80, 60, 0.7)';
     ctx.beginPath();
     ctx.ellipse(x, y, 2, 5, 0, 0, Math.PI * 2);
@@ -6066,23 +6096,19 @@ function drawButterfly(ctx, x, y, phase) {
 }
 
 function drawBunny(ctx, x, y, frame) {
-    const hop = Math.abs(Math.sin(frame * 0.02)) * 2;
+    const hop = Math.abs(Math.sin(frame * 0.015)) * 2;
     const by = y - 10 - hop;
-    // Тело
     ctx.fillStyle = '#E0E0E0';
     ctx.beginPath();
     ctx.ellipse(x, by, 6, 5, 0, 0, Math.PI * 2);
     ctx.fill();
-    // Голова
     ctx.beginPath();
     ctx.arc(x + 5, by - 3, 4, 0, Math.PI * 2);
     ctx.fill();
-    // Уши
     ctx.beginPath();
     ctx.ellipse(x + 3, by - 10, 2, 5, -0.2, 0, Math.PI * 2);
     ctx.ellipse(x + 7, by - 10, 2, 5, 0.2, 0, Math.PI * 2);
     ctx.fill();
-    // Глаз
     ctx.fillStyle = '#333';
     ctx.beginPath();
     ctx.arc(x + 7, by - 3, 1, 0, Math.PI * 2);
@@ -6091,28 +6117,24 @@ function drawBunny(ctx, x, y, frame) {
 
 function drawPlayer(ctx, x, y, tick) {
     const p = G.player;
-    const bounce = p.onGround ? Math.sin(tick * 0.12) * 1.2 : 0;
+    const bounce = p.onGround ? Math.sin(tick * 0.1) * 1 : 0;
 
-    // Тень
     ctx.fillStyle = 'rgba(0,0,0,0.2)';
     ctx.beginPath();
     ctx.ellipse(x + p.w/2, y + p.h + 2, 9, 3, 0, 0, Math.PI * 2);
     ctx.fill();
 
-    // Тело
     ctx.fillStyle = '#FF6B6B';
     ctx.beginPath();
     ctx.arc(x + p.w/2, y + p.h/2 + bounce, 13, 0, Math.PI * 2);
     ctx.fill();
 
-    // Щёчки
     ctx.fillStyle = '#FF8A80';
     ctx.beginPath();
     ctx.arc(x + 5, y + p.h/2 + 3 + bounce, 3, 0, Math.PI * 2);
     ctx.arc(x + p.w - 5, y + p.h/2 + 3 + bounce, 3, 0, Math.PI * 2);
     ctx.fill();
 
-    // Глаза
     ctx.fillStyle = '#fff';
     const eyeX = p.facingRight ? 1.5 : -1.5;
     ctx.beginPath();
@@ -6126,13 +6148,11 @@ function drawPlayer(ctx, x, y, tick) {
     ctx.arc(x + p.w/2 + 5 + eyeX + 0.8, y + p.h/2 - 3 + bounce, 1.8, 0, Math.PI * 2);
     ctx.fill();
 
-    // Листик
     ctx.fillStyle = '#8BC34A';
     ctx.beginPath();
     ctx.ellipse(x + p.w/2 + 4, y + 3 + bounce, 4, 2.5, 0.5, 0, Math.PI * 2);
     ctx.fill();
 
-    // Веточка
     ctx.strokeStyle = '#795548';
     ctx.lineWidth = 2;
     ctx.beginPath();
@@ -6147,15 +6167,15 @@ function winGame() {
     document.getElementById('finalApples').textContent = G.apples;
 
     const secrets = {
-        0: { title: "🍂 Пустые Ветви", text: "Ты прошёл весь путь, не сорвав ни одного яблока..." },
-        5: { title: "🌱 Первые Ростки", text: "Немного яблок — немного историй. «Цифровой Сад помнит каждого»." },
-        10: { title: "🍎 Яблочный Подмастерье", text: "Неплохой урожай! «Каждый пресет — это семечко»." },
-        15: { title: "🌳 Хранитель Сада", text: "Отличный сбор! «Я была яблоней 300 лет...»" },
-        20: { title: "✨ Мастер Урожая", text: "Почти всё! «Золотые яблоки — осколки моих снов»." },
-        999: { title: "🌟 Легенда Сада", text: "ВСЕ яблоки! «Цифровой Сад существует между строк кода»." }
+        0: { title: "🍂 Пустые Ветви", text: "Ты прошёл путь без яблок..." },
+        5: { title: "🌱 Первые Ростки", text: "«Цифровой Сад помнит всех»." },
+        10: { title: "🍎 Подмастерье", text: "«Каждый пресет — семечко»." },
+        15: { title: "🌳 Хранитель", text: "«Я была яблоней 300 лет...»" },
+        20: { title: "✨ Мастер", text: "«Золотые яблоки — осколки снов»." },
+        999: { title: "🌟 Легенда!", text: "«Сад существует между строк кода»." }
     };
 
-    const maxApples = 22;
+    const maxApples = 24;
     let secretKey = 0;
     if (G.apples >= maxApples) secretKey = 999;
     else if (G.apples >= 20) secretKey = 20;
@@ -6167,9 +6187,7 @@ function winGame() {
     document.getElementById('secretText').textContent = secrets[secretKey].text;
     showOverlay('gameWin');
 }
-
-
-		
+	
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape') {
                 closeThingDesc();
