@@ -1977,7 +1977,7 @@
                 </div>
 
                 <!-- ① OOC -->
-                <div class="cat" data-cat="basic">
+                <div class="cat" data-cat="extra">
                     <div class="cat-head" onclick="toggleCat(this)">
                         <div class="cat-info">
                             <div class="cat-num">①</div>
@@ -2004,27 +2004,72 @@
                         <div class="cat-info">
                             <div class="cat-num green">②</div>
                             <div>
-                                <div class="cat-title">◜︎Основные промпты для РП!◞︎</div>
-                                <div class="cat-desc">Язык, режим, темп, длина</div>
+                                <div class="cat-title">◜︎base◞︎</div>
+                                <div class="cat-desc">Язык, режим, длина</div>
                             </div>
                         </div>
                         <span class="cat-arrow">▼</span>
                     </div>
                     <div class="cat-body"><div class="cat-inner">
-                        <div class="subsec">◇ Язык</div>
+                        <div class="subsec">❝ language</div>
                         <div class="prompt">
                             <div class="prompt-head" onclick="togglePrompt(this)">
-                                <div class="prompt-name"><span class="tag tag-one">✧</span> Русский</div>
+                                <div class="prompt-name"><span class="tag tag-one">↔︎</span> Русский</div>
                                 <div class="prompt-meta"><span class="prompt-default">★ Дефолт</span><button class="prompt-btn" onclick="event.stopPropagation();copy('[RU]')">Копировать</button></div>
                             </div>
-                            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">[RU]</div></div></div>
+                            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Русский язык</div></div></div>
                         </div>
                         <div class="prompt">
                             <div class="prompt-head" onclick="togglePrompt(this)">
-                                <div class="prompt-name"><span class="tag tag-one">✧</span> English</div>
+                                <div class="prompt-name"><span class="tag tag-one">↔︎</span> English</div>
                                 <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[EN]')">Копировать</button></div>
                             </div>
-                            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">[EN]</div></div></div>
+                            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Английский язык</div></div></div>
+                        </div>
+                        <div class="prompt">
+                            <div class="prompt-head" onclick="togglePrompt(this)">
+                                <div class="prompt-name"><span class="tag tag-one">↔︎</span> Украинский</div>
+                                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[UA]')">Копировать</button></div>
+                            </div>
+                            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Украинский язык</div></div></div>
+                        </div>
+                    </div>
+                    <div class="cat-body"><div class="cat-inner">
+                        <div class="subsec">❝ length</div>
+                        <div class="prompt">
+                            <div class="prompt-head" onclick="togglePrompt(this)">
+                                <div class="prompt-name"><span class="tag tag-one">↔︎</span> ✏️ Маленькая (параграфы)</div>
+                                <div class="prompt-meta"><span class="prompt-default">★ Дефолт</span><button class="prompt-btn" onclick="event.stopPropagation();copy('[2-3]')">Копировать</button></div>
+                            </div>
+                            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">2-3 параграфов</div></div></div>
+                        </div>
+                        <div class="prompt">
+                            <div class="prompt-head" onclick="togglePrompt(this)">
+                                <div class="prompt-name"><span class="tag tag-one">↔︎</span> 📝 Средняя (параграфы)</div>
+                                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[5]')">Копировать</button></div>
+                            </div>
+                            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">5 параграфов</div></div></div>
+                        </div>
+                        <div class="prompt">
+                            <div class="prompt-head" onclick="togglePrompt(this)">
+                                <div class="prompt-name"><span class="tag tag-one">↔︎</span> 📚 Большая (параграфы)</div>
+                                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[7-8]')">Копировать</button></div>
+                            </div>
+                            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">7-8 параграфов</div></div></div>
+                        </div>
+                        <div class="prompt">
+                            <div class="prompt-head" onclick="togglePrompt(this)">
+                                <div class="prompt-name"><span class="tag tag-one">↔︎</span> 🔄 Адаптивная</div>
+                                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[adap]')">Копировать</button></div>
+                            </div>
+                            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Отменяет жёсткие ограничения по объёму текста и передаёт контроль над длиной ответа самому ИИ.</div></div></div>
+                        </div>
+                        <div class="prompt">
+                            <div class="prompt-head" onclick="togglePrompt(this)">
+                                <div class="prompt-name"><span class="tag tag-one">↔︎</span> 📝 В словах</div>
+                                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[words]')">Копировать</button></div>
+                            </div>
+                            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Устанавливает строгий математический лимит на объём текста. Вы можете изменить минимальное-максимальное значение вручную, как показано на скрине.<br><br><img src="screen111.jpg" alt="Пример 111"></div></div></div>
                         </div>
                     </div></div>
                 </div>
@@ -2035,8 +2080,8 @@
                         <div class="cat-info">
                             <div class="cat-num gold">③</div>
                             <div>
-                                <div class="cat-title">◜︎Улучшение письма модели!◞︎</div>
-                                <div class="cat-desc">Стили, фокус, рандомизация</div>
+                                <div class="cat-title">◜︎scribbling◞︎</div>
+                                <div class="cat-desc">Стили речи/письма</div>
                             </div>
                         </div>
                         <span class="cat-arrow">▼</span>
