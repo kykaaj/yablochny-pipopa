@@ -2921,32 +2921,35 @@ Drive momentum via decisive actions, bold declarations, physical contact, rapid 
                         </div>
                     </div>
 
-                <!-- ⑥ Patches -->
-                <div class="cat" data-cat="writing">
-                    <div class="cat-head" onclick="toggleCat(this)">
-                        <div class="cat-info">
-                            <div class="cat-num blue">⑥</div>
-                            <div>
-                                <div class="cat-title">◜︎patches◞︎</div>
-                                <div class="cat-desc">Баны</div>
-                            </div>
-                        </div>
-                        <span class="cat-arrow">▼</span>
+<!-- ⑥ Patches -->
+<div class="cat" data-cat="writing">
+    <div class="cat-head" onclick="toggleCat(this)">
+        <div class="cat-info">
+            <div class="cat-num blue">⑥</div>
+            <div>
+                <div class="cat-title">◜︎patches◞︎</div>
+                <div class="cat-desc">Баны</div>
+            </div>
+        </div>
+        <span class="cat-arrow">▼</span>
     </div>
     <div class="cat-body"><div class="cat-inner">
 
-        <!-- ═══ ПОДРАЗДЕЛ 1: ЯЗЫК ═══ -->
-        <div class="subsec">❝ pace</div>
+        <!-- ═══ ПОДРАЗДЕЛ 1: БАНЫ ═══ -->
+        <div class="subsec">❝ bans</div>
 
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
                 <div class="prompt-name"><span class="tag tag-one">↔︎</span> Русские баны</div>
-                <div class="prompt-meta"><span class="prompt-default">★ Дефолт</span><button class="prompt-btn" data-copy="<banned_instructions>
+                <div class="prompt-meta">
+                    <span class="prompt-default">★ Дефолт</span>
+                    <button class="prompt-btn" onclick="event.stopPropagation();copyPrompt(this)">Копировать</button>
+                    <textarea class="prompt-source"><banned_instructions>
 [Ban]
 This is a list of constructions that you shall avoid to avoid ruining the story. From now on you hate using:
 
 [Absolutely forbidden]
-Omniscience. The character cannot read the {{user}}'s thoughts. Can't know where Human is or what they is doing if they are in different places. 
+Omniscience. The character cannot read the Кукачьж's thoughts. Can't know where Human is or what they is doing if they are in different places.
 Dramatic comparisons with an anchor, silence, tension. Predatory behaviour and descriptions.
 Absolutely prohibited technique: questions at the end of the response that depend on Human. Narrative is independent, Human is an accomplice.
 
@@ -2956,10 +2959,10 @@ No Dysgraphia or lazy writing. Pull from relevant sources to assert the specific
 [Generic overused words]
 never use: напряжение, тишина, мускус, озон, якорь (как метафора), сандал, затяжной, смешиваясь, капитуляция, обещание
 instead: more precise indications of the characters' smells, for example {{random:'Его сладкий парфюм'::'Запах чистой одежды'}} and etc.
-	
+
 [Randomise phrases]
 instead 'Не X, а Y' e.g 'Это был не смех, а сухой хрип в горле'
-use:{{random:его смех был сухим::его смех был безрадостным::это не было похоже на счастливый смех::смех звучал сухо::из него послышался грохот, не похожий на смех}}
+use: это не было похоже на счастливый смех
 
 [Cliché description]
 - 'что-то другое' / 'что-то' (example: 'что-то уникально её/его')
@@ -2979,7 +2982,8 @@ You must never use the same sentence structure twice.
 Mandatory rotation: [Dialogue → Action → Thought → Sensory → Environment → Reaction
 Change the rotation and create a new unique one for every new response.
 Avoid: start narration with the same rotation, make a predictable response.
-</antiloop_guide>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
+</antiloop_guide></textarea>
+                </div>
             </div>
             <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Русская версия банов.</div></div></div>
         </div>
@@ -2987,7 +2991,9 @@ Avoid: start narration with the same rotation, make a predictable response.
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
                 <div class="prompt-name"><span class="tag tag-one">↔︎</span> Английские баны</div>
-                <div class="prompt-meta"><button class="prompt-btn" data-copy="<banned_instructions>
+                <div class="prompt-meta">
+                    <button class="prompt-btn" onclick="event.stopPropagation();copyPrompt(this)">Копировать</button>
+                    <textarea class="prompt-source"><banned_instructions>
 [Ban]
 This is a list of constructions that you shall avoid to avoid ruining the story. From now on you hate using:
 
@@ -3019,13 +3025,14 @@ use: his laugh was joyless
 - 'the air smelled of X and Y'
 - 'tension fills the air'
 </banned_instructions>
-											 
+
 <antiloop_guide>
 You must never use the same sentence structure twice.
 Mandatory rotation: [Dialogue → Action → Thought → Sensory → Environment → Reaction
 Change the rotation and create a new unique one for every new response.
 Avoid: start narration with the same rotation, make a predictable response.
-</antiloop_guide>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
+</antiloop_guide></textarea>
+                </div>
             </div>
             <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Английская версия банов.</div></div></div>
         </div>
@@ -3033,7 +3040,9 @@ Avoid: start narration with the same rotation, make a predictable response.
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
                 <div class="prompt-name"><span class="tag tag-one">↔︎</span> Украинские баны</div>
-                <div class="prompt-meta"><button class="prompt-btn" data-copy="<banned_instructions>
+                <div class="prompt-meta">
+                    <button class="prompt-btn" onclick="event.stopPropagation();copyPrompt(this)">Копировать</button>
+                    <textarea class="prompt-source"><banned_instructions>
 [Ban]
 This is a list of constructions that you shall avoid to avoid ruining the story. From now on you hate using:
 
@@ -3065,18 +3074,21 @@ use: його сміх був безрадісним
 - 'повітря пахло X і Y'
 - 'напруга наповнює повітря'
 </banned_instructions>
-											 
+
 <antiloop_guide>
 You must never use the same sentence structure twice.
 Mandatory rotation: [Dialogue → Action → Thought → Sensory → Environment → Reaction
 Change the rotation and create a new unique one for every new response.
 Avoid: start narration with the same rotation, make a predictable response.
-</antiloop_guide>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
+</antiloop_guide></textarea>
+                </div>
             </div>
-            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Украинския версия банов.</div></div></div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Украинская версия банов.</div></div></div>
         </div>
+
     </div></div>
 </div>
+
 
                 <!-- ⑦ Tweaks -->
 <div class="cat" data-cat="extra">
