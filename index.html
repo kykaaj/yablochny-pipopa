@@ -3642,35 +3642,175 @@ window.addEventListener('load', () => {
     document.getElementById('thingsCopyBtn').disabled = count === 0;
 }
 
-
-        function copySelectedThings() {
-            const selected = document.querySelectorAll('.thing-item.selected:not([data-thing="stub"])');
-            const codes = [];
-            selected.forEach(item => {
-                codes.push(item.dataset.code);
-            });
-            if (codes.length > 0) {
-                navigator.clipboard.writeText(codes.join('\n\n')).then(() => {
-                    showToast(`Скопировано ${codes.length} штук! 🍎`);
-                        });
+function copySelectedThings() {
+    const selected = document.querySelectorAll('.thing-item.selected');
+    const codes = [];
+    selected.forEach(item => {
+        codes.push(item.dataset.code);
+    });
+    if (codes.length > 0) {
+        navigator.clipboard.writeText(codes.join('\n\n')).then(() => {
+            showToast('Скопировано ' + codes.length + ' штук! 🍎');
+        });
     }
 }
 
-function showThingDesc(title, desc, code) {
+// Данные для штук
+const thingsData = {
+    flashbacks: {
+        title: 'Флешбеки',
+        desc: 'Добавляет флешбек в 「...」<br><img src="example1.jpg" alt="Пример">',
+        code: '[FLASHBACKS]'
+    },
+    transitions: {
+        title: 'Переходы',
+        desc: 'Красивые переходы между сценами',
+        code: '[TRANSITIONS]'
+    },
+    realworld: {
+        title: 'Реальный Мир',
+        desc: 'Вставки реального мира',
+        code: '[REAL_WORLD]'
+    },
+    webchapter: {
+        title: 'Стиль веб-главы',
+        desc: 'Оформление как веб-новелла',
+        code: '[WEB_CHAPTER]'
+    },
+    interview: {
+        title: 'Интервью с Актерами',
+        desc: 'Интервью персонажей',
+        code: '[INTERVIEW]'
+    },
+    meme: {
+        title: 'MEME',
+        desc: 'Мемные вставки',
+        code: '[MEME]'
+    },
+    typography: {
+        title: 'Типографика',
+        desc: 'Улучшенная типографика',
+        code: '[TYPOGRAPHY]'
+    },
+    musicsubs: {
+        title: 'Музыкальные Субтитры',
+        desc: 'Субтитры с музыкой',
+        code: '[MUSIC_SUBS]'
+    },
+    hiddenprofiles: {
+        title: 'Скрытые Профили',
+        desc: 'Раскрываемые профили',
+        code: '[HIDDEN_PROFILES]'
+    },
+    hiddenevents: {
+        title: 'Закадровые События',
+        desc: 'Скрытые события',
+        code: '[HIDDEN_EVENTS]'
+    },
+    hiddenplans: {
+        title: 'Скрытые Планы',
+        desc: 'Планы NPC',
+        code: '[HIDDEN_PLANS]'
+    },
+    hiddendating: {
+        title: 'Скрытый DatingSim',
+        desc: 'Дейтинг механика',
+        code: '[HIDDEN_DATING]'
+    },
+    inforenette: {
+        title: 'Логи Ренетт',
+        desc: 'Инфоблок в стиле Ренетт',
+        code: '[INFO_RENETTE]'
+    },
+    infoclock: {
+        title: 'Яблочные часы',
+        desc: 'Часы',
+        code: '[INFO_CLOCK]'
+    },
+    infomini: {
+        title: 'Мини-Инфоблок',
+        desc: 'Компактный инфоблок',
+        code: '[INFO_MINI]'
+    },
+    infomain: {
+        title: 'Основной Инфоблок',
+        desc: 'Полный инфоблок',
+        code: '[INFO_MAIN]'
+    },
+    infomatrix: {
+        title: '+Матрица отношений',
+        desc: 'Инфоблок с матрицей',
+        code: '[INFO_MATRIX]'
+    },
+    infothoughts: {
+        title: '+МатрОтн + Мысли',
+        desc: 'Матрица + мысли',
+        code: '[INFO_THOUGHTS]'
+    },
+    cyoamacro: {
+        title: 'CYOA - R-Macro',
+        desc: 'CYOA с макросами',
+        code: '[CYOA_MACRO]'
+    },
+    cyoanomacro: {
+        title: 'CYOA - No R-Macro',
+        desc: 'CYOA без макросов',
+        code: '[CYOA_NO_MACRO]'
+    },
+    fancyfull: {
+        title: 'Fancy UI',
+        desc: 'Полный Fancy UI',
+        code: '[FANCY_FULL]'
+    },
+    fancybase: {
+        title: 'Только Основа',
+        desc: 'Базовый Fancy',
+        code: '[FANCY_BASE]'
+    },
+    fancythoughts: {
+        title: 'Только Мысли',
+        desc: 'Fancy мысли',
+        code: '[FANCY_THOUGHTS]'
+    },
+    commentsv1: {
+        title: 'Комменты V1',
+        desc: 'Комментарии версия 1',
+        code: '[COMMENTS_V1]'
+    },
+    commentsv2: {
+        title: 'Комменты V2',
+        desc: 'Комментарии версия 2',
+        code: '[COMMENTS_V2]'
+    },
+    commentsv3: {
+        title: 'Комменты V3',
+        desc: 'Комментарии версия 3',
+        code: '[COMMENTS_V3]'
+    },
+    chronicleslight: {
+        title: 'Светлая Тема',
+        desc: 'Хроники светлые',
+        code: '[CHRONICLES_LIGHT]'
+    },
+    chroniclesdark: {
+        title: 'Тёмная Тема',
+        desc: 'Хроники тёмные',
+        code: '[CHRONICLES_DARK]'
+    }
+};
 
-
-function showThingDesc(title, desc, code) {
-    document.getElementById('thingDescTitle').innerHTML = '📄 ' + title;
-    document.getElementById('thingDescText').innerHTML = desc;
-    document.getElementById('thingDescCode').innerHTML = code;
+function showThingDesc(id) {
+    const data = thingsData[id];
+    if (!data) return;
+    document.getElementById('thingDescTitle').innerHTML = '📄 ' + data.title;
+    document.getElementById('thingDescText').innerHTML = data.desc;
+    document.getElementById('thingDescCode').innerHTML = data.code;
     document.getElementById('thingDescModal').classList.add('active');
 }
 
-
-
-        function closeThingDesc() {
-            document.getElementById('thingDescModal').classList.remove('active');
-        }
+function closeThingDesc() {
+    document.getElementById('thingDescModal').classList.remove('active');
+}
 
         document.getElementById('thingDescModal').addEventListener('click', (e) => {
             if (e.target === document.getElementById('thingDescModal')) closeThingDesc();
