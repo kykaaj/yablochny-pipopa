@@ -3652,10 +3652,12 @@ window.addEventListener('load', () => {
             if (codes.length > 0) {
                 navigator.clipboard.writeText(codes.join('\n\n')).then(() => {
                     showToast(`Скопировано ${codes.length} штук! 🍎`);
-                });
-            }
-        }
-};
+                        });
+    }
+}
+
+function showThingDesc(title, desc, code) {
+
 
 function showThingDesc(title, desc, code) {
     document.getElementById('thingDescTitle').innerHTML = '📄 ' + title;
