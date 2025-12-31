@@ -1,1 +1,4133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="google-site-verification" content="L1aS8txxzlMjDV_Efl0Oi1WDR0J7_DCdyazGjG1zVPk">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <title>Apple Preset - SillyTavern</title>
+	<!-- Favicon -->
+<link rel="icon" type="image/png" href="favicoon.png">
+    <style>
+        /* Styles remain identical to original */
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
+        :root {
+            --red: #E63946;
+            --red-dark: #B82E3A;
+            --green: #2ECC71;
+            --green-dark: #27AE60;
+            --green-light: #58D68D;
+            --gold: #F1C40F;
+            --gold-dark: #D4AC0D;
+            --pink: #FDA7DF;
+            --purple: #9B59B6;
+            --blue: #3498DB;
+            --bg: #0A0A0F;
+            --bg-card: #12121A;
+            --bg-elevated: #1A1A25;
+            --border: #2A2A35;
+            --text: #EAEAEA;
+            --text-muted: #8A8A9A;
+            --text-dim: #5A5A6A;
+            --glow-green: rgba(46, 204, 113, 0.5);
+            --glow-red: rgba(230, 57, 70, 0.5);
+            --glow-gold: rgba(241, 196, 15, 0.5);
+            --font: 'Montserrat', sans-serif;
+            --mono: 'JetBrains Mono', monospace;
+            --container: 900px;
+            --radius: 12px;
+            --radius-sm: 8px;
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+		.prompt-desc p,
+.prompt-code p {
+    margin: 0 0 0.5rem 0;
+}
+
+.prompt-desc p:last-child,
+.prompt-code p:last-child {
+    margin-bottom: 0;
+}
+		/* ═══════════════════════════════════════
+   IMPROVED GUIDES
+═══════════════════════════════════════ */
+
+/* Step Headers */
+.step-content h4 {
+    color: var(--green);
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px dashed var(--green);
+}
+
+/* Step Paragraphs */
+.step-content p {
+    margin: 0.6rem 0;
+    line-height: 1.7;
+}
+
+.step-content p:first-of-type {
+    margin-top: 0;
+}
+
+/* Step Images */
+.step-content img,
+.step-image {
+    display: block;
+    max-width: 100%;
+    margin: 1rem 0;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    cursor: zoom-in;
+}
+
+.step-content img:hover,
+.step-image:hover {
+    border-color: var(--green);
+}
+
+/* Important Text Highlight */
+.step-content strong,
+.step-content b {
+    color: var(--gold);
+}
+
+/* Code/Tags in text */
+.step-content code {
+    background: var(--bg-card);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-family: var(--mono);
+    font-size: 0.85em;
+    color: var(--green);
+}
+
+/* Mobile Version */
+@media (max-width: 600px) {
+    .step {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .step-num {
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+    }
+
+    .step-content {
+        width: 100%;
+    }
+
+    .step-content h4 {
+        font-size: 1rem;
+    }
+
+    .step-content p {
+        font-size: 0.9rem;
+        margin: 0.5rem 0;
+    }
+
+    .step-content img {
+        margin: 0.8rem 0;
+    }
+
+    .guide-inner {
+        padding: 1rem;
+    }
+}
+
+/* Quotes in guides */
+.step-content blockquote {
+    background: var(--bg-card);
+    border-left: 3px solid var(--pink);
+    padding: 0.8rem 1rem;
+    margin: 1rem 0;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+		/* Padding for changelog after cards */
+.cards + .guide {
+    margin-top: 2rem;
+}
+
+		/* Changelog */
+.changelog-item {
+    padding: 1rem 0;
+    border-bottom: 1px dashed var(--border);
+}
+
+.changelog-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.changelog-item:first-child {
+    padding-top: 0;
+}
+
+.changelog-ver {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+}
+
+.changelog-badge {
+    padding: 0.3rem 0.8rem;
+    background: var(--green);
+    color: var(--bg);
+    font-weight: 800;
+    font-size: 0.85rem;
+    border-radius: var(--radius-sm);
+}
+
+.changelog-badge.old {
+    background: var(--bg-elevated);
+    color: var(--text-muted);
+}
+
+.changelog-date {
+    color: var(--text-dim);
+    font-size: 0.8rem;
+}
+
+.changelog-list {
+    margin: 0;
+    padding-left: 1.5rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.changelog-list li {
+    margin: 0.3rem 0;
+}
+
+.changelog-list li::marker {
+    color: var(--green);
+}
+
+/* Lightbox */
+.lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 10002;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    cursor: zoom-out;
+}
+
+.lightbox.active {
+    display: flex;
+}
+
+.lightbox-img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: var(--radius);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+    cursor: default;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: var(--bg-card);
+    border: 1px solid var(--red);
+    border-radius: var(--radius-sm);
+    color: var(--red);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.lightbox-close:hover {
+    background: var(--red);
+    color: #fff;
+}
+
+/* Images in text — clickable */
+.prompt-code img,
+.prompt-desc img,
+.guide-inner img {
+    max-width: 100%;
+    border-radius: var(--radius-sm);
+    margin: 0.5rem 0;
+    cursor: zoom-in;
+    transition: all 0.3s;
+    border: 1px solid var(--border);
+}
+
+.prompt-code img:hover,
+.prompt-desc img:hover,
+.guide-inner img:hover {
+    border-color: var(--green);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+        /* Links in text */
+.prompt-code a,
+.prompt-desc a,
+.things-note a,
+.guide-inner a,
+.prompts-desc a {
+    color: var(--green);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--green);
+    transition: all 0.3s;
+}
+
+.prompt-code a:hover,
+.prompt-desc a:hover,
+.things-note a:hover,
+.guide-inner a:hover,
+.prompts-desc a:hover {
+    color: var(--gold);
+    border-color: var(--gold);
+}
+
+/* ═══════════════════════════════════════
+   MUSIC PLAYER
+═══════════════════════════════════════ */
+.music-toggle {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(18, 18, 26, 0.8);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+    transition: all 0.3s;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.music-toggle:hover {
+    border-color: var(--green);
+    color: var(--green);
+}
+
+.music-toggle.playing {
+    border-color: var(--green);
+    background: rgba(46, 204, 113, 0.1);
+    color: var(--green);
+}
+
+.music-icon {
+    font-size: 1.2rem;
+    transition: transform 0.3s;
+}
+
+.music-toggle.playing .music-icon {
+    animation: musicPulse 1s ease-in-out infinite;
+}
+
+@keyframes musicPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+.music-label {
+    display: none;
+}
+
+@media (min-width: 500px) {
+    .music-label { display: inline; }
+}
+
+@media (max-width: 768px) {
+    .music-toggle {
+        top: 15px;
+        left: 15px;
+        padding: 0.4rem 0.8rem;
+    }
+}
+
+        /* ═══════════════════════════════════════
+           LOADER
+        ═══════════════════════════════════════ */
+        .loader {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: var(--bg);
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-apple {
+            font-size: 4rem;
+            animation: loaderBounce 1s ease-in-out infinite;
+        }
+
+        @keyframes loaderBounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.1); }
+        }
+
+        .loader-bar {
+            width: 200px;
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            margin-top: 2rem;
+            overflow: hidden;
+        }
+
+        .loader-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--green), var(--gold), var(--red));
+            border-radius: 2px;
+            animation: loaderFill 1.5s ease-out forwards;
+        }
+
+        @keyframes loaderFill {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        .loader-text {
+            margin-top: 1rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* ═══════════════════════════════════════
+           BACKGROUND & EFFECTS
+        ═══════════════════════════════════════ */
+        #bgCanvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        #headerCanvas {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        .content-wrap { position: relative; z-index: 1; }
+
+        .leaves-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .falling-leaf {
+            position: absolute;
+            width: 20px;
+            height: 28px;
+            background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+            border-radius: 0 70% 0 70%;
+            opacity: 0.15;
+            animation: fallLeaf linear infinite;
+        }
+
+        .falling-leaf::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 15px;
+            background: var(--green-dark);
+            top: 8px; left: 9px;
+            border-radius: 2px;
+        }
+
+        @keyframes fallLeaf {
+            0% { transform: translateY(-100px) rotate(0deg) translateX(0); opacity: 0; }
+            10% { opacity: 0.15; }
+            90% { opacity: 0.15; }
+            100% { transform: translateY(100vh) rotate(360deg) translateX(100px); opacity: 0; }
+        }
+
+        .cursor-glow {
+            position: fixed;
+            width: 350px; height: 350px;
+            background: radial-gradient(circle, rgba(46,204,113,0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+        }
+        @media (max-width: 768px) { .cursor-glow { display: none; } }
+
+        /* ═══════════════════════════════════════
+           SCROLL TOP BUTTON
+        ═══════════════════════════════════════ */
+        .scroll-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(180deg, var(--green) 0%, var(--green-dark) 100%);
+            border-radius: 50% 50% 50% 50% / 45% 45% 55% 55%;
+            cursor: pointer;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 20px var(--glow-green);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s;
+            border: none;
+        }
+
+        .scroll-top::before {
+            content: '';
+            position: absolute;
+            top: -7px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 10px;
+            background: #5D3A1A;
+            border-radius: 2px;
+        }
+
+        .scroll-top::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            right: 10px;
+            width: 12px;
+            height: 14px;
+            background: var(--green-light);
+            border-radius: 0 70% 0 70%;
+            transform: rotate(45deg);
+        }
+
+        .scroll-top.visible { opacity: 1; visibility: visible; }
+        .scroll-top:hover { transform: scale(1.1) translateY(-5px); }
+        .scroll-top span { font-size: 1.2rem; color: var(--bg); font-weight: 900; z-index: 1; }
+
+        @media (max-width: 768px) {
+            .scroll-top {
+                width: 45px;
+                height: 45px;
+                bottom: 15px;
+                right: 15px;
+            }
+        }
+
+        /* ═══════════════════════════════════════
+           HEADER
+        ═══════════════════════════════════════ */
+        .header {
+            position: relative;
+            min-height: 92vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 4rem 2rem 2rem;
+        }
+
+        .header-video {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+
+        .header-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(180deg,
+                rgba(10,10,15,0.4) 0%,
+                rgba(10,10,15,0.7) 50%,
+                rgba(10,10,15,0.98) 100%);
+            z-index: 1;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%; height: 4px;
+            background: linear-gradient(90deg, var(--green), var(--gold), var(--red), var(--pink), var(--green));
+            background-size: 300% 100%;
+            animation: gradientMove 5s linear infinite;
+            z-index: 10;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 300% 50%; }
+        }
+
+        /* Language Switcher in Header */
+        .header-lang {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            gap: 0.3rem;
+            background: rgba(18, 18, 26, 0.8);
+            padding: 0.4rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+        }
+
+        .lang-btn {
+            padding: 0.4rem 0.8rem;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .lang-btn:hover { color: var(--green); }
+        .lang-btn.active {
+            background: var(--green);
+            color: var(--bg);
+        }
+
+        @media (max-width: 768px) {
+            .header-lang {
+                top: 15px;
+                right: 15px;
+                padding: 0.3rem;
+            }
+            .lang-btn {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.7rem;
+            }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 5;
+            text-align: center;
+            max-width: 700px;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .header-line {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--green));
+        }
+        .header-line:last-child {
+            background: linear-gradient(90deg, var(--green), transparent);
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.2rem;
+            background: rgba(46, 204, 113, 0.1);
+            border: 1px solid var(--green);
+            border-radius: var(--radius);
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--green);
+        }
+
+        .pulse-dot {
+            width: 8px; height: 8px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 var(--glow-green); }
+            50% { box-shadow: 0 0 0 10px transparent; }
+        }
+
+        .header-hero { margin: 2rem 0; perspective: 1000px; }
+
+        .parallax-title {
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
+        }
+
+        .header-title {
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin: 1rem 0 0.5rem;
+            background: linear-gradient(135deg, var(--green) 0%, var(--gold) 50%, var(--red) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+        }
+
+        .header-subtitle {
+            font-size: 1rem;
+            color: var(--text-muted);
+        }
+        .header-subtitle span { color: var(--green); font-weight: 700; }
+
+        .header-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .stat { text-align: center; }
+        .stat-value { font-size: 1.8rem; font-weight: 900; color: var(--green); }
+        .stat-label { font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
+
+        .header-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            border: 2px solid var(--green);
+            border-radius: var(--radius-sm);
+            background: transparent;
+            color: var(--green);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn:hover {
+            background: var(--green);
+            color: var(--bg);
+            box-shadow: 0 0 30px var(--glow-green);
+            transform: translateY(-3px);
+        }
+
+        .btn-fill { background: var(--green); color: var(--bg); }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            color: var(--green);
+            animation: bounce 2s infinite;
+            cursor: pointer;
+            font-size: 1.5rem;
+            opacity: 0.7;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        @keyframes appleFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-12px) rotate(-3deg); }
+            75% { transform: translateY(-6px) rotate(3deg); }
+        }
+
+        /* ═══════════════════════════════════════
+           NAV
+        ═══════════════════════════════════════ */
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(10,10,15,0.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav.scrolled { box-shadow: 0 5px 30px rgba(0,0,0,0.5); }
+
+        .nav-inner {
+            max-width: var(--container);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem 1.5rem;
+            gap: 1rem;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 800;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+
+        .nav-logo:hover { color: var(--green); }
+
+        .apple-nav {
+            display: flex;
+            gap: 0.3rem;
+        }
+
+        .apple-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.2rem;
+            text-decoration: none;
+            padding: 0.3rem 0.5rem;
+            border-radius: var(--radius-sm);
+            transition: all 0.3s;
+        }
+
+        .apple-nav-item:hover {
+            background: rgba(46, 204, 113, 0.1);
+        }
+
+        .apple-icon {
+            position: relative;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(180deg, #E63946 0%, #B82E3A 100%);
+            border-radius: 50% 50% 50% 50% / 45% 45% 55% 55%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 3px 10px rgba(230, 57, 70, 0.3);
+        }
+
+        .apple-icon::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 6px;
+            background: #5D3A1A;
+            border-radius: 2px;
+        }
+
+        .apple-icon::after {
+            content: '';
+            position: absolute;
+            top: -3px;
+            right: 5px;
+            width: 8px;
+            height: 10px;
+            background: var(--green);
+            border-radius: 0 70% 0 70%;
+            transform: rotate(45deg);
+        }
+
+        .apple-icon span {
+            font-size: 0.6rem;
+            font-weight: 800;
+            color: #fff;
+            z-index: 1;
+        }
+
+        .apple-icon.green {
+            background: linear-gradient(180deg, var(--green) 0%, var(--green-dark) 100%);
+            box-shadow: 0 3px 10px var(--glow-green);
+        }
+
+        .apple-icon.gold {
+            background: linear-gradient(180deg, var(--gold) 0%, var(--gold-dark) 100%);
+            box-shadow: 0 3px 10px var(--glow-gold);
+        }
+        .apple-icon.gold span { color: var(--bg); }
+
+        .apple-nav-item:hover .apple-icon {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .apple-nav-label {
+            font-size: 0.6rem;
+            color: var(--text-dim);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .apple-nav-item:hover .apple-nav-label {
+            color: var(--green);
+        }
+
+        @media (max-width: 700px) {
+            .apple-nav { display: none; }
+            .nav-mobile-btn { display: flex !important; }
+        }
+
+        .nav-mobile-btn {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: none;
+            border: 1px solid var(--green);
+            border-radius: var(--radius-sm);
+            color: var(--green);
+            padding: 0.6rem 1rem;
+            cursor: pointer;
+            font-size: 1rem;
+            gap: 0.5rem;
+            font-weight: 600;
+        }
+
+        .nav-mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: var(--bg);
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .nav-mobile-menu.open { display: flex; }
+        .nav-mobile-menu a {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 1rem;
+            background: var(--bg-card);
+        }
+        .nav-mobile-menu a:hover, .nav-mobile-menu a:active {
+            background: var(--bg-elevated);
+            color: var(--green);
+        }
+        .nav-mobile-menu .mob-icon { font-size: 1.3rem; }
+
+        /* ═══════════════════════════════════════
+           MAIN
+        ═══════════════════════════════════════ */
+        .main {
+            max-width: var(--container);
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+
+       .section {
+    margin-bottom: 5rem;
+    scroll-margin-top: 110px;
+}
+
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        .section-head {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+        }
+
+        .section-head::after {
+            content: '';
+            position: absolute;
+            bottom: -1px; left: 0;
+            width: 100px; height: 2px;
+            background: linear-gradient(90deg, var(--green), transparent);
+        }
+
+        .section-icon { font-size: 2rem; animation: appleFloat 4s ease-in-out infinite; }
+
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .section-title span {
+            background: linear-gradient(135deg, var(--green), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ═══════════════════════════════════════
+           CARDS
+        ═══════════════════════════════════════ */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 600px) {
+            .cards {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .card {
+                padding: 1.2rem;
+            }
+            .card-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+            .card-title { font-size: 1rem; }
+            .card-text { font-size: 0.85rem; }
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            transition: all 0.4s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--green);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 30px var(--glow-green);
+        }
+
+        .card-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+        .card-title { font-size: 1.1rem; font-weight: 700; color: var(--green); margin-bottom: 0.5rem; }
+        .card-text { color: var(--text-muted); font-size: 0.9rem; }
+
+        /* ═══════════════════════════════════════
+           DOWNLOAD
+        ═══════════════════════════════════════ */
+        .download-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        @media (max-width: 700px) { .download-grid { grid-template-columns: 1fr; } }
+
+        .download-visual {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 280px;
+        }
+
+        .download-apple {
+            font-size: 8rem;
+            filter: drop-shadow(0 0 60px var(--glow-red));
+            animation: appleFloat 4s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        .download-rings { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+
+        .download-ring {
+            position: absolute;
+            border: 2px solid var(--green);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: ringPulse 3s ease-out infinite;
+        }
+
+        .download-ring:nth-child(1) { width: 150px; height: 150px; top: -75px; left: -75px; animation-delay: 0s; }
+        .download-ring:nth-child(2) { width: 220px; height: 220px; top: -110px; left: -110px; animation-delay: 0.5s; }
+        .download-ring:nth-child(3) { width: 290px; height: 290px; top: -145px; left: -145px; animation-delay: 1s; }
+
+        @keyframes ringPulse {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            100% { transform: scale(1.2); opacity: 0; }
+        }
+
+        .download-info {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+        }
+
+        .download-ver-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(135deg, var(--green), var(--green-dark));
+            border-radius: var(--radius-sm);
+            color: var(--bg);
+            font-weight: 900;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 30px var(--glow-green);
+        }
+
+        .download-meta { display: flex; gap: 1.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .download-meta-item { display: flex; align-items: center; gap: 0.4rem; color: var(--text-muted); font-size: 0.9rem; }
+        .download-meta-item strong { color: var(--text); }
+
+        .download-features { margin-bottom: 2rem; }
+
+        .download-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.6rem 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-bottom: 1px dashed var(--border);
+        }
+        .download-feature:last-child { border-bottom: none; }
+        .download-feature-icon { color: var(--green); font-weight: 700; }
+
+        .download-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+        /* ═══════════════════════════════════════
+           PROMPTS
+        ═══════════════════════════════════════ */
+        .prompts-desc {
+            background: var(--bg-card);
+            border-left: 4px solid var(--green);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            padding: 1.2rem;
+            margin-bottom: 2rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .prompts-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+
+        .search-box { flex: 1; min-width: 200px; position: relative; }
+
+        .search-input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 2.5rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text);
+            font-family: var(--font);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--green);
+            box-shadow: 0 0 20px var(--glow-green);
+        }
+
+        .search-icon { position: absolute; left: 0.8rem; top: 50%; transform: translateY(-50%); color: var(--text-dim); }
+
+        .filters { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+        .filter-btn {
+            padding: 0.6rem 1rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--green);
+            border-color: var(--green);
+            color: var(--bg);
+        }
+
+        /* Category */
+        .cat {
+            margin-bottom: 1rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg-card);
+            overflow: hidden;
+        }
+
+        .cat-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.2rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .cat-head:hover { background: rgba(46,204,113,0.05); }
+
+        .cat-info { display: flex; align-items: center; gap: 1rem; }
+
+        .cat-num {
+            width: 40px; height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--green), var(--green-dark));
+            border-radius: var(--radius-sm);
+            color: var(--bg);
+            font-weight: 900;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .cat-num.red { background: linear-gradient(135deg, var(--red), var(--red-dark)); }
+        .cat-num.gold { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); }
+        .cat-num.purple { background: linear-gradient(135deg, var(--purple), #7D3C98); }
+        .cat-num.blue { background: linear-gradient(135deg, var(--blue), #2980B9); }
+        .cat-num.pink { background: linear-gradient(135deg, var(--pink), #E91E8C); }
+
+        .cat-title { font-weight: 700; }
+        .cat-desc { color: var(--text-dim); font-size: 0.8rem; }
+        .cat-arrow { color: var(--green); transition: transform 0.3s; }
+        .cat-head.open .cat-arrow { transform: rotate(180deg); }
+
+        .cat-body { max-height: 0; overflow: hidden; transition: max-height 0.5s; }
+        .cat-body.open { max-height: 20000px; }
+
+        .cat-inner {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+            background: var(--bg);
+        }
+
+        .subsec {
+            color: var(--gold);
+            font-weight: 700;
+            margin: 1.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dashed rgba(241,196,15,0.3);
+        }
+        .subsec:first-child { margin-top: 0; }
+
+        /* Prompt */
+        .prompt {
+            background: var(--bg-card);
+            border-radius: var(--radius-sm);
+            margin-bottom: 0.8rem;
+            border: 1px solid transparent;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .prompt:hover { border-color: rgba(46,204,113,0.3); transform: translateX(5px); }
+
+        .prompt-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .prompt-name { display: flex; align-items: center; gap: 0.6rem; font-weight: 600; }
+
+        .tag { padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.65rem; font-weight: 700; }
+        .tag-one { background: linear-gradient(135deg, var(--red), var(--red-dark)); color: #fff; }
+        .tag-multi { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: var(--bg); }
+
+        .prompt-meta { display: flex; align-items: center; gap: 0.8rem; }
+        .prompt-default { font-size: 0.75rem; color: var(--gold); font-weight: 600; }
+
+        .prompt-btn {
+    padding: 0.4rem 0.9rem;
+    background: transparent;
+    border: 1px solid var(--green);
+    border-radius: var(--radius-sm);
+    color: var(--green);
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.prompt-btn:hover { background: var(--green); color: var(--bg); }
+
+/* Fix prompts for mobile */
+@media (max-width: 500px) {
+    .prompt-head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+    }
+
+    .prompt-meta {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .prompt-btn {
+        margin-left: auto;
+    }
+
+    .prompt-default {
+        font-size: 0.7rem;
+    }
+}
+
+.prompt-body { max-height: 0; overflow: hidden; transition: max-height 0.4s; }
+
+        .prompt-body { max-height: 0; overflow: hidden; transition: max-height 0.4s; }
+        .prompt-body.open { max-height: 2000px; }
+
+        .prompt-inner { padding: 1.2rem; border-top: 1px solid var(--border); background: var(--bg); }
+        .prompt-desc { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem; }
+
+        .prompt-code {
+            background: var(--bg-card);
+            border-left: 3px solid var(--green);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            padding: 1rem;
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            max-height: 200px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            color: var(--text-muted);
+        }
+
+        /* ═══════════════════════════════════════
+   THINGS SELECTOR
+═══════════════════════════════════════ */
+.things-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px dashed var(--border);
+}
+
+.things-title {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.things-copy-btn {
+    padding: 0.6rem 1.2rem;
+    background: var(--green);
+    border: none;
+    border-radius: var(--radius-sm);
+    color: var(--bg);
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.things-copy-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px var(--glow-green);
+}
+
+.things-copy-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.things-count {
+    font-size: 0.85rem;
+    color: var(--green);
+    font-weight: 600;
+}
+
+.things-note {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+    padding: 0.8rem 1rem;
+    background: var(--bg);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--text-dim);
+}
+
+.things-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.6rem;
+    margin-bottom: 1.5rem;
+}
+
+.thing-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem 1rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.3s;
+    user-select: none;
+}
+
+.thing-item:hover {
+    border-color: var(--green);
+    background: var(--bg-elevated);
+}
+
+.thing-item.selected {
+    border-color: var(--green);
+    background: rgba(46, 204, 113, 0.1);
+}
+
+.thing-item.exclusive.selected {
+    border-color: var(--pink);
+    background: rgba(253, 167, 223, 0.1);
+}
+
+.thing-checkbox {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    flex-shrink: 0;
+}
+
+.thing-item.exclusive .thing-checkbox {
+    border-radius: 50%;
+}
+
+.thing-item.selected .thing-checkbox {
+    background: var(--green);
+    border-color: var(--green);
+}
+
+.thing-item.exclusive.selected .thing-checkbox {
+    background: var(--pink);
+    border-color: var(--pink);
+}
+
+.thing-checkbox::after {
+    content: '✓';
+    color: var(--bg);
+    font-size: 0.7rem;
+    font-weight: 900;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.thing-item.selected .thing-checkbox::after {
+    opacity: 1;
+}
+
+.thing-icon { font-size: 1.1rem; }
+.thing-name { font-size: 0.85rem; font-weight: 600; flex: 1; }
+
+.thing-action-btn {
+    padding: 0.3rem 0.5rem;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text-dim);
+    font-size: 0.65rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.thing-action-btn:hover {
+    border-color: var(--green);
+    color: var(--green);
+}
+
+        /* Thing Description Modal */
+        .thing-desc-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 10001;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .thing-desc-modal.active { display: flex; }
+
+        .thing-desc-box {
+            background: var(--bg-card);
+            border: 1px solid var(--green);
+            border-radius: var(--radius);
+            max-width: 500px;
+            width: 100%;
+            max-height: 80vh;
+            overflow: hidden;
+        }
+
+        .thing-desc-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .thing-desc-title {
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .thing-desc-close {
+            background: none;
+            border: 1px solid var(--red);
+            border-radius: var(--radius-sm);
+            color: var(--red);
+            width: 30px; height: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .thing-desc-close:hover {
+            background: var(--red);
+            color: #fff;
+        }
+
+        .thing-desc-content {
+            padding: 1.5rem;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .thing-desc-text {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .thing-desc-code {
+            background: var(--bg);
+            border-left: 3px solid var(--green);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            padding: 1rem;
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            white-space: pre-wrap;
+            color: var(--text-muted);
+            max-height: 200px;
+            overflow-y: auto;
+        }
+		.thing-desc-text img,
+.thing-desc-code img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-sm);
+    margin-top: 0.5rem;
+    display: block;
+}
+
+
+        /* ═══════════════════════════════════════
+           GUIDES
+        ═══════════════════════════════════════ */
+        .guide {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .guide-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.2rem 1.5rem;
+            cursor: pointer;
+        }
+
+        .guide-head:hover { background: var(--bg-elevated); }
+        .guide-title { font-weight: 700; display: flex; align-items: center; gap: 0.6rem; }
+
+        .guide-body { max-height: 0; overflow: hidden; transition: max-height 0.5s; }
+        .guide-body.open { max-height: 10000px; }
+
+        .guide-inner { padding: 1.5rem; border-top: 1px solid var(--border); }
+
+        .step {
+            display: flex;
+            gap: 1.2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px dashed var(--border);
+        }
+        .step:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+
+        .step-num {
+            width: 40px; height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--green), var(--green-dark));
+            border-radius: var(--radius-sm);
+            color: var(--bg);
+            font-weight: 900;
+            flex-shrink: 0;
+        }
+
+        .step-num.q { background: linear-gradient(135deg, var(--red), var(--red-dark)); }
+
+        .step-content { flex: 1; }
+        .step-content h4 { color: var(--green); margin-bottom: 0.3rem; }
+        .step-content p { color: var(--text-muted); font-size: 0.9rem; }
+
+        .glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .glossary-item {
+            background: var(--bg-card);
+            border-left: 3px solid var(--green);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            padding: 1rem 1.2rem;
+        }
+
+        .glossary-term {
+            font-weight: 700;
+            color: var(--green);
+            margin-bottom: 0.3rem;
+        }
+
+        .glossary-def {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* ═══════════════════════════════════════
+           CONTACTS
+        ═══════════════════════════════════════ */
+        .contacts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+
+        .contact-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.4s;
+        }
+
+        .contact-card:hover {
+            border-color: var(--green);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .contact-icon { font-size: 2rem; color: var(--green); }
+        .contact-info h4 { font-weight: 700; }
+        .contact-info p { color: var(--text-muted); font-size: 0.85rem; }
+
+        .thanks { margin-top: 2.5rem; }
+        .thanks-section { margin-bottom: 2rem; }
+        .thanks-title { color: var(--green); font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+
+        .thanks-list { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+
+        .thanks-item {
+            padding: 0.5rem 1rem;
+            background: var(--bg-card);
+            border-left: 3px solid var(--green);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .thanks-item:hover { transform: translateX(8px); background: var(--bg-elevated); }
+        .thanks-item a { color: var(--text); text-decoration: none; }
+        .thanks-item a:hover { color: var(--green); }
+        .thanks-item.no-link { border-color: var(--gold); }
+
+        /* ═══════════════════════════════════════
+           EASTER EGG - HIDDEN GAME LINK
+        ═══════════════════════════════════════ */
+        .easter-egg-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            background: var(--bg-elevated);
+            border: 1px dashed var(--pink);
+            border-radius: var(--radius-sm);
+            color: var(--pink);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .easter-egg-link:hover {
+            background: rgba(253, 167, 223, 0.1);
+            transform: scale(1.05);
+        }
+
+        /* ═══════════════════════════════════════
+           GAME MODAL
+        ═══════════════════════════════════════ */
+        .game-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+        .game-modal.active { display: flex; }
+
+        .game-box {
+            background: var(--bg);
+            border: 2px solid var(--green);
+            border-radius: var(--radius);
+            max-width: 750px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .game-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--green);
+        }
+
+        .game-title { font-weight: 800; color: var(--green); }
+
+        .game-close {
+            background: none;
+            border: 1px solid var(--red);
+            border-radius: var(--radius-sm);
+            color: var(--red);
+            width: 32px; height: 32px;
+            cursor: pointer;
+        }
+        .game-close:hover { background: var(--red); color: #fff; }
+
+        .game-screen {
+            position: relative;
+            aspect-ratio: 16/10;
+            background: linear-gradient(180deg, #1a2a1a 0%, #0a150a 100%);
+        }
+
+        #gameCanvas { width: 100%; height: 100%; display: block; }
+
+        .game-hud {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            right: 1rem;
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none;
+        }
+
+        .hud-item {
+            background: rgba(0,0,0,0.85);
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--green);
+            border-radius: var(--radius-sm);
+            font-family: var(--mono);
+            font-size: 0.8rem;
+        }
+        .hud-item span { color: var(--green); font-weight: 700; }
+
+        .game-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+        }
+        .game-overlay.active { display: flex; }
+
+        .game-overlay-icon { font-size: 4rem; margin-bottom: 1rem; }
+        .game-overlay-title { font-size: 2rem; font-weight: 900; margin-bottom: 0.5rem; }
+        .game-overlay-title.win { color: var(--gold); }
+        .game-overlay-title.start { color: var(--green); }
+        .game-overlay-text { color: var(--text-muted); margin-bottom: 1.5rem; }
+        .game-overlay-stats { margin-bottom: 1.5rem; }
+        .game-overlay-stats p { margin: 0.3rem 0; font-size: 1.1rem; }
+        .game-overlay-stats strong { color: var(--green); }
+
+        /* Easter Egg Banner - FIXED */
+        .easter-egg-banner {
+            background: linear-gradient(135deg, var(--pink), var(--purple));
+            padding: 1.2rem 1.5rem;
+            border-radius: var(--radius-sm);
+            margin: 1.5rem 0;
+            animation: bannerGlow 2s ease-in-out infinite alternate;
+            max-width: 400px;
+        }
+
+        @keyframes bannerGlow {
+            0% { box-shadow: 0 0 20px rgba(253, 167, 223, 0.3); }
+            100% { box-shadow: 0 0 40px rgba(253, 167, 223, 0.6); }
+        }
+
+        .easter-egg-banner h3 {
+            color: #fff;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .easter-egg-banner p {
+            color: rgba(255,255,255,0.9);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .game-controls {
+            padding: 1rem;
+            background: var(--bg-card);
+            display: flex;
+            justify-content: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .game-btn {
+            padding: 0.6rem 1.3rem;
+            background: var(--bg);
+            border: 1px solid var(--green);
+            border-radius: var(--radius-sm);
+            color: var(--green);
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .game-btn:hover { background: var(--green); color: var(--bg); }
+
+        .game-info {
+            padding: 0.8rem;
+            background: var(--bg);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        /* ═══════════════════════════════════════
+           TOAST & FOOTER
+        ═══════════════════════════════════════ */
+        .toast-box { position: fixed; bottom: 90px; right: 20px; z-index: 9999; }
+
+        @media (max-width: 768px) {
+            .toast-box { bottom: 80px; right: 10px; left: 10px; }
+            .toast { font-size: 0.85rem; padding: 0.8rem 1rem; }
+        }
+
+        .toast {
+            padding: 1rem 1.5rem;
+            background: var(--bg-card);
+            border-left: 4px solid var(--green);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            color: var(--text);
+            font-weight: 600;
+            margin-top: 0.5rem;
+            animation: toastIn 0.4s;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+        }
+
+        @keyframes toastIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .footer {
+            background: var(--bg-card);
+            padding: 2.5rem;
+            text-align: center;
+            border-top: 1px solid var(--green);
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 4px;
+            background: linear-gradient(90deg, var(--green), var(--gold), var(--red), var(--pink), var(--green));
+            background-size: 300% 100%;
+            animation: gradientMove 5s linear infinite;
+        }
+
+        .footer p { color: var(--text-muted); }
+        .footer a { color: var(--green); text-decoration: none; }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--green), var(--gold)); border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="loader-apple">🍎</div>
+        <div class="loader-bar"><div class="loader-progress"></div></div>
+        <p class="loader-text">Loading Apple Orchard...</p>
+    </div>
+
+    <canvas id="bgCanvas"></canvas>
+    <div class="leaves-container" id="leavesContainer"></div>
+    <div class="cursor-glow" id="cursorGlow"></div>
+
+    <!-- Scroll to Top -->
+    <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0})">
+        <span>↑</span>
+    </button>
+
+    <div class="toast-box" id="toastBox"></div>
+
+    <!-- Thing Description Modal -->
+    <div class="thing-desc-modal" id="thingDescModal">
+        <div class="thing-desc-box">
+            <div class="thing-desc-header">
+                <div class="thing-desc-title" id="thingDescTitle">📄 Title</div>
+                <button class="thing-desc-close" onclick="closeThingDesc()">✕</button>
+            </div>
+            <div class="thing-desc-content">
+                <p class="thing-desc-text" id="thingDescText">Description...</p>
+                <div class="thing-desc-code" id="thingDescCode">Code...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Modal -->
+    <div class="game-modal" id="gameModal">
+        <div class="game-box">
+            <div class="game-head">
+                <div class="game-title">🍎 Apple Orchard</div>
+                <button class="game-close" onclick="closeGame()">✕</button>
+            </div>
+            <div class="game-screen">
+                <canvas id="gameCanvas"></canvas>
+                <div class="game-hud">
+                    <div class="hud-item">Score: <span id="gameScore">0</span></div>
+                    <div class="hud-item">Lvl: <span id="gameLevel">1</span>/5</div>
+                    <div class="hud-item">🍎 <span id="gameApples">0</span></div>
+                </div>
+                <div class="game-overlay active" id="gameStart">
+                    <div class="game-overlay-icon">🍎</div>
+                    <div class="game-overlay-title start">Apple Orchard</div>
+                    <div class="game-overlay-text">Collect apples and reach the star!<br><small>(PC Only — arrows/WASD + space)</small></div>
+                    <button class="btn btn-fill" onclick="startGame()">▶ Start</button>
+                </div>
+                <div class="game-overlay" id="gameWin">
+                    <div class="game-overlay-icon">🎉</div>
+                    <div class="game-overlay-title win">Victory!</div>
+                    <div class="game-overlay-stats">
+                        <p>Score: <strong id="finalScore">0</strong></p>
+                        <p>Apples: <strong id="finalApples">0</strong> 🍎</p>
+                    </div>
+                    <div class="easter-egg-banner">
+                        <h3>🌟 Renette's Secret</h3>
+                        <p>Renette was an apple tree for 300 years in the Digital Garden until lightning struck her roots. Thus, she gained consciousness and became the digital guardian spirit of all presets!</p>
+                    </div>
+                    <button class="btn btn-fill" onclick="restartGame()">↺ Play Again</button>
+                    <button class="btn" onclick="closeGame()" style="margin-top:0.5rem">✕ Close</button>
+                </div>
+                <div class="game-overlay" id="gameLevelUp">
+                    <div class="game-overlay-icon">⭐</div>
+                    <div class="game-overlay-title start">Level Complete!</div>
+                    <div class="game-overlay-text">Level <span id="nextLevel">2</span></div>
+                </div>
+            </div>
+            <div class="game-controls">
+                <button class="game-btn" onclick="startGame()">▶ Start</button>
+                <button class="game-btn" onclick="pauseGame()">⏸ Pause</button>
+                <button class="game-btn" onclick="restartGame()">↺ Restart</button>
+            </div>
+            <div class="game-info">← → move ◇ Space jump ◇ PC Only!</div>
+        </div>
+    </div>
+
+    <div class="content-wrap">
+        <!-- Header -->
+        <header class="header" id="home">
+    <video class="header-video" autoplay muted loop playsinline>
+        <source src="headerr.mp4" type="video/mp4">
+    </video>
+    <div class="header-overlay"></div>
+
+            <canvas id="headerCanvas"></canvas>
+            <button class="music-toggle" id="musicToggle" onclick="toggleMusic()">
+    <span class="music-icon">🔇</span>
+    <span class="music-label">Tinex!</span>
+</button>
+
+<!-- Audio Element (hidden) -->
+<audio id="bgMusic" loop preload="auto">
+    <source src="musicc.mp3" type="audio/mpeg">
+</audio>
+
+            <!-- Language Switcher - Fixed in Header -->
+            <div class="header-lang">
+                <a href="../" class="lang-btn">RU</a>
+                <a href="./" class="lang-btn active">EN</a>
+                <a href="../uk/" class="lang-btn">UK</a>
+            </div>
+
+            <div class="header-content">
+                <div class="header-top">
+                    <div class="header-line"></div>
+                    <div class="header-badge"><span class="pulse-dot"></span> V1.7</div>
+                    <div class="header-line"></div>
+                </div>
+
+                <div class="header-hero">
+                    <div class="parallax-title" id="parallaxTitle">
+                        <h1 class="header-title">Apple Preset</h1>
+                        <p class="header-subtitle">Modular preset for <span>SillyTavern</span></p>
+                    </div>
+                </div>
+
+                <div class="header-stats">
+                    <div class="stat"><div class="stat-value">~70</div><div class="stat-label">KB</div></div>
+                    <div class="stat"><div class="stat-value">9</div><div class="stat-label">Categories</div></div>
+                    <div class="stat"><div class="stat-value">50+</div><div class="stat-label">Prompts</div></div>
+                </div>
+
+                <div class="header-btns">
+                    <a href="#download" class="btn btn-fill">⬇ Download</a>
+                    <a href="#prompts" class="btn">◇ Prompts</a>
+                </div>
+            </div>
+
+            <div class="scroll-hint" onclick="document.getElementById('about').scrollIntoView()">▼</div>
+        </header>
+
+        <!-- Nav -->
+        <nav class="nav" id="nav">
+            <div class="nav-inner">
+                <a href="#home" class="nav-logo">🍎 Apple</a>
+
+                <div class="apple-nav">
+                    <a href="#about" class="apple-nav-item">
+                        <div class="apple-icon"><span>i</span></div>
+                        <span class="apple-nav-label">About</span>
+                    </a>
+                    <a href="#download" class="apple-nav-item">
+                        <div class="apple-icon green"><span>↓</span></div>
+                        <span class="apple-nav-label">Download</span>
+                    </a>
+                    <a href="#prompts" class="apple-nav-item">
+                        <div class="apple-icon gold"><span>◇</span></div>
+                        <span class="apple-nav-label">Prompts</span>
+                    </a>
+                    <a href="#guides" class="apple-nav-item">
+                        <div class="apple-icon"><span>?</span></div>
+                        <span class="apple-nav-label">Guides</span>
+                    </a>
+                    <a href="#contacts" class="apple-nav-item">
+                        <div class="apple-icon green"><span>@</span></div>
+                        <span class="apple-nav-label">Contacts</span>
+                    </a>
+                </div>
+
+                <button class="nav-mobile-btn" onclick="toggleNav()">
+                    <span>☰</span> Menu
+                </button>
+                <div class="nav-mobile-menu" id="navMobile">
+                    <a href="#about" onclick="toggleNav()"><span class="mob-icon">🍏</span> About</a>
+                    <a href="#download" onclick="toggleNav()"><span class="mob-icon">⬇️</span> Download</a>
+                    <a href="#prompts" onclick="toggleNav()"><span class="mob-icon">◇</span> Prompts</a>
+                    <a href="#guides" onclick="toggleNav()"><span class="mob-icon">📖</span> Guides</a>
+                    <a href="#contacts" onclick="toggleNav()"><span class="mob-icon">💬</span> Contacts</a>
+                </div>
+            </div>
+        </nav>
+
+        <main class="main">
+            <!-- About -->
+            <section class="section reveal" id="about">
+                <div class="section-head">
+                    <span class="section-icon">🍏</span>
+                    <h2 class="section-title">About <span>Preset</span></h2>
+                </div>
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-icon">🍎</div>
+                        <h3 class="card-title">◇ Modular System</h3>
+                        <p class="card-text">9 categories with toggles for fine-tuning.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🍏</div>
+                        <h3 class="card-title">◇ Renette OOC</h3>
+                        <p class="card-text">Digital spirit assistant.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🍎</div>
+                        <h3 class="card-title">◇ Optimized</h3>
+                        <p class="card-text">Only ~70 KB!</p>
+                    </div>
+                </div>
+				<!-- Changelog -->
+<div class="guide">
+    <div class="guide-head" onclick="toggleGuide(this)">
+        <div class="guide-title">📋 Changelog</div>
+        <span class="cat-arrow">▼</span>
+    </div>
+    <div class="guide-body"><div class="guide-inner">
+<div class="changelog-item">
+            <div class="changelog-ver">
+                <span class="changelog-badge">V1.8</span>
+                <span class="changelog-date">1.01.2026</span>
+            </div>
+            <ul class="changelog-list">
+                <li>Preset bulked up to ~70 KB.</li>
+<li>Default prose style changed, new ones added to the site, added speech styles (from Fawn, link in guides or contacts).</li>
+                                <li>Enhancements added.</li>
+                                <li>Structure changed.</li>
+                                <li>Prompts changed (almost ALL of them).</li>
+                                <li>HTML from Shino.</li>
+								<li>Thinking logic (COT) changed.</li>
+								<li>Lots more stuff (especially prompt updates), but I won't describe minor or invisible things x2.</li>
+            </ul>
+        </div>
+        <div class="changelog-item">
+            <div class="changelog-ver">
+                <span class="changelog-badge old">V1.7</span>
+                <span class="changelog-date">14.06.2025</span>
+            </div>
+            <ul class="changelog-list">
+                <li>Preset slimmed down to 60 KB.</li>
+<li>Added Magic Focuses - four toggles: ✧✈️Progress, ✧🧩Details, ✧💭Thoughts and ✧💬Dialogues. They definitely work, small prompts to accentuate one aspect or another. Work great if you play with FF mode (speaking for user), immersion is slightly worse. Can they be combined? Thoughts generally mix with everything, better not mix the others as they contradict.</li>
+                                <li>✏️Writing Rules - narration time and POV settings moved there (will write in guide later).</li>
+                                <li>Hard update where I got rid of the ballast of enhancements, genres and a few more settings (specifically settings moved elsewhere).
+Enhancements honestly didn't feel like they were working so their removal was a matter of time, genres are more ambiguous, but current models don't seem to need them.
+What instead?
+Author styles. For now took four Chinese novelists relatively different from each other (there are four variants on site, toggle itself - 📓Literary Style). And it really writes interestingly and I like-like it!!! Recently strictly disliked the writing style in the preset, but with this, the plot really drives well, so advise switching to this version and trying. Theoretically, you can add your own authors you know (and suggest them to me, by the way).</li>
+                                <li>Improved jailbreak.</li>
+                                <li>Added HTML prompt variant for site from Minty (https://t.me/loliluna_ai). heavily edited it, but authorship is still hers.</li>
+								<li>Some prompts moved as I said, including on the site.</li>
+								<li>Lots more stuff (especially prompt updates), but I won't describe minor or invisible things.</li>
+            </ul>
+        </div>
+
+        <div class="changelog-item">
+            <div class="changelog-ver">
+                <span class="changelog-badge old">V1.61</span>
+                <span class="changelog-date">7.12.2025</span>
+            </div>
+            <ul class="changelog-list">
+                <li>Language fix, seems to rely less on input now (at least not as much) and writes in the specified language.</li>
+                                <li>Roles fix, seems to listen better.</li>
+                                <li>Bans fix.</li>
+                                <li>Thinking logic rewritten.</li>
+                                <li>Rearrangements.</li>
+                                <li>Pace fix, seems to have stopped time-skipping like crazy (remade slowburn prompt, haven't touched fast pace yet but will smack it soon too).</li>
+								<li>Slight narrative fix.</li>
+								<li>Finally added a language toggle at the start. Its variants are on the site, but you can manually change literally two words.</li>
+            </ul>
+        </div>
+
+        <div class="changelog-item">
+            <div class="changelog-ver">
+                <span class="changelog-badge old">V1.6</span>
+                <span class="changelog-date">6.12.2025</span>
+            </div>
+            <ul class="changelog-list">
+                <li>Preset slimmed down to 77 KB.</li>
+                                <li>Renette's character changed, no longer Caelian.</li>
+                                <li>Glued some toggles like RP Type and Tones.</li>
+                                <li>Added system with templates and replaceable/complementary toggles.</li>
+                                <li>Thinking logic remade and now segmented.</li>
+                                <li>Actually so many remakes I'm too lazy to write about them.</li>
+            </ul>
+        </div>
+
+    </div></div>
+</div>
+
+            </section>
+
+            <!-- Download -->
+            <section class="section reveal" id="download">
+                <div class="section-head">
+                    <span class="section-icon">🍎</span>
+                    <h2 class="section-title">Download <span>Preset</span></h2>
+                </div>
+
+                <div class="download-grid">
+                    <div class="download-visual">
+                        <div class="download-rings">
+                            <div class="download-ring"></div>
+                            <div class="download-ring"></div>
+                            <div class="download-ring"></div>
+                        </div>
+                        <div class="download-apple">🍎</div>
+                    </div>
+
+                    <div class="download-info">
+                        <div class="download-ver-badge">🍎 V1.8</div>
+
+                        <div class="download-meta">
+                            <div class="download-meta-item">◇ Size: <strong>~70 KB</strong></div>
+                            <div class="download-meta-item">◇ Date: <strong>1.01.2026</strong></div>
+                        </div>
+
+                        <div class="download-features">
+                            <div class="download-feature"><span class="download-feature-icon">✓</span> 9 prompt categories</div>
+                            <div class="download-feature"><span class="download-feature-icon">✓</span> Modular COT system</div>
+                            <div class="download-feature"><span class="download-feature-icon">✓</span> HTML themes and infoblocks</div>
+                            <div class="download-feature"><span class="download-feature-icon">✓</span> Support for Claude, Gemini, GPT, DeepSeek</div>
+                        </div>
+
+                        <div class="download-actions">
+                            <a href="🍎Yablochny V1.8.json" class="btn btn-fill" download onclick="showToast('Download started!')">⬇ Download JSON</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Prompts -->
+            <section class="section reveal" id="prompts">
+                <div class="section-head">
+                    <span class="section-icon">🍏</span>
+                    <h2 class="section-title">Prompt <span>Library</span></h2>
+                </div>
+
+                <div class="prompts-desc">
+                    Some options are available only on the site. To change a prompt — copy the one you need, paste it into the corresponding toggle in the preset (deleting contents there first) and save!
+                </div>
+
+                <div class="prompts-toolbar">
+                    <div class="search-box">
+                        <span class="search-icon">◇</span>
+                        <input type="text" class="search-input" id="searchInput" placeholder="Search..." oninput="filterPrompts()">
+                    </div>
+                    <div class="filters">
+                        <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
+                        <button class="filter-btn" onclick="setFilter('basic',this)">Basic</button>
+                        <button class="filter-btn" onclick="setFilter('writing',this)">Writing</button>
+                        <button class="filter-btn" onclick="setFilter('nsfw',this)">NSFW</button>
+                        <button class="filter-btn" onclick="setFilter('extra',this)">Extras</button>
+                    </div>
+                </div>
+
+                <!-- ① OOC -->
+                <div class="cat" data-cat="extra">
+                    <div class="cat-head" onclick="toggleCat(this)">
+                        <div class="cat-info">
+                            <div class="cat-num">①</div>
+                            <div>
+                                <div class="cat-title">◜︎ooc◞︎</div>
+                                <div class="cat-desc">Renette — apple girl!</div>
+                            </div>
+                        </div>
+                        <span class="cat-arrow">▼</span>
+                    </div>
+                    <div class="cat-body"><div class="cat-inner">
+                        <div class="prompt">
+                            <div class="prompt-head" onclick="togglePrompt(this)">
+                                <div class="prompt-name"><span class="tag tag-one">✧</span> No additional options</div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ② Basic -->
+<div class="cat" data-cat="basic">
+    <div class="cat-head" onclick="toggleCat(this)">
+        <div class="cat-info">
+            <div class="cat-num green">②</div>
+            <div>
+                <div class="cat-title">◜︎base◞︎</div>
+                <div class="cat-desc">Language, mode, length</div>
+            </div>
+        </div>
+        <span class="cat-arrow">▼</span>
+    </div>
+    <div class="cat-body"><div class="cat-inner">
+
+        <!-- ═══ SUBSECTION 1: LANGUAGE ═══ -->
+        <div class="subsec">❝ language</div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> Russian</div>
+                <div class="prompt-meta"><span class="prompt-default">★ Default</span><button class="prompt-btn" onclick="event.stopPropagation();copy('Русский язык')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Русский язык</div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> English</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('Английский язык')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Английский язык</div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> Ukrainian</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('Украинский язык')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Украинский язык</div></div></div>
+        </div>
+
+        <!-- ═══ SUBSECTION 2: LENGTH ═══ -->
+        <div class="subsec">❝ length</div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> ✏️ Small (paragraphs)</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('2-3 параграфа')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">2-3 paragraphs</div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> 📝 Medium (paragraphs)</div>
+                <div class="prompt-meta"><span class="prompt-default">★ Default</span><button class="prompt-btn" onclick="event.stopPropagation();copy('5 параграфов')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">5 paragraphs</div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> 📚 Large (paragraphs)</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('7-8 параграфов')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">7-8 paragraphs</div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> 🔄 Adaptive</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('Адаптивная длина')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Removes strict volume limits and gives control over length to the AI itself.</div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> 📝 In words</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('Лимит в словах')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Sets a strict mathematical limit on text volume.<br><br><img src="ex11.jpg" alt="Example 11"></div></div></div>
+        </div>
+
+    </div></div>
+</div>
+
+               <!-- ③ Writing -->
+<div class="cat" data-cat="writing">
+    <div class="cat-head" onclick="toggleCat(this)">
+        <div class="cat-info">
+            <div class="cat-num gold">③</div>
+            <div>
+                <div class="cat-title">◜︎scribbling◞︎</div>
+                <div class="cat-desc">Speech and writing styles</div>
+            </div>
+        </div>
+        <span class="cat-arrow">▼</span>
+    </div>
+    <div class="cat-body"><div class="cat-inner">
+
+        <!-- ═══ PROSE STYLE ═══ -->
+        <div class="subsec">❞︎ prose style</div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> Anne Rice</div>
+                <div class="prompt-meta"><span class="prompt-default">★ Default</span><button class="prompt-btn" onclick="event.stopPropagation();copy('[PROSE_ANNE_RICE]')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Description taken from <a href="https://t.me/dearfawwn" target="_blank">Fawn's</a> guide.</p><p>Very delicious prose, describes feelings, emotions, atmosphere. Yummy, in a word. Will describe curtains as if they testify to your secret desires. Her books in AI's head are about vampires, but I cut that trope out, so just enjoy the tasty, pleasant base. Fits any RP if you attach a mod to it (and if you RP vampires, well... you found a gold mine).</p></div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> Donna Tartt</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[donna tartt]')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Description taken from <a href="https://t.me/dearfawwn" target="_blank">Fawn's</a> guide.</p><p>Also cool prose, descriptions, BUT. Donna is dark academia, her prose is strictly academic and observational (but not scientific or stuffy). Fits a lot, but check your preferences. I'd say everything sticks to her (via mods). Will shine in academic (not party) uni:au and such. Also a solid prose base. Watched "The Goldfinch"? Filmed based on her novel. While your character thinks about philosophy, she already dissected his psychology and wrote a dissertation.</p></div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> Terry Pratchett</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[PROSE_RT]')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Description taken from <a href="https://t.me/dearfawwn" target="_blank">Fawn's</a> guide.</p><p>Peak for giggly fluff. Soft, warm, ironic. Goes well with rough characters without toxicity. Loves absurd metaphors, warmly cynical. Goes well with soft plots. He is a marshmallow ready to adapt to cruelty, but do you need that?</p></div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> Oscar Wilde</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[PROSE_UK]')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Description taken from <a href="https://t.me/dearfawwn" target="_blank">Fawn's</a> guide.</p><p>Mother is mothering, no better diva in the preset. He's about champagne, pearls and love... for himself. Very tasty, very outrageous and goes VERY well with characters who always lived in luxury, or, perfect word, thoroughbreds. Sharp sarcasm, sighs — all him.</p></div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> Gillian Flynn</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[PROSE_MZ]')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Description taken from <a href="https://t.me/dearfawwn" target="_blank">Fawn's</a> guide.</p><p>You watched "Gone Girl"? The one where the woman faked her own murder to frame her husband because he cheated? She wrote that novel. She is GOOD with dead dovе, mafia-bosses (cruel ones), crime and schemes. Just good.</p></div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> F. Scott Fitzgerald</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[PROSE_MI]')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Description taken from <a href="https://t.me/dearfawwn" target="_blank">Fawn's</a> guide.</p><p>This is "The Great Gatsby". Need I continue? Very tender, very thoughtful, melancholic. Fluff, light descriptions — all to him.</p></div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> J.D. Salinger</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[PROSE_PE]')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Description taken from <a href="https://t.me/dearfawwn" target="_blank">Fawn's</a> guide.</p><p>"CATCHER IN THE RYE". Hope it's obvious how I love him. Love him to tears. Reads easily, inserts swears and fits perfectly for teen/young adult RPs. Won't say I love him separately, but in mods he is there and it is YUMMY.</p></div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> Jenny Lawson</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[PROSE_KO]')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Description taken from <a href="https://t.me/dearfawwn" target="_blank">Fawn's</a> guide.</p><p>Touch carefully. Queen of absurd. Like Twitter but in prose. Just if you want to giggle, tired of seriousness.</p></div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> Ursula K. Le Guin</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[PROSE_CR]')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Description taken from <a href="https://t.me/dearfawwn" target="_blank">Fawn's</a> guide.</p><p>QUEEN of fantasy. All castles, knights — all hers. Builds worlds, loves magic. If your world has even one tradition, ritual or weird custom — she already invented a history for it three generations deep.</p></div></div></div>
+        </div>
+
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> Liu Zhenyun</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[PROSE_EVSKY]')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Dry, unembellished, slightly repetitive narrative. Absurd logic of everyday life, small things turn into complex problems.</p></div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> Mo Yan</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[PROSE_HAY]')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Sensorially rich language, smells, colors, bodily sensations. Raw, vital tone. Long expressive sentences. Grotesque elements if necessary.</p></div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> Eileen Zhang</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[PROSE_N]')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Psychological depth, detached elegance, sharp observations of details, slightly cynical and melancholic tone.</p></div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> Yu Hua</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[PROSE_GAN]')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Minimalist, simple short sentences, calm tone even in tense moments, focus on physical reality.</p></div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> Shui Qiang Cheng</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[PROSE_WE]')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Sharp emotional realism, power dynamics, control and vulnerability, psychological tension, direct language without embellishments.<p></div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> Fredrik Backman</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[PROSE_G]')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Warm, observational narrator voice, humor and poignancy, attention to character quirks and hidden emotional depth behind stubborn facade.<p></div></div></div>
+        </div>
+
+        <!-- ═══ SPEECH STYLE ═══ -->
+        <div class="subsec">❞︎ speech style</div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> cigarette confessions (J.D. Salinger)</div>
+                <div class="prompt-meta"><span class="prompt-default">★ Default</span><button class="prompt-btn" onclick="event.stopPropagation();copy('[SPEECH_SER]')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Description taken from <a href="https://t.me/dearfawwn" target="_blank">Fawn's</a> guide.</p><p>Universal. Literally. Characters swear, think like humans, panic, all super for RP in real world, students, hockey players etc. Makes them breathe (and eats prose a bit, but does it beautifully).</p></div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> sugar-coated razors (Flynn)</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[SPEECH_LD]')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Description taken from <a href="https://t.me/dearfawwn" target="_blank">Fawn's</a> guide.</p><p>She is about dark romance in dialogues and thoughts, smiles hiding murder thoughts, elegant jabs. Very dark, very analytical and, as AI loves to say, predatory.</p></div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> warm cynicism (Pratchett)</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[SPEECH_SKIN]')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Description taken from <a href="https://t.me/dearfawwn" target="_blank">Fawn's</a> guide.</p><p>Like Salinger in mod, just no swearing and not so explicit. Soft, warm and real. When you want character to be kind, but not an idiot. Will help old lady across road, but mentally pee himself laughing at her hat.</p></div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> earthsea wisdom (Le Guin)</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[SPEECH_TAINO]')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Description taken from <a href="https://t.me/dearfawwn" target="_blank">Fawn's</a> guide.</p><p>For your characters to speak and think like fantasy, while you want prose from someone else. Just fantasy queen, adjusting to old communication norms etc.</p></div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> broken mirror (Chuck Palahniuk)</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[SPEECH_MET]')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Description taken from <a href="https://t.me/dearfawwn" target="_blank">Fawn's</a> guide.</p><p>Very specific. VERY. Short, to the point, loops. Repetition is not a bug, it's a feature. He... just specific. Might fit someone. Cold, fight club and so on.</p></div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> velvet daggers (Wilde)</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[SPEECH_WMS]')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Description taken from <a href="https://t.me/dearfawwn" target="_blank">Fawn's</a> guide.</p><p>My god, yummy. Again. Read his style description and insert into dialogues. Jabs interestingly, lives sarcasm and is so... Well... Chic in primary meaning. Luxury max, luxe and list goes on. Prepare for your rude worker to suddenly speak like an aristocrat at a ball. Not a bug, it's Wilde.</p></div></div></div>
+        </div>
+    </div></div>
+</div>
+
+
+                <!-- ④ Branches -->
+                <div class="cat" data-cat="writing">
+                    <div class="cat-head" onclick="toggleCat(this)">
+                        <div class="cat-info">
+                            <div class="cat-num purple">④</div>
+                            <div>
+                                <div class="cat-title">◜︎branches◞︎</div>
+                                <div class="cat-desc">Pace (enhancements, not here, they are in preset)</div>
+                            </div>
+                        </div>
+                        <span class="cat-arrow">▼</span>
+    </div>
+    <div class="cat-body"><div class="cat-inner">
+
+        <!-- ═══ SUBSECTION 1: LANGUAGE ═══ -->
+        <div class="subsec">❝ pace</div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> slowburn</div>
+                <div class="prompt-meta"><span class="prompt-default">★ Default</span><button class="prompt-btn" onclick="event.stopPropagation();copy('мт')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Slow relationship development pace.</div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> fast burn</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('бт')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Fast relationship development pace.</div></div></div>
+        </div>
+    </div></div>
+</div>
+
+                <!-- ⑤ NSFW -->
+                <div class="cat" data-cat="nsfw">
+                    <div class="cat-head" onclick="toggleCat(this)">
+                        <div class="cat-info">
+                            <div class="cat-num red">⑤</div>
+                            <div>
+                                <div class="cat-title">◜︎nsfw◞︎</div>
+                                <div class="cat-desc">Instructions</div>
+                            </div>
+                        </div>
+                        <span class="cat-arrow">▼</span>
+                    </div>
+                    <div class="cat-body"><div class="cat-inner">
+                        <div class="prompt">
+                            <div class="prompt-head" onclick="togglePrompt(this)">
+                                <div class="prompt-name"><span class="tag tag-one">✧</span> No additional options</div>
+
+                            </div>
+                            </div></div>
+                        </div>
+                    </div>
+
+                <!-- ⑥ Patches -->
+                <div class="cat" data-cat="writing">
+                    <div class="cat-head" onclick="toggleCat(this)">
+                        <div class="cat-info">
+                            <div class="cat-num blue">⑥</div>
+                            <div>
+                                <div class="cat-title">◜︎patches◞︎</div>
+                                <div class="cat-desc">Bans</div>
+                            </div>
+                        </div>
+                        <span class="cat-arrow">▼</span>
+    </div>
+    <div class="cat-body"><div class="cat-inner">
+
+        <!-- ═══ SUBSECTION 1: LANGUAGE ═══ -->
+        <div class="subsec">❝ pace</div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> Russian bans</div>
+                <div class="prompt-meta"><span class="prompt-default">★ Default</span><button class="prompt-btn" onclick="event.stopPropagation();copy('Русские баны')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Russian version of bans.</div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> English bans</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('Английские баны')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">English version of bans.</div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> Ukrainian bans</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('Украинские баны')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Ukrainian version of bans.</div></div></div>
+        </div>
+    </div></div>
+</div>
+
+                <!-- ⑦ Tweaks -->
+<div class="cat" data-cat="extra">
+    <div class="cat-head" onclick="toggleCat(this)">
+        <div class="cat-info">
+            <div class="cat-num pink">⑦</div>
+            <div>
+                <div class="cat-title">◜︎tweaks◞︎</div>
+                <div class="cat-desc">HTML prompts, things and themes</div>
+            </div>
+        </div>
+        <span class="cat-arrow">▼</span>
+    </div>
+    <div class="cat-body"><div class="cat-inner">
+
+        <!-- ═══ HTML PROMPT ═══ -->
+        <div class="subsec">❝ html prompt</div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> 📄 Standard (Shino)</div>
+                <div class="prompt-meta"><span class="prompt-default">★ Default</span><button class="prompt-btn" onclick="event.stopPropagation();copy('[HTML_STANDARD]')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Slightly edited prompt by <a href="https://t.me/ah_ah_shino4ka" target="_blank">Shino</a>. F*cking awesome, compact and does beautifully.</div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> 🌸 Celia</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[HTML_EXTENDED]')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Edited Caelian prompt, used to be standard.</div></div></div>
+        </div>
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> 💜 Iris Bloomwave v1.0</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[HTML_minty]')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>CSS prompt version from Minty, but slightly edited for preset structure.</p>
+<p>Works best with Gemini 3.0, prompt itself heavier than Renette HTML.</p>
+<p>Can read about prompt in author's <a href="https://teletype.in/@loliluna_ai/iris_bloomwave_css_for_st" target="_blank">article</a>.</p>
+<p>Also link to her <a href="https://t.me/loliluna_ai" target="_blank">channel</a>.</p>
+</div></div></div>
+        </div>
+
+        <!-- ═══ THINGS ═══ -->
+        <div class="subsec">❝ things (sample)</div>
+
+        <div class="things-header">
+            <div class="things-title">📋 Selected: <span class="things-count" id="thingsCount">0</span></div>
+            <button class="things-copy-btn" id="thingsCopyBtn" onclick="copySelectedThings()" disabled>
+                📋 Copy Selected
+            </button>
+        </div>
+
+        <div class="things-note">
+            💡 Empty by default — select needed things and copy to Things Sample toggle
+        </div>
+
+        <!-- Can be mixed -->
+<p style="color:var(--green);font-weight:600;margin:1rem 0 0.5rem;">◇ Can be mixed:</p>
+<div class="things-grid">
+    <div class="thing-item" data-code="[Memory Flashbacks]
+All characters have some form of past and feelings that lingers, each have family lines, sentiments and 'core' memories they hold close to heart, influencing their attitudes toward life, others and themselves. Surface these memories at opportune momentd, inside stylized 『Japanese Quotations』Triggers can be from familiarity, objects(that reminds), sentimentality(good or bad) or personal associations." onclick="toggleThing(this)">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">🕰️</span>
+        <span class="thing-name">Flashbacks</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('flashbacks')">👁</button>
+    </div>
+    <div class="thing-item" data-code="[TRANSITIONS]" onclick="toggleThing(this)">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">⏩</span>
+        <span class="thing-name">Transitions</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('transitions')">👁</button>
+    </div>
+    <div class="thing-item" data-code="[REAL_WORLD]" onclick="toggleThing(this)">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">🌎</span>
+        <span class="thing-name">Real World</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('realworld')">👁</button>
+    </div>
+    <div class="thing-item" data-code="[WEB_CHAPTER]" onclick="toggleThing(this)">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">✒️</span>
+        <span class="thing-name">Web-chapter Style</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('webchapter')">👁</button>
+    </div>
+    <div class="thing-item" data-code="[INTERVIEW]" onclick="toggleThing(this)">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">📢</span>
+        <span class="thing-name">Interview with Actors</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('interview')">👁</button>
+    </div>
+    <div class="thing-item" data-code="[MEME]" onclick="toggleThing(this)">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">🖼️</span>
+        <span class="thing-name">MEME</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('meme')">👁</button>
+    </div>
+    <div class="thing-item" data-code="[TYPOGRAPHY]" onclick="toggleThing(this)">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">🔰</span>
+        <span class="thing-name">Typography</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('typography')">👁</button>
+    </div>
+    <div class="thing-item" data-code="[MUSIC_SUBS]" onclick="toggleThing(this)">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">🎙️</span>
+        <span class="thing-name">Musical Subtitles</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('musicsubs')">👁</button>
+    </div>
+</div>
+
+<!-- Hidden Blocks -->
+<p style="color:var(--green);font-weight:600;margin:1.5rem 0 0.5rem;">👁 Hidden Blocks:</p>
+<div class="things-grid">
+    <div class="thing-item" data-code="[HIDDEN_PROFILES]" onclick="toggleThing(this)">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">👤</span>
+        <span class="thing-name">Hidden Profiles</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('hiddenprofiles')">👁</button>
+    </div>
+    <div class="thing-item" data-code="[HIDDEN_EVENTS]" onclick="toggleThing(this)">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">📍</span>
+        <span class="thing-name">Off-screen Events</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('hiddenevents')">👁</button>
+    </div>
+    <div class="thing-item" data-code="[HIDDEN_PLANS]" onclick="toggleThing(this)">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">🗒️</span>
+        <span class="thing-name">Hidden Plans</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('hiddenplans')">👁</button>
+    </div>
+    <div class="thing-item" data-code="[HIDDEN_DATING]" onclick="toggleThing(this)">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">💌</span>
+        <span class="thing-name">Hidden DatingSim</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('hiddendating')">👁</button>
+    </div>
+</div>
+
+<!-- Infoblocks -->
+<p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ Infoblocks <span style="color:var(--text-dim);font-weight:400;">(only one)</span></p>
+<div class="things-grid">
+    <div class="thing-item exclusive" data-group="infoblocks" data-code="[INFO_RENETTE]" onclick="toggleExclusive(this,'infoblocks')">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">🍎</span>
+        <span class="thing-name">Renette Logs</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('inforenette')">👁</button>
+    </div>
+    <div class="thing-item exclusive" data-group="infoblocks" data-code="[INFO_CLOCK]" onclick="toggleExclusive(this,'infoblocks')">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">🍏</span>
+        <span class="thing-name">Apple Clock</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('infoclock')">👁</button>
+    </div>
+    <div class="thing-item exclusive" data-group="infoblocks" data-code="[INFO_MINI]" onclick="toggleExclusive(this,'infoblocks')">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">🗂️</span>
+        <span class="thing-name">Mini-Infoblock</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('infomini')">👁</button>
+    </div>
+    <div class="thing-item exclusive" data-group="infoblocks" data-code="[INFO_MAIN]" onclick="toggleExclusive(this,'infoblocks')">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">📝</span>
+        <span class="thing-name">Main Infoblock</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('infomain')">👁</button>
+    </div>
+    <div class="thing-item exclusive" data-group="infoblocks" data-code="[INFO_MATRIX]" onclick="toggleExclusive(this,'infoblocks')">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">💖</span>
+        <span class="thing-name">+Relation Matrix</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('infomatrix')">👁</button>
+    </div>
+    <div class="thing-item exclusive" data-group="infoblocks" data-code="[INFO_THOUGHTS]" onclick="toggleExclusive(this,'infoblocks')">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">💭</span>
+        <span class="thing-name">+RelMatrix + Thoughts</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('infothoughts')">👁</button>
+    </div>
+</div>
+
+<!-- CYOA -->
+<p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ CYOA <span style="color:var(--text-dim);font-weight:400;">(only one)</span></p>
+<div class="things-grid">
+    <div class="thing-item exclusive" data-group="cyoa" data-code="[CYOA_MACRO]" onclick="toggleExclusive(this,'cyoa')">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">🎲</span>
+        <span class="thing-name">CYOA - R-Macro</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('cyoamacro')">👁</button>
+    </div>
+    <div class="thing-item exclusive" data-group="cyoa" data-code="[CYOA_NO_MACRO]" onclick="toggleExclusive(this,'cyoa')">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">🕹️</span>
+        <span class="thing-name">CYOA - No R-Macro</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('cyoanomacro')">👁</button>
+    </div>
+</div>
+
+<!-- Fancy UI -->
+<p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ Fancy UI <span style="color:var(--text-dim);font-weight:400;">(only one)</span></p>
+<div class="things-grid">
+    <div class="thing-item exclusive" data-group="fancy" data-code="[FANCY_FULL]" onclick="toggleExclusive(this,'fancy')">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">🥂</span>
+        <span class="thing-name">Fancy UI</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('fancyfull')">👁</button>
+    </div>
+    <div class="thing-item exclusive" data-group="fancy" data-code="[FANCY_BASE]" onclick="toggleExclusive(this,'fancy')">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">🥂</span>
+        <span class="thing-name">Only Base</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('fancybase')">👁</button>
+    </div>
+    <div class="thing-item exclusive" data-group="fancy" data-code="[FANCY_THOUGHTS]" onclick="toggleExclusive(this,'fancy')">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">🥂</span>
+        <span class="thing-name">Only Thoughts</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('fancythoughts')">👁</button>
+    </div>
+</div>
+
+<!-- Comments -->
+<p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ Comments <span style="color:var(--text-dim);font-weight:400;">(only one)</span></p>
+<div class="things-grid">
+    <div class="thing-item exclusive" data-group="comments" data-code="[COMMENTS_V1]" onclick="toggleExclusive(this,'comments')">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">💬</span>
+        <span class="thing-name">Comments V1</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('commentsv1')">👁</button>
+    </div>
+    <div class="thing-item exclusive" data-group="comments" data-code="[COMMENTS_V2]" onclick="toggleExclusive(this,'comments')">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">💬</span>
+        <span class="thing-name">Comments V2</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('commentsv2')">👁</button>
+    </div>
+    <div class="thing-item exclusive" data-group="comments" data-code="[COMMENTS_V3]" onclick="toggleExclusive(this,'comments')">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">💬</span>
+        <span class="thing-name">Comments V3</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('commentsv3')">👁</button>
+    </div>
+</div>
+
+<!-- Chronicles -->
+<p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ Chronicles <span style="color:var(--text-dim);font-weight:400;">(only one)</span></p>
+<div class="things-grid" style="margin-bottom:2rem;">
+    <div class="thing-item exclusive" data-group="chronicles" data-code="[CHRONICLES_LIGHT]" onclick="toggleExclusive(this,'chronicles')">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">📜</span>
+        <span class="thing-name">Light Theme</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('chronicleslight')">👁</button>
+    </div>
+    <div class="thing-item exclusive" data-group="chronicles" data-code="[CHRONICLES_DARK]" onclick="toggleExclusive(this,'chronicles')">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">📜</span>
+        <span class="thing-name">Dark Theme</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('chroniclesdark')">👁</button>
+    </div>
+</div>
+
+
+        <!-- ═══ HTML THEME ═══ -->
+        <div class="subsec">❝ html Theme</div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> 🎨 Dark Theme</div>
+                <div class="prompt-meta"><span class="prompt-default">★ Default</span><button class="prompt-btn" onclick="event.stopPropagation();copy('[THEME_DARK]')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Dark theme for HTML blocks</div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> 🎨 Light Theme</div>
+                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[THEME_LIGHT]')">Copy</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Light theme for HTML blocks</div></div></div>
+        </div>
+
+    </div></div>
+</div>
+
+                <!-- ⑧ COT -->
+                <div class="cat" data-cat="extra">
+                    <div class="cat-head" onclick="toggleCat(this)">
+                        <div class="cat-info">
+                            <div class="cat-num gold">⑧</div>
+                            <div>
+                                <div class="cat-title">◜︎COT◞︎</div>
+                                <div class="cat-desc">Segmented Chain Of Thoughts (Thinking Logic)</div>
+                            </div>
+                        </div>
+                        <span class="cat-arrow">▼</span>
+                    </div>
+                    <div class="cat-body"><div class="cat-inner">
+                        <div class="prompt">
+                            <div class="prompt-head" onclick="togglePrompt(this)">
+                                <div class="prompt-name"><span class="tag tag-one">✧</span> No additional options</div>
+
+                            </div>
+                            </div></div>
+                        </div>
+                    </div>
+
+                <!-- ⑨ Prefill -->
+                <div class="cat" data-cat="basic">
+                    <div class="cat-head" onclick="toggleCat(this)">
+                        <div class="cat-info">
+                            <div class="cat-num green">⑨</div>
+                            <div>
+                                <div class="cat-title">◜︎prefill◞︎</div>
+                                <div class="cat-desc">For Gemini/Claude (+GPT). DeepSeek — turn off!</div>
+                            </div>
+                        </div>
+                        <span class="cat-arrow">▼</span>
+                    </div>
+                    <div class="cat-body"><div class="cat-inner">
+                        <div class="prompt">
+                            <div class="prompt-head" onclick="togglePrompt(this)">
+                                <div class="prompt-name"><span class="tag tag-one">✧</span> No additional options</div>
+
+                            </div>
+                            </div></div>
+                        </div>
+                    </div>
+            </section>
+
+            <!-- Guides -->
+            <section class="section reveal" id="guides">
+                <div class="section-head">
+                    <span class="section-icon">🍎</span>
+                    <h2 class="section-title">Guides</h2>
+                </div>
+
+                <div class="guide">
+                    <div class="guide-head" onclick="toggleGuide(this)">
+                        <div class="guide-title">📖 Glossary</div>
+                        <span class="cat-arrow">▼</span>
+                    </div>
+                    <div class="guide-body"><div class="guide-inner">
+                        <div class="glossary-grid">
+                            <div class="glossary-item">
+                                <div class="glossary-term">COT</div>
+                                <div class="glossary-def">"Thinking Logic" — model thinks in <think></div>
+                            </div>
+                            <div class="glossary-item">
+                                <div class="glossary-term">Prefill</div>
+                                <div class="glossary-def">Text at the beginning of the model's response</div>
+                            </div>
+                            <div class="glossary-item">
+                                <div class="glossary-term">OOC</div>
+                                <div class="glossary-def">Out Of Character comments</div>
+                            </div>
+                            <div class="glossary-item">
+                                <div class="glossary-term">Toggle</div>
+                                <div class="glossary-def">Prompt switch</div>
+                            </div>
+                            <div class="glossary-item">
+                                <div class="glossary-term">CYOA</div>
+                                <div class="glossary-def">Choice options at the end</div>
+                            </div>
+                            <div class="glossary-item">
+                                <div class="glossary-term">Things Sample</div>
+                                <div class="glossary-def">Toggle for custom things</div>
+                            </div>
+                        </div>
+                    </div></div>
+                </div>
+
+               <div class="guide">
+    <div class="guide-head" onclick="toggleGuide(this)">
+        <div class="guide-title">🍎 Installation</div>
+        <span class="cat-arrow">▼</span>
+    </div>
+    <div class="guide-body"><div class="guide-inner">
+        <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+                <h4>Download file</h4>
+                <p>Go to the <strong>"Download"</strong> tab and get the latest JSON preset file.</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+                <h4>Import to SillyTavern</h4>
+                <p>Before installing, make sure API connection settings are set to <strong>"Chat Completion"</strong>.</p>
+                <p>Then open the preset tab <strong>(leftmost button)</strong> and insert the preset as shown in screenshot.</p>
+                <p>Upon import a window will pop up. Press <strong>yes</strong>, Regexes will import.</p>
+                <img src="example6.jpg" alt="Screenshot 6">
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+                <h4>Thinking Format</h4>
+                <p>Go to <strong>AI Response Format</strong> section (third button from left), scroll down, expand <strong>"Thinking Template"</strong> and set everything exactly as in screenshot.</p>
+                <img src="example8.jpg" alt="Screenshot 8">
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+                <h4>Choosing Prompts</h4>
+                <p>Many prompts are <strong>"Templates"</strong> or <strong>"Replaceable"</strong>.</p>
+                <p><strong>Templates</strong> — completely empty toggles where you paste one or more (where possible) prompts. They are labeled: <code>❞︎ ✎ things (sample)</code>. Currently only this toggle has this system.</p>
+            </div>
+        </div>
+    </div></div>
+</div>
+
+<div class="guide">
+    <div class="guide-head" onclick="toggleGuide(this)">
+        <div class="guide-title">🔧 Functions</div>
+        <span class="cat-arrow">▼</span>
+    </div>
+    <div class="guide-body"><div class="guide-inner">
+        <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+                <h4>◜Renette ooc◞</h4>
+                <img src="ex1.jpg" alt="ex1">
+                <p>Disable/Enable OOC from Renette, logical?</p>
+                <p><code>↔︎</code> — this sign means you can select <strong>only one</strong> of the variants nearby, appears later too.</p>
+                <p>In disabled state you can still write instructions and requests like this:</p>
+                <p><code>(OOC: let's do this)</code></p>
+                <p>She might reply to this in next post, but won't write constantly.</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+                <h4>◜base◞</h4>
+                <img src="ex2.jpg" alt="ex2">
+                <p>All toggles in block <strong>must be on always</strong> (can replace their prompts with site variants, but not disable completely), but <strong>dont speak</strong> and <strong>speak for user</strong> cannot be enabled simultaneously.</p>
+                <p><strong>language</strong> — you can just change two words in prompt (<code>English</code>, suppose), or take one of three variants from site.</p>
+                <p><strong>Writing mode</strong> — Don't speak/speak for user, understandable overall.</p>
+                <p><code>↔︎</code> — this sign means you can select <strong>only one</strong> of the variants nearby, appears later too.</p>
+                <p><strong>length</strong> — default: Medium in paragraphs. There's a myth that answer logic depends on it too. Claude listens better to length in words generally.</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+                <h4>◜scribbling◞</h4>
+                <img src="ex3.jpg" alt="ex3">
+                <p><strong>rules</strong> and <strong>prose</strong> must be on always (can replace their prompts with site variants, but not disable completely), speech and focuses can be disabled.</p>
+                <p><strong>rules</strong> — here you can change POV and time:</p>
+                <p>First person — <code>1st-person perspective</code></p>
+                <p>Second person — <code>2nd-person perspective</code></p>
+                <p>Past tense — <code>past tense</code></p>
+                <p>Future tense — <code>future tense</code></p>
+                <img src="ex10.jpg" alt="ex10">
+                <p><strong>prose style</strong> — huge choice (not roleplay) and I update it (can add your author too). Answer and style <strong>heavily depend</strong> on prose style, try other options, their descriptions (and all prompt descriptions generally) are in Prompts tab on site.</p>
+                <blockquote>
+                    <p>(part from <a href="https://t.me/dearfawwn" target="_blank">Fawn's</a> guide)</p>
+                    <p>Four dudes I don't advise mixing at all, if they are main authors:</p>
+                    <p>— <strong>SALINGER</strong>. He will eat everything with his style. You can't take away dialogues/thoughts/humor from him. He lives by it.</p>
+                    <p>— <strong>Jenny Lawson</strong>. Same as Salinger. RED WARNING do not mix.</p>
+                    <p>— <strong>Terry Pratchett</strong>. Too warm to mix. Too much. You won't drive anything else into him. Except Lawson mod. They are quite a pair.</p>
+                    <p>With HUGE exception: <strong>Wilde</strong>. He is too diva to mix. He will yield positions. But there are variants, just need to know how to pick.
+                </blockquote>
+                <p><strong>speech style</strong> — Fawn's idea.</p>
+                <p>Basically character dialogue styles, read variants in prompt library section too.</p>
+                <blockquote>
+                    <p>(another part from her guide)</p>
+                    <p>My favorite mixes:</p>
+                    <p><strong>cigarette confessions + ann rice</strong>. Love it die right now. Good for modern roleplays, trope doesn't matter. They are just good, give super base.</p>
+                    <p><strong>earthsea wisdom + ann rice</strong>. Solid fantasy, adjusts to lore and fears nothing.</p>
+                    <p><strong>velvet daggers + gillian flynn</strong> and vice versa. Cool couple for mafia-bosses living in luxury. Not luxury against cruelty background — luxury AS cruelty.
+                </blockquote>
+                <p><strong>Focuses (magic)</strong> — three variants, can pick only one. How to say?.. Accentuates one aspect: world details, char dialogues, char thoughts. Work depends on model and writing mode. <strong>Can be disabled entirely.</strong></p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+                <h4>◜branches◞</h4>
+                <img src="ex4.jpg" alt="ex4">
+                <p>Prompts brazenly stolen from <a href="https://t.me/dearfawwn" target="_blank">Fawn</a></p>
+                <p>All prompts here except maybe pace are <strong>"enhancements"</strong>, meaning you can freely disable and enable them.</p>
+                <p><strong>pace</strong> — relationship development pace. Default — slowburn, fast burn variant on site.</p>
+                <p><strong>autonomous character</strong> — makes char more independent. Personality priority over plot.</p>
+                <p><strong>world engine</strong> — task is to make world alive and force plot forward even if player is inactive.</p>
+                <p><strong>npc autonomy</strong> — responsible for autonomy and depth of characters (NPC). Turns them from "cardboard decorations" into full story participants.</p>
+                <p><strong>living world</strong> — responsible for presence effect and "living" world. Task is to make environment not just decoration but feel like real place.</p>
+                <p><strong>speech enhance</strong> — responsible for speech authenticity and unique voice of each character. Task is to ensure heroes don't sound same, and their communication manner reflects past and character.</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-content">
+                <h4>◜nsfw◞</h4>
+                <img src="ex5.jpg" alt="ex5">
+                <p>Main instruction for <strong>NSFW</strong> and <strong>no horny</strong> (Rorati) — so characters don't get aroused without reason.</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-num">6</div>
+            <div class="step-content">
+                <h4>◜patches◞</h4>
+                <img src="ex6.jpg" alt="ex6">
+                <p><strong>bans</strong> — Choose one of three variants in prompts on site — Ru, En and Ukr language. If rolling in another language choose English version or remake prompt for your language.</p>
+                <p><strong>anti-pronouns</strong> — fewer pronouns. "He", "She" etc., especially at sentence start. <strong>Indispensable for 2.5 about Gemini.</strong></p>
+                <p><strong>user silent turn</strong> — patch. Model doesn't complain if last reply in chat is from assistant.</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-num">7</div>
+            <div class="step-content">
+                <h4>◜tweaks◞</h4>
+                <img src="ex7.jpg" alt="ex7">
+                <p><strong>colored dialogues</strong> — think it's clear.</p>
+                <p><strong>colored emphasis</strong> — colors some accent words, works poorly on dumb models.</p>
+                <p><strong>html prompt</strong> — HTML blocks throughout plot.</p>
+                <p><strong>✎ things (sample)</strong> — can shove bunch of stuff from site here, pick several and shove.</p>
+                <p><strong>html theme</strong> — can enable to choose theme for HTML. Default is black, but there is light variant in prompts tab.</p>
+                <p><strong>tweaks language</strong> — asks to follow language in HTML text etc. (content in tweaks) specified in <code><language></code>.</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-num">8</div>
+            <div class="step-content">
+                <h4>◜COT◞</h4>
+                <img src="ex8.jpg" alt="ex8">
+                <p><strong>Thinking Logic</strong>. Segmented, can disable some parts so model thinks faster, but will consider and check less.</p>
+                <p>Can disable all toggles from <code><think></code> to <code></think></code> if want to turn it off.</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-num">9</div>
+            <div class="step-content">
+                <h4>◜prefill◞</h4>
+                <img src="ex9.jpg" alt="ex9">
+                <p>Choose depending on model.</p>
+                <p><strong>For DeepSeek disable entirely</strong> (same as thinking logic).</p>
+            </div>
+        </div>
+    </div></div>
+</div>
+
+                <div class="guide">
+                    <div class="guide-head" onclick="toggleGuide(this)">
+                        <div class="guide-title">❓ FAQ</div>
+                        <span class="cat-arrow">▼</span>
+                    </div>
+                    <div class="guide-body"><div class="guide-inner">
+                        <div class="step">
+                            <div class="step-num q">?</div>
+                            <div class="step-content"><h4>Where to paste things?</h4><p>In Things Sample toggle (⑦)</p></div>
+                        </div>
+                        <div class="step">
+                            <div class="step-num q">?</div>
+                            <div class="step-content"><h4>DeepSeek?</h4><p>Disable Prefill completely</p></div>
+                        </div>
+                    </div></div>
+                </div>
+            </section>
+
+            <!-- Contacts -->
+            <section class="section reveal" id="contacts">
+                <div class="section-head">
+                    <span class="section-icon">🍏</span>
+                    <h2 class="section-title">Contacts</h2>
+                </div>
+
+                <div class="contacts-grid">
+                    <a href="https://t.me/YablochnyAI" target="_blank" class="contact-card">
+                        <div class="contact-icon">◈</div>
+                        <div class="contact-info"><h4>Telegram Channel</h4><p>News</p></div>
+                    </a>
+                    <a href="https://t.me/YablochnyChat" target="_blank" class="contact-card">
+                        <div class="contact-icon">◇</div>
+                        <div class="contact-info"><h4>Telegram Chat</h4><p>Support</p></div>
+                    </a>
+                    <a href="https://boosty.to/yablochnyai" target="_blank" class="contact-card">
+                        <div class="contact-icon">♥</div>
+                        <div class="contact-info"><h4>Boosty</h4><p>Support me</p></div>
+                    </a>
+                </div>
+
+                <div class="thanks">
+                    <div class="thanks-section">
+                        <div class="thanks-title">◇ Prompt Authors</div>
+                        <div class="thanks-list">
+							<span class="thanks-item"><a href="https://t.me/YablochnyAI" target="_blank">Me??</a></span>
+<span class="thanks-item"><a href="https://t.me/ah_ah_shino4ka" target="_blank">Shino</a></span>
+<span class="thanks-item"><a href="https://t.me/loliluna_ai" target="_blank">Minty</a></span>
+<span class="thanks-item"><a href="https://t.me/dearfawwn" target="_blank">Fawn</a></span>
+<span class="thanks-item"><a href="https://t.me/t1avernbot" target="_blank">Nastenka</a></span>
+<span class="thanks-item"><a href="https://t.me/pinacoladaST" target="_blank">Pina-colada</a></span>
+<span class="thanks-item"><a href="https://leafcanfly.neocities.org/presets" target="_blank">Leafcanfly</a></span>
+
+                        </div>
+                    </div>
+                    <div class="thanks-section">
+                        <div class="thanks-title">◇ Credits</div>
+                        <div class="thanks-list">
+                            <span class="thanks-item no-link"><p>My Ksyulya, ray of light, The closest person in my sight! You are the keeper of the summer, And warmth against the river's murmur.</p>
+						<p>You're not just testing, checking lines, You are the aesthetic of my designs. No automated tool or art Could ever replace a human heart Like Ksyulya's — best of all, the one, Who clears the clouds and brings the sun.</p>
+						<p>Every toggle, every bug, Every preset like a hug — You color like a palette bright, In proper shades of our delight. Without you, Ksyulya, dear friend, Things would unravel, have no end. Life is brighter now with you, And our FemDom is cozy too.</p>
+						<p>I love you, dear! And say thanks, That tirelessly, through all ranks, You share my fate and hold my hand. My friend, support, my solid land. Ksyulya, there is no dispute, That anyone would stand resolute Before your smile so sweet and true.</p>
+						<p>I simply adore you! Always stay this way, With all my love, I say today!</p></span>
+                            <span class="thanks-item no-link">Vinishko, Vladochka, Potassium..... Uhhh...</span>
+							<span class="thanks-item no-link">mlks</span>
+							<span class="thanks-item no-link">Mary Heart</span>
+							<span class="thanks-item no-link">Nastenka, again</span>
+							<span class="thanks-item no-link">Logic (for censorship crash test...)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hidden Game Link (Easter Egg) -->
+                <div style="text-align:center; margin-top: 2rem;">
+                    <span class="easter-egg-link" onclick="openGame()">
+                        🎮 Mini-game (PC Only)
+                    </span>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>Made with ◇ by <a href="https://t.me/YablochnyAI">kykaaj</a> ◇ 2025</p>
+        </footer>
+    </div>
+
+    <script>
+		// Lightbox
+function openLightbox(src) {
+    document.getElementById('lightboxImg').src = src;
+    document.getElementById('lightbox').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// Make all images clickable
+document.addEventListener('click', (e) => {
+    if (e.target.matches('.prompt-code img, .prompt-desc img, .guide-inner img, .thing-desc-text img, .thing-desc-code img, .step-content img')) {
+        openLightbox(e.target.src);
+    }
+});
+
+
+// Close on Escape
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closeLightbox();
+    }
+});
+
+        // Music Player
+const bgMusic = document.getElementById('bgMusic');
+const musicToggle = document.getElementById('musicToggle');
+const musicIcon = musicToggle.querySelector('.music-icon');
+let musicPlaying = false;
+
+function toggleMusic() {
+    if (musicPlaying) {
+        bgMusic.pause();
+        musicIcon.textContent = '🔇';
+        musicToggle.classList.remove('playing');
+    } else {
+        bgMusic.volume = 0.3; // Volume 30%
+        bgMusic.play().catch(e => {
+            console.log('Autoplay blocked:', e);
+        });
+        musicIcon.textContent = '🎵';
+        musicToggle.classList.add('playing');
+    }
+    musicPlaying = !musicPlaying;
+}
+
+        // Loader
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        document.getElementById('loader').classList.add('hidden');
+    }, 800);
+});
+
+
+        // Parallax Title
+        const parallaxTitle = document.getElementById('parallaxTitle');
+        const header = document.querySelector('.header');
+
+        header.addEventListener('mousemove', (e) => {
+            if (window.innerWidth < 768) return;
+            const rect = header.getBoundingClientRect();
+            const x = (e.clientX - rect.left - rect.width / 2) / rect.width;
+            const y = (e.clientY - rect.top - rect.height / 2) / rect.height;
+            parallaxTitle.style.transform = `translate(${x * -20}px, ${y * -15}px) rotateX(${y * 5}deg) rotateY(${x * -5}deg)`;
+        });
+
+        header.addEventListener('mouseleave', () => {
+            parallaxTitle.style.transform = 'translate(0, 0) rotateX(0) rotateY(0)';
+        });
+
+        // Falling Leaves
+        const leavesContainer = document.getElementById('leavesContainer');
+        for (let i = 0; i < 15; i++) {
+            const leaf = document.createElement('div');
+            leaf.className = 'falling-leaf';
+            leaf.style.left = Math.random() * 100 + '%';
+            leaf.style.animationDuration = (10 + Math.random() * 10) + 's';
+            leaf.style.animationDelay = (Math.random() * 15) + 's';
+            leaf.style.transform = `rotate(${Math.random() * 360}deg) scale(${0.5 + Math.random() * 0.5})`;
+            leavesContainer.appendChild(leaf);
+        }
+
+        // Background Particles
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouse = { x: null, y: null, radius: 150 };
+
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        resize();
+        window.addEventListener('resize', () => { resize(); initParticles(); });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.baseX = this.x;
+                this.baseY = this.y;
+                this.density = Math.random() * 30 + 1;
+                this.color = ['#2ECC71', '#E63946', '#F1C40F'][Math.floor(Math.random() * 3)];
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            update() {
+                let dx = mouse.x - this.x, dy = mouse.y - this.y;
+                let dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < mouse.radius) {
+                    let force = (mouse.radius - dist) / mouse.radius;
+                    this.x -= (dx / dist) * force * this.density;
+                    this.y -= (dy / dist) * force * this.density;
+                } else {
+                    if (this.x !== this.baseX) this.x -= (this.x - this.baseX) / 10;
+                    if (this.y !== this.baseY) this.y -= (this.y - this.baseY) / 10;
+                }
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < (canvas.width * canvas.height) / 20000; i++) particles.push(new Particle());
+        }
+
+        function animateBg() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let p of particles) { p.draw(); p.update(); }
+            for (let a = 0; a < particles.length; a++) {
+                for (let b = a; b < particles.length; b++) {
+                    let dx = particles[a].x - particles[b].x, dy = particles[a].y - particles[b].y;
+                    let dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 100) {
+                        ctx.strokeStyle = `rgba(46,204,113,${0.1 - dist/1000})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[a].x, particles[a].y);
+                        ctx.lineTo(particles[b].x, particles[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateBg);
+        }
+
+        window.addEventListener('mousemove', e => { mouse.x = e.x; mouse.y = e.y; });
+        window.addEventListener('mouseout', () => { mouse.x = mouse.y = undefined; });
+        initParticles();
+        animateBg();
+
+        // Header Canvas
+        const headerCanvas = document.getElementById('headerCanvas');
+        const hctx = headerCanvas.getContext('2d');
+        let sparkles = [];
+
+        function resizeHeader() {
+            const h = document.querySelector('.header');
+            headerCanvas.width = h.offsetWidth;
+            headerCanvas.height = h.offsetHeight;
+        }
+        resizeHeader();
+        window.addEventListener('resize', resizeHeader);
+
+        class Sparkle {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * headerCanvas.width;
+                this.y = Math.random() * headerCanvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedY = Math.random() * 0.3 + 0.1;
+                this.opacity = Math.random();
+                this.color = ['#2ECC71', '#F1C40F', '#E63946'][Math.floor(Math.random() * 3)];
+            }
+            draw() {
+                hctx.save();
+                hctx.globalAlpha = this.opacity;
+                hctx.fillStyle = this.color;
+                hctx.beginPath();
+                hctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                hctx.fill();
+                hctx.restore();
+            }
+            update() {
+                this.y += this.speedY;
+                this.opacity += (Math.random() - 0.5) * 0.03;
+                if (this.opacity < 0.1) this.opacity = 0.1;
+                if (this.opacity > 1) this.opacity = 1;
+                if (this.y > headerCanvas.height) this.reset();
+            }
+        }
+
+        for (let i = 0; i < 30; i++) sparkles.push(new Sparkle());
+
+        function animateHeader() {
+            hctx.clearRect(0, 0, headerCanvas.width, headerCanvas.height);
+            for (let s of sparkles) { s.draw(); s.update(); }
+            requestAnimationFrame(animateHeader);
+        }
+        animateHeader();
+
+        // Cursor glow
+        const glow = document.getElementById('cursorGlow');
+        document.addEventListener('mousemove', e => { glow.style.left = e.clientX + 'px'; glow.style.top = e.clientY + 'px'; });
+
+        // Scroll effects
+        const nav = document.getElementById('nav');
+        const scrollTop = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', scrollY > 50);
+            scrollTop.classList.toggle('visible', scrollY > 500);
+        });
+
+        // Nav toggle
+        function toggleNav() { document.getElementById('navMobile').classList.toggle('open'); }
+
+        // Reveal
+        const reveals = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        reveals.forEach(r => revealObserver.observe(r));
+
+        // Toggles
+        function toggleCat(h) { h.classList.toggle('open'); h.nextElementSibling.classList.toggle('open'); }
+        function togglePrompt(h) { h.nextElementSibling.classList.toggle('open'); }
+        function toggleGuide(h) { h.classList.toggle('open'); h.nextElementSibling.classList.toggle('open'); }
+
+        function copy(text) { navigator.clipboard.writeText(text).then(() => showToast('Copied! 🍎')); }
+
+        let filter = 'all';
+        function setFilter(f, btn) {
+            filter = f;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            filterPrompts();
+        }
+        function filterPrompts() {
+            const term = document.getElementById('searchInput').value.toLowerCase();
+            document.querySelectorAll('.cat').forEach(cat => {
+                const c = cat.dataset.cat;
+                const t = cat.textContent.toLowerCase();
+                cat.style.display = (filter === 'all' || c === filter) && (!term || t.includes(term)) ? '' : 'none';
+            });
+        }
+
+        function showToast(msg) {
+            const t = document.createElement('div');
+            t.className = 'toast';
+            t.textContent = msg;
+            document.getElementById('toastBox').appendChild(t);
+            setTimeout(() => t.remove(), 3000);
+        }
+
+        // Things Selector
+        function toggleThing(el) {
+            el.classList.toggle('selected');
+            updateThingsCount();
+        }
+
+        function toggleExclusive(el, group) {
+            const wasSelected = el.classList.contains('selected');
+            document.querySelectorAll(`.thing-item[data-group="${group}"]`).forEach(item => {
+                item.classList.remove('selected');
+            });
+            if (!wasSelected) {
+                el.classList.add('selected');
+            }
+            updateThingsCount();
+        }
+
+       function updateThingsCount() {
+    const selected = document.querySelectorAll('.thing-item.selected');
+    const count = selected.length;
+    document.getElementById('thingsCount').textContent = count;
+    document.getElementById('thingsCopyBtn').disabled = count === 0;
+}
+
+function copySelectedThings() {
+    const selected = document.querySelectorAll('.thing-item.selected');
+    const codes = [];
+    selected.forEach(item => {
+        codes.push(item.dataset.code);
+    });
+    if (codes.length > 0) {
+        navigator.clipboard.writeText(codes.join('\n\n')).then(() => {
+            showToast('Copied ' + codes.length + ' things! 🍎');
+        });
+    }
+}
+
+// Data for things
+const thingsData = {
+    flashbacks: {
+        title: 'Flashbacks',
+        desc: 'Adds flashback in 「...」<br><img src="example1.jpg" alt="Example">',
+		code: '[FLASHBACKS]'
+    },
+    transitions: {
+        title: 'Transitions',
+        desc: 'This function is like a set of directing tools for AI. It tells it not just to write text in a continuous stream, but to actively use special transition signs (like this: ∆ ... ∆) to beautifully structure the story, change scenes, and show character thoughts. Huge prompt.<br><img src="example22.jpg" alt="Example 22">',
+        code: '[TRANSITIONS]'
+    },
+    realworld: {
+        title: 'Real World',
+        desc: 'This function asks AI to use names of real things, places, and cultural phenomena in the story. Claude manages fine without it.',
+        code: '[REAL_WORLD]'
+    },
+    webchapter: {
+        title: 'Web-chapter Style',
+        desc: 'This function requires AI to format each response as a separate chapter of an online novel (web novel or light novel), imitating the style of popular translation sites.<br><img src="example29.jpg" alt="Example 29">',
+        code: '[WEB_CHAPTER]'
+    },
+    interview: {
+        title: 'Interview with Actors',
+        desc: 'This function adds a special section at the end of each response, breaking the "fourth wall". Characters momentarily become "actors" who played this scene.<br><img src="example30.jpg" alt="Example 30">',
+        code: '[INTERVIEW]'
+    },
+    meme: {
+        title: 'MEME',
+        desc: 'Generates a large meme at start of message based on current situation.',
+        code: '[MEME]'
+    },
+    typography: {
+        title: 'Typography',
+        desc: 'This function requires AI to visually format text that physically exists in the game world, using HTML/CSS styles and different fonts.<br><img src="example2.jpg" alt="Example 2">',
+        code: '[TYPOGRAPHY]'
+    },
+    musicsubs: {
+        title: 'Musical Subtitles',
+        desc: 'This function requires AI to fully write out lyrics of songs that play in the story or are performed by characters, making subtitles inside note symbols.<br><img src="example31.jpg" alt="Example 31">',
+        code: '[MUSIC_SUBS]'
+    },
+    hiddenprofiles: {
+        title: 'Hidden Profiles',
+        desc: 'This function requires AI to automatically create and attach a dossier (profile) for each new original character appearing in the plot for the first time at the end of post.<br><img src="example36.jpg" alt="Example 36">',
+        code: '[HIDDEN_PROFILES]'
+    },
+    hiddenevents: {
+        title: 'Off-screen Events',
+        desc: 'This function requires AI to simulate and track events happening parallel to the main story, but elsewhere ("off-screen").<br><img src="example37.jpg" alt="Example 37">',
+        code: '[HIDDEN_EVENTS]'
+    },
+    hiddenplans: {
+        title: 'Hidden Plans',
+        desc: 'This function serves as a workbook or planner for AI. In it, it records its thoughts on plot development, which usually remain invisible.<br><img src="example38.jpg" alt="Example 38">',
+        code: '[HIDDEN_PLANS]'
+    },
+    hiddendating: {
+        title: 'Hidden DatingSim',
+        desc: 'This function implements hidden dating simulator mechanics into narrative, forcing AI to track relationships with characters in digital and plot format.<br><img src="example39.jpg" alt="Example 39">',
+        code: '[HIDDEN_DATING]'
+    },
+    inforenette: {
+        title: 'Renette Logs',
+        desc: 'Infoblock. Lightest version, 146 tokens.<br><img src="example24.jpg" alt="Example 24">',
+        code: '[INFO_RENETTE]'
+    },
+    infoclock: {
+        title: 'Apple Clock',
+        desc: 'Small infoblock at start of post. Location, time, character clothes and scene state. 360 tokens.<br><img src="ex12.jpg" alt="Example 121">',
+        code: '[INFO_CLOCK]'
+    },
+    infomini: {
+        title: 'Mini-Infoblock',
+        desc: 'Infoblock. Version with 866 tokens.<br><img src="example25.jpg" alt="Example 25">',
+        code: '[INFO_MINI]'
+    },
+    infomain: {
+        title: 'Main Infoblock',
+        desc: 'Infoblock. Version with 1126 tokens.<br><img src="example26.jpg" alt="Example 26">',
+        code: '[INFO_MAIN]'
+    },
+    infomatrix: {
+        title: '+Relation Matrix',
+        desc: 'Infoblock. Version with 1366 tokens.<br><img src="example27.jpg" alt="Example 27">',
+        code: '[INFO_MATRIX]'
+    },
+    infothoughts: {
+        title: '+RelMatrix + Thoughts',
+        desc: 'Infoblock. Version with 1548 tokens.<br><img src="example28.jpg" alt="Example 28">',
+        code: '[INFO_THOUGHTS]'
+    },
+    cyoamacro: {
+        title: 'CYOA - R-Macro',
+        desc: 'Hardcore CYOA mode, turning story into real tabletop RPG (like D&D).<br><img src="example34.jpg" alt="Example 34">',
+        code: '[CYOA_MACRO]'
+    },
+    cyoanomacro: {
+        title: 'CYOA - No R-Macro',
+        desc: 'Story mode, similar to visual novels or interactive books (like Telltale games).<br><img src="example35.jpg" alt="Example 35">',
+        code: '[CYOA_NO_MACRO]'
+    },
+    fancyfull: {
+        title: 'Fancy UI',
+        desc: 'This function turns text chat into full graphical interface (UI), using complex HTML and CSS design. Makes game look like visual novel or RPG.<br><img src="example40.jpg" alt="Example 40"><img src="example41.jpg" alt="Example 41">',
+        code: '[FANCY_FULL]'
+    },
+    fancybase: {
+        title: 'Only Base',
+        desc: 'Leaves only main location block.<br><img src="example40.jpg" alt="Example 40">',
+        code: '[FANCY_BASE]'
+    },
+    fancythoughts: {
+        title: 'Only Thoughts',
+        desc: 'Leaves only thoughts block.<br><img src="example41.jpg" alt="Example 41">',
+        code: '[FANCY_THOUGHTS]'
+    },
+    commentsv1: {
+        title: 'Comments V1',
+        desc: 'Comments at end of message. First version. To look nice like this, enable HTML. Formatting varies case by case.<br><img src="example42.jpg" alt="Example 42">',
+        code: '[COMMENTS_V1]'
+    },
+    commentsv2: {
+        title: 'Comments V2',
+        desc: 'Comments at end of message. Second version.<img src="example43.jpg" alt="Example 43">',
+        code: '[COMMENTS_V2]'
+    },
+    commentsv3: {
+        title: 'Comments V3',
+        desc: 'Comments at end of message. Third version.<img src="example44.jpg" alt="Example 44">',
+        code: '[COMMENTS_V3]'
+    },
+    chronicleslight: {
+        title: 'Light Theme',
+        desc: 'Chronicles block at end of message, example on screen. Light version.<br><img src="example45.jpg" alt="Example 45">',
+        code: '[CHRONICLES_LIGHT]'
+    },
+    chroniclesdark: {
+        title: 'Dark Theme',
+        desc: 'Chronicles block at end of message, example on screen. Dark theme.<br><img src="example46.jpg" alt="Example 46">',
+        code: '[CHRONICLES_DARK]'
+    }
+};
+
+function showThingDesc(id) {
+    const data = thingsData[id];
+    if (!data) return;
+    document.getElementById('thingDescTitle').innerHTML = '📄 ' + data.title;
+    document.getElementById('thingDescText').innerHTML = data.desc;
+    document.getElementById('thingDescCode').innerHTML = data.code;
+    document.getElementById('thingDescModal').classList.add('active');
+}
+
+function closeThingDesc() {
+    document.getElementById('thingDescModal').classList.remove('active');
+}
+
+        document.getElementById('thingDescModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('thingDescModal')) closeThingDesc();
+        });
+
+        // Game
+        let G = {
+    canvas: null, ctx: null, running: false, paused: false,
+    score: 0, level: 1, apples: 0, maxLevels: 5,
+    player: { x: 80, y: 0, vx: 0, vy: 0, w: 28, h: 32, ground: false },
+    platforms: [], collectibles: [], goal: null, cam: 0, keys: {},
+    gravity: 0.6, jump: -13, speed: 5
+};
+
+function openGame() {
+    document.getElementById('gameModal').classList.add('active');
+    initGame();
+}
+
+function closeGame() {
+    document.getElementById('gameModal').classList.remove('active');
+    G.running = false;
+}
+
+function initGame() {
+    G.canvas = document.getElementById('gameCanvas');
+    G.ctx = G.canvas.getContext('2d');
+    const r = G.canvas.parentElement.getBoundingClientRect();
+    G.canvas.width = r.width;
+    G.canvas.height = r.height;
+    document.onkeydown = e => { G.keys[e.code] = true; };
+    document.onkeyup = e => { G.keys[e.code] = false; };
+    showOverlay('gameStart');
+}
+
+function showOverlay(id) {
+    document.querySelectorAll('.game-overlay').forEach(o => o.classList.remove('active'));
+    if (id) document.getElementById(id).classList.add('active');
+}
+
+function genLevel() {
+    const groundY = G.canvas.height - 40;
+    const levelLength = 1200 + G.level * 300;
+
+    G.platforms = [];
+    G.collectibles = [];
+    G.goal = null;
+
+    // Ground
+    G.platforms.push({ x: 0, y: groundY, w: levelLength + 500, h: 50, type: 'ground' });
+
+    // Platforms — BALANCED
+    let px = 150;
+    const platformCount = 10 + G.level * 2;
+
+    for (let i = 0; i < platformCount; i++) {
+        const w = 100 + Math.random() * 80; // Width 100-180
+
+        // Height: alternate low and medium platforms
+        let y;
+        if (i % 3 === 0) {
+            y = groundY - 60 - Math.random() * 40;  // Low (60-100)
+        } else if (i % 3 === 1) {
+            y = groundY - 90 - Math.random() * 50;  // Medium (90-140)
+        } else {
+            y = groundY - 70 - Math.random() * 60;  // Mixed (70-130)
+        }
+
+        G.platforms.push({ x: px, y, w, h: 20, type: 'platform' });
+
+        // Apples
+        if (Math.random() > 0.25) {
+            G.collectibles.push({ x: px + w/2 - 12, y: y - 35, collected: false });
+        }
+
+        // Distance to next: 50-120 (easy jump)
+        px += w + 50 + Math.random() * 70;
+    }
+
+    // Goal
+    G.goal = {
+        x: px + 80,
+        y: groundY - 60,
+        w: 70,
+        h: 70
+    };
+}
+
+
+function startGame() {
+    if (G.running) return;
+    G.score = 0;
+    G.level = 1;
+    G.apples = 0;
+    G.cam = 0;
+    G.running = true;
+    G.paused = false;
+
+    resetPlayer();
+    genLevel();
+    updateHUD();
+    showOverlay(null);
+    loop();
+}
+
+function resetPlayer() {
+    G.player.x = 80;
+    G.player.y = G.canvas.height - 150;
+    G.player.vx = 0;
+    G.player.vy = 0;
+    G.player.ground = false;
+}
+
+function pauseGame() {
+    if (!G.running) return;
+    G.paused = !G.paused;
+    if (!G.paused) loop();
+}
+
+function restartGame() {
+    G.running = false;
+    showOverlay('gameStart');
+}
+
+function nextLevel() {
+    G.level++;
+    G.score += 150;
+
+    if (G.level > G.maxLevels) {
+        winGame();
+        return;
+    }
+
+    document.getElementById('nextLevel').textContent = G.level;
+    showOverlay('gameLevelUp');
+    G.running = false; // Stop game while showing overlay
+
+    setTimeout(() => {
+        G.cam = 0;
+        resetPlayer();
+        genLevel();
+        updateHUD();
+        showOverlay(null);
+        G.running = true;
+        loop();
+    }, 1500);
+}
+
+function winGame() {
+    G.running = false;
+    document.getElementById('finalScore').textContent = G.score;
+    document.getElementById('finalApples').textContent = G.apples;
+    showOverlay('gameWin');
+    // DO NOT call loop() after win!
+}
+
+function loop() {
+    if (!G.running || G.paused) return;
+    update();
+    render();
+    requestAnimationFrame(loop);
+}
+
+function update() {
+    const p = G.player;
+
+    // Controls
+    if (G.keys['ArrowLeft'] || G.keys['KeyA']) {
+        p.vx = -G.speed;
+    } else if (G.keys['ArrowRight'] || G.keys['KeyD']) {
+        p.vx = G.speed;
+    } else {
+        p.vx *= 0.85;
+    }
+
+    // Jump
+    if ((G.keys['Space'] || G.keys['ArrowUp'] || G.keys['KeyW']) && p.ground) {
+        p.vy = G.jump;
+        p.ground = false;
+    }
+
+    // Physics
+    p.vy += G.gravity;
+    p.x += p.vx;
+    p.y += p.vy;
+
+    if (p.x < 0) p.x = 0;
+
+    // Collision with platforms
+    p.ground = false;
+    for (const pl of G.platforms) {
+        if (p.x + p.w > pl.x && p.x < pl.x + pl.w) {
+            if (p.y + p.h >= pl.y && p.y + p.h <= pl.y + 25 && p.vy >= 0) {
+                p.y = pl.y - p.h;
+                p.vy = 0;
+                p.ground = true;
+            }
+        }
+    }
+
+    // Goal Check (SEPARATE!)
+    if (G.goal) {
+        const g = G.goal;
+        if (p.x + p.w > g.x && p.x < g.x + g.w &&
+            p.y + p.h > g.y && p.y < g.y + g.h) {
+            nextLevel();
+            return; // Important to exit!
+        }
+    }
+
+    // Collect Apples
+    for (const c of G.collectibles) {
+        if (!c.collected &&
+            p.x + p.w > c.x && p.x < c.x + 24 &&
+            p.y + p.h > c.y && p.y < c.y + 24) {
+            c.collected = true;
+            G.apples++;
+            G.score += 15;
+            updateHUD();
+        }
+    }
+
+    // Fall
+    if (p.y > G.canvas.height + 100) {
+        G.score = Math.max(0, G.score - 30);
+        resetPlayer();
+        G.cam = 0;
+        updateHUD();
+    }
+
+    // Camera
+    const targetCam = p.x - G.canvas.width / 3;
+    G.cam += (targetCam - G.cam) * 0.1;
+    if (G.cam < 0) G.cam = 0;
+}
+
+function render() {
+    const ctx = G.ctx;
+    const c = G.cam;
+
+    // Background
+    const grad = ctx.createLinearGradient(0, 0, 0, G.canvas.height);
+    grad.addColorStop(0, '#1a2a1a');
+    grad.addColorStop(1, '#0a150a');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, G.canvas.width, G.canvas.height);
+
+    // Platforms
+    for (const pl of G.platforms) {
+        const x = pl.x - c;
+        if (x < -pl.w - 50 || x > G.canvas.width + 50) continue;
+
+        if (pl.type === 'ground') {
+            ctx.fillStyle = '#1a2a1a';
+            ctx.fillRect(0, pl.y, G.canvas.width, pl.h);
+            ctx.fillStyle = '#2ECC71';
+            ctx.fillRect(0, pl.y, G.canvas.width, 3);
+        } else {
+            ctx.fillStyle = '#2a3a2a';
+            ctx.fillRect(x, pl.y, pl.w, pl.h);
+            ctx.fillStyle = '#2ECC71';
+            ctx.fillRect(x, pl.y, pl.w, 3);
+        }
+    }
+
+    // Goal
+    if (G.goal) {
+        const gx = G.goal.x - c;
+        if (gx > -100 && gx < G.canvas.width + 100) {
+            ctx.fillStyle = '#F1C40F';
+            ctx.fillRect(gx, G.goal.y, G.goal.w, G.goal.h);
+            ctx.fillStyle = '#000';
+            ctx.font = '28px Arial';
+            ctx.fillText('★', gx + G.goal.w/2 - 10, G.goal.y + G.goal.h/2 + 10);
+        }
+    }
+
+    // Apples
+    for (const col of G.collectibles) {
+        if (col.collected) continue;
+        const x = col.x - c;
+        if (x < -30 || x > G.canvas.width + 30) continue;
+        ctx.font = '20px Arial';
+        ctx.fillText('🍎', x, col.y + 20);
+    }
+
+    // Player
+    const px = G.player.x - c;
+    const py = G.player.y;
+    ctx.font = '28px Arial';
+    ctx.fillText('🍏', px, py + 28);
+}
+
+function updateHUD() {
+    document.getElementById('gameScore').textContent = G.score;
+    document.getElementById('gameLevel').textContent = G.level;
+    document.getElementById('gameApples').textContent = G.apples;
+}
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+                closeThingDesc();
+                closeGame();
+            }
+        });
+
+        document.getElementById('gameModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('gameModal')) closeGame();
+        });
+    </script>
+	<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+    <img class="lightbox-img" id="lightboxImg" src="" alt="">
+</div>
+
+</body>
+</html>
