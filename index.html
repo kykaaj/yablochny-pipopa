@@ -1212,18 +1212,42 @@
         .prompt-default { font-size: 0.75rem; color: var(--gold); font-weight: 600; }
 
         .prompt-btn {
-            padding: 0.4rem 0.9rem;
-            background: transparent;
-            border: 1px solid var(--green);
-            border-radius: var(--radius-sm);
-            color: var(--green);
-            font-size: 0.75rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
+    padding: 0.4rem 0.9rem;
+    background: transparent;
+    border: 1px solid var(--green);
+    border-radius: var(--radius-sm);
+    color: var(--green);
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
 
-        .prompt-btn:hover { background: var(--green); color: var(--bg); }
+.prompt-btn:hover { background: var(--green); color: var(--bg); }
+
+/* Фикс промптов для мобильных */
+@media (max-width: 500px) {
+    .prompt-head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+    }
+
+    .prompt-meta {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .prompt-btn {
+        margin-left: auto;
+    }
+
+    .prompt-default {
+        font-size: 0.7rem;
+    }
+}
+
+.prompt-body { max-height: 0; overflow: hidden; transition: max-height 0.4s; }
 
         .prompt-body { max-height: 0; overflow: hidden; transition: max-height 0.4s; }
         .prompt-body.open { max-height: 2000px; }
