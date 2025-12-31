@@ -1928,13 +1928,26 @@
 .game-overlay .btn {
     background: var(--bg-card);
     border: 2px solid var(--green);
+    color: var(--text) !important;
     position: relative;
     z-index: 101;
 }
 
 .game-overlay .btn:hover {
     background: var(--green);
+    color: var(--bg) !important;
 }
+
+.game-overlay .btn-fill {
+    background: var(--green);
+    color: var(--bg) !important;
+}
+
+.game-overlay .btn-fill:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+}
+
 
         .game-overlay.active { display: flex; }
 
@@ -4983,13 +4996,30 @@ function closeThingDesc() {
             if (e.target === document.getElementById('thingDescModal')) closeThingDesc();
         });
 
-        // Game
-        let G = {
-    canvas: null, ctx: null, running: false, paused: false,
-    score: 0, level: 1, apples: 0, maxLevels: 5,
-    player: { x: 80, y: 0, vx: 0, vy: 0, w: 28, h: 32, ground: false },
-    platforms: [], collectibles: [], goal: null, cam: 0, keys: {},
-    gravity: 0.6, jump: -13, speed: 5
+// ═══════════════════════════════════════
+// MINI-GAME: APPLE ADVENTURE
+// ═══════════════════════════════════════
+
+const G = {
+    canvas: null, ctx: null,
+    running: false, paused: false,
+    player: null,
+    platforms: [],
+    collectibles: [],
+    hazards: [],
+    movingPlatforms: [],
+    fadingPlatforms: [],
+    bouncePads: [],
+    decorations: [],
+    goal: null,
+    camera: { x: 0 },
+    keys: {},
+    level: 1,
+    maxLevel: 5,
+    score: 0,
+    apples: 0,
+    levelName: "",
+    particles: []
 };
 
 function openGame() {
@@ -5008,9 +5038,258 @@ function initGame() {
     const r = G.canvas.parentElement.getBoundingClientRect();
     G.canvas.width = r.width;
     G.canvas.height = r.height;
-    document.onkeydown = e => { G.keys[e.code] = true; };
-    document.onkeyup = e => { G.keys[e.code] = false; };
+
+    document.addEventListener('keydown', e => {
+        G.keys[e.code] = true;
+        if (['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.code)) {
+            e.preventDefault();
+        }
+    });
+    document.addEventListener('keyup', e => G.keys[e.code] = false);
     showOverlay('gameStart');
+}
+
+function startGame() {
+    G.level = 1;
+    G.score = 0;
+    G.apples = 0;
+    startLevel();
+    showOverlay(null);
+    G.running = true;
+    G.paused = false;
+    gameLoop();
+}
+
+function restartGame() {
+    G.level = 1;
+    G.score = 0;
+    G.apples = 0;
+    startLevel();
+    showOverlay(null);
+    G.running = true;
+    G.paused = false;
+    gameLoop();
+}
+
+function pauseGame() {
+    if (!G.running) return;
+    G.paused = !G.paused;
+    if (!G.paused) gameLoop();
+}
+
+function startLevel() {
+    G.player = {
+        x: 50, y: 100,
+        vx: 0, vy: 0,
+        w: 28, h: 28,
+        onGround: false,
+        jumpHeld: false,
+        facingRight: true,
+        frameTime: 0
+    };
+    G.camera.x = 0;
+    G.particles = [];
+    genLevel();
+    updateHUD();
+}
+
+function genLevel() {
+    const groundY = G.canvas.height - 40;
+    G.platforms = [];
+    G.collectibles = [];
+    G.hazards = [];
+    G.movingPlatforms = [];
+    G.fadingPlatforms = [];
+    G.bouncePads = [];
+    G.decorations = [];
+    G.goal = null;
+
+    const levels = {
+        1: {
+            name: "🌱 Яблочный Сад",
+            platforms: [
+                { x: 0, y: groundY, w: 300, h: 50 },
+                { x: 200, y: groundY - 80, w: 100, h: 20 },
+                { x: 380, y: groundY - 60, w: 100, h: 20 },
+                { x: 560, y: groundY, w: 200, h: 50 },
+                { x: 650, y: groundY - 100, w: 80, h: 20 },
+                { x: 840, y: groundY - 70, w: 120, h: 20 },
+                { x: 1040, y: groundY, w: 300, h: 50 },
+            ],
+            apples: [
+                { x: 240, y: groundY - 115 },
+                { x: 420, y: groundY - 95 },
+                { x: 680, y: groundY - 140 },
+                { x: 890, y: groundY - 105 },
+                { x: 240, y: groundY - 35, secret: true },
+            ],
+            hazards: [],
+            moving: [],
+            fading: [],
+            bouncy: [],
+            goalX: 1200
+        },
+        2: {
+            name: "⚡ Прыжки Веры",
+            platforms: [
+                { x: 0, y: groundY, w: 200, h: 50 },
+                { x: 320, y: groundY - 40, w: 80, h: 20 },
+                { x: 520, y: groundY - 80, w: 80, h: 20 },
+                { x: 720, y: groundY - 40, w: 80, h: 20 },
+                { x: 920, y: groundY, w: 150, h: 50 },
+                { x: 1150, y: groundY - 100, w: 100, h: 20 },
+                { x: 1350, y: groundY, w: 300, h: 50 },
+            ],
+            apples: [
+                { x: 350, y: groundY - 75 },
+                { x: 550, y: groundY - 115 },
+                { x: 750, y: groundY - 75 },
+                { x: 1180, y: groundY - 135 },
+            ],
+            hazards: [
+                { x: 250, y: groundY - 20, w: 50, h: 20 },
+                { x: 850, y: groundY - 20, w: 50, h: 20 },
+            ],
+            moving: [
+                { x: 600, y: groundY - 130, w: 80, h: 20, minX: 550, maxX: 700, speed: 1.5 },
+            ],
+            fading: [],
+            bouncy: [],
+            goalX: 1500
+        },
+        3: {
+            name: "🌀 Движущийся Хаос",
+            platforms: [
+                { x: 0, y: groundY, w: 180, h: 50 },
+                { x: 400, y: groundY, w: 150, h: 50 },
+                { x: 750, y: groundY - 60, w: 100, h: 20 },
+                { x: 1100, y: groundY, w: 150, h: 50 },
+                { x: 1400, y: groundY, w: 300, h: 50 },
+            ],
+            apples: [
+                { x: 300, y: groundY - 100 },
+                { x: 550, y: groundY - 80 },
+                { x: 900, y: groundY - 140 },
+                { x: 1050, y: groundY - 180, secret: true },
+                { x: 1200, y: groundY - 35 },
+            ],
+            hazards: [
+                { x: 600, y: groundY - 20, w: 80, h: 20 },
+                { x: 950, y: groundY - 20, w: 80, h: 20 },
+            ],
+            moving: [
+                { x: 220, y: groundY - 60, w: 90, h: 20, minX: 200, maxX: 350, speed: 2 },
+                { x: 550, y: groundY - 120, w: 80, h: 20, minX: 500, maxX: 680, speed: 1.8 },
+                { x: 900, y: groundY - 100, w: 90, h: 20, minX: 850, maxX: 1050, speed: 2.2 },
+            ],
+            fading: [],
+            bouncy: [
+                { x: 450, y: groundY - 15, w: 60, h: 15 },
+            ],
+            goalX: 1550
+        },
+        4: {
+            name: "👻 Исчезающие Тропы",
+            platforms: [
+                { x: 0, y: groundY, w: 150, h: 50 },
+                { x: 350, y: groundY - 50, w: 80, h: 20 },
+                { x: 700, y: groundY, w: 120, h: 50 },
+                { x: 1050, y: groundY - 80, w: 100, h: 20 },
+                { x: 1350, y: groundY, w: 300, h: 50 },
+            ],
+            apples: [
+                { x: 250, y: groundY - 110 },
+                { x: 500, y: groundY - 90 },
+                { x: 620, y: groundY - 160, secret: true },
+                { x: 850, y: groundY - 60 },
+                { x: 1100, y: groundY - 130 },
+                { x: 1200, y: groundY - 180, secret: true },
+            ],
+            hazards: [
+                { x: 550, y: groundY - 20, w: 100, h: 20 },
+                { x: 900, y: groundY - 20, w: 100, h: 20 },
+            ],
+            moving: [
+                { x: 800, y: groundY - 110, w: 80, h: 20, minX: 750, maxX: 950, speed: 2.5 },
+            ],
+            fading: [
+                { x: 180, y: groundY - 70, w: 90, h: 20, timer: 0, visible: true, interval: 120 },
+                { x: 480, y: groundY - 50, w: 90, h: 20, timer: 60, visible: true, interval: 120 },
+                { x: 580, y: groundY - 120, w: 70, h: 20, timer: 30, visible: true, interval: 100 },
+                { x: 1180, y: groundY - 140, w: 80, h: 20, timer: 0, visible: true, interval: 90 },
+            ],
+            bouncy: [],
+            goalX: 1500
+        },
+        5: {
+            name: "🔥 Яблочный Ад",
+            platforms: [
+                { x: 0, y: groundY, w: 120, h: 50 },
+                { x: 500, y: groundY - 40, w: 80, h: 20 },
+                { x: 850, y: groundY, w: 100, h: 50 },
+                { x: 1200, y: groundY - 60, w: 80, h: 20 },
+                { x: 1550, y: groundY, w: 100, h: 50 },
+                { x: 1850, y: groundY, w: 300, h: 50 },
+            ],
+            apples: [
+                { x: 300, y: groundY - 120 },
+                { x: 450, y: groundY - 180, secret: true },
+                { x: 650, y: groundY - 80 },
+                { x: 1000, y: groundY - 100 },
+                { x: 1100, y: groundY - 200, secret: true },
+                { x: 1350, y: groundY - 120 },
+                { x: 1650, y: groundY - 60 },
+                { x: 1750, y: groundY - 180, secret: true },
+            ],
+            hazards: [
+                { x: 150, y: groundY - 20, w: 80, h: 20 },
+                { x: 380, y: groundY - 20, w: 80, h: 20 },
+                { x: 700, y: groundY - 20, w: 120, h: 20 },
+                { x: 1050, y: groundY - 20, w: 100, h: 20 },
+                { x: 1400, y: groundY - 20, w: 120, h: 20 },
+            ],
+            moving: [
+                { x: 200, y: groundY - 80, w: 80, h: 20, minX: 150, maxX: 350, speed: 2.5 },
+                { x: 600, y: groundY - 130, w: 70, h: 20, minX: 550, maxX: 750, speed: 3 },
+                { x: 1000, y: groundY - 150, w: 80, h: 20, minX: 950, maxX: 1150, speed: 2.8 },
+                { x: 1350, y: groundY - 100, w: 70, h: 20, minX: 1280, maxX: 1480, speed: 3.2 },
+                { x: 1700, y: groundY - 130, w: 80, h: 20, minX: 1620, maxX: 1800, speed: 2.5 },
+            ],
+            fading: [
+                { x: 400, y: groundY - 140, w: 70, h: 20, timer: 0, visible: true, interval: 80 },
+                { x: 1080, y: groundY - 160, w: 60, h: 20, timer: 40, visible: true, interval: 70 },
+            ],
+            bouncy: [
+                { x: 250, y: groundY - 15, w: 50, h: 15 },
+                { x: 950, y: groundY - 15, w: 50, h: 15 },
+                { x: 1600, y: groundY - 15, w: 50, h: 15 },
+            ],
+            goalX: 2000
+        }
+    };
+
+    const lvl = levels[G.level];
+    G.levelName = lvl.name;
+
+    lvl.platforms.forEach(p => G.platforms.push({ ...p }));
+    lvl.apples.forEach(a => G.collectibles.push({ ...a, collected: false }));
+    lvl.hazards.forEach(h => G.hazards.push({ ...h }));
+    lvl.moving.forEach(m => G.movingPlatforms.push({ ...m, dir: 1 }));
+    lvl.fading.forEach(f => G.fadingPlatforms.push({ ...f }));
+    lvl.bouncy.forEach(b => G.bouncePads.push({ ...b }));
+
+    for (let i = 0; i < lvl.goalX; i += 200) {
+        if (Math.random() > 0.5) G.decorations.push({ x: i + Math.random() * 100, type: 'tree' });
+        if (Math.random() > 0.6) G.decorations.push({ x: i + Math.random() * 150, type: 'bush' });
+    }
+
+    G.goal = { x: lvl.goalX, y: groundY - 80 };
+}
+
+function updateHUD() {
+    document.getElementById('gameLevel').textContent = G.level;
+    document.getElementById('gameScore').textContent = G.score;
+    document.getElementById('gameApples').textContent = G.apples;
 }
 
 function showOverlay(id) {
@@ -5018,221 +5297,448 @@ function showOverlay(id) {
     if (id) document.getElementById(id).classList.add('active');
 }
 
-function genLevel() {
-    const groundY = G.canvas.height - 40;
-    G.platforms = [];
-    G.collectibles = [];
-    G.goal = null;
-
-    // Захардкоженные уровни
-    const levels = {
-        1: { // Обучение — простые платформы
-            name: "Яблочный Сад",
-            platforms: [
-                { x: 0, y: groundY, w: 2000, h: 50, type: 'ground' },
-                { x: 200, y: groundY - 70, w: 120, h: 20 },
-                { x: 400, y: groundY - 70, w: 120, h: 20 },
-                { x: 600, y: groundY - 100, w: 150, h: 20 },
-                { x: 850, y: groundY - 70, w: 120, h: 20 },
-                { x: 1050, y: groundY - 100, w: 150, h: 20 },
-            ],
-            apples: [
-                { x: 250, y: groundY - 100 },
-                { x: 450, y: groundY - 100 },
-                { x: 660, y: groundY - 135 },
-                { x: 900, y: groundY - 100 },
-                { x: 1100, y: groundY - 135 },
-            ],
-            goalX: 1300
-        },
-        2: { // Лестница — подъём вверх
-            name: "Яблочная Лестница",
-            platforms: [
-                { x: 0, y: groundY, w: 500, h: 50, type: 'ground' },
-                { x: 150, y: groundY - 60, w: 100, h: 20 },
-                { x: 300, y: groundY - 110, w: 100, h: 20 },
-                { x: 450, y: groundY - 160, w: 100, h: 20 },
-                { x: 600, y: groundY - 200, w: 150, h: 20 },
-                { x: 800, y: groundY - 160, w: 100, h: 20 },
-                { x: 950, y: groundY - 110, w: 100, h: 20 },
-                { x: 1100, y: groundY - 60, w: 150, h: 20 },
-                { x: 1100, y: groundY, w: 400, h: 50, type: 'ground' },
-            ],
-            apples: [
-                { x: 180, y: groundY - 90 },
-                { x: 330, y: groundY - 140 },
-                { x: 480, y: groundY - 190 },
-                { x: 660, y: groundY - 235 },
-                { x: 830, y: groundY - 190 },
-                { x: 980, y: groundY - 140 },
-            ],
-            goalX: 1350
-        },
-        3: { // Прыжки через пропасти
-            name: "Яблочные Пропасти",
-            platforms: [
-                { x: 0, y: groundY, w: 200, h: 50, type: 'ground' },
-                { x: 280, y: groundY - 30, w: 80, h: 20 },
-                { x: 440, y: groundY, w: 150, h: 50, type: 'ground' },
-                { x: 670, y: groundY - 50, w: 80, h: 20 },
-                { x: 830, y: groundY - 80, w: 80, h: 20 },
-                { x: 1000, y: groundY, w: 150, h: 50, type: 'ground' },
-                { x: 1230, y: groundY - 60, w: 100, h: 20 },
-                { x: 1400, y: groundY, w: 300, h: 50, type: 'ground' },
-            ],
-            apples: [
-                { x: 300, y: groundY - 60 },
-                { x: 500, y: groundY - 35 },
-                { x: 690, y: groundY - 85 },
-                { x: 855, y: groundY - 115 },
-                { x: 1060, y: groundY - 35 },
-                { x: 1260, y: groundY - 95 },
-            ],
-            goalX: 1550
-        },
-        4: { // Зигзаг — влево-вправо
-            name: "Яблочный Зигзаг",
-            platforms: [
-                { x: 0, y: groundY, w: 250, h: 50, type: 'ground' },
-                { x: 200, y: groundY - 80, w: 120, h: 20 },
-                { x: 100, y: groundY - 150, w: 120, h: 20 },
-                { x: 280, y: groundY - 220, w: 120, h: 20 },
-                { x: 460, y: groundY - 180, w: 120, h: 20 },
-                { x: 640, y: groundY - 130, w: 120, h: 20 },
-                { x: 820, y: groundY - 80, w: 120, h: 20 },
-                { x: 1000, y: groundY - 50, w: 120, h: 20 },
-                { x: 1000, y: groundY, w: 300, h: 50, type: 'ground' },
-            ],
-            apples: [
-                { x: 240, y: groundY - 115 },
-                { x: 140, y: groundY - 185 },
-                { x: 320, y: groundY - 255 },
-                { x: 500, y: groundY - 215 },
-                { x: 680, y: groundY - 165 },
-                { x: 860, y: groundY - 115 },
-                { x: 1040, y: groundY - 85 },
-            ],
-            goalX: 1200
-        },
-        5: { // Финал — всё вместе
-            name: "Яблочный Финал",
-            platforms: [
-                { x: 0, y: groundY, w: 200, h: 50, type: 'ground' },
-                { x: 280, y: groundY - 60, w: 80, h: 20 },
-                { x: 420, y: groundY - 120, w: 80, h: 20 },
-                { x: 560, y: groundY - 180, w: 100, h: 20 },
-                { x: 720, y: groundY - 140, w: 80, h: 20 },
-                { x: 880, y: groundY - 100, w: 80, h: 20 },
-                { x: 1020, y: groundY - 60, w: 100, h: 20 },
-                { x: 1200, y: groundY, w: 150, h: 50, type: 'ground' },
-                { x: 1430, y: groundY - 80, w: 80, h: 20 },
-                { x: 1580, y: groundY - 140, w: 100, h: 20 },
-                { x: 1750, y: groundY, w: 300, h: 50, type: 'ground' },
-            ],
-            apples: [
-                { x: 300, y: groundY - 95 },
-                { x: 445, y: groundY - 155 },
-                { x: 595, y: groundY - 215 },
-                { x: 745, y: groundY - 175 },
-                { x: 905, y: groundY - 135 },
-                { x: 1055, y: groundY - 95 },
-                { x: 1260, y: groundY - 35 },
-                { x: 1455, y: groundY - 115 },
-                { x: 1615, y: groundY - 175 },
-            ],
-            goalX: 1900
-        }
-    };
-
-    const lvl = levels[G.level];
-
-    // Платформы
-    lvl.platforms.forEach(p => {
-        G.platforms.push({
-            x: p.x,
-            y: p.y,
-            w: p.w,
-            h: p.h,
-            type: p.type || 'platform'
-        });
-    });
-
-    // Яблоки
-    lvl.apples.forEach(a => {
-        G.collectibles.push({ x: a.x, y: a.y, collected: false });
-    });
-
-    // Цель
-    G.goal = {
-        x: lvl.goalX,
-        y: groundY - 60,
-        w: 70,
-        h: 70
-    };
-
-    // Показать название уровня
-    G.levelName = lvl.name;
-}
-
-
-
-function startGame() {
-    if (G.running) return;
-    G.score = 0;
-    G.level = 1;
-    G.apples = 0;
-    G.cam = 0;
-    G.running = true;
-    G.paused = false;
-
-    resetPlayer();
-    genLevel();
-    updateHUD();
-    showOverlay(null);
-    loop();
-}
-
-function resetPlayer() {
-    G.player.x = 80;
-    G.player.y = G.canvas.height - 150;
-    G.player.vx = 0;
-    G.player.vy = 0;
-    G.player.ground = false;
-}
-
-function pauseGame() {
+function gameLoop() {
     if (!G.running) return;
-    G.paused = !G.paused;
-    if (!G.paused) loop();
+    if (!G.paused) {
+        update();
+        render();
+    }
+    requestAnimationFrame(gameLoop);
 }
 
-function restartGame() {
-    G.running = false;
-    showOverlay('gameStart');
-}
+function update() {
+    const p = G.player;
+    const groundY = G.canvas.height - 40;
 
-function nextLevel() {
-    G.level++;
-    G.score += 150;
-
-    if (G.level > G.maxLevels) {
-        winGame();
-        return;
+    if (G.keys['ArrowLeft'] || G.keys['KeyA']) {
+        p.vx = -5;
+        p.facingRight = false;
+    } else if (G.keys['ArrowRight'] || G.keys['KeyD']) {
+        p.vx = 5;
+        p.facingRight = true;
+    } else {
+        p.vx *= 0.8;
     }
 
-    document.getElementById('nextLevel').textContent = G.level;
-    showOverlay('gameLevelUp');
-    G.running = false; // Останавливаем игру на время показа
+    if ((G.keys['Space'] || G.keys['ArrowUp'] || G.keys['KeyW']) && p.onGround && !p.jumpHeld) {
+        p.vy = -14;
+        p.onGround = false;
+        p.jumpHeld = true;
+        spawnParticles(p.x + p.w/2, p.y + p.h, 'jump');
+    }
+    if (!G.keys['Space'] && !G.keys['ArrowUp'] && !G.keys['KeyW']) {
+        p.jumpHeld = false;
+    }
 
-    setTimeout(() => {
-        G.cam = 0;
-        resetPlayer();
-        genLevel();
+    p.vy += 0.7;
+    if (p.vy > 15) p.vy = 15;
+
+    p.x += p.vx;
+    p.y += p.vy;
+
+    p.onGround = false;
+
+    G.movingPlatforms.forEach(mp => {
+        mp.x += mp.speed * mp.dir;
+        if (mp.x <= mp.minX || mp.x >= mp.maxX) mp.dir *= -1;
+    });
+
+    G.fadingPlatforms.forEach(fp => {
+        fp.timer++;
+        if (fp.timer >= fp.interval) {
+            fp.visible = !fp.visible;
+            fp.timer = 0;
+        }
+    });
+
+    const allPlatforms = [
+        ...G.platforms,
+        ...G.movingPlatforms,
+        ...G.fadingPlatforms.filter(f => f.visible)
+    ];
+
+    allPlatforms.forEach(plat => {
+        if (p.x < plat.x + plat.w && p.x + p.w > plat.x &&
+            p.y + p.h > plat.y && p.y + p.h < plat.y + plat.h + 15 && p.vy >= 0) {
+            p.y = plat.y - p.h;
+            p.vy = 0;
+            p.onGround = true;
+            if (plat.speed) p.x += plat.speed * plat.dir;
+        }
+    });
+
+    G.bouncePads.forEach(bp => {
+        if (p.x < bp.x + bp.w && p.x + p.w > bp.x &&
+            p.y + p.h > bp.y && p.y + p.h < bp.y + bp.h + 15 && p.vy >= 0) {
+            p.vy = -20;
+            spawnParticles(p.x + p.w/2, bp.y, 'bounce');
+        }
+    });
+
+    G.hazards.forEach(h => {
+        if (p.x < h.x + h.w && p.x + p.w > h.x &&
+            p.y + p.h > h.y && p.y < h.y + h.h) {
+            p.x -= 50;
+            p.vy = -8;
+            G.score = Math.max(0, G.score - 50);
+            spawnParticles(p.x + p.w/2, p.y + p.h/2, 'hurt');
+            updateHUD();
+        }
+    });
+
+    G.collectibles.forEach(c => {
+        if (!c.collected &&
+            p.x < c.x + 20 && p.x + p.w > c.x &&
+            p.y < c.y + 20 && p.y + p.h > c.y) {
+            c.collected = true;
+            G.apples++;
+            G.score += c.secret ? 200 : 100;
+            spawnParticles(c.x + 10, c.y + 10, 'collect');
+            updateHUD();
+        }
+    });
+
+    if (p.y > G.canvas.height + 50) {
+        p.x = 50;
+        p.y = 100;
+        p.vx = 0;
+        p.vy = 0;
+        G.score = Math.max(0, G.score - 100);
         updateHUD();
-        showOverlay(null);
-        G.running = true;
-        loop();
-    }, 1500);
+    }
+
+    const targetCam = p.x - G.canvas.width / 3;
+    G.camera.x += (targetCam - G.camera.x) * 0.1;
+    if (G.camera.x < 0) G.camera.x = 0;
+
+    if (p.x > G.goal.x && p.x < G.goal.x + 80 && p.y > G.goal.y - 20) {
+        if (G.level < G.maxLevel) {
+            G.level++;
+            G.score += 500;
+            startLevel();
+        } else {
+            winGame();
+        }
+    }
+
+    G.particles = G.particles.filter(pt => {
+        pt.x += pt.vx;
+        pt.y += pt.vy;
+        pt.vy += 0.2;
+        pt.life--;
+        return pt.life > 0;
+    });
+}
+
+function spawnParticles(x, y, type) {
+    const colors = {
+        jump: ['#8BC34A', '#689F38'],
+        collect: ['#FF6B6B', '#FFE66D', '#4ECDC4'],
+        bounce: ['#E040FB', '#7C4DFF'],
+        hurt: ['#FF5252', '#FF1744']
+    };
+    const c = colors[type] || ['#fff'];
+    for (let i = 0; i < 8; i++) {
+        G.particles.push({
+            x, y,
+            vx: (Math.random() - 0.5) * 6,
+            vy: (Math.random() - 0.5) * 6 - 2,
+            color: c[Math.floor(Math.random() * c.length)],
+            life: 20 + Math.random() * 15
+        });
+    }
+}
+
+function render() {
+    const ctx = G.ctx;
+    const cam = G.camera.x;
+
+    const skyGrad = ctx.createLinearGradient(0, 0, 0, G.canvas.height);
+    skyGrad.addColorStop(0, '#1a1a2e');
+    skyGrad.addColorStop(0.5, '#16213e');
+    skyGrad.addColorStop(1, '#0f3460');
+    ctx.fillStyle = skyGrad;
+    ctx.fillRect(0, 0, G.canvas.width, G.canvas.height);
+
+    ctx.fillStyle = 'rgba(255,255,255,0.5)';
+    for (let i = 0; i < 30; i++) {
+        const sx = ((i * 73 + 20) % 500) - (cam * 0.1) % 500;
+        const sy = (i * 37) % 150;
+        ctx.fillRect(sx, sy, 2, 2);
+    }
+
+    G.decorations.forEach(d => {
+        const dx = d.x - cam;
+        if (dx > -50 && dx < G.canvas.width + 50) {
+            if (d.type === 'tree') drawTree(ctx, dx, G.canvas.height - 40);
+            else drawBush(ctx, dx, G.canvas.height - 40);
+        }
+    });
+
+    G.platforms.forEach(pl => {
+        const px = pl.x - cam;
+        if (px > -pl.w && px < G.canvas.width) drawPlatform(ctx, px, pl.y, pl.w, pl.h, 'normal');
+    });
+
+    G.movingPlatforms.forEach(mp => {
+        const px = mp.x - cam;
+        if (px > -mp.w && px < G.canvas.width) drawPlatform(ctx, px, mp.y, mp.w, mp.h, 'moving');
+    });
+
+    G.fadingPlatforms.forEach(fp => {
+        if (!fp.visible) return;
+        const px = fp.x - cam;
+        if (px > -fp.w && px < G.canvas.width) {
+            const alpha = 0.4 + 0.6 * (1 - fp.timer / fp.interval);
+            drawPlatform(ctx, px, fp.y, fp.w, fp.h, 'fading', alpha);
+        }
+    });
+
+    G.bouncePads.forEach(bp => {
+        const px = bp.x - cam;
+        if (px > -bp.w && px < G.canvas.width) drawBouncePad(ctx, px, bp.y, bp.w, bp.h);
+    });
+
+    G.hazards.forEach(h => {
+        const hx = h.x - cam;
+        if (hx > -h.w && hx < G.canvas.width) drawSpikes(ctx, hx, h.y, h.w);
+    });
+
+    G.collectibles.forEach(c => {
+        if (c.collected) return;
+        const cx = c.x - cam;
+        if (cx > -30 && cx < G.canvas.width + 30) drawApple(ctx, cx, c.y, c.secret);
+    });
+
+    const gx = G.goal.x - cam;
+    if (gx > -100 && gx < G.canvas.width + 100) drawGoalPortal(ctx, gx, G.goal.y);
+
+    drawPlayer(ctx, G.player.x - cam, G.player.y);
+
+    G.particles.forEach(pt => {
+        ctx.globalAlpha = pt.life / 35;
+        ctx.fillStyle = pt.color;
+        ctx.beginPath();
+        ctx.arc(pt.x - cam, pt.y, 3, 0, Math.PI * 2);
+        ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+
+    if (G.player.frameTime < 120) {
+        G.player.frameTime++;
+        ctx.fillStyle = 'rgba(0,0,0,0.7)';
+        ctx.fillRect(0, G.canvas.height / 2 - 30, G.canvas.width, 60);
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 20px Nunito, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(G.levelName, G.canvas.width / 2, G.canvas.height / 2 + 7);
+    }
+}
+
+function drawPlatform(ctx, x, y, w, h, type, alpha = 1) {
+    ctx.globalAlpha = alpha;
+    const colors = {
+        normal: { top: '#8BC34A', side: '#689F38', dark: '#558B2F' },
+        moving: { top: '#7C4DFF', side: '#651FFF', dark: '#4527A0' },
+        fading: { top: '#26C6DA', side: '#00ACC1', dark: '#00838F' }
+    };
+    const c = colors[type];
+
+    ctx.fillStyle = c.top;
+    ctx.beginPath();
+    ctx.roundRect(x, y, w, 10, [5, 5, 0, 0]);
+    ctx.fill();
+
+    ctx.fillStyle = c.side;
+    ctx.fillRect(x, y + 10, w, h - 10);
+
+    ctx.fillStyle = c.dark;
+    for (let i = 0; i < w; i += 20) {
+        ctx.fillRect(x + i + 5, y + 15, 8, 4);
+    }
+    ctx.globalAlpha = 1;
+}
+
+function drawBouncePad(ctx, x, y, w, h) {
+    const time = Date.now() / 200;
+    const squish = Math.sin(time) * 2;
+    ctx.fillStyle = '#E040FB';
+    ctx.beginPath();
+    ctx.ellipse(x + w/2, y + h/2 + squish, w/2, h/2 - squish, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#F8BBD9';
+    ctx.beginPath();
+    ctx.ellipse(x + w/2, y + h/2 - 2 + squish, w/3, h/3, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#fff';
+    ctx.font = '10px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('▲▲', x + w/2, y - 2);
+}
+
+function drawSpikes(ctx, x, y, w) {
+    ctx.fillStyle = '#FF5252';
+    const spikeW = 12;
+    const count = Math.floor(w / spikeW);
+    for (let i = 0; i < count; i++) {
+        const sx = x + i * spikeW;
+        ctx.beginPath();
+        ctx.moveTo(sx, y + 20);
+        ctx.lineTo(sx + spikeW/2, y);
+        ctx.lineTo(sx + spikeW, y + 20);
+        ctx.fill();
+    }
+    ctx.fillStyle = '#FF8A80';
+    for (let i = 0; i < count; i++) {
+        ctx.fillRect(x + i * spikeW + spikeW/2 - 2, y + 5, 3, 6);
+    }
+}
+
+function drawApple(ctx, x, y, isSecret) {
+    const bob = Math.sin(Date.now() / 300 + x) * 3;
+    const ay = y + bob;
+
+    if (isSecret) {
+        ctx.fillStyle = 'rgba(255, 215, 0, 0.3)';
+        ctx.beginPath();
+        ctx.arc(x + 10, ay + 10, 18, 0, Math.PI * 2);
+        ctx.fill();
+    }
+
+    ctx.fillStyle = 'rgba(0,0,0,0.3)';
+    ctx.beginPath();
+    ctx.ellipse(x + 10, ay + 22, 8, 3, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = isSecret ? '#FFD700' : '#FF6B6B';
+    ctx.beginPath();
+    ctx.arc(x + 10, ay + 12, 10, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = 'rgba(255,255,255,0.4)';
+    ctx.beginPath();
+    ctx.arc(x + 6, ay + 8, 4, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = '#8BC34A';
+    ctx.beginPath();
+    ctx.ellipse(x + 14, ay + 2, 5, 3, 0.5, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.strokeStyle = '#795548';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(x + 10, ay + 2);
+    ctx.lineTo(x + 10, ay - 3);
+    ctx.stroke();
+}
+
+function drawGoalPortal(ctx, x, y) {
+    const time = Date.now() / 500;
+
+    const glow = ctx.createRadialGradient(x + 40, y + 40, 10, x + 40, y + 40, 60);
+    glow.addColorStop(0, 'rgba(139, 195, 74, 0.8)');
+    glow.addColorStop(0.5, 'rgba(139, 195, 74, 0.3)');
+    glow.addColorStop(1, 'rgba(139, 195, 74, 0)');
+    ctx.fillStyle = glow;
+    ctx.fillRect(x - 20, y - 20, 120, 120);
+
+    ctx.strokeStyle = '#8BC34A';
+    ctx.lineWidth = 6;
+    ctx.beginPath();
+    ctx.arc(x + 40, y + 80, 40, Math.PI, 0);
+    ctx.stroke();
+
+    ctx.fillStyle = '#689F38';
+    ctx.fillRect(x, y + 40, 12, 50);
+    ctx.fillRect(x + 68, y + 40, 12, 50);
+
+    ctx.fillStyle = '#8BC34A';
+    ctx.beginPath();
+    ctx.arc(x + 6, y + 50, 5, 0, Math.PI * 2);
+    ctx.arc(x + 74, y + 50, 5, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = '#fff';
+    for (let i = 0; i < 5; i++) {
+        const sx = x + 20 + Math.sin(time + i) * 15;
+        const sy = y + 50 + Math.cos(time * 1.5 + i) * 20;
+        ctx.beginPath();
+        ctx.arc(sx, sy, 2, 0, Math.PI * 2);
+        ctx.fill();
+    }
+
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 10px Nunito, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('✦ FINISH ✦', x + 40, y + 15);
+}
+
+function drawTree(ctx, x, y) {
+    ctx.fillStyle = '#5D4037';
+    ctx.fillRect(x + 10, y - 40, 10, 40);
+    ctx.fillStyle = '#2E7D32';
+    ctx.beginPath();
+    ctx.arc(x + 15, y - 50, 25, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#388E3C';
+    ctx.beginPath();
+    ctx.arc(x + 5, y - 40, 15, 0, Math.PI * 2);
+    ctx.fill();
+}
+
+function drawBush(ctx, x, y) {
+    ctx.fillStyle = '#388E3C';
+    ctx.beginPath();
+    ctx.arc(x, y - 10, 12, 0, Math.PI * 2);
+    ctx.arc(x + 15, y - 8, 10, 0, Math.PI * 2);
+    ctx.fill();
+}
+
+function drawPlayer(ctx, x, y) {
+    const p = G.player;
+    const bounce = p.onGround ? Math.sin(Date.now() / 150) * 1 : 0;
+
+    ctx.fillStyle = 'rgba(0,0,0,0.3)';
+    ctx.beginPath();
+    ctx.ellipse(x + p.w/2, y + p.h + 2, 12, 4, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = '#FF6B6B';
+    ctx.beginPath();
+    ctx.arc(x + p.w/2, y + p.h/2 + bounce, 14, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = '#FF8A80';
+    ctx.beginPath();
+    ctx.arc(x + 5, y + p.h/2 + 4 + bounce, 4, 0, Math.PI * 2);
+    ctx.arc(x + p.w - 5, y + p.h/2 + 4 + bounce, 4, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = '#fff';
+    const eyeX = p.facingRight ? 3 : -3;
+    ctx.beginPath();
+    ctx.arc(x + p.w/2 - 5 + eyeX, y + p.h/2 - 3 + bounce, 4, 0, Math.PI * 2);
+    ctx.arc(x + p.w/2 + 5 + eyeX, y + p.h/2 - 3 + bounce, 4, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = '#333';
+    ctx.beginPath();
+    ctx.arc(x + p.w/2 - 5 + eyeX + 1, y + p.h/2 - 3 + bounce, 2, 0, Math.PI * 2);
+    ctx.arc(x + p.w/2 + 5 + eyeX + 1, y + p.h/2 - 3 + bounce, 2, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = '#8BC34A';
+    ctx.beginPath();
+    ctx.ellipse(x + p.w/2 + 5, y + 2 + bounce, 6, 4, 0.5, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.strokeStyle = '#795548';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(x + p.w/2, y + 5 + bounce);
+    ctx.lineTo(x + p.w/2, y - 2 + bounce);
+    ctx.stroke();
 }
 
 function winGame() {
@@ -5240,195 +5746,28 @@ function winGame() {
     document.getElementById('finalScore').textContent = G.score;
     document.getElementById('finalApples').textContent = G.apples;
 
-    // Разные секреты за яблоки
     const secrets = {
-        0: {
-            title: "🍂 Пустые Ветви",
-            text: "Ты прошёл весь путь, не сорвав ни одного яблока. Ренетт грустно смотрит на пустую корзину..."
-        },
-        10: {
-            title: "🌱 Первые Ростки",
-            text: "Немного яблок — немного историй. Ренетт шепчет: «Цифровой Сад помнит каждого, кто его навестил»."
-        },
-        20: {
-            title: "🍎 Яблочный Подмастерье",
-            text: "Неплохой урожай! Ренетт делится секретом: «Каждый пресет — это семечко. Посади его в правильную почву, и вырастет целый мир»."
-        },
-        30: {
-            title: "🌳 Хранитель Сада",
-            text: "Отличный сбор! Ренетт рассказывает: «Я была яблоней 300 лет, пока молния не ударила в мои корни. Так я обрела сознание и стала духом-хранителем всех пресетов»."
-        },
-        40: {
-            title: "✨ Мастер Урожая",
-            text: "Почти все яблоки! Ренетт открывает тайну: «В каждом яблоке — частичка кода. Собери их все, и ты поймёшь, как устроен Цифровой Сад изнутри»."
-        },
-        999: {
-            title: "🌟 Легенда Цифрового Сада",
-            text: "ВСЕ яблоки собраны! Ренетт сияет: «Ты — первый, кто собрал весь урожай за века! Открою главную тайну: Цифровой Сад существует между строк кода. Каждый промпт — это дверь, каждый тогл — ключ. А я... я просто яблоня, которая научилась мечтать»."
-        }
+        0: { title: "🍂 Пустые Ветви", text: "Ты прошёл весь путь, не сорвав ни одного яблока..." },
+        5: { title: "🌱 Первые Ростки", text: "Немного яблок — немного историй. Ренетт шепчет: «Цифровой Сад помнит каждого»." },
+        12: { title: "🍎 Яблочный Подмастерье", text: "Неплохой урожай! Секрет: «Каждый пресет — это семечко»." },
+        18: { title: "🌳 Хранитель Сада", text: "Отличный сбор! «Я была яблоней 300 лет, пока молния не ударила в мои корни»." },
+        24: { title: "✨ Мастер Урожая", text: "Почти всё! «Золотые яблоки — осколки моих снов»." },
+        999: { title: "🌟 Легенда Сада", text: "ВСЕ яблоки! «Цифровой Сад существует между строк кода. А я... яблоня, которая научилась мечтать»." }
     };
 
-    // Подсчёт максимума яблок (сумма по всем уровням)
-    const maxApples = 5 + 6 + 6 + 7 + 9; // = 33
-
+    const maxApples = 28;
     let secretKey = 0;
     if (G.apples >= maxApples) secretKey = 999;
-    else if (G.apples >= 30) secretKey = 40;
-    else if (G.apples >= 22) secretKey = 30;
-    else if (G.apples >= 15) secretKey = 20;
-    else if (G.apples >= 8) secretKey = 10;
+    else if (G.apples >= 24) secretKey = 24;
+    else if (G.apples >= 18) secretKey = 18;
+    else if (G.apples >= 12) secretKey = 12;
+    else if (G.apples >= 5) secretKey = 5;
 
-    const secret = secrets[secretKey];
-
-    document.getElementById('secretTitle').textContent = secret.title;
-    document.getElementById('secretText').textContent = secret.text;
-
+    document.getElementById('secretTitle').textContent = secrets[secretKey].title;
+    document.getElementById('secretText').textContent = secrets[secretKey].text;
     showOverlay('gameWin');
 }
 
-
-function loop() {
-    if (!G.running || G.paused) return;
-    update();
-    render();
-    requestAnimationFrame(loop);
-}
-
-function update() {
-    const p = G.player;
-
-    // Управление
-    if (G.keys['ArrowLeft'] || G.keys['KeyA']) {
-        p.vx = -G.speed;
-    } else if (G.keys['ArrowRight'] || G.keys['KeyD']) {
-        p.vx = G.speed;
-    } else {
-        p.vx *= 0.85;
-    }
-
-    // Прыжок
-    if ((G.keys['Space'] || G.keys['ArrowUp'] || G.keys['KeyW']) && p.ground) {
-        p.vy = G.jump;
-        p.ground = false;
-    }
-
-    // Физика
-    p.vy += G.gravity;
-    p.x += p.vx;
-    p.y += p.vy;
-
-    if (p.x < 0) p.x = 0;
-
-    // Столкновение с платформами
-    p.ground = false;
-    for (const pl of G.platforms) {
-        if (p.x + p.w > pl.x && p.x < pl.x + pl.w) {
-            if (p.y + p.h >= pl.y && p.y + p.h <= pl.y + 25 && p.vy >= 0) {
-                p.y = pl.y - p.h;
-                p.vy = 0;
-                p.ground = true;
-            }
-        }
-    }
-
-    // Проверка достижения цели (ОТДЕЛЬНО!)
-    if (G.goal) {
-        const g = G.goal;
-        if (p.x + p.w > g.x && p.x < g.x + g.w &&
-            p.y + p.h > g.y && p.y < g.y + g.h) {
-            nextLevel();
-            return; // Важно выйти!
-        }
-    }
-
-    // Сбор яблок
-    for (const c of G.collectibles) {
-        if (!c.collected &&
-            p.x + p.w > c.x && p.x < c.x + 24 &&
-            p.y + p.h > c.y && p.y < c.y + 24) {
-            c.collected = true;
-            G.apples++;
-            G.score += 15;
-            updateHUD();
-        }
-    }
-
-    // Падение
-    if (p.y > G.canvas.height + 100) {
-        G.score = Math.max(0, G.score - 30);
-        resetPlayer();
-        G.cam = 0;
-        updateHUD();
-    }
-
-    // Камера
-    const targetCam = p.x - G.canvas.width / 3;
-    G.cam += (targetCam - G.cam) * 0.1;
-    if (G.cam < 0) G.cam = 0;
-}
-
-function render() {
-    const ctx = G.ctx;
-    const c = G.cam;
-
-    // Фон
-    const grad = ctx.createLinearGradient(0, 0, 0, G.canvas.height);
-    grad.addColorStop(0, '#1a2a1a');
-    grad.addColorStop(1, '#0a150a');
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, G.canvas.width, G.canvas.height);
-
-    // Платформы
-    for (const pl of G.platforms) {
-        const x = pl.x - c;
-        if (x < -pl.w - 50 || x > G.canvas.width + 50) continue;
-
-        if (pl.type === 'ground') {
-            ctx.fillStyle = '#1a2a1a';
-            ctx.fillRect(0, pl.y, G.canvas.width, pl.h);
-            ctx.fillStyle = '#2ECC71';
-            ctx.fillRect(0, pl.y, G.canvas.width, 3);
-        } else {
-            ctx.fillStyle = '#2a3a2a';
-            ctx.fillRect(x, pl.y, pl.w, pl.h);
-            ctx.fillStyle = '#2ECC71';
-            ctx.fillRect(x, pl.y, pl.w, 3);
-        }
-    }
-
-    // Цель
-    if (G.goal) {
-        const gx = G.goal.x - c;
-        if (gx > -100 && gx < G.canvas.width + 100) {
-            ctx.fillStyle = '#F1C40F';
-            ctx.fillRect(gx, G.goal.y, G.goal.w, G.goal.h);
-            ctx.fillStyle = '#000';
-            ctx.font = '28px Arial';
-            ctx.fillText('★', gx + G.goal.w/2 - 10, G.goal.y + G.goal.h/2 + 10);
-        }
-    }
-
-    // Яблоки
-    for (const col of G.collectibles) {
-        if (col.collected) continue;
-        const x = col.x - c;
-        if (x < -30 || x > G.canvas.width + 30) continue;
-        ctx.font = '20px Arial';
-        ctx.fillText('🍎', x, col.y + 20);
-    }
-
-    // Игрок
-    const px = G.player.x - c;
-    const py = G.player.y;
-    ctx.font = '28px Arial';
-    ctx.fillText('🍏', px, py + 28);
-}
-
-function updateHUD() {
-    document.getElementById('gameScore').textContent = G.score;
-    document.getElementById('gameLevel').textContent = G.level;
-    document.getElementById('gameApples').textContent = G.apples;
-}
 
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape') {
