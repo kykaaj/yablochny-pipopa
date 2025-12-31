@@ -240,12 +240,33 @@
 }
 
 .lightbox-img {
-    max-width: 90%;
-    max-height: 90%;
+    max-width: 95%;
+    max-height: 95%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
     border-radius: var(--radius);
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
     cursor: default;
 }
+
+/* На телефонах картинка занимает почти весь экран */
+@media (max-width: 768px) {
+    .lightbox-img {
+        max-width: 98%;
+        max-height: 85%;
+    }
+
+    .lightbox {
+        padding: 0.5rem;
+    }
+
+    .lightbox-close {
+        top: 10px;
+        right: 10px;
+    }
+}
+
 
 .lightbox-close {
     position: absolute;
@@ -923,9 +944,42 @@
         }
 
         @media (max-width: 700px) {
-            .apple-nav { display: none; }
-            .nav-mobile-btn { display: flex !important; }
-        }
+    /* Прячем логотип и кнопку меню */
+    .nav-logo { display: none; }
+    .nav-mobile-btn { display: none !important; }
+
+    /* Показываем яблочные иконки */
+    .apple-nav {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        gap: 0.2rem;
+    }
+
+    /* Делаем иконки меньше для мобилок */
+    .apple-icon {
+        width: 28px;
+        height: 28px;
+    }
+
+    .apple-icon span {
+        font-size: 0.5rem;
+    }
+
+    .apple-nav-label {
+        font-size: 0.5rem;
+    }
+
+    .apple-nav-item {
+        padding: 0.2rem 0.3rem;
+    }
+
+    /* Центрируем навигацию */
+    .nav-inner {
+        justify-content: center;
+    }
+}
+
 
         .nav-mobile-btn {
             display: none;
