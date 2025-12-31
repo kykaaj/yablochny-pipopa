@@ -3374,10 +3374,11 @@ function closeLightbox() {
 
 // Делаем все картинки кликабельными
 document.addEventListener('click', (e) => {
-    if (e.target.matches('.prompt-code img, .prompt-desc img, .guide-inner img')) {
+    if (e.target.matches('.prompt-code img, .prompt-desc img, .guide-inner img, .thing-desc-text img, .thing-desc-code img, .step-content img')) {
         openLightbox(e.target.src);
     }
 });
+
 
 // Закрытие по Escape
 document.addEventListener('keydown', (e) => {
