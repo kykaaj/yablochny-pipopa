@@ -1087,181 +1087,162 @@
         }
 
         /* ═══════════════════════════════════════
-           THINGS SELECTOR
-        ═══════════════════════════════════════ */
-        .things-section {
-            background: var(--bg-card);
-            border: 2px solid var(--gold);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-        }
+   THINGS SELECTOR
+═══════════════════════════════════════ */
+.things-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px dashed var(--border);
+}
 
-        .things-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
+.things-title {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-muted);
+}
 
-        .things-title {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            font-size: 1.2rem;
-            font-weight: 800;
-            color: var(--gold);
-        }
+.things-copy-btn {
+    padding: 0.6rem 1.2rem;
+    background: var(--green);
+    border: none;
+    border-radius: var(--radius-sm);
+    color: var(--bg);
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
 
-        .things-copy-btn {
-            padding: 0.6rem 1.2rem;
-            background: var(--gold);
-            border: none;
-            border-radius: var(--radius-sm);
-            color: var(--bg);
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+.things-copy-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px var(--glow-green);
+}
 
-        .things-copy-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px var(--glow-gold);
-        }
+.things-copy-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
 
-        .things-copy-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
+.things-count {
+    font-size: 0.85rem;
+    color: var(--green);
+    font-weight: 600;
+}
 
-        .things-count {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-left: 0.5rem;
-        }
+.things-note {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+    padding: 0.8rem 1rem;
+    background: var(--bg);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--text-dim);
+}
 
-        .things-group {
-            margin-bottom: 1.5rem;
-        }
+.things-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.6rem;
+    margin-bottom: 1.5rem;
+}
 
-        .things-group-title {
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 0.8rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px dashed var(--border);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+.thing-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem 1rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.3s;
+    user-select: none;
+}
 
-        .things-group-title.mixable { color: var(--green); }
-        .things-group-title.exclusive { color: var(--pink); }
-        .things-group-title .hint {
-            font-size: 0.75rem;
-            color: var(--text-dim);
-            font-weight: 400;
-        }
+.thing-item:hover {
+    border-color: var(--green);
+    background: var(--bg-elevated);
+}
 
-        .things-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 0.6rem;
-        }
+.thing-item.selected {
+    border-color: var(--green);
+    background: rgba(46, 204, 113, 0.1);
+}
 
-        .thing-item {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            padding: 0.8rem 1rem;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            transition: all 0.3s;
-            user-select: none;
-        }
+.thing-item.exclusive.selected {
+    border-color: var(--pink);
+    background: rgba(253, 167, 223, 0.1);
+}
 
-        .thing-item:hover {
-            border-color: var(--green);
-            background: var(--bg-elevated);
-        }
+.thing-checkbox {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    flex-shrink: 0;
+}
 
-        .thing-item.selected {
-            border-color: var(--green);
-            background: rgba(46, 204, 113, 0.1);
-        }
+.thing-item.exclusive .thing-checkbox {
+    border-radius: 50%;
+}
 
-        .thing-item.exclusive.selected {
-            border-color: var(--pink);
-            background: rgba(253, 167, 223, 0.1);
-        }
+.thing-item.selected .thing-checkbox {
+    background: var(--green);
+    border-color: var(--green);
+}
 
-        .thing-checkbox {
-            width: 18px;
-            height: 18px;
-            border: 2px solid var(--border);
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            flex-shrink: 0;
-        }
+.thing-item.exclusive.selected .thing-checkbox {
+    background: var(--pink);
+    border-color: var(--pink);
+}
 
-        .thing-item.selected .thing-checkbox {
-            background: var(--green);
-            border-color: var(--green);
-        }
+.thing-checkbox::after {
+    content: '✓';
+    color: var(--bg);
+    font-size: 0.7rem;
+    font-weight: 900;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
 
-        .thing-item.exclusive.selected .thing-checkbox {
-            background: var(--pink);
-            border-color: var(--pink);
-            border-radius: 50%;
-        }
+.thing-item.selected .thing-checkbox::after {
+    opacity: 1;
+}
 
-        .thing-checkbox::after {
-            content: '✓';
-            color: var(--bg);
-            font-size: 0.7rem;
-            font-weight: 900;
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
+.thing-icon { font-size: 1.1rem; }
+.thing-name { font-size: 0.85rem; font-weight: 600; flex: 1; }
 
-        .thing-item.selected .thing-checkbox::after {
-            opacity: 1;
-        }
+.thing-action-btn {
+    padding: 0.3rem 0.5rem;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text-dim);
+    font-size: 0.65rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
 
-        .thing-icon { font-size: 1.1rem; }
-        .thing-name { font-size: 0.85rem; font-weight: 600; flex: 1; }
-
-        .thing-actions {
-            display: flex;
-            gap: 0.3rem;
-        }
-
-        .thing-action-btn {
-            padding: 0.3rem 0.5rem;
-            background: transparent;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            color: var(--text-dim);
-            font-size: 0.65rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .thing-action-btn:hover {
-            border-color: var(--green);
-            color: var(--green);
-        }
+.thing-action-btn:hover {
+    border-color: var(--green);
+    color: var(--green);
+}
 
         /* Thing Description Modal */
         .thing-desc-modal {
@@ -2191,249 +2172,217 @@
     </div>
     <div class="cat-body"><div class="cat-inner">
 
-        <div class="prompts-desc">
-            💡 По дефолту тогл пустой. Выбери нужные штуки, нажми на каждую чтобы скопировать, и вставь в Things Sample в пресете.
+        <div class="things-header">
+            <div class="things-title">📋 Выбрано: <span class="things-count" id="thingsCount">0</span></div>
+            <button class="things-copy-btn" id="thingsCopyBtn" onclick="copySelectedThings()" disabled>
+                📋 Скопировать выбранное
+            </button>
+        </div>
+
+        <div class="things-note">
+            💡 По дефолту пусто — выбери нужные штуки и скопируй в тогл Things Sample
         </div>
 
         <!-- Можно смешивать -->
-        <div class="subsec">◇ Можно смешивать</div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="thing-icon">🕰️</span> Флешбеки</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[FLASHBACKS]')">Копировать</button></div>
+        <div class="subsec">◇ Можно смешивать <span style="color:var(--text-dim);font-weight:400;">(выбирай сколько хочешь)</span></div>
+        <div class="things-grid">
+            <div class="thing-item" data-code="[FLASHBACKS]" onclick="toggleThing(this)">
+                <div class="thing-checkbox"></div>
+                <span class="thing-icon">🕰️</span>
+                <span class="thing-name">Флешбеки</span>
+                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Флешбеки','Вставки флешбеков в историю','[FLASHBACKS]')">👁</button>
             </div>
-            <div class="prompt-body"><div class="prompt-inner"><p class="prompt-desc">Вставки флешбеков в историю</p><div class="prompt-code">[FLASHBACKS]</div></div></div>
+            <div class="thing-item" data-code="[TRANSITIONS]" onclick="toggleThing(this)">
+                <div class="thing-checkbox"></div>
+                <span class="thing-icon">⏩</span>
+                <span class="thing-name">Переходы</span>
+                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Переходы','Красивые переходы между сценами','[TRANSITIONS]')">👁</button>
+            </div>
+            <div class="thing-item" data-code="[REAL_WORLD]" onclick="toggleThing(this)">
+                <div class="thing-checkbox"></div>
+                <span class="thing-icon">🌎</span>
+                <span class="thing-name">Реальный Мир</span>
+                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Реальный Мир','Вставки реального мира','[REAL_WORLD]')">👁</button>
+            </div>
+            <div class="thing-item" data-code="[WEB_CHAPTER]" onclick="toggleThing(this)">
+                <div class="thing-checkbox"></div>
+                <span class="thing-icon">✒️</span>
+                <span class="thing-name">Стиль веб-главы</span>
+                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Стиль веб-главы','Оформление как веб-новелла','[WEB_CHAPTER]')">👁</button>
+            </div>
+            <div class="thing-item" data-code="[INTERVIEW]" onclick="toggleThing(this)">
+                <div class="thing-checkbox"></div>
+                <span class="thing-icon">📢</span>
+                <span class="thing-name">Интервью с Актерами</span>
+                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Интервью с Актерами','Интервью персонажей','[INTERVIEW]')">👁</button>
+            </div>
+            <div class="thing-item" data-code="[MEME]" onclick="toggleThing(this)">
+                <div class="thing-checkbox"></div>
+                <span class="thing-icon">🖼️</span>
+                <span class="thing-name">MEME</span>
+                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('MEME','Мемные вставки','[MEME]')">👁</button>
+            </div>
+            <div class="thing-item" data-code="[TYPOGRAPHY]" onclick="toggleThing(this)">
+                <div class="thing-checkbox"></div>
+                <span class="thing-icon">🔰</span>
+                <span class="thing-name">Типографика</span>
+                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Типографика','Улучшенная типографика','[TYPOGRAPHY]')">👁</button>
+            </div>
+            <div class="thing-item" data-code="[MUSIC_SUBS]" onclick="toggleThing(this)">
+                <div class="thing-checkbox"></div>
+                <span class="thing-icon">🎙️</span>
+                <span class="thing-name">Музыкальные Субтитры</span>
+                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Музыкальные Субтитры','Субтитры с музыкой','[MUSIC_SUBS]')">👁</button>
+            </div>
         </div>
 
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="thing-icon">⏩</span> Переходы</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[TRANSITIONS]')">Копировать</button></div>
+        <!-- Скрытые Блоки -->
+        <div class="subsec">👁 Скрытые Блоки <span style="color:var(--text-dim);font-weight:400;">(можно смешивать)</span></div>
+        <div class="things-grid">
+            <div class="thing-item" data-code="[HIDDEN_PROFILES]" onclick="toggleThing(this)">
+                <div class="thing-checkbox"></div>
+                <span class="thing-icon">👤</span>
+                <span class="thing-name">Скрытые Профили</span>
+                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Скрытые Профили','Раскрываемые профили','[HIDDEN_PROFILES]')">👁</button>
             </div>
-            <div class="prompt-body"><div class="prompt-inner"><p class="prompt-desc">Красивые переходы между сценами</p><div class="prompt-code">[TRANSITIONS]</div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="thing-icon">🌎</span> Реальный Мир</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[REAL_WORLD]')">Копировать</button></div>
+            <div class="thing-item" data-code="[HIDDEN_EVENTS]" onclick="toggleThing(this)">
+                <div class="thing-checkbox"></div>
+                <span class="thing-icon">📍</span>
+                <span class="thing-name">Закадровые События</span>
+                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Закадровые События','Скрытые события','[HIDDEN_EVENTS]')">👁</button>
             </div>
-            <div class="prompt-body"><div class="prompt-inner"><p class="prompt-desc">Вставки реального мира</p><div class="prompt-code">[REAL_WORLD]</div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="thing-icon">✒️</span> Стиль веб-главы</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[WEB_CHAPTER]')">Копировать</button></div>
+            <div class="thing-item" data-code="[HIDDEN_PLANS]" onclick="toggleThing(this)">
+                <div class="thing-checkbox"></div>
+                <span class="thing-icon">🗒️</span>
+                <span class="thing-name">Скрытые Планы</span>
+                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Скрытые Планы','Планы NPC','[HIDDEN_PLANS]')">👁</button>
             </div>
-            <div class="prompt-body"><div class="prompt-inner"><p class="prompt-desc">Оформление как веб-новелла</p><div class="prompt-code">[WEB_CHAPTER]</div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="thing-icon">📢</span> Интервью с Актерами</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[INTERVIEW]')">Копировать</button></div>
+            <div class="thing-item" data-code="[HIDDEN_DATING]" onclick="toggleThing(this)">
+                <div class="thing-checkbox"></div>
+                <span class="thing-icon">💌</span>
+                <span class="thing-name">Скрытый DatingSim</span>
+                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Скрытый DatingSim','Дейтинг механика','[HIDDEN_DATING]')">👁</button>
             </div>
-            <div class="prompt-body"><div class="prompt-inner"><p class="prompt-desc">Интервью персонажей</p><div class="prompt-code">[INTERVIEW]</div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="thing-icon">🖼️</span> MEME</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[MEME]')">Копировать</button></div>
-            </div>
-            <div class="prompt-body"><div class="prompt-inner"><p class="prompt-desc">Мемные вставки</p><div class="prompt-code">[MEME]</div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="thing-icon">🔰</span> Типографика</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[TYPOGRAPHY]')">Копировать</button></div>
-            </div>
-            <div class="prompt-body"><div class="prompt-inner"><p class="prompt-desc">Улучшенная типографика</p><div class="prompt-code">[TYPOGRAPHY]</div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="thing-icon">🎙️</span> Музыкальные Субтитры</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[MUSIC_SUBS]')">Копировать</button></div>
-            </div>
-            <div class="prompt-body"><div class="prompt-inner"><p class="prompt-desc">Субтитры с музыкой</p><div class="prompt-code">[MUSIC_SUBS]</div></div></div>
         </div>
 
         <!-- Инфоблоки -->
-        <div class="subsec">✧ Инфоблоки (выбери один)</div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="thing-icon">🍎</span> Логи Ренетт</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[INFO_RENETTE]')">Копировать</button></div>
+        <div class="subsec">✧ Инфоблоки <span style="color:var(--text-dim);font-weight:400;">(только ОДИН)</span></div>
+        <div class="things-grid">
+            <div class="thing-item exclusive" data-group="infoblocks" data-code="[INFO_RENETTE]" onclick="toggleExclusive(this,'infoblocks')">
+                <div class="thing-checkbox"></div>
+                <span class="thing-icon">🍎</span>
+                <span class="thing-name">Логи Ренетт</span>
+                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Логи Ренетт','Инфоблок в стиле Ренетт','[INFO_RENETTE]')">👁</button>
             </div>
-            <div class="prompt-body"><div class="prompt-inner"><p class="prompt-desc">Инфоблок в стиле Ренетт</p><div class="prompt-code">[INFO_RENETTE]</div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="thing-icon">🗂️</span> Мини-Инфоблок</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[INFO_MINI]')">Копировать</button></div>
+            <div class="thing-item exclusive" data-group="infoblocks" data-code="[INFO_MINI]" onclick="toggleExclusive(this,'infoblocks')">
+                <div class="thing-checkbox"></div>
+                <span class="thing-icon">🗂️</span>
+                <span class="thing-name">Мини-Инфоблок</span>
+                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Мини-Инфоблок','Компактный инфоблок','[INFO_MINI]')">👁</button>
             </div>
-            <div class="prompt-body"><div class="prompt-inner"><p class="prompt-desc">Компактный инфоблок</p><div class="prompt-code">[INFO_MINI]</div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="thing-icon">📝</span> Основной Инфоблок</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[INFO_MAIN]')">Копировать</button></div>
+            <div class="thing-item exclusive" data-group="infoblocks" data-code="[INFO_MAIN]" onclick="toggleExclusive(this,'infoblocks')">
+                <div class="thing-checkbox"></div>
+                <span class="thing-icon">📝</span>
+                <span class="thing-name">Основной Инфоблок</span>
+                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Основной Инфоблок','Полный инфоблок','[INFO_MAIN]')">👁</button>
             </div>
-            <div class="prompt-body"><div class="prompt-inner"><p class="prompt-desc">Полный инфоблок</p><div class="prompt-code">[INFO_MAIN]</div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="thing-icon">💖</span> +Матрица отношений</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[INFO_MATRIX]')">Копировать</button></div>
+            <div class="thing-item exclusive" data-group="infoblocks" data-code="[INFO_MATRIX]" onclick="toggleExclusive(this,'infoblocks')">
+                <div class="thing-checkbox"></div>
+                <span class="thing-icon">💖</span>
+                <span class="thing-name">+Матрица отношений</span>
+                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('+Матрица отношений','Инфоблок с матрицей','[INFO_MATRIX]')">👁</button>
             </div>
-            <div class="prompt-body"><div class="prompt-inner"><p class="prompt-desc">Инфоблок с матрицей</p><div class="prompt-code">[INFO_MATRIX]</div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="thing-icon">💭</span> +МатрОтн + Мысли</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[INFO_THOUGHTS]')">Копировать</button></div>
+            <div class="thing-item exclusive" data-group="infoblocks" data-code="[INFO_THOUGHTS]" onclick="toggleExclusive(this,'infoblocks')">
+                <div class="thing-checkbox"></div>
+                <span class="thing-icon">💭</span>
+                <span class="thing-name">+МатрОтн + Мысли</span>
+                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('+МатрОтн + Мысли','Матрица + мысли','[INFO_THOUGHTS]')">👁</button>
             </div>
-            <div class="prompt-body"><div class="prompt-inner"><p class="prompt-desc">Матрица + мысли</p><div class="prompt-code">[INFO_THOUGHTS]</div></div></div>
         </div>
 
         <!-- CYOA -->
-        <div class="subsec">✧ CYOA (выбери один)</div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="thing-icon">🎲</span> CYOA - R-Macro</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[CYOA_MACRO]')">Копировать</button></div>
+        <div class="subsec">✧ CYOA <span style="color:var(--text-dim);font-weight:400;">(только ОДИН)</span></div>
+        <div class="things-grid">
+            <div class="thing-item exclusive" data-group="cyoa" data-code="[CYOA_MACRO]" onclick="toggleExclusive(this,'cyoa')">
+                <div class="thing-checkbox"></div>
+                <span class="thing-icon">🎲</span>
+                <span class="thing-name">CYOA - R-Macro</span>
+                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('CYOA - R-Macro','CYOA с макросами','[CYOA_MACRO]')">👁</button>
             </div>
-            <div class="prompt-body"><div class="prompt-inner"><p class="prompt-desc">CYOA с макросами</p><div class="prompt-code">[CYOA_MACRO]</div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="thing-icon">🕹️</span> CYOA - No R-Macro</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[CYOA_NO_MACRO]')">Копировать</button></div>
+            <div class="thing-item exclusive" data-group="cyoa" data-code="[CYOA_NO_MACRO]" onclick="toggleExclusive(this,'cyoa')">
+                <div class="thing-checkbox"></div>
+                <span class="thing-icon">🕹️</span>
+                <span class="thing-name">CYOA - No R-Macro</span>
+                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('CYOA - No R-Macro','CYOA без макросов','[CYOA_NO_MACRO]')">👁</button>
             </div>
-            <div class="prompt-body"><div class="prompt-inner"><p class="prompt-desc">CYOA без макросов</p><div class="prompt-code">[CYOA_NO_MACRO]</div></div></div>
-        </div>
-
-        <!-- Скрытые блоки -->
-        <div class="subsec">◇ Скрытые блоки (можно смешивать)</div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="thing-icon">👤</span> Скрытые Профили</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[HIDDEN_PROFILES]')">Копировать</button></div>
-            </div>
-            <div class="prompt-body"><div class="prompt-inner"><p class="prompt-desc">Раскрываемые профили</p><div class="prompt-code">[HIDDEN_PROFILES]</div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="thing-icon">📍</span> Закадровые События</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[HIDDEN_EVENTS]')">Копировать</button></div>
-            </div>
-            <div class="prompt-body"><div class="prompt-inner"><p class="prompt-desc">Скрытые события</p><div class="prompt-code">[HIDDEN_EVENTS]</div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="thing-icon">🗒️</span> Скрытые Планы</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[HIDDEN_PLANS]')">Копировать</button></div>
-            </div>
-            <div class="prompt-body"><div class="prompt-inner"><p class="prompt-desc">Планы NPC</p><div class="prompt-code">[HIDDEN_PLANS]</div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="thing-icon">💌</span> Скрытый DatingSim</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[HIDDEN_DATING]')">Копировать</button></div>
-            </div>
-            <div class="prompt-body"><div class="prompt-inner"><p class="prompt-desc">Дейтинг механика</p><div class="prompt-code">[HIDDEN_DATING]</div></div></div>
         </div>
 
         <!-- Fancy UI -->
-        <div class="subsec">✧ Fancy UI (выбери один)</div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="thing-icon">🥂</span> Fancy UI полный</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[FANCY_FULL]')">Копировать</button></div>
+        <div class="subsec">✧ Fancy UI <span style="color:var(--text-dim);font-weight:400;">(только ОДИН)</span></div>
+        <div class="things-grid">
+            <div class="thing-item exclusive" data-group="fancy" data-code="[FANCY_FULL]" onclick="toggleExclusive(this,'fancy')">
+                <div class="thing-checkbox"></div>
+                <span class="thing-icon">🥂</span>
+                <span class="thing-name">Fancy UI</span>
+                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Fancy UI','Полный Fancy UI','[FANCY_FULL]')">👁</button>
             </div>
-            <div class="prompt-body"><div class="prompt-inner"><p class="prompt-desc">Полный Fancy UI</p><div class="prompt-code">[FANCY_FULL]</div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="thing-icon">🥂</span> Только Основа</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[FANCY_BASE]')">Копировать</button></div>
+            <div class="thing-item exclusive" data-group="fancy" data-code="[FANCY_BASE]" onclick="toggleExclusive(this,'fancy')">
+                <div class="thing-checkbox"></div>
+                <span class="thing-icon">🥂</span>
+                <span class="thing-name">Только Основа</span>
+                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Только Основа','Базовый Fancy','[FANCY_BASE]')">👁</button>
             </div>
-            <div class="prompt-body"><div class="prompt-inner"><p class="prompt-desc">Базовый Fancy</p><div class="prompt-code">[FANCY_BASE]</div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="thing-icon">🥂</span> Только Мысли</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[FANCY_THOUGHTS]')">Копировать</button></div>
+            <div class="thing-item exclusive" data-group="fancy" data-code="[FANCY_THOUGHTS]" onclick="toggleExclusive(this,'fancy')">
+                <div class="thing-checkbox"></div>
+                <span class="thing-icon">🥂</span>
+                <span class="thing-name">Только Мысли</span>
+                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Только Мысли','Fancy мысли','[FANCY_THOUGHTS]')">👁</button>
             </div>
-            <div class="prompt-body"><div class="prompt-inner"><p class="prompt-desc">Fancy мысли</p><div class="prompt-code">[FANCY_THOUGHTS]</div></div></div>
         </div>
 
         <!-- Комментарии -->
-        <div class="subsec">✧ Комментарии (выбери один)</div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="thing-icon">💬</span> Комменты V1</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[COMMENTS_V1]')">Копировать</button></div>
+        <div class="subsec">✧ Комментарии <span style="color:var(--text-dim);font-weight:400;">(только ОДИН)</span></div>
+        <div class="things-grid">
+            <div class="thing-item exclusive" data-group="comments" data-code="[COMMENTS_V1]" onclick="toggleExclusive(this,'comments')">
+                <div class="thing-checkbox"></div>
+                <span class="thing-icon">💬</span>
+                <span class="thing-name">Комменты V1</span>
+                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Комменты V1','Комментарии версия 1','[COMMENTS_V1]')">👁</button>
             </div>
-            <div class="prompt-body"><div class="prompt-inner"><p class="prompt-desc">Комментарии версия 1</p><div class="prompt-code">[COMMENTS_V1]</div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="thing-icon">💬</span> Комменты V2</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[COMMENTS_V2]')">Копировать</button></div>
+            <div class="thing-item exclusive" data-group="comments" data-code="[COMMENTS_V2]" onclick="toggleExclusive(this,'comments')">
+                <div class="thing-checkbox"></div>
+                <span class="thing-icon">💬</span>
+                <span class="thing-name">Комменты V2</span>
+                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Комменты V2','Комментарии версия 2','[COMMENTS_V2]')">👁</button>
             </div>
-            <div class="prompt-body"><div class="prompt-inner"><p class="prompt-desc">Комментарии версия 2</p><div class="prompt-code">[COMMENTS_V2]</div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="thing-icon">💬</span> Комменты V3</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[COMMENTS_V3]')">Копировать</button></div>
+            <div class="thing-item exclusive" data-group="comments" data-code="[COMMENTS_V3]" onclick="toggleExclusive(this,'comments')">
+                <div class="thing-checkbox"></div>
+                <span class="thing-icon">💬</span>
+                <span class="thing-name">Комменты V3</span>
+                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Комменты V3','Комментарии версия 3','[COMMENTS_V3]')">👁</button>
             </div>
-            <div class="prompt-body"><div class="prompt-inner"><p class="prompt-desc">Комментарии версия 3</p><div class="prompt-code">[COMMENTS_V3]</div></div></div>
         </div>
 
         <!-- Хроники -->
-        <div class="subsec">✧ Хроники (выбери один)</div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="thing-icon">📜</span> Светлая Тема</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[CHRONICLES_LIGHT]')">Копировать</button></div>
+        <div class="subsec">✧ Хроники <span style="color:var(--text-dim);font-weight:400;">(только ОДИН)</span></div>
+        <div class="things-grid">
+            <div class="thing-item exclusive" data-group="chronicles" data-code="[CHRONICLES_LIGHT]" onclick="toggleExclusive(this,'chronicles')">
+                <div class="thing-checkbox"></div>
+                <span class="thing-icon">📜</span>
+                <span class="thing-name">Светлая Тема</span>
+                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Светлая Тема','Хроники светлые','[CHRONICLES_LIGHT]')">👁</button>
             </div>
-            <div class="prompt-body"><div class="prompt-inner"><p class="prompt-desc">Хроники светлые</p><div class="prompt-code">[CHRONICLES_LIGHT]</div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="thing-icon">📜</span> Тёмная Тема</div>
-                <div class="prompt-meta"><button class="prompt-btn" onclick="event.stopPropagation();copy('[CHRONICLES_DARK]')">Копировать</button></div>
+            <div class="thing-item exclusive" data-group="chronicles" data-code="[CHRONICLES_DARK]" onclick="toggleExclusive(this,'chronicles')">
+                <div class="thing-checkbox"></div>
+                <span class="thing-icon">📜</span>
+                <span class="thing-name">Тёмная Тема</span>
+                <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('Тёмная Тема','Хроники тёмные','[CHRONICLES_DARK]')">👁</button>
             </div>
-            <div class="prompt-body"><div class="prompt-inner"><p class="prompt-desc">Хроники тёмные</p><div class="prompt-code">[CHRONICLES_DARK]</div></div></div>
         </div>
 
     </div></div>
 </div>
+
 
 
                 <!-- ⑧ COT -->
@@ -2995,12 +2944,13 @@ window.addEventListener('load', () => {
             updateThingsCount();
         }
 
-        function updateThingsCount() {
-            const selected = document.querySelectorAll('.thing-item.selected:not([data-thing="stub"])');
-            const count = selected.length;
-            document.getElementById('thingsCount').textContent = count;
-            document.getElementById('thingsCopyBtn').disabled = count === 0;
-        }
+       function updateThingsCount() {
+    const selected = document.querySelectorAll('.thing-item.selected');
+    const count = selected.length;
+    document.getElementById('thingsCount').textContent = count;
+    document.getElementById('thingsCopyBtn').disabled = count === 0;
+}
+
 
         function copySelectedThings() {
             const selected = document.querySelectorAll('.thing-item.selected:not([data-thing="stub"])');
