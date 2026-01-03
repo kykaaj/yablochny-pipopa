@@ -11,6 +11,7 @@
             padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
         }
 
         :root {
@@ -30,10 +31,18 @@
             --text-muted: #787478;
         }
 
+        /* Убираем синее выделение */
+        a, button, input, textarea, select {
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+        }
+
+        /* Курсор */
         @media (hover: hover) and (pointer: fine) {
             *, *::before, *::after { cursor: none !important; }
             .cursor, .cursor-follower { display: block; }
         }
+
         @media (hover: none), (pointer: coarse) {
             .cursor, .cursor-follower { display: none !important; }
         }
@@ -82,6 +91,7 @@
             overflow-x: hidden;
         }
 
+        /* Фон */
         #bg-particles {
             position: fixed;
             top: 0;
@@ -100,17 +110,10 @@
             width: 100%;
             height: 100%;
             background-image:
-                radial-gradient(ellipse at 20% 20%, rgba(212, 160, 176, 0.03) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(126, 184, 218, 0.02) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(184, 160, 216, 0.02) 0%, transparent 60%);
+                radial-gradient(ellipse at 20% 20%, rgba(212, 160, 176, 0.02) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(126, 184, 218, 0.015) 0%, transparent 50%);
             pointer-events: none;
             z-index: 0;
-            animation: bgPulse 15s ease-in-out infinite;
-        }
-
-        @keyframes bgPulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
         }
 
         body::after {
@@ -134,6 +137,7 @@
             100% { transform: translate(50px, 50px); }
         }
 
+        /* Плавающие фигуры */
         .floating-shapes {
             position: fixed;
             top: 0;
@@ -152,19 +156,18 @@
             animation: floatShape 30s ease-in-out infinite;
         }
 
-        .shape:nth-child(1) { width: 100px; height: 100px; top: 10%; left: 5%; animation-duration: 25s; }
-        .shape:nth-child(2) { width: 70px; height: 70px; top: 60%; right: 10%; border-radius: 50%; animation-delay: -8s; animation-duration: 35s; }
+        .shape:nth-child(1) { width: 100px; height: 100px; top: 10%; left: 5%; }
+        .shape:nth-child(2) { width: 70px; height: 70px; top: 60%; right: 10%; border-radius: 50%; animation-delay: -8s; }
         .shape:nth-child(3) { width: 50px; height: 50px; bottom: 15%; left: 15%; transform: rotate(45deg); animation-delay: -15s; }
-        .shape:nth-child(4) { width: 80px; height: 80px; top: 30%; right: 20%; border-radius: 50%; animation-delay: -5s; animation-duration: 28s; opacity: 0.03; }
-        .shape:nth-child(5) { width: 60px; height: 60px; bottom: 30%; right: 5%; transform: rotate(45deg); animation-delay: -12s; animation-duration: 32s; opacity: 0.025; }
+        .shape:nth-child(4) { width: 80px; height: 80px; top: 30%; right: 20%; border-radius: 50%; animation-delay: -20s; opacity: 0.03; }
+        .shape:nth-child(5) { width: 60px; height: 60px; bottom: 30%; right: 5%; transform: rotate(45deg); animation-delay: -12s; opacity: 0.025; }
 
         @keyframes floatShape {
             0%, 100% { transform: translateY(0) rotate(0deg); }
-            25% { transform: translateY(-15px) rotate(90deg); }
-            50% { transform: translateY(-25px) rotate(180deg); }
-            75% { transform: translateY(-10px) rotate(270deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
         }
 
+        /* Углы с анимацией */
         .corner {
             position: fixed;
             width: 70px;
@@ -173,16 +176,17 @@
             pointer-events: none;
             z-index: 2;
             opacity: 0.1;
-            transition: opacity 0.5s;
+            transition: opacity 0.5s, width 0.5s, height 0.5s;
         }
+
+        .corner:hover { opacity: 0.2; }
 
         .corner.tl { top: 30px; left: 30px; border-right: none; border-bottom: none; }
         .corner.tr { top: 30px; right: 30px; border-left: none; border-bottom: none; }
         .corner.bl { bottom: 30px; left: 30px; border-right: none; border-top: none; }
         .corner.br { bottom: 30px; right: 30px; border-left: none; border-top: none; }
 
-        .corner:hover { opacity: 0.3; }
-
+        /* Scroll top */
         .scroll-top {
             position: fixed;
             bottom: 30px;
@@ -206,6 +210,7 @@
         .scroll-top.visible { opacity: 1; visibility: visible; }
         .scroll-top:hover { background: var(--pink); color: var(--black); transform: translateY(-5px); }
 
+        /* === HERO === */
         .hero {
             position: relative;
             min-height: 100vh;
@@ -218,6 +223,7 @@
             z-index: 2;
         }
 
+        /* Галерея — ОБЕ СТРОКИ НА ВЕСЬ ЭКРАН */
         .hero-gallery {
             position: absolute;
             top: 0;
@@ -229,7 +235,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 3% 0;
+            padding: 5% 0;
         }
 
         .gallery-track {
@@ -238,15 +244,20 @@
             width: max-content;
         }
 
-        .gallery-track.top { animation: galleryScrollRight 80s linear infinite; }
-        .gallery-track.bottom { animation: galleryScrollLeft 80s linear infinite; }
+        .gallery-track.top {
+            animation: galleryScrollLeft 100s linear infinite;
+        }
 
-        @keyframes galleryScrollRight {
+        .gallery-track.bottom {
+            animation: galleryScrollRight 100s linear infinite;
+        }
+
+        @keyframes galleryScrollLeft {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
         }
 
-        @keyframes galleryScrollLeft {
+        @keyframes galleryScrollRight {
             0% { transform: translateX(-50%); }
             100% { transform: translateX(0); }
         }
@@ -286,17 +297,12 @@
             opacity: 0.3;
         }
 
+        /* Hero контент */
         .hero-content {
             position: relative;
             z-index: 2;
             text-align: center;
             max-width: 800px;
-            animation: heroFadeIn 1.2s ease;
-        }
-
-        @keyframes heroFadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .hero-label {
@@ -328,17 +334,11 @@
             color: var(--cream);
             line-height: 1.1;
             margin-bottom: 25px;
-            animation: fadeSlideUp 1s ease 0.2s backwards, titleGlow 5s ease-in-out infinite 2s;
-        }
-
-        @keyframes titleGlow {
-            0%, 100% { text-shadow: 0 0 0 transparent; }
-            50% { text-shadow: 0 0 30px rgba(212, 160, 176, 0.15); }
+            animation: fadeSlideUp 1s ease 0.2s backwards;
         }
 
         .hero-title span {
             color: var(--pink);
-            display: inline-block;
             animation: underscoreBlink 1.5s step-end infinite;
         }
 
@@ -388,22 +388,22 @@
             content: '';
             position: absolute;
             top: 0;
-            left: -100%;
-            width: 100%;
+            left: 0;
+            width: 0;
             height: 100%;
             background: var(--pink);
-            transition: left 0.4s;
+            transition: width 0.4s;
             z-index: -1;
         }
 
         .hero-link:hover {
             color: var(--black);
             border-color: var(--pink);
-            transform: translateY(-3px);
         }
 
-        .hero-link:hover::before { left: 0; }
+        .hero-link:hover::before { width: 100%; }
 
+        /* Навигация */
         .hero-nav {
             display: flex;
             justify-content: center;
@@ -438,7 +438,6 @@
         .hero-nav-btn:hover {
             color: var(--pink);
             border-color: rgba(212, 160, 176, 0.2);
-            transform: translateY(-2px);
         }
 
         .hero-nav-btn:hover::before { width: 60%; }
@@ -450,6 +449,7 @@
             opacity: 0.7;
         }
 
+        /* Скролл индикатор */
         .scroll-indicator {
             position: absolute;
             bottom: 40px;
@@ -477,6 +477,7 @@
             50% { transform: translateX(-50%) translateY(10px); }
         }
 
+        /* === ОСНОВНОЙ КОНТЕНТ === */
         .main-content {
             position: relative;
             z-index: 2;
@@ -503,12 +504,6 @@
             color: var(--pink);
             opacity: 0.2;
             line-height: 1;
-            animation: numberPulse 4s ease-in-out infinite;
-        }
-
-        @keyframes numberPulse {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 0.35; }
         }
 
         .section-title {
@@ -523,15 +518,15 @@
             flex: 1;
             height: 1px;
             background: linear-gradient(90deg, var(--pink), transparent);
-            animation: lineGrow 1s ease forwards;
-            transform-origin: left;
+            animation: lineGrow 2s ease forwards;
         }
 
         @keyframes lineGrow {
-            from { transform: scaleX(0); }
+            from { transform: scaleX(0); transform-origin: left; }
             to { transform: scaleX(1); }
         }
 
+        /* === КАРТОЧКИ === */
         .fics-grid {
             display: flex;
             flex-direction: column;
@@ -546,8 +541,7 @@
             overflow: hidden;
             transition: all 0.5s;
             position: relative;
-            opacity: 0;
-            animation: cardFadeIn 0.6s ease forwards;
+            animation: cardFadeIn 0.6s ease backwards;
         }
 
         .fic-card:nth-child(1) { animation-delay: 0.1s; }
@@ -555,15 +549,9 @@
         .fic-card:nth-child(3) { animation-delay: 0.3s; }
         .fic-card:nth-child(4) { animation-delay: 0.4s; }
         .fic-card:nth-child(5) { animation-delay: 0.5s; }
-        .fic-card:nth-child(6) { animation-delay: 0.6s; }
-        .fic-card:nth-child(7) { animation-delay: 0.7s; }
-        .fic-card:nth-child(8) { animation-delay: 0.8s; }
-        .fic-card:nth-child(9) { animation-delay: 0.9s; }
-        .fic-card:nth-child(10) { animation-delay: 1s; }
-        .fic-card:nth-child(11) { animation-delay: 1.1s; }
 
         @keyframes cardFadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -583,9 +571,10 @@
         .fic-card:hover {
             border-color: rgba(212, 160, 176, 0.2);
             transform: translateX(8px);
-            box-shadow: -10px 0 30px rgba(212, 160, 176, 0.05);
+            box-shadow: -8px 0 30px rgba(212, 160, 176, 0.05);
         }
 
+        /* Обложка */
         .fic-cover-wrap {
             position: relative;
             background: linear-gradient(135deg, var(--black-light), var(--black));
@@ -622,6 +611,7 @@
             transform: scale(1.05);
         }
 
+        /* Контент */
         .fic-content {
             padding: 30px 35px;
             display: flex;
@@ -715,33 +705,29 @@
             color: var(--gold);
         }
 
-        .spoiler-toggle {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 3px 10px;
-            font-size: 0.68rem;
+        /* Спойлеры */
+        .spoiler-btn {
+            background: none;
             border: 1px dashed rgba(212, 160, 176, 0.3);
             color: var(--text-muted);
-            background: none;
+            padding: 3px 10px;
+            font-size: 0.68rem;
             cursor: pointer;
             transition: all 0.3s;
+            margin-left: 5px;
         }
 
-        .spoiler-toggle:hover {
+        .spoiler-btn:hover {
             border-color: var(--pink);
             color: var(--pink);
         }
 
-        .spoiler-content {
+        .spoiler-tags {
             display: none;
-            margin-top: 8px;
         }
 
-        .spoiler-content.visible {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
+        .spoiler-tags.visible {
+            display: contents;
         }
 
         .fic-meta {
@@ -794,6 +780,7 @@
         .fic-read-btn:hover { color: var(--black); }
         .fic-read-btn:hover::before { left: 0; }
 
+        /* Футер */
         .footer {
             text-align: center;
             padding: 80px 30px;
@@ -821,12 +808,12 @@
             height: 12px;
             border: 1px solid var(--pink);
             transform: rotate(45deg);
-            animation: diamondPulse 3s ease-in-out infinite;
+            animation: diamondSpin 10s linear infinite;
         }
 
-        @keyframes diamondPulse {
-            0%, 100% { transform: rotate(45deg) scale(1); opacity: 1; }
-            50% { transform: rotate(45deg) scale(1.2); opacity: 0.7; }
+        @keyframes diamondSpin {
+            from { transform: rotate(45deg); }
+            to { transform: rotate(405deg); }
         }
 
         .footer-links {
@@ -852,6 +839,7 @@
             opacity: 0.5;
         }
 
+        /* Адаптив */
         @media (max-width: 900px) {
             .hero-title { font-size: 3.5rem; }
             .hero-nav { gap: 30px; }
@@ -884,6 +872,7 @@
             .scroll-top.visible { opacity: 0.6; }
         }
 
+        /* Скроллбар */
         ::-webkit-scrollbar { width: 10px; }
         ::-webkit-scrollbar-track { background: var(--black); }
         ::-webkit-scrollbar-thumb { background: var(--pink-dark); border: 2px solid var(--black); }
@@ -916,62 +905,66 @@
 
     <a href="#top" class="scroll-top" id="scrollTop">↑</a>
 
+    <!-- HERO -->
     <section class="hero" id="top">
         <div class="hero-gallery">
             <div class="gallery-track top">
-                <div class="gallery-item"><div class="gallery-placeholder">✧</div></div>
+                <!-- Картинки: images/gallery/cover-1.jpg и т.д. -->
+                <div class="gallery-item"><div class="gallery-placeholder">K</div></div>
                 <div class="gallery-item"><div class="gallery-placeholder">♡</div></div>
-                <div class="gallery-item"><div class="gallery-placeholder">☾</div></div>
-                <div class="gallery-item"><div class="gallery-placeholder">✦</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">S</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">✧</div></div>
                 <div class="gallery-item"><div class="gallery-placeholder">♪</div></div>
-                <div class="gallery-item"><div class="gallery-placeholder">❀</div></div>
-                <div class="gallery-item"><div class="gallery-placeholder">★</div></div>
-                <div class="gallery-item"><div class="gallery-placeholder">◇</div></div>
-                <div class="gallery-item"><div class="gallery-placeholder">✧</div></div>
-                <div class="gallery-item"><div class="gallery-placeholder">♡</div></div>
                 <div class="gallery-item"><div class="gallery-placeholder">☾</div></div>
                 <div class="gallery-item"><div class="gallery-placeholder">✦</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">K</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">♡</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">S</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">✧</div></div>
                 <div class="gallery-item"><div class="gallery-placeholder">♪</div></div>
-                <div class="gallery-item"><div class="gallery-placeholder">❀</div></div>
-                <div class="gallery-item"><div class="gallery-placeholder">★</div></div>
-                <div class="gallery-item"><div class="gallery-placeholder">◇</div></div>
-                <div class="gallery-item"><div class="gallery-placeholder">✧</div></div>
-                <div class="gallery-item"><div class="gallery-placeholder">♡</div></div>
                 <div class="gallery-item"><div class="gallery-placeholder">☾</div></div>
                 <div class="gallery-item"><div class="gallery-placeholder">✦</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">K</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">♡</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">S</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">✧</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">♪</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">☾</div></div>
             </div>
             <div class="gallery-track bottom">
-                <div class="gallery-item"><div class="gallery-placeholder">◆</div></div>
-                <div class="gallery-item"><div class="gallery-placeholder">✿</div></div>
-                <div class="gallery-item"><div class="gallery-placeholder">☆</div></div>
-                <div class="gallery-item"><div class="gallery-placeholder">♢</div></div>
-                <div class="gallery-item"><div class="gallery-placeholder">✵</div></div>
-                <div class="gallery-item"><div class="gallery-placeholder">❋</div></div>
-                <div class="gallery-item"><div class="gallery-placeholder">◈</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">❀</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">★</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">K</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">♡</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">S</div></div>
                 <div class="gallery-item"><div class="gallery-placeholder">✧</div></div>
-                <div class="gallery-item"><div class="gallery-placeholder">◆</div></div>
-                <div class="gallery-item"><div class="gallery-placeholder">✿</div></div>
-                <div class="gallery-item"><div class="gallery-placeholder">☆</div></div>
-                <div class="gallery-item"><div class="gallery-placeholder">♢</div></div>
-                <div class="gallery-item"><div class="gallery-placeholder">✵</div></div>
-                <div class="gallery-item"><div class="gallery-placeholder">❋</div></div>
-                <div class="gallery-item"><div class="gallery-placeholder">◈</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">▽</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">❀</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">★</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">K</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">♡</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">S</div></div>
                 <div class="gallery-item"><div class="gallery-placeholder">✧</div></div>
-                <div class="gallery-item"><div class="gallery-placeholder">◆</div></div>
-                <div class="gallery-item"><div class="gallery-placeholder">✿</div></div>
-                <div class="gallery-item"><div class="gallery-placeholder">☆</div></div>
-                <div class="gallery-item"><div class="gallery-placeholder">♢</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">▽</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">❀</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">★</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">K</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">♡</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">S</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">✧</div></div>
             </div>
         </div>
 
         <div class="hero-content">
             <div class="hero-label">Архив фанфиков</div>
             <h1 class="hero-title">Kris_mem<span>_</span>2222</h1>
-            <p class="hero-subtitle">В душе всегда лапочка · Флафф — это смысл жизни · Дышу Казускарами</p>
+            <p class="hero-subtitle">
+                В душе всегда лапочка · Флафф — это смысл жизни · Дышу Казускарами
+            </p>
 
             <div class="hero-links">
-                <a href="https://ficbook.net/authors/7774941" target="_blank" class="hero-link">
-                    <span>✦</span> Профиль на Фикбуке
+                <a href="https://ficbook.net/authors/7774941#content" target="_blank" class="hero-link">
+                    <span>✧</span> Профиль на Фикбуке
                 </a>
                 <a href="https://kykaaj.github.io/yablochny-preset/" target="_blank" class="hero-link">
                     <span>◇</span> Разработчик сайта
@@ -987,7 +980,9 @@
         <div class="scroll-indicator"><span>листай</span></div>
     </section>
 
+    <!-- ОСНОВНОЙ КОНТЕНТ -->
     <main class="main-content">
+        <!-- В ПРОЦЕССЕ -->
         <section class="section" id="ongoing">
             <div class="section-header">
                 <span class="section-number">01</span>
@@ -996,6 +991,7 @@
             </div>
 
             <div class="fics-grid">
+                <!-- 1. Пять причин -->
                 <article class="fic-card">
                     <div class="fic-cover-wrap"><div class="fic-cover">✦</div></div>
                     <div class="fic-content">
@@ -1018,21 +1014,27 @@
                             <span class="fic-tag warning">Алкоголь</span>
                             <span class="fic-tag warning">Нецензурная лексика</span>
                             <span class="fic-tag warning">ООС</span>
-                            <span class="fic-tag warning">Отклонения от канона</span>
-                            <span class="fic-tag warning">Проблемы доверия</span>
-                            <span class="fic-tag warning">Рейтинг за секс</span>
-                            <span class="fic-tag">Разница в возрасте</span>
+                            <button class="spoiler-btn" onclick="toggleSpoiler(this)">+ спойлеры</button>
+                            <span class="spoiler-tags">
+                                <span class="fic-tag warning">Отклонения от канона</span>
+                                <span class="fic-tag warning">Проблемы доверия</span>
+                                <span class="fic-tag warning">Рейтинг за секс</span>
+                                <span class="fic-tag warning">Упоминания алкоголя</span>
+                                <span class="fic-tag warning">Упоминания курения</span>
+                                <span class="fic-tag">Разница в возрасте</span>
+                            </span>
                         </div>
                         <div class="fic-meta">
                             <span>◈ 46 стр.</span>
                             <span>✎ 15 458 слов</span>
-                            <span>◇ 6 глав</span>
+                            <span>▤ 6 глав</span>
                             <span>↻ 03.01.2026</span>
                         </div>
                         <a href="fics/five-reasons.html" class="fic-read-btn">Читать →</a>
                     </div>
                 </article>
 
+                <!-- 2. Скрипичный ключ -->
                 <article class="fic-card">
                     <div class="fic-cover-wrap"><div class="fic-cover">♪</div></div>
                     <div class="fic-content">
@@ -1052,15 +1054,18 @@
                             <span class="fic-tag">AU: Школа</span>
                             <span class="fic-tag warning">Внутренняя гомофобия</span>
                             <span class="fic-tag warning">Проблемы доверия</span>
-                            <span class="fic-tag warning">Рейтинг за секс</span>
-                            <span class="fic-tag warning">Упоминания алкоголя</span>
-                            <span class="fic-tag warning">Упоминания курения</span>
-                            <span class="fic-tag warning">Частичный ООС</span>
+                            <button class="spoiler-btn" onclick="toggleSpoiler(this)">+ спойлеры</button>
+                            <span class="spoiler-tags">
+                                <span class="fic-tag warning">Рейтинг за секс</span>
+                                <span class="fic-tag warning">Упоминания алкоголя</span>
+                                <span class="fic-tag warning">Упоминания курения</span>
+                                <span class="fic-tag warning">Частичный ООС</span>
+                            </span>
                         </div>
                         <div class="fic-meta">
                             <span>◈ 12 стр.</span>
                             <span>✎ 4 163 слова</span>
-                            <span>◇ 2 главы</span>
+                            <span>▤ 2 главы</span>
                             <span>↻ 26.07.2025</span>
                         </div>
                         <a href="#" class="fic-read-btn">Читать →</a>
@@ -1069,6 +1074,7 @@
             </div>
         </section>
 
+        <!-- ЗАВЕРШЁННЫЕ -->
         <section class="section" id="completed">
             <div class="section-header">
                 <span class="section-number">02</span>
@@ -1077,6 +1083,7 @@
             </div>
 
             <div class="fics-grid">
+                <!-- 3. Когда умирают ангелы -->
                 <article class="fic-card">
                     <div class="fic-cover-wrap"><div class="fic-cover">☁</div></div>
                     <div class="fic-content">
@@ -1096,36 +1103,29 @@
                             <span class="fic-tag">Драма</span>
                             <span class="fic-tag warning">Алкоголь</span>
                             <span class="fic-tag warning">Внутренняя гомофобия</span>
-                            <span class="fic-tag warning">Курение</span>
-                            <span class="fic-tag warning">ООС</span>
-                            <span class="fic-tag warning">Упоминания изнасилования</span>
-                            <span class="fic-tag warning">Упоминания наркотиков</span>
-                            <span class="fic-tag warning">Упоминания насилия</span>
-                            <span class="fic-tag warning">Упоминания религии</span>
-                            <button class="spoiler-toggle" onclick="toggleSpoiler(this)">▼ Спойлеры</button>
-                        </div>
-                        <div class="spoiler-content">
-                            <span class="fic-tag">Анальный секс</span>
-                            <span class="fic-tag">Боязнь привязанности</span>
-                            <span class="fic-tag">Заболевания</span>
-                            <span class="fic-tag">Защищенный секс</span>
-                            <span class="fic-tag">Кризис ориентации</span>
-                            <span class="fic-tag">Минет</span>
-                            <span class="fic-tag">Нежный секс</span>
-                            <span class="fic-tag">Синдром религиозной травмы</span>
-                            <span class="fic-tag">Смертельные заболевания</span>
-                            <span class="fic-tag">Элементы мистики</span>
+                            <button class="spoiler-btn" onclick="toggleSpoiler(this)">+ спойлеры</button>
+                            <span class="spoiler-tags">
+                                <span class="fic-tag warning">Курение</span>
+                                <span class="fic-tag warning">ООС</span>
+                                <span class="fic-tag warning">Упоминания изнасилования</span>
+                                <span class="fic-tag warning">Упоминания наркотиков</span>
+                                <span class="fic-tag warning">Упоминания насилия</span>
+                                <span class="fic-tag warning">Упоминания религии</span>
+                                <span class="fic-tag">Синдром религиозной травмы</span>
+                                <span class="fic-tag">Смертельные заболевания</span>
+                            </span>
                         </div>
                         <div class="fic-meta">
                             <span>◈ 417 стр.</span>
                             <span>✎ 139 838 слов</span>
-                            <span>◇ 54 главы</span>
+                            <span>▤ 54 главы</span>
                             <span>✓ 18.08.2025</span>
                         </div>
                         <a href="#" class="fic-read-btn">Читать →</a>
                     </div>
                 </article>
 
+                <!-- 4. Горький вкус -->
                 <article class="fic-card">
                     <div class="fic-cover-wrap"><div class="fic-cover">◈</div></div>
                     <div class="fic-content">
@@ -1136,7 +1136,7 @@
                         </div>
                         <a href="#" class="fic-title">Горький вкус твоих таблеток</a>
                         <p class="fic-pairing">Странник / Кадзуха Каэдэхара</p>
-                        <p class="fic-characters">Райдэн Эи, Горо, Сяо, Венти, Чжун Ли, Тарталья, Томо, Нин Гуан, Бэй Доу</p>
+                        <p class="fic-characters">Странник, Райдэн Эи, Горо, Сяо, Венти, Чжун Ли, Тарталья, Томо, Нин Гуан, Бэй Доу</p>
                         <div class="fic-description">Психолог сказал мне: «Нужно жить дальше». Я послал его к черту…</div>
                         <div class="fic-tags">
                             <span class="fic-tag">AU</span>
@@ -1147,40 +1147,29 @@
                             <span class="fic-tag">Флафф</span>
                             <span class="fic-tag warning">Курение</span>
                             <span class="fic-tag warning">ООС</span>
-                            <span class="fic-tag warning">Психологические травмы</span>
-                            <span class="fic-tag warning">Упоминания алкоголя</span>
-                            <span class="fic-tag warning">Упоминания селфхарма</span>
-                            <span class="fic-tag warning">Упоминания смертей</span>
-                            <button class="spoiler-toggle" onclick="toggleSpoiler(this)">▼ Спойлеры</button>
-                        </div>
-                        <div class="spoiler-content">
-                            <span class="fic-tag">Громкий секс</span>
-                            <span class="fic-tag">Заболевания</span>
-                            <span class="fic-tag">Защищенный секс</span>
-                            <span class="fic-tag">Инвалидность</span>
-                            <span class="fic-tag">Кинк на похвалу</span>
-                            <span class="fic-tag">Мастурбация</span>
-                            <span class="fic-tag">Минет</span>
-                            <span class="fic-tag">Нежный секс</span>
-                            <span class="fic-tag">Разница в возрасте</span>
-                            <span class="fic-tag">Римминг</span>
-                            <span class="fic-tag">Секс-игрушки</span>
-                            <span class="fic-tag">Сексуальная неопытность</span>
-                            <span class="fic-tag">Стимуляция руками</span>
-                            <span class="fic-tag">Эротические фантазии</span>
+                            <button class="spoiler-btn" onclick="toggleSpoiler(this)">+ спойлеры</button>
+                            <span class="spoiler-tags">
+                                <span class="fic-tag warning">Психологические травмы</span>
+                                <span class="fic-tag warning">Упоминания алкоголя</span>
+                                <span class="fic-tag warning">Упоминания селфхарма</span>
+                                <span class="fic-tag warning">Упоминания смертей</span>
+                                <span class="fic-tag">Инвалидность</span>
+                                <span class="fic-tag">Разница в возрасте</span>
+                            </span>
                         </div>
                         <div class="fic-meta">
                             <span>◈ 366 стр.</span>
                             <span>✎ 120 200 слов</span>
-                            <span>◇ 55 глав</span>
+                            <span>▤ 55 глав</span>
                             <span>✓ 31.10.2024</span>
                         </div>
                         <a href="#" class="fic-read-btn">Читать →</a>
                     </div>
                 </article>
 
+                <!-- 5. Философия бытия -->
                 <article class="fic-card">
-                    <div class="fic-cover-wrap"><div class="fic-cover">☆</div></div>
+                    <div class="fic-cover-wrap"><div class="fic-cover">▦</div></div>
                     <div class="fic-content">
                         <div class="fic-badges">
                             <span class="fic-badge slash">Слэш</span>
@@ -1196,32 +1185,24 @@
                             <span class="fic-tag">Hurt/Comfort</span>
                             <span class="fic-tag">Ангст</span>
                             <span class="fic-tag">Флафф</span>
+                            <span class="fic-tag">AU: Школа</span>
                             <span class="fic-tag warning">Алкоголь</span>
                             <span class="fic-tag warning">Внутренняя гомофобия</span>
                             <span class="fic-tag warning">Курение</span>
-                            <span class="fic-tag warning">Частичный ООС</span>
-                            <button class="spoiler-toggle" onclick="toggleSpoiler(this)">▼ Спойлеры</button>
-                        </div>
-                        <div class="spoiler-content">
-                            <span class="fic-tag">AU: Школа</span>
-                            <span class="fic-tag">Защищенный секс</span>
-                            <span class="fic-tag">Нежный секс</span>
-                            <span class="fic-tag">Незащищенный секс</span>
-                            <span class="fic-tag">Сексуальная неопытность</span>
-                            <span class="fic-tag">Стимуляция руками</span>
                         </div>
                         <div class="fic-meta">
                             <span>◈ 110 стр.</span>
                             <span>✎ 32 999 слов</span>
-                            <span>◇ 20 глав</span>
+                            <span>▤ 20 глав</span>
                             <span>✓ 24.06.2024</span>
                         </div>
                         <a href="#" class="fic-read-btn">Читать →</a>
                     </div>
                 </article>
 
+                <!-- 6. Я только танцую -->
                 <article class="fic-card">
-                    <div class="fic-cover-wrap"><div class="fic-cover">✧</div></div>
+                    <div class="fic-cover-wrap"><div class="fic-cover">❀</div></div>
                     <div class="fic-content">
                         <div class="fic-badges">
                             <span class="fic-badge slash">Слэш</span>
@@ -1238,32 +1219,27 @@
                             <span class="fic-tag warning">Курение</span>
                             <span class="fic-tag warning">ООС</span>
                             <span class="fic-tag warning">Попытка изнасилования</span>
-                            <span class="fic-tag warning">Упоминания алкоголя</span>
-                            <span class="fic-tag warning">Упоминания курения</span>
-                            <span class="fic-tag warning">Упоминания наркотиков</span>
-                            <button class="spoiler-toggle" onclick="toggleSpoiler(this)">▼ Спойлеры</button>
-                        </div>
-                        <div class="spoiler-content">
-                            <span class="fic-tag">Защищенный секс</span>
-                            <span class="fic-tag">Нежный секс</span>
-                            <span class="fic-tag">Неловкий секс</span>
-                            <span class="fic-tag">Приватный танец</span>
-                            <span class="fic-tag">Сексуальная неопытность</span>
-                            <span class="fic-tag">Стрип-клубы</span>
-                            <span class="fic-tag">Универсалы</span>
+                            <button class="spoiler-btn" onclick="toggleSpoiler(this)">+ спойлеры</button>
+                            <span class="spoiler-tags">
+                                <span class="fic-tag warning">Упоминания алкоголя</span>
+                                <span class="fic-tag warning">Упоминания курения</span>
+                                <span class="fic-tag warning">Упоминания наркотиков</span>
+                                <span class="fic-tag">Стрип-клубы</span>
+                            </span>
                         </div>
                         <div class="fic-meta">
                             <span>◈ 226 стр.</span>
                             <span>✎ 69 145 слов</span>
-                            <span>◇ 31 глава</span>
+                            <span>▤ 31 глава</span>
                             <span>✓ 09.06.2024</span>
                         </div>
                         <a href="#" class="fic-read-btn">Читать →</a>
                     </div>
                 </article>
 
+                <!-- 7. Да все окей -->
                 <article class="fic-card">
-                    <div class="fic-cover-wrap"><div class="fic-cover">♡</div></div>
+                    <div class="fic-cover-wrap"><div class="fic-cover">✧</div></div>
                     <div class="fic-content">
                         <div class="fic-badges">
                             <span class="fic-badge slash">Слэш</span>
@@ -1275,22 +1251,23 @@
                         <div class="fic-description">Рано… Ты пока не готов к этому.</div>
                         <div class="fic-tags">
                             <span class="fic-tag">Флафф</span>
+                            <span class="fic-tag">Драббл</span>
                             <span class="fic-tag warning">Намеки на отношения</span>
                             <span class="fic-tag warning">Намеки на секс</span>
-                            <span class="fic-tag">Драббл</span>
                         </div>
                         <div class="fic-meta">
                             <span>◈ 4 стр.</span>
                             <span>✎ 1 659 слов</span>
-                            <span>◇ 1 глава</span>
+                            <span>▤ 1 глава</span>
                             <span>✓ 09.07.2023</span>
                         </div>
                         <a href="#" class="fic-read-btn">Читать →</a>
                     </div>
                 </article>
 
+                <!-- 8. Общая вина -->
                 <article class="fic-card">
-                    <div class="fic-cover-wrap"><div class="fic-cover">◆</div></div>
+                    <div class="fic-cover-wrap"><div class="fic-cover">⚖</div></div>
                     <div class="fic-content">
                         <div class="fic-badges">
                             <span class="fic-badge slash">Слэш</span>
@@ -1310,31 +1287,27 @@
                             <span class="fic-tag warning">Жестокость</span>
                             <span class="fic-tag warning">Курение</span>
                             <span class="fic-tag warning">ООС</span>
-                            <span class="fic-tag warning">Упоминания изнасилования</span>
-                            <button class="spoiler-toggle" onclick="toggleSpoiler(this)">▼ Спойлеры</button>
-                        </div>
-                        <div class="spoiler-content">
-                            <span class="fic-tag">Боязнь привязанности</span>
-                            <span class="fic-tag">Дружба</span>
-                            <span class="fic-tag">Заболевания</span>
-                            <span class="fic-tag">Любовь/Ненависть</span>
-                            <span class="fic-tag">Расстройства шизофренического спектра</span>
-                            <span class="fic-tag">Селфхарм</span>
-                            <span class="fic-tag">Школьники</span>
-                            <span class="fic-tag">Элементы гета</span>
+                            <button class="spoiler-btn" onclick="toggleSpoiler(this)">+ спойлеры</button>
+                            <span class="spoiler-tags">
+                                <span class="fic-tag warning">Упоминания изнасилования</span>
+                                <span class="fic-tag">Расстройства шизофренического спектра</span>
+                                <span class="fic-tag">Селфхарм</span>
+                                <span class="fic-tag">Школьники</span>
+                            </span>
                         </div>
                         <div class="fic-meta">
                             <span>◈ 152 стр.</span>
                             <span>✎ 66 408 слов</span>
-                            <span>◇ 35 глав</span>
+                            <span>▤ 35 глав</span>
                             <span>✓ 31.05.2023</span>
                         </div>
                         <a href="#" class="fic-read-btn">Читать →</a>
                     </div>
                 </article>
 
+                <!-- 9. Жди меня, Кадзуха -->
                 <article class="fic-card">
-                    <div class="fic-cover-wrap"><div class="fic-cover">☾</div></div>
+                    <div class="fic-cover-wrap"><div class="fic-cover">☂</div></div>
                     <div class="fic-content">
                         <div class="fic-badges">
                             <span class="fic-badge slash">Слэш</span>
@@ -1350,21 +1323,21 @@
                             <span class="fic-tag warning">Курение</span>
                             <span class="fic-tag warning">ООС</span>
                             <span class="fic-tag warning">Упоминания смертей</span>
-                            <span class="fic-tag">Заболевания</span>
                             <span class="fic-tag">Смертельные заболевания</span>
                         </div>
                         <div class="fic-meta">
                             <span>◈ 3 стр.</span>
                             <span>✎ 856 слов</span>
-                            <span>◇ 1 глава</span>
+                            <span>▤ 1 глава</span>
                             <span>✓ 23.05.2023</span>
                         </div>
                         <a href="#" class="fic-read-btn">Читать →</a>
                     </div>
                 </article>
 
+                <!-- 10. Ночной пешеход -->
                 <article class="fic-card">
-                    <div class="fic-cover-wrap"><div class="fic-cover">★</div></div>
+                    <div class="fic-cover-wrap"><div class="fic-cover">☾</div></div>
                     <div class="fic-content">
                         <div class="fic-badges">
                             <span class="fic-badge slash">Слэш</span>
@@ -1377,24 +1350,25 @@
                         <div class="fic-tags">
                             <span class="fic-tag">AU</span>
                             <span class="fic-tag">Флафф</span>
+                            <span class="fic-tag">Философия</span>
                             <span class="fic-tag warning">Курение</span>
                             <span class="fic-tag warning">Намеки на отношения</span>
                             <span class="fic-tag warning">Намеки на секс</span>
                             <span class="fic-tag warning">Упоминания смертей</span>
-                            <span class="fic-tag">Философия</span>
                         </div>
                         <div class="fic-meta">
                             <span>◈ 9 стр.</span>
                             <span>✎ 2 694 слова</span>
-                            <span>◇ 3 главы</span>
+                            <span>▤ 3 главы</span>
                             <span>✓ 27.02.2023</span>
                         </div>
                         <a href="#" class="fic-read-btn">Читать →</a>
                     </div>
                 </article>
 
+                <!-- 11. Стань частью моего сценария -->
                 <article class="fic-card">
-                    <div class="fic-cover-wrap"><div class="fic-cover">❀</div></div>
+                    <div class="fic-cover-wrap"><div class="fic-cover">≈</div></div>
                     <div class="fic-content">
                         <div class="fic-badges">
                             <span class="fic-badge slash">Слэш</span>
@@ -1406,16 +1380,16 @@
                         <div class="fic-description">Парень не верил, что в его жизни хоть что-то может пойти не по сценарию.</div>
                         <div class="fic-tags">
                             <span class="fic-tag">AU</span>
-                            <span class="fic-tag">Боязнь привязанности</span>
                             <span class="fic-tag">Русалки</span>
                             <span class="fic-tag">Философия</span>
+                            <span class="fic-tag">Боязнь привязанности</span>
                             <span class="fic-tag">Элементы мистики</span>
                             <span class="fic-tag">Элементы флаффа</span>
                         </div>
                         <div class="fic-meta">
                             <span>◈ 8 стр.</span>
                             <span>✎ 2 647 слов</span>
-                            <span>◇ 1 глава</span>
+                            <span>▤ 1 глава</span>
                             <span>✓ 07.01.2023</span>
                         </div>
                         <a href="#" class="fic-read-btn">Читать →</a>
@@ -1432,13 +1406,14 @@
             <span></span>
         </div>
         <div class="footer-links">
-            <a href="https://ficbook.net/authors/7774941" target="_blank">Профиль на Фикбуке</a>
+            <a href="https://ficbook.net/authors/7774941#content" target="_blank">Профиль на Фикбуке</a>
             <a href="https://kykaaj.github.io/yablochny-preset/" target="_blank">Разработчик сайта</a>
         </div>
         <p class="footer-credit">Сделано с ♡ для фандома</p>
     </footer>
 
     <script>
+        // === ИНТЕРАКТИВНЫЙ ФОН ===
         const canvas = document.getElementById('bg-particles');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -1510,6 +1485,7 @@
         }
         animate();
 
+        // === КУРСОР ===
         const isMobile = window.matchMedia('(hover: none)').matches || window.matchMedia('(pointer: coarse)').matches;
 
         if (!isMobile) {
@@ -1538,15 +1514,17 @@
             });
         }
 
+        // === SCROLL TOP ===
         const scrollBtn = document.getElementById('scrollTop');
         window.addEventListener('scroll', () => {
             scrollBtn.classList.toggle('visible', window.scrollY > 500);
         });
 
+        // === СПОЙЛЕРЫ ===
         function toggleSpoiler(btn) {
-            const content = btn.parentElement.nextElementSibling;
-            content.classList.toggle('visible');
-            btn.textContent = content.classList.contains('visible') ? '▲ Скрыть' : '▼ Спойлеры';
+            const spoilerTags = btn.nextElementSibling;
+            spoilerTags.classList.toggle('visible');
+            btn.textContent = spoilerTags.classList.contains('visible') ? '− спойлеры' : '+ спойлеры';
         }
     </script>
 </body>
