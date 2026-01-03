@@ -3,598 +3,1200 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Библиотека Kris_mem_2222</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Подключаем красивые шрифты -->
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,400&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <title>Kris_mem_2222 | Фанфики</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0d0d12;
+            --bg-secondary: #151520;
+            --bg-card: #1a1a28;
+            --bg-card-hover: #222235;
+            --accent-primary: #9d4edd;
+            --accent-secondary: #e879a9;
+            --accent-tertiary: #f4a4ba;
+            --text-primary: #e8e6f0;
+            --text-secondary: #a8a6b8;
+            --text-muted: #6b6980;
+            --border-subtle: rgba(157, 78, 221, 0.2);
+            --glow: rgba(157, 78, 221, 0.4);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* ===== ИНТЕРАКТИВНЫЙ ФОН С ЛЕПЕСТКАМИ ===== */
+        #petals-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Градиентный оверлей */
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(157, 78, 221, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(232, 121, 169, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(244, 164, 186, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ===== ОСНОВНОЙ КОНТЕЙНЕР ===== */
+        .main-container {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* ===== ШАПКА С АВТОРОМ ===== */
+        .author-header {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            padding: 40px;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%);
+            border-radius: 24px;
+            border: 1px solid var(--border-subtle);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .author-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary), var(--accent-tertiary));
+        }
+
+        /* Место для арта в шапке - декоративный блок справа */
+        .header-art-space {
+            position: absolute;
+            right: -20px;
+            top: -20px;
+            width: 300px;
+            height: 350px;
+            background: linear-gradient(135deg, rgba(157, 78, 221, 0.1) 0%, transparent 100%);
+            border-radius: 0 0 0 100px;
+            opacity: 0.5;
+            /* Сюда можно вставить арт как background-image */
+            /* background-image: url('путь-к-арту.jpg'); */
+            /* background-size: cover; */
+            /* background-position: center; */
+        }
+
+        .author-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            flex-shrink: 0;
+            box-shadow: 0 0 30px var(--glow);
+            animation: pulse 3s ease-in-out infinite;
+            /* Замени на реальную аву: */
+            /* background-image: url('ава.jpg'); */
+            /* background-size: cover; */
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 30px var(--glow); }
+            50% { box-shadow: 0 0 50px var(--glow), 0 0 80px rgba(232, 121, 169, 0.3); }
+        }
+
+        .author-info {
+            flex: 1;
+            z-index: 1;
+        }
+
+        .author-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-tertiary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .author-desc {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .author-stats {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .stat-icon {
+            font-size: 1.2rem;
+        }
+
+        .stat-value {
+            color: var(--accent-secondary);
+            font-weight: 600;
+        }
+
+        /* ===== ДЕКОРАТИВНЫЕ АРТ-ЗОНЫ ПО БОКАМ ===== */
+        .side-art {
+            position: fixed;
+            width: 200px;
+            height: 400px;
+            pointer-events: none;
+            opacity: 0.15;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            transition: opacity 0.3s;
+            z-index: 1;
+            /* Добавь сюда арты: */
+            /* background-image: url('арт.jpg'); */
+        }
+
+        .side-art:hover {
+            opacity: 0.3;
+            pointer-events: auto;
+        }
+
+        .side-art.left {
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .side-art.right {
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* ===== ФИЛЬТРЫ И ПОИСК ===== */
+        .filters-section {
+            margin-bottom: 30px;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .filters-row {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 30px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px var(--glow);
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 30px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 20px var(--glow);
+        }
+
+        .search-box::before {
+            content: '🔍';
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.1rem;
+        }
+
+        /* ===== СЕТКА ФАНФИКОВ ===== */
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 25px;
+        }
+
+        /* ===== КАРТОЧКА ФАНФИКА ===== */
+        .work-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            border: 1px solid var(--border-subtle);
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: fadeInUp 0.6s ease-out both;
+            position: relative;
+        }
+
+        .work-card:nth-child(1) { animation-delay: 0.1s; }
+        .work-card:nth-child(2) { animation-delay: 0.15s; }
+        .work-card:nth-child(3) { animation-delay: 0.2s; }
+        .work-card:nth-child(4) { animation-delay: 0.25s; }
+        .work-card:nth-child(5) { animation-delay: 0.3s; }
+        .work-card:nth-child(6) { animation-delay: 0.35s; }
+
+        .work-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--accent-primary);
+            box-shadow:
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                0 0 30px var(--glow);
+        }
+
+        .work-card.read {
+            opacity: 0.7;
+        }
+
+        .work-card.read::after {
+            content: '✓ Прочитано';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #2d8a4e, #4ade80);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            z-index: 10;
+        }
+
+        /* Верхняя часть карточки с градиентом */
+        .card-header {
+            height: 120px;
+            background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 50%, var(--accent-tertiary) 100%);
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            padding: 15px;
+        }
+
+        .card-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(26, 26, 40, 0.9) 0%, transparent 100%);
+        }
+
+        .status-badge {
+            position: relative;
+            z-index: 1;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-badge.completed {
+            background: linear-gradient(135deg, #059669, #10b981);
+            color: white;
+        }
+
+        .status-badge.in-progress {
+            background: linear-gradient(135deg, #d97706, #fbbf24);
+            color: #1a1a28;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .work-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            line-height: 1.3;
+            transition: color 0.3s;
+        }
+
+        .work-card:hover .work-title {
+            color: var(--accent-tertiary);
+        }
+
+        .work-pairing {
+            color: var(--accent-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .work-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            font-style: italic;
+        }
+
+        .work-meta {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Теги/Жанры */
+        .work-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .tag {
+            padding: 4px 10px;
+            background: rgba(157, 78, 221, 0.15);
+            border: 1px solid rgba(157, 78, 221, 0.3);
+            border-radius: 12px;
+            font-size: 0.75rem;
+            color: var(--accent-tertiary);
+            transition: all 0.3s;
+        }
+
+        .tag:hover {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        .tag.warning {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+        }
+
+        /* Кнопки карточки */
+        .card-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px var(--glow);
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-card-hover);
+            color: var(--text-primary);
+        }
+
+        .btn-read-toggle {
+            padding: 12px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+        }
+
+        .btn-read-toggle:hover {
+            background: linear-gradient(135deg, #059669, #10b981);
+            border-color: transparent;
+        }
+
+        .btn-read-toggle.is-read {
+            background: linear-gradient(135deg, #059669, #10b981);
+            border-color: transparent;
+        }
+
+        /* ===== АНИМАЦИИ ===== */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== ФУТЕР ===== */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .footer a {
+            color: var(--accent-secondary);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== АДАПТИВНОСТЬ ===== */
+        @media (max-width: 900px) {
+            .side-art {
+                display: none;
+            }
+
+            .header-art-space {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .author-header {
+                flex-direction: column;
+                text-align: center;
+                padding: 30px 20px;
+            }
+
+            .author-name {
+                font-size: 2rem;
+            }
+
+            .author-stats {
+                justify-content: center;
+            }
+
+            .works-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters-row {
+                flex-direction: column;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .filter-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-container {
+                padding: 10px;
+            }
+
+            .card-body {
+                padding: 15px;
+            }
+
+            .work-title {
+                font-size: 1.2rem;
+            }
+
+            .card-actions {
+                flex-direction: column;
+            }
+        }
+
+        /* ===== СКРОЛЛБАР ===== */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--accent-primary), var(--accent-secondary));
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(var(--accent-secondary), var(--accent-tertiary));
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Интерактивный фон (частицы) -->
-    <canvas id="canvas-bg"></canvas>
+    <!-- Интерактивный фон с лепестками -->
+    <canvas id="petals-canvas"></canvas>
 
-    <!-- Шапка сайта -->
-    <header class="glass-header">
-        <div class="author-profile">
-            <!-- Сюда положишь аватарку в папку images и назовешь avatar.jpg -->
-            <img src="images/avatar.jpg" alt="Kris_mem_2222" class="avatar" onerror="this.src='https://placehold.co/100x100/5f4b8b/fff?text=K'">
-            <div class="author-info">
-                <h1>Kris_mem_2222</h1>
-                <p>Любимые истории по Genshin Impact</p>
+    <!-- Градиентный оверлей -->
+    <div class="bg-gradient"></div>
+
+    <!-- Декоративные зоны для артов по бокам -->
+    <div class="side-art left" style="/* background-image: url('арт1.jpg'); */">
+        <!-- Сюда можно вставить арт -->
+    </div>
+    <div class="side-art right" style="/* background-image: url('арт2.jpg'); */">
+        <!-- Сюда можно вставить арт -->
+    </div>
+
+    <div class="main-container">
+
+        <!-- ===== ШАПКА АВТОРА ===== -->
+        <header class="author-header">
+            <div class="header-art-space">
+                <!-- Место для декоративного арта в шапке -->
             </div>
-        </div>
-    </header>
 
-    <!-- Место для красивого арта с КадзуСкарами -->
-    <div class="art-banner">
-        <!-- Замени src на свой арт -->
-        <img src="images/kazuscara_banner.jpg" alt="KazuScara Art" class="hero-art" onerror="this.style.display='none'">
+            <div class="author-avatar">
+                ✨
+                <!-- Замени на: <img src="аватар.jpg" alt="Avatar" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"> -->
+            </div>
+
+            <div class="author-info">
+                <h1 class="author-name">Kris_mem_2222</h1>
+                <p class="author-desc">Фанфики по Genshin Impact • Кадзуха × Странник</p>
+                <div class="author-stats">
+                    <div class="stat">
+                        <span class="stat-icon">📚</span>
+                        <span><span class="stat-value">11</span> работ</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-icon">📄</span>
+                        <span><span class="stat-value">440K+</span> слов</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-icon">❤️</span>
+                        <span><span class="stat-value">4000+</span> лайков</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- ===== ФИЛЬТРЫ ===== -->
+        <section class="filters-section">
+            <div class="filters-row">
+                <button class="filter-btn active" data-filter="all">Все работы</button>
+                <button class="filter-btn" data-filter="completed">✓ Завершённые</button>
+                <button class="filter-btn" data-filter="in-progress">⏳ В процессе</button>
+                <button class="filter-btn" data-filter="unread">📖 Не прочитано</button>
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="Поиск по названию...">
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== СЕТКА РАБОТ ===== -->
+        <main class="works-grid" id="works-grid">
+
+            <!-- КАРТОЧКА 1 -->
+            <article class="work-card" data-id="gorkiy-vkus" data-status="completed">
+                <div class="card-header">
+                    <span class="status-badge completed">Завершён</span>
+                </div>
+                <div class="card-body">
+                    <h2 class="work-title">Горький вкус твоих таблеток</h2>
+                    <div class="work-pairing">💜 Странник/Кадзуха</div>
+                    <p class="work-description">Психолог сказал мне: «Нужно жить дальше». Я послал его к черту…</p>
+                    <div class="work-meta">
+                        <span class="meta-item">📄 120 200 слов</span>
+                        <span class="meta-item">📑 55 глав</span>
+                        <span class="meta-item">⭐ 1186</span>
+                    </div>
+                    <div class="work-tags">
+                        <span class="tag">AU</span>
+                        <span class="tag">Hurt/Comfort</span>
+                        <span class="tag">Ангст</span>
+                        <span class="tag">Психология</span>
+                        <span class="tag warning">NC-17</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="works/gorkiy-vkus.html" class="btn btn-primary">Читать</a>
+                        <button class="btn-read-toggle" onclick="toggleRead('gorkiy-vkus', this)" title="Отметить прочитанным">📖</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- КАРТОЧКА 2 -->
+            <article class="work-card" data-id="obshaya-vina" data-status="completed">
+                <div class="card-header">
+                    <span class="status-badge completed">Завершён</span>
+                </div>
+                <div class="card-body">
+                    <h2 class="work-title">Общая вина</h2>
+                    <div class="work-pairing">💜 Кадзуха/Странник</div>
+                    <p class="work-description">Развяжет один узел — придётся перематывать весь клубок…</p>
+                    <div class="work-meta">
+                        <span class="meta-item">📄 66 408 слов</span>
+                        <span class="meta-item">📑 35 глав</span>
+                        <span class="meta-item">⭐ 1492</span>
+                    </div>
+                    <div class="work-tags">
+                        <span class="tag">AU</span>
+                        <span class="tag">Hurt/Comfort</span>
+                        <span class="tag">Драма</span>
+                        <span class="tag">Школьники</span>
+                        <span class="tag warning">NC-17</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="works/obshaya-vina.html" class="btn btn-primary">Читать</a>
+                        <button class="btn-read-toggle" onclick="toggleRead('obshaya-vina', this)" title="Отметить прочитанным">📖</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- КАРТОЧКА 3 -->
+            <article class="work-card" data-id="ya-tolko-tancuyu" data-status="completed">
+                <div class="card-header">
+                    <span class="status-badge completed">Завершён</span>
+                </div>
+                <div class="card-body">
+                    <h2 class="work-title">Я только танцую</h2>
+                    <div class="work-pairing">💜 Кадзуха/Странник</div>
+                    <p class="work-description">«Я стриптизер, а не проститутка», представляешь, что сказал?! А я ему такие деньжища за продолжение приятного вечера предлагал!</p>
+                    <div class="work-meta">
+                        <span class="meta-item">📄 69 145 слов</span>
+                        <span class="meta-item">📑 31 глава</span>
+                        <span class="meta-item">⭐ 620</span>
+                    </div>
+                    <div class="work-tags">
+                        <span class="tag">AU</span>
+                        <span class="tag">Стрип-клубы</span>
+                        <span class="tag warning">NC-17</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="works/ya-tolko-tancuyu.html" class="btn btn-primary">Читать</a>
+                        <button class="btn-read-toggle" onclick="toggleRead('ya-tolko-tancuyu', this)" title="Отметить прочитанным">📖</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- КАРТОЧКА 4 -->
+            <article class="work-card" data-id="filosofiya-bytiya" data-status="completed">
+                <div class="card-header">
+                    <span class="status-badge completed">Завершён</span>
+                </div>
+                <div class="card-body">
+                    <h2 class="work-title">Философия бытия через призму общаги</h2>
+                    <div class="work-pairing">💜 Кадзуха/Странник</div>
+                    <p class="work-description">— Можно тебя обнять, пожалуйста? Просто по-дружески? — ага, и спим мы просто по-дружески.</p>
+                    <div class="work-meta">
+                        <span class="meta-item">📄 32 999 слов</span>
+                        <span class="meta-item">📑 20 глав</span>
+                        <span class="meta-item">⭐ 468</span>
+                    </div>
+                    <div class="work-tags">
+                        <span class="tag">AU</span>
+                        <span class="tag">AU: Школа</span>
+                        <span class="tag">Флафф</span>
+                        <span class="tag warning">NC-17</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="works/filosofiya-bytiya.html" class="btn btn-primary">Читать</a>
+                        <button class="btn-read-toggle" onclick="toggleRead('filosofiya-bytiya', this)" title="Отметить прочитанным">📖</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- КАРТОЧКА 5 -->
+            <article class="work-card" data-id="kogda-umirayut-angely" data-status="completed">
+                <div class="card-header">
+                    <span class="status-badge completed">Завершён</span>
+                </div>
+                <div class="card-body">
+                    <h2 class="work-title">Когда умирают ангелы</h2>
+                    <div class="work-pairing">💜 Кадзуха/Странник</div>
+                    <p class="work-description">Свободная душа, запертая в несвободном теле, не сможет обрести счастье. Кадзуха стал заложником обстоятельств, которые перечеркнули его жизнь, не оставляя и капли надежды на хоть какое-то будущее.</p>
+                    <div class="work-meta">
+                        <span class="meta-item">📄 139 838 слов</span>
+                        <span class="meta-item">📑 54 главы</span>
+                        <span class="meta-item">⭐ 331</span>
+                    </div>
+                    <div class="work-tags">
+                        <span class="tag">AU</span>
+                        <span class="tag">Hurt/Comfort</span>
+                        <span class="tag">Ангст</span>
+                        <span class="tag">Драма</span>
+                        <span class="tag warning">NC-17</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="works/kogda-umirayut-angely.html" class="btn btn-primary">Читать</a>
+                        <button class="btn-read-toggle" onclick="toggleRead('kogda-umirayut-angely', this)" title="Отметить прочитанным">📖</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- КАРТОЧКА 6 -->
+            <article class="work-card" data-id="pyat-prichin" data-status="in-progress">
+                <div class="card-header">
+                    <span class="status-badge in-progress">В процессе</span>
+                </div>
+                <div class="card-body">
+                    <h2 class="work-title">Пять причин, почему я сплю с ножом</h2>
+                    <div class="work-pairing">💜 Кадзуха/Странник</div>
+                    <p class="work-description">Так и жил он с постоянной готовностью к двум вещам: сесть в тюрьму за чье-нибудь убийство или умереть от паранойи. Или просто жизнь официанта, которому впервые вместо просьбы переделать заказ поступило предложение сходить на свидание.</p>
+                    <div class="work-meta">
+                        <span class="meta-item">📄 15 458 слов</span>
+                        <span class="meta-item">📑 6 глав</span>
+                        <span class="meta-item">⭐ 60</span>
+                    </div>
+                    <div class="work-tags">
+                        <span class="tag">AU</span>
+                        <span class="tag">Hurt/Comfort</span>
+                        <span class="tag">Романтика</span>
+                        <span class="tag">Юмор</span>
+                        <span class="tag warning">NC-17</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="works/pyat-prichin.html" class="btn btn-primary">Читать</a>
+                        <button class="btn-read-toggle" onclick="toggleRead('pyat-prichin', this)" title="Отметить прочитанным">📖</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- КАРТОЧКА 7 -->
+            <article class="work-card" data-id="skripichniy-kluch" data-status="in-progress">
+                <div class="card-header">
+                    <span class="status-badge in-progress">В процессе</span>
+                </div>
+                <div class="card-body">
+                    <h2 class="work-title">Скрипичный ключ к сердцу</h2>
+                    <div class="work-pairing">💜 Кадзуха/Странник</div>
+                    <p class="work-description">Живя свою спокойную, даже рутинную жизнь, Кадзуха и не догадывался о том, что в нее можно было так просто вмешаться и пошатнуть некогда выверенное равновесие.</p>
+                    <div class="work-meta">
+                        <span class="meta-item">📄 4 163 слова</span>
+                        <span class="meta-item">📑 2 главы</span>
+                        <span class="meta-item">⭐ 22</span>
+                    </div>
+                    <div class="work-tags">
+                        <span class="tag">AU</span>
+                        <span class="tag">AU: Школа</span>
+                        <span class="tag">Флафф</span>
+                        <span class="tag warning">NC-17</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="works/skripichniy-kluch.html" class="btn btn-primary">Читать</a>
+                        <button class="btn-read-toggle" onclick="toggleRead('skripichniy-kluch', this)" title="Отметить прочитанным">📖</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- КАРТОЧКА 8 -->
+            <article class="work-card" data-id="da-vse-okei" data-status="completed">
+                <div class="card-header">
+                    <span class="status-badge completed">Завершён</span>
+                </div>
+                <div class="card-body">
+                    <h2 class="work-title">Да все окей</h2>
+                    <div class="work-pairing">💜 Кадзуха/Странник</div>
+                    <p class="work-description">Рано… Ты пока не готов к этому.</p>
+                    <div class="work-meta">
+                        <span class="meta-item">📄 1 659 слов</span>
+                        <span class="meta-item">📑 1 часть</span>
+                        <span class="meta-item">⭐ 208</span>
+                    </div>
+                    <div class="work-tags">
+                        <span class="tag">Флафф</span>
+                        <span class="tag">Драббл</span>
+                        <span class="tag warning">NC-17</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="works/da-vse-okei.html" class="btn btn-primary">Читать</a>
+                        <button class="btn-read-toggle" onclick="toggleRead('da-vse-okei', this)" title="Отметить прочитанным">📖</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- КАРТОЧКА 9 -->
+            <article class="work-card" data-id="zhdi-menya" data-status="completed">
+                <div class="card-header">
+                    <span class="status-badge completed">Завершён</span>
+                </div>
+                <div class="card-body">
+                    <h2 class="work-title">Жди меня, Кадзуха…</h2>
+                    <div class="work-pairing">💜 Странник/Кадзуха</div>
+                    <p class="work-description">Сейчас, идя по мокрому асфальту и игнорируя бегущих людей вокруг, Скара улыбался…</p>
+                    <div class="work-meta">
+                        <span class="meta-item">📄 856 слов</span>
+                        <span class="meta-item">📑 1 часть</span>
+                    </div>
+                    <div class="work-tags">
+                        <span class="tag">AU</span>
+                        <span class="tag">Ангст</span>
+                        <span class="tag warning">Смерть персонажей</span>
+                        <span class="tag warning">NC-17</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="works/zhdi-menya.html" class="btn btn-primary">Читать</a>
+                        <button class="btn-read-toggle" onclick="toggleRead('zhdi-menya', this)" title="Отметить прочитанным">📖</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- КАРТОЧКА 10 -->
+            <article class="work-card" data-id="nochnoi-peshehod" data-status="completed">
+                <div class="card-header">
+                    <span class="status-badge completed">Завершён</span>
+                </div>
+                <div class="card-body">
+                    <h2 class="work-title">Ночной пешеход</h2>
+                    <div class="work-pairing">💜 Кадзуха/Странник</div>
+                    <p class="work-description">Что делать, если вся жизнь кажется обманом? Если все вокруг лишь иллюзия и ложь, которую ты по крупицам выстроил для собственного спокойствия.</p>
+                    <div class="work-meta">
+                        <span class="meta-item">📄 2 694 слова</span>
+                        <span class="meta-item">📑 3 части</span>
+                    </div>
+                    <div class="work-tags">
+                        <span class="tag">AU</span>
+                        <span class="tag">Флафф</span>
+                        <span class="tag">Философия</span>
+                        <span class="tag warning">NC-17</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="works/nochnoi-peshehod.html" class="btn btn-primary">Читать</a>
+                        <button class="btn-read-toggle" onclick="toggleRead('nochnoi-peshehod', this)" title="Отметить прочитанным">📖</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- КАРТОЧКА 11 -->
+            <article class="work-card" data-id="stan-chastyu" data-status="completed">
+                <div class="card-header">
+                    <span class="status-badge completed">Завершён</span>
+                </div>
+                <div class="card-body">
+                    <h2 class="work-title">Стань частью моего сценария</h2>
+                    <div class="work-pairing">💜 Странник/Кадзуха</div>
+                    <p class="work-description">Парень не верил, что в его жизни хоть что-то может пойти не по сценарию, будто его судьба была уже подробно расписана каким-нибудь писателем и сопротивляться ему не было никакого смысла.</p>
+                    <div class="work-meta">
+                        <span class="meta-item">📄 2 647 слов</span>
+                        <span class="meta-item">📑 1 часть</span>
+                    </div>
+                    <div class="work-tags">
+                        <span class="tag">AU</span>
+                        <span class="tag">Русалки</span>
+                        <span class="tag">Мистика</span>
+                        <span class="tag">PG-13</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="works/stan-chastyu.html" class="btn btn-primary">Читать</a>
+                        <button class="btn-read-toggle" onclick="toggleRead('stan-chastyu', this)" title="Отметить прочитанным">📖</button>
+                    </div>
+                </div>
+            </article>
+
+        </main>
+
+        <!-- ===== ФУТЕР ===== -->
+        <footer class="footer">
+            <p>Все работы принадлежат автору <a href="https://ficbook.net/authors/kris_mem_2222" target="_blank">Kris_mem_2222</a></p>
+            <p style="margin-top: 10px; opacity: 0.6;">Сделано с 💜 для любителей Казускары</p>
+        </footer>
+
     </div>
 
-    <!-- Список фанфиков -->
-    <main class="container">
-        <div class="grid" id="fic-list">
+    <script>
+        // ===== АНИМИРОВАННЫЕ ЛЕПЕСТКИ САКУРЫ =====
+        const canvas = document.getElementById('petals-canvas');
+        const ctx = canvas.getContext('2d');
 
-            <!-- Фанфик 1 -->
-            <article class="card" data-id="fic1">
-                <div class="status-badge process">В процессе</div>
-                <h2>Пять причин, почему я сплю с ножом</h2>
-                <div class="meta">NC-17 | Кадзуха/Странник | Макси</div>
-                <p class="summary">Так и жил он с постоянной готовностью к двум вещам: сесть в тюрьму или умереть от паранойи...</p>
-                <div class="tags">
-                    <span>Hurt/Comfort</span><span>Романтика</span><span>Флафф</span>
-                </div>
-                <div class="card-actions">
-                    <a href="fics/reasons.html" class="read-btn">Читать</a>
-                    <button class="mark-btn" onclick="toggleRead('fic1')">Отметить прочитанным</button>
-                </div>
-            </article>
+        let petals = [];
+        const petalCount = 35;
 
-            <!-- Фанфик 2 -->
-            <article class="card" data-id="fic2">
-                <div class="status-badge finished">Завершён</div>
-                <h2>Когда умирают ангелы</h2>
-                <div class="meta">NC-17 | Кадзуха/Странник | 417 стр.</div>
-                <p class="summary">Свободная душа, запертая в несвободном теле. Кадзуха стал заложником обстоятельств...</p>
-                <div class="tags">
-                    <span>Ангст</span><span>Драма</span><span>Смерть перс.</span>
-                </div>
-                <div class="card-actions">
-                    <a href="fics/angels.html" class="read-btn">Читать</a>
-                    <button class="mark-btn" onclick="toggleRead('fic2')">Отметить прочитанным</button>
-                </div>
-            </article>
-
-            <!-- Фанфик 3 -->
-            <article class="card" data-id="fic3">
-                <div class="status-badge process">В процессе</div>
-                <h2>Скрипичный ключ к сердцу</h2>
-                <div class="meta">NC-17 | AU: Школа | Макси</div>
-                <p class="summary">Живя свою спокойную жизнь, Кадзуха и не догадывался, что в нее можно так просто вмешаться...</p>
-                <div class="tags">
-                    <span>AU: Школа</span><span>Флафф</span>
-                </div>
-                <div class="card-actions">
-                    <a href="fics/violin.html" class="read-btn">Читать</a>
-                    <button class="mark-btn" onclick="toggleRead('fic3')">Отметить прочитанным</button>
-                </div>
-            </article>
-
-            <!-- Фанфик 4 -->
-            <article class="card" data-id="fic4">
-                <div class="status-badge finished">Завершён</div>
-                <h2>Горький вкус твоих таблеток</h2>
-                <div class="meta">NC-17 | Психология | 366 стр.</div>
-                <p class="summary">Психолог сказал мне: «Нужно жить дальше». Я послал его к черту…</p>
-                <div class="tags">
-                    <span>Психология</span><span>Драма</span><span>Hurt/Comfort</span>
-                </div>
-                <div class="card-actions">
-                    <a href="fics/pills.html" class="read-btn">Читать</a>
-                    <button class="mark-btn" onclick="toggleRead('fic4')">Отметить прочитанным</button>
-                </div>
-            </article>
-
-            <!-- Фанфик 5 -->
-            <article class="card" data-id="fic5">
-                <div class="status-badge finished">Завершён</div>
-                <h2>Философия бытия через призму общаги</h2>
-                <div class="meta">NC-17 | AU: Школа | 110 стр.</div>
-                <p class="summary">— Можно тебя обнять, пожалуйста? Просто по-дружески? — ага, и спим мы просто по-дружески.</p>
-                <div class="tags">
-                    <span>AU</span><span>Юмор</span><span>Флафф</span>
-                </div>
-                <div class="card-actions">
-                    <a href="fics/philosophy.html" class="read-btn">Читать</a>
-                    <button class="mark-btn" onclick="toggleRead('fic5')">Отметить прочитанным</button>
-                </div>
-            </article>
-
-             <!-- Фанфик 6 -->
-             <article class="card" data-id="fic6">
-                <div class="status-badge finished">Завершён</div>
-                <h2>Я только танцую</h2>
-                <div class="meta">NC-17 | Стрип-клуб AU | 226 стр.</div>
-                <p class="summary">«Я стриптизер, а не проститутка», представляешь, что сказал?!</p>
-                <div class="tags">
-                    <span>AU</span><span>Драма</span>
-                </div>
-                <div class="card-actions">
-                    <a href="fics/dancing.html" class="read-btn">Читать</a>
-                    <button class="mark-btn" onclick="toggleRead('fic6')">Отметить прочитанным</button>
-                </div>
-            </article>
-
-             <!-- Фанфик 7 -->
-             <article class="card" data-id="fic7">
-                <div class="status-badge finished">Завершён</div>
-                <h2>Да все окей</h2>
-                <div class="meta">NC-17 | Драббл | 4 стр.</div>
-                <p class="summary">Рано… Ты пока не готов к этому.</p>
-                <div class="tags">
-                    <span>Флафф</span><span>Драббл</span>
-                </div>
-                <div class="card-actions">
-                    <a href="fics/okay.html" class="read-btn">Читать</a>
-                    <button class="mark-btn" onclick="toggleRead('fic7')">Отметить прочитанным</button>
-                </div>
-            </article>
-
-            <!-- Остальные фанфики можно добавить по такому же шаблону, просто копируй блок <article> и меняй текст! -->
-
-        </div>
-    </main>
-
-    <script src="script.js"></script>
-</body>
-</html>
-```
-
----
-
-### Шаг 3: Стиль и Красота (style.css)
-Создай файл `style.css`. Здесь я настроила темную, приятную для глаз тему с цветами Анемо (бирюзовый, темный индиго).
-
-```css
-:root {
-    /* Палитра цветов - меняй здесь, если захочешь! */
-    --bg-color: #0f111a; /* Темный фон */
-    --card-bg: #1a1d29; /* Фон карточек */
-    --text-main: #e0e6ed;
-    --text-muted: #94a3b8;
-    --accent: #5eead4; /* Светящийся бирюзовый */
-    --accent-glow: rgba(94, 234, 212, 0.3);
-    --secondary: #c084fc; /* Мягкий фиолетовый для контраста */
-}
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    background-color: var(--bg-color);
-    color: var(--text-main);
-    font-family: 'Montserrat', sans-serif;
-    overflow-x: hidden;
-    min-height: 100vh;
-}
-
-/* Фон с частицами */
-#canvas-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    pointer-events: none;
-}
-
-/* Шапка профиля */
-.glass-header {
-    background: rgba(15, 17, 26, 0.8);
-    backdrop-filter: blur(10px);
-    padding: 20px;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    display: flex;
-    justify-content: center;
-}
-
-.author-profile {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.avatar {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    border: 2px solid var(--accent);
-    box-shadow: 0 0 15px var(--accent-glow);
-    object-fit: cover;
-}
-
-.author-info h1 {
-    font-size: 1.5rem;
-    color: var(--accent);
-}
-
-.author-info p {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-}
-
-/* Арт баннер */
-.art-banner {
-    width: 100%;
-    max-width: 1200px;
-    margin: 20px auto;
-    border-radius: 20px;
-    overflow: hidden;
-    position: relative;
-    max-height: 300px;
-}
-
-.hero-art {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.8;
-    transition: transform 0.5s;
-}
-
-.hero-art:hover {
-    transform: scale(1.02);
-}
-
-/* Сетка карточек */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 25px;
-}
-
-/* Карточка фанфика */
-.card {
-    background: var(--card-bg);
-    border-radius: 16px;
-    padding: 25px;
-    border: 1px solid rgba(255,255,255,0.05);
-    transition: all 0.3s ease;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    border-color: var(--accent-glow);
-}
-
-/* Бейджики статуса */
-.status-badge {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    font-size: 0.7rem;
-    padding: 4px 10px;
-    border-radius: 20px;
-    text-transform: uppercase;
-    font-weight: bold;
-}
-
-.status-badge.process { background: rgba(255, 165, 0, 0.2); color: orange; }
-.status-badge.finished { background: rgba(94, 234, 212, 0.2); color: var(--accent); }
-
-.card h2 {
-    font-family: 'Merriweather', serif;
-    font-size: 1.3rem;
-    margin-bottom: 10px;
-    line-height: 1.4;
-    color: #fff;
-}
-
-.card .meta {
-    font-size: 0.8rem;
-    color: var(--secondary);
-    margin-bottom: 15px;
-    font-weight: 600;
-}
-
-.card .summary {
-    font-size: 0.95rem;
-    color: var(--text-muted);
-    line-height: 1.6;
-    margin-bottom: 20px;
-    flex-grow: 1; /* Чтобы кнопки всегда были внизу */
-    display: -webkit-box;
-    -webkit-line-clamp: 4; /* Показываем только 4 строки */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-.tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 20px;
-}
-
-.tags span {
-    font-size: 0.75rem;
-    background: rgba(255,255,255,0.05);
-    padding: 4px 8px;
-    border-radius: 6px;
-    color: var(--text-muted);
-}
-
-/* Кнопки */
-.card-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: auto;
-}
-
-.read-btn {
-    flex: 1;
-    text-align: center;
-    background: linear-gradient(45deg, var(--accent), #2dd4bf);
-    color: #000;
-    padding: 12px;
-    border-radius: 10px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: 0.3s;
-}
-
-.read-btn:hover {
-    filter: brightness(1.1);
-    box-shadow: 0 0 15px var(--accent-glow);
-}
-
-.mark-btn {
-    background: transparent;
-    border: 1px solid rgba(255,255,255,0.2);
-    color: var(--text-muted);
-    padding: 10px;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.mark-btn:hover {
-    background: rgba(255,255,255,0.05);
-    color: #fff;
-}
-
-/* Стиль для прочитанного */
-.card.read {
-    opacity: 0.6;
-    filter: grayscale(0.5);
-    border: 1px solid var(--secondary);
-}
-
-.card.read .mark-btn {
-    background: var(--secondary);
-    color: #fff;
-    border-color: var(--secondary);
-}
-
-/* --- Стили для страницы чтения (Reader) --- */
-.reader-body {
-    max-width: 800px;
-    margin: 0 auto;
-    background: #151823;
-    min-height: 100vh;
-    box-shadow: 0 0 50px rgba(0,0,0,0.5);
-}
-
-.reader-header {
-    padding: 40px 20px;
-    text-align: center;
-    background: linear-gradient(to bottom, #1a1d29, #151823);
-}
-
-.reader-content {
-    padding: 20px 40px 60px;
-    font-family: 'Merriweather', serif;
-    font-size: 1.15rem;
-    line-height: 1.8;
-    color: #d1d5db;
-}
-
-.reader-content p {
-    margin-bottom: 20px;
-    text-indent: 20px; /* Красная строка как в книгах */
-}
-
-.back-link {
-    display: inline-block;
-    margin-bottom: 20px;
-    color: var(--accent);
-    text-decoration: none;
-    font-size: 0.9rem;
-}
-
-/* Адаптивность для телефонов */
-@media (max-width: 768px) {
-    .reader-content {
-        padding: 20px;
-        font-size: 1.05rem;
-    }
-
-    .grid {
-        grid-template-columns: 1fr; /* Одна колонка на телефоне */
-    }
-}
-```
-
----
-
-### Шаг 4: Интерактив (script.js)
-Создай файл `script.js`. Здесь мы сделаем так, чтобы браузер запоминал, что ты прочитала, и нарисуем красивые "светлячки" на фоне.
-
-```javascript
-// --- 1. Логика "Прочитано" ---
-
-// Эта функция запускается, когда сайт загрузился
-document.addEventListener('DOMContentLoaded', () => {
-    // Проверяем каждую карточку
-    const cards = document.querySelectorAll('.card');
-
-    cards.forEach(card => {
-        const id = card.getAttribute('data-id');
-        // Если в памяти есть отметка, делаем фанфик серым
-        if (localStorage.getItem(id) === 'true') {
-            card.classList.add('read');
-            const btn = card.querySelector('.mark-btn');
-            if(btn) btn.textContent = 'Прочитано ✓';
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
         }
-    });
-});
 
-// Функция, которая срабатывает при нажатии кнопки
-function toggleRead(id) {
-    const card = document.querySelector(`.card[data-id="${id}"]`);
-    const btn = card.querySelector('.mark-btn');
+        class Petal {
+            constructor() {
+                this.reset();
+            }
 
-    // Если уже прочитано - убираем отметку
-    if (localStorage.getItem(id) === 'true') {
-        localStorage.removeItem(id);
-        card.classList.remove('read');
-        btn.textContent = 'Отметить прочитанным';
-    } else {
-        // Если не прочитано - ставим отметку и сохраняем в память
-        localStorage.setItem(id, 'true');
-        card.classList.add('read');
-        btn.textContent = 'Прочитано ✓';
-    }
-}
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height - canvas.height;
+                this.size = Math.random() * 12 + 6;
+                this.speedX = Math.random() * 2 - 1;
+                this.speedY = Math.random() * 1.5 + 0.5;
+                this.rotation = Math.random() * 360;
+                this.rotationSpeed = Math.random() * 2 - 1;
+                this.opacity = Math.random() * 0.4 + 0.2;
+                // Цвета в стиле сакуры и фиолетовые
+                const colors = [
+                    'rgba(244, 164, 186, ', // розовый
+                    'rgba(232, 121, 169, ', // тёмно-розовый
+                    'rgba(157, 78, 221, ',  // фиолетовый
+                    'rgba(255, 182, 193, ', // светло-розовый
+                ];
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+            }
 
+            update() {
+                this.x += this.speedX + Math.sin(this.y * 0.01) * 0.5;
+                this.y += this.speedY;
+                this.rotation += this.rotationSpeed;
 
-// --- 2. Красивые частицы на фоне (Canvas) ---
-const canvas = document.getElementById('canvas-bg');
-const ctx = canvas.getContext('2d');
+                if (this.y > canvas.height + 50) {
+                    this.reset();
+                    this.y = -20;
+                }
+                if (this.x > canvas.width + 50) this.x = -50;
+                if (this.x < -50) this.x = canvas.width + 50;
+            }
 
-let particlesArray;
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation * Math.PI / 180);
+                ctx.fillStyle = this.color + this.opacity + ')';
+                ctx.beginPath();
+                // Рисуем форму лепестка
+                ctx.moveTo(0, 0);
+                ctx.bezierCurveTo(
+                    this.size / 2, -this.size / 2,
+                    this.size, 0,
+                    this.size / 2, this.size / 2
+                );
+                ctx.bezierCurveTo(
+                    0, this.size / 3,
+                    0, 0,
+                    0, 0
+                );
+                ctx.fill();
+                ctx.restore();
+            }
+        }
 
-// Растягиваем канвас на весь экран
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+        function initPetals() {
+            petals = [];
+            for (let i = 0; i < petalCount; i++) {
+                petals.push(new Petal());
+            }
+        }
 
-// Класс для частички
-class Particle {
-    constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2; // Размер
-        this.speedX = (Math.random() * 1) - 0.5;
-        this.speedY = (Math.random() * 1) - 0.5;
-        this.color = Math.random() > 0.5 ? 'rgba(94, 234, 212,' : 'rgba(192, 132, 252,'; // Бирюзовый или фиолетовый
-    }
-    update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        // Если улетел за край, возвращаем обратно
-        if (this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
-        if (this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
-    }
-    draw() {
-        ctx.fillStyle = this.color + Math.random() + ')'; // Мерцание
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-    }
-}
+        function animatePetals() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            petals.forEach(petal => {
+                petal.update();
+                petal.draw();
+            });
+            requestAnimationFrame(animatePetals);
+        }
 
-function init() {
-    particlesArray = [];
-    for (let i = 0; i < 100; i++) { // 100 частиц
-        particlesArray.push(new Particle());
-    }
-}
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+        });
 
-function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (let i = 0; i < particlesArray.length; i++) {
-        particlesArray[i].update();
-        particlesArray[i].draw();
-    }
-    requestAnimationFrame(animate);
-}
+        resizeCanvas();
+        initPetals();
+        animatePetals();
 
-// При изменении размера окна
-window.addEventListener('resize', () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    init();
-});
+        // ===== СИСТЕМА ОТСЛЕЖИВАНИЯ ПРОЧИТАННОГО =====
+        function getReadWorks() {
+            const stored = localStorage.getItem('readWorks');
+            return stored ? JSON.parse(stored) : [];
+        }
 
-init();
-animate();
-```
+        function saveReadWorks(works) {
+            localStorage.setItem('readWorks', JSON.stringify(works));
+        }
 
----
+        function toggleRead(workId, button) {
+            let readWorks = getReadWorks();
+            const card = document.querySelector(`[data-id="${workId}"]`);
 
-### Шаг 5: Шаблон для самого текста (fics/reasons.html)
-Теперь самое главное! В папке, где лежит `index.html`, создай новую папку `fics`. Внутри неё будем создавать файлы для каждого фанфика.
+            if (readWorks.includes(workId)) {
+                readWorks = readWorks.filter(id => id !== workId);
+                card.classList.remove('read');
+                button.classList.remove('is-read');
+                button.innerHTML = '📖';
+            } else {
+                readWorks.push(workId);
+                card.classList.add('read');
+                button.classList.add('is-read');
+                button.innerHTML = '✓';
+            }
 
-Например, для первого фанфика создай файл `reasons.html` (от "Пять причин...").
+            saveReadWorks(readWorks);
+        }
 
-Вот код, который ты вставишь. Я добавила сюда кнопку "Назад" и удобное форматирование.
+        // При загрузке страницы отметить прочитанные
+        function markReadWorks() {
+            const readWorks = getReadWorks();
+            readWorks.forEach(workId => {
+                const card = document.querySelector(`[data-id="${workId}"]`);
+                const button = card?.querySelector('.btn-read-toggle');
+                if (card && button) {
+                    card.classList.add('read');
+                    button.classList.add('is-read');
+                    button.innerHTML = '✓';
+                }
+            });
+        }
 
-```html
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Пять причин, почему я сплю с ножом</title>
-    <!-- Обрати внимание, здесь две точки (..), чтобы выйти из папки fics к стилям -->
-    <link rel="stylesheet" href="../style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,400&display=swap" rel="stylesheet">
-</head>
-<body class="reader-body">
+        // ===== ФИЛЬТРАЦИЯ =====
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const cards = document.querySelectorAll('.work-card');
+        const searchInput = document.getElementById('search-input');
 
-    <header class="reader-header">
-        <a href="../index.html" class="back-link">← Вернуться в библиотеку</a>
-        <h1>Пять причин, почему я сплю с ножом</h1>
-        <p style="color: var(--accent); margin-top: 10px;">Часть 1</p>
-    </header>
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                filterCards();
+            });
+        });
 
-    <!-- СЮДА ВСТАВЛЯЕШЬ АРТ ДЛЯ ЭТОГО ФАНФИКА -->
-    <div style="text-align: center; margin-bottom: 30px;">
-        <img src="../images/art_fanfic1.jpg" style="max-width: 100%; border-radius: 10px; opacity: 0.9;" onerror="this.style.display='none'">
-    </div>
+        searchInput.addEventListener('input', filterCards);
 
-    <main class="reader-content">
-        <!-- Сюда вставляешь текст фанфика! Просто копируй с фикбука -->
-        <!-- Каждый абзац заворачивай в тег <p>Текст</p> -->
+        function filterCards() {
+            const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+            const searchQuery = searchInput.value.toLowerCase();
+            const readWorks = getReadWorks();
 
-        <p>Так и жил он с постоянной готовностью к двум вещам: сесть в тюрьму за чье-нибудь убийство или умереть от паранойи...</p>
+            cards.forEach(card => {
+                const status = card.dataset.status;
+                const id = card.dataset.id;
+                const title = card.querySelector('.work-title').textContent.toLowerCase();
 
-        <p>Или просто жизнь официанта, которому впервые вместо просьбы переделать заказ поступило предложение сходить на свидание.</p>
+                let showByFilter = true;
+                let showBySearch = title.includes(searchQuery);
 
-        <p>ЗДЕСЬ БУДЕТ ВЕСЬ ОСТАЛЬНОЙ ТЕКСТ...</p>
+                if (activeFilter === 'completed') {
+                    showByFilter = status === 'completed';
+                } else if (activeFilter === 'in-progress') {
+                    showByFilter = status === 'in-progress';
+                } else if (activeFilter === 'unread') {
+                    showByFilter = !readWorks.includes(id);
+                }
 
-        <!-- Кнопки навигации внизу -->
-        <div style="margin-top: 50px; text-align: center;">
-            <a href="../index.html" class="read-btn" style="display: inline-block; width: auto; padding: 15px 40px;">Закончить чтение</a>
-        </div>
-    </main>
+                card.style.display = (showByFilter && showBySearch) ? 'block' : 'none';
+            });
+        }
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', () => {
+            markReadWorks();
+        });
+    </script>
 
 </body>
 </html>
