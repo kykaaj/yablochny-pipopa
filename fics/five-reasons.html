@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Пять причин, почему я сплю с ножом — Kris_mem_2222</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>Глава 1 — Пять причин, почему я сплю с ножом</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,63 +14,65 @@
 
         :root {
             --black: #0a0a0a;
-            --black-light: #121214;
-            --black-card: #18181c;
-            --pink: #e8a0b4;
-            --pink-light: #f0b8c8;
-            --pink-dark: #c4889a;
-            --cream: #faf5f7;
-            --text: #f0eaec;
-            --text-muted: #9a9098;
-            --slash-blue: #7eb8da;
+            --black-light: #0e0e10;
+            --black-card: #141418;
+            --pink: #d4a0b0;
+            --pink-light: #e8c4d0;
+            --pink-dark: #b8889a;
+            --pink-glow: rgba(212, 160, 176, 0.1);
+            --cream: #f8f4f5;
+            --text: #e0dada;
+            --text-soft: #c8c0c2;
+            --text-muted: #8a8085;
+            --dialogue: #d8c8c0;
         }
 
-        *, *::before, *::after {
-            cursor: none !important;
-        }
-
-        .cursor, .cursor-follower {
-            position: fixed;
-            pointer-events: none;
-            z-index: 10000;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            transform: translate(-50%, -50%);
-        }
-
-        .cursor.loaded, .cursor-follower.loaded {
-            opacity: 1;
-        }
+        /* КУРСОР */
+        *, *::before, *::after { cursor: none !important; }
 
         .cursor {
-            width: 8px;
-            height: 8px;
+            position: fixed;
+            width: 6px;
+            height: 6px;
             background: var(--pink);
             border-radius: 50%;
-            mix-blend-mode: difference;
+            pointer-events: none;
+            z-index: 10001;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.3s;
         }
+
+        .cursor.loaded { opacity: 1; }
 
         .cursor-follower {
-            width: 35px;
-            height: 35px;
-            border: 1px solid var(--pink);
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(212, 160, 176, 0.5);
             border-radius: 50%;
-            transition: opacity 0.3s, width 0.2s, height 0.2s, background 0.2s;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background 0.3s, opacity 0.3s;
+            opacity: 0;
         }
 
+        .cursor-follower.loaded { opacity: 1; }
         .cursor-follower.hover {
-            width: 50px;
-            height: 50px;
-            background: rgba(232, 160, 180, 0.1);
+            width: 55px;
+            height: 55px;
+            background: rgba(212, 160, 176, 0.08);
         }
 
+        /* BODY */
         body {
-            font-family: 'Raleway', sans-serif;
+            font-family: 'Cormorant Garamond', serif;
             background: var(--black);
             color: var(--text);
             min-height: 100vh;
-            line-height: 1.7;
-            font-size: 17px;
+            font-size: 22px;
+            line-height: 2;
         }
 
         body::before {
@@ -80,38 +82,354 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: radial-gradient(rgba(232, 160, 180, 0.03) 1px, transparent 1px);
-            background-size: 30px 30px;
+            background:
+                radial-gradient(ellipse at 30% 0%, rgba(212, 160, 176, 0.02) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 100%, rgba(212, 160, 176, 0.02) 0%, transparent 50%);
             pointer-events: none;
-            z-index: 0;
         }
 
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(rgba(212, 160, 176, 0.02) 1px, transparent 1px);
+            background-size: 35px 35px;
+            pointer-events: none;
+        }
+
+        /* КОНТЕЙНЕР */
         .container {
-            position: relative;
-            z-index: 2;
             max-width: 900px;
             margin: 0 auto;
-            padding: 60px 30px 80px;
+            padding: 60px 50px 120px;
+            position: relative;
+            z-index: 1;
         }
 
-        /* Кнопка наверх */
+        /* НАВИГАЦИЯ */
+        .nav-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0 40px;
+            border-bottom: 1px solid rgba(212, 160, 176, 0.1);
+            margin-bottom: 60px;
+            font-family: 'Raleway', sans-serif;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-top a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-top a:hover {
+            color: var(--pink);
+        }
+
+        .nav-center {
+            color: var(--pink);
+            font-size: 0.85rem;
+        }
+
+        /* ЗАГОЛОВОК ГЛАВЫ */
+        .chapter-header {
+            text-align: center;
+            margin-bottom: 70px;
+            position: relative;
+        }
+
+        .chapter-label {
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--pink);
+            margin-bottom: 20px;
+        }
+
+        .chapter-number {
+            font-size: 6rem;
+            font-weight: 300;
+            color: var(--cream);
+            line-height: 1;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .chapter-title {
+            font-size: 2.2rem;
+            font-weight: 500;
+            font-style: italic;
+            color: var(--cream);
+            margin-bottom: 15px;
+        }
+
+        .chapter-date {
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        .chapter-ornament {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .ornament-line {
+            width: 80px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--pink), transparent);
+        }
+
+        .ornament-diamond {
+            width: 10px;
+            height: 10px;
+            border: 1px solid var(--pink);
+            transform: rotate(45deg);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; transform: rotate(45deg) scale(1); }
+            50% { opacity: 1; transform: rotate(45deg) scale(1.1); }
+        }
+
+        /* ПРИМЕЧАНИЯ АВТОРА */
+        .author-note {
+            background: var(--black-card);
+            border: 1px solid rgba(212, 160, 176, 0.1);
+            padding: 35px 40px;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .author-note::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--pink);
+        }
+
+        .author-note-label {
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--pink);
+            margin-bottom: 20px;
+        }
+
+        .author-note-text {
+            color: var(--text-soft);
+            font-size: 1.1rem;
+            line-height: 1.9;
+        }
+
+        /* МУЗЫКА */
+        .music-box {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px 30px;
+            background: var(--black-light);
+            border: 1px solid rgba(212, 160, 176, 0.08);
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+        }
+
+        .music-icon {
+            font-size: 1.5rem;
+        }
+
+        .music-label {
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--pink);
+        }
+
+        .music-tracks {
+            flex: 1;
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* ТЕКСТ ГЛАВЫ */
+        .chapter-text {
+            color: var(--text);
+        }
+
+        .chapter-text p {
+            margin-bottom: 1.8em;
+            text-indent: 2em;
+        }
+
+        .chapter-text p:first-of-type {
+            text-indent: 0;
+        }
+
+        /* Буквица */
+        .chapter-text p:first-of-type::first-letter {
+            float: left;
+            font-size: 5rem;
+            line-height: 0.8;
+            padding-right: 15px;
+            padding-top: 5px;
+            color: var(--pink);
+            font-weight: 400;
+        }
+
+        /* ДИАЛОГИ - ВЫДЕЛЕНЫ! */
+        .chapter-text p.dialogue {
+            text-indent: 0;
+            padding-left: 2em;
+            border-left: 2px solid rgba(212, 160, 176, 0.3);
+            color: var(--dialogue);
+            font-style: normal;
+            margin-left: 0;
+            background: linear-gradient(90deg, rgba(212, 160, 176, 0.03), transparent);
+        }
+
+        /* МЫСЛИ */
+        .chapter-text p.thought {
+            text-indent: 0;
+            font-style: italic;
+            color: var(--text-muted);
+            padding-left: 2em;
+            position: relative;
+        }
+
+        .chapter-text p.thought::before {
+            content: '«';
+            position: absolute;
+            left: 0.5em;
+            color: var(--pink);
+            opacity: 0.5;
+        }
+
+        /* РАЗДЕЛИТЕЛЬ СЦЕН */
+        .scene-break {
+            text-align: center;
+            margin: 3em 0;
+            font-size: 1.5rem;
+            letter-spacing: 15px;
+            color: var(--pink);
+            opacity: 0.5;
+        }
+
+        /* ПРИМЕЧАНИЯ В КОНЦЕ */
+        .end-notes {
+            background: var(--black-card);
+            border: 1px solid rgba(212, 160, 176, 0.1);
+            padding: 35px 40px;
+            margin-top: 70px;
+            position: relative;
+        }
+
+        .end-notes::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--pink);
+        }
+
+        /* НАВИГАЦИЯ ВНИЗУ */
+        .nav-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 70px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(212, 160, 176, 0.1);
+            font-family: 'Raleway', sans-serif;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 25px;
+            background: transparent;
+            border: 1px solid rgba(212, 160, 176, 0.3);
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-btn:hover {
+            border-color: var(--pink);
+            color: var(--pink);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.disabled {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .nav-btn.primary {
+            background: var(--pink);
+            border-color: var(--pink);
+            color: var(--black);
+        }
+
+        .nav-btn.primary:hover {
+            background: var(--pink-light);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.read-btn.marked {
+            background: rgba(120, 200, 152, 0.2);
+            border-color: #78c898;
+            color: #78c898;
+        }
+
+        /* КНОПКА НАВЕРХ */
         .scroll-top {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 45px;
-            height: 45px;
+            bottom: 40px;
+            right: 40px;
+            width: 50px;
+            height: 50px;
             background: var(--black-card);
             border: 1px solid var(--pink);
             color: var(--pink);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             text-decoration: none;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
             z-index: 99;
         }
 
@@ -125,619 +443,310 @@
             color: var(--black);
         }
 
-        /* Навигация */
-        .nav-back {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.9rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            padding: 15px 0;
-            transition: color 0.3s;
-            margin-bottom: 40px;
+        /* ПРОГРЕСС ЧТЕНИЯ */
+        .reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--pink-dark), var(--pink), var(--pink-light));
+            z-index: 1000;
+            transition: width 0.1s;
         }
 
-        .nav-back::before {
-            content: '←';
-            font-size: 1.2rem;
-        }
-
-        .nav-back:hover {
-            color: var(--pink);
-        }
-
-        /* Шапка фанфика (обложка) */
-        .fic-cover-section {
-            margin-bottom: 40px;
-            text-align: center;
-        }
-
-        .fic-cover-img {
-            max-width: 100%;
-            max-height: 350px;
-            border: 1px solid rgba(232, 160, 180, 0.2);
-            object-fit: cover;
-        }
-
-        .fic-cover-placeholder {
-            width: 100%;
-            max-width: 600px;
-            height: 200px;
-            margin: 0 auto;
-            background: linear-gradient(135deg, var(--black-light), var(--black-card));
-            border: 1px solid rgba(232, 160, 180, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.5rem;
-            font-style: italic;
-        }
-
-        /* Шапка фанфика */
-        .fic-header {
-            margin-bottom: 50px;
-            padding-bottom: 40px;
-            border-bottom: 1px solid rgba(232, 160, 180, 0.15);
-        }
-
-        .fic-badges {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-
-        .fic-badge {
-            padding: 5px 14px;
-            font-size: 0.75rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            border: 1px solid;
-        }
-
-        .fic-badge.slash {
-            border-image: linear-gradient(135deg, var(--slash-blue), #b8a0d8, var(--pink)) 1;
-            color: var(--slash-blue);
-        }
-
-        .fic-badge.rating {
-            border-color: #ff6b6b;
-            color: #ff6b6b;
-        }
-
-        .fic-badge.status {
-            border-color: var(--pink);
-            color: var(--pink);
-        }
-
-        .fic-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.8rem;
-            font-weight: 400;
-            color: var(--cream);
-            line-height: 1.2;
-            margin-bottom: 15px;
-        }
-
-        .fic-pairing {
-            font-size: 1.1rem;
-            color: var(--pink);
-            font-style: italic;
-            margin-bottom: 8px;
-        }
-
-        .fic-characters {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            margin-bottom: 25px;
-        }
-
-        .fic-description {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.15rem;
-            color: var(--text);
-            line-height: 1.9;
-            padding: 25px 30px;
-            border-left: 2px solid var(--pink);
-            background: rgba(232, 160, 180, 0.03);
-            margin-bottom: 25px;
-        }
-
-        /* Примечания */
-        .fic-notes {
-            background: var(--black-card);
-            border: 1px solid rgba(232, 160, 180, 0.1);
-            padding: 25px;
-            margin-bottom: 25px;
-        }
-
-        .fic-notes-title {
-            font-size: 0.85rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--pink);
-            margin-bottom: 15px;
-        }
-
-        .fic-notes-content {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.8;
-        }
-
-        /* Теги */
-        .fic-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 25px;
-        }
-
-        .tag {
-            padding: 4px 12px;
-            font-size: 0.75rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            border: 1px solid rgba(232, 160, 180, 0.3);
-            color: var(--text-muted);
-        }
-
-        .tag.warning {
-            border-color: rgba(251, 146, 60, 0.4);
-            color: #fb923c;
-        }
-
-        /* Спойлер */
-        .spoiler-btn {
-            background: none;
-            border: none;
-            color: var(--pink);
-            font-size: 0.8rem;
-            padding: 5px 10px;
-            cursor: pointer;
-            letter-spacing: 1px;
-        }
-
-        .spoiler-content {
-            display: none;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 10px;
-        }
-
-        .spoiler-content.open {
-            display: flex;
-        }
-
-        /* Мета */
-        .fic-stats {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 25px;
-            font-size: 0.95rem;
-            color: var(--text-muted);
-        }
-
-        /* Прогресс */
-        .progress-section {
-            background: var(--black-card);
-            border: 1px solid rgba(232, 160, 180, 0.12);
-            padding: 25px;
-            margin-bottom: 50px;
-        }
-
-        .progress-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .progress-text {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        .progress-text span {
-            color: var(--pink);
-            font-weight: 600;
-        }
-
-        .progress-bar {
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: var(--pink);
-            transition: width 0.5s ease;
-        }
-
-        .mark-all-btn {
-            background: transparent;
-            border: 1px solid var(--pink);
-            color: var(--pink);
-            padding: 10px 20px;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .mark-all-btn:hover {
-            background: var(--pink);
-            color: var(--black);
-        }
-
-        /* Список глав */
-        .chapters-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.8rem;
-            color: var(--cream);
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .chapters-title::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(90deg, var(--pink), transparent);
-        }
-
-        .chapters-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .chapter-item {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            padding: 18px 22px;
-            background: var(--black-card);
-            border: 1px solid rgba(232, 160, 180, 0.1);
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.3s ease;
-        }
-
-        .chapter-item:hover {
-            border-color: var(--pink);
-            transform: translateX(8px);
-        }
-
-        .chapter-item.read {
-            opacity: 0.5;
-        }
-
-        .chapter-item.read .chapter-number {
-            background: transparent;
-            border-color: #4ade80;
-            color: #4ade80;
-        }
-
-        .chapter-number {
-            width: 42px;
-            height: 42px;
-            border: 1px solid var(--pink);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.2rem;
-            color: var(--pink);
-            flex-shrink: 0;
-            transition: all 0.3s;
-        }
-
-        .chapter-item:hover .chapter-number {
-            background: var(--pink);
-            color: var(--black);
-        }
-
-        .chapter-info {
-            flex: 1;
-        }
-
-        .chapter-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.3rem;
-            color: var(--cream);
-            margin-bottom: 4px;
-        }
-
-        .chapter-meta {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        .chapter-checkbox {
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border: 1px solid var(--pink);
-            cursor: pointer;
-            transition: all 0.3s;
-            position: relative;
-            flex-shrink: 0;
-        }
-
-        .chapter-checkbox:checked {
-            background: var(--pink);
-        }
-
-        .chapter-checkbox:checked::after {
-            content: '✓';
-            position: absolute;
-            color: var(--black);
-            font-size: 11px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .chapter-arrow {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            transition: transform 0.3s;
-        }
-
-        .chapter-item:hover .chapter-arrow {
-            transform: translateX(5px);
-            color: var(--pink);
-        }
-
-        /* Футер */
-        .footer {
-            text-align: center;
-            padding: 40px 20px;
-            margin-top: 50px;
-            border-top: 1px solid rgba(232, 160, 180, 0.1);
-        }
-
-        .footer a {
-            color: var(--pink);
-            text-decoration: none;
-        }
-
-        /* Адаптив */
+        /* АДАПТИВ */
         @media (max-width: 768px) {
+            body {
+                font-size: 19px;
+                line-height: 1.9;
+            }
+
             .container {
-                padding: 40px 20px;
-            }
-
-            .fic-title {
-                font-size: 2rem;
-            }
-
-            .chapter-item {
-                padding: 15px 18px;
+                padding: 40px 25px 100px;
             }
 
             .chapter-number {
-                width: 36px;
-                height: 36px;
-                font-size: 1rem;
+                font-size: 4rem;
             }
 
-            .progress-header {
+            .chapter-title {
+                font-size: 1.6rem;
+            }
+
+            .chapter-text p:first-of-type::first-letter {
+                font-size: 3.5rem;
+            }
+
+            .nav-bottom {
                 flex-direction: column;
-                align-items: flex-start;
+            }
+
+            .nav-btn {
+                width: 100%;
+                justify-content: center;
             }
 
             .scroll-top {
                 bottom: 20px;
-                left: 20px;
-                right: auto;
-                width: 40px;
-                height: 40px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+            }
+
+            .author-note, .end-notes {
+                padding: 25px 30px;
             }
         }
 
-        ::-webkit-scrollbar { width: 8px; }
+        /* СКРОЛЛБАР */
+        ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: var(--black); }
-        ::-webkit-scrollbar-thumb { background: var(--pink-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--pink-dark); border-radius: 3px; }
 
         html { scroll-behavior: smooth; }
     </style>
 </head>
 <body>
+    <div class="reading-progress" id="progress"></div>
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
-
     <a href="#top" class="scroll-top" id="scrollTop">↑</a>
 
     <div class="container" id="top">
-        <a href="../index.html" class="nav-back">Ко всем работам</a>
+        <nav class="nav-top">
+            <a href="../five-reasons.html">← К оглавлению</a>
+            <span class="nav-center">Глава 1 из 6</span>
+            <a href="chapter-2.html">Глава 2 →</a>
+        </nav>
 
-        <!-- Обложка -->
-        <div class="fic-cover-section">
-            <div class="fic-cover-placeholder">Обложка</div>
-            <!-- <img src="cover.jpg" alt="Обложка" class="fic-cover-img"> -->
-        </div>
-
-        <header class="fic-header">
-            <div class="fic-badges">
-                <span class="fic-badge slash">Слэш</span>
-                <span class="fic-badge rating">NC-17</span>
-                <span class="fic-badge status">В процессе</span>
-            </div>
-
-            <h1 class="fic-title">Пять причин, почему я сплю с ножом</h1>
-            <p class="fic-pairing">Кадзуха Каэдэхара / Странник</p>
-            <p class="fic-characters">Тарталья, Юмэмидзуки Мидзуки, Кирара</p>
-
-            <div class="fic-description">
-                Так и жил он с постоянной готовностью к двум вещам: сесть в тюрьму за чье-нибудь убийство или умереть от паранойи.<br><br>
-                Или просто жизнь официанта, которому впервые вместо просьбы переделать заказ поступило предложение сходить на свидание.
-            </div>
-
-            <div class="fic-notes">
-                <div class="fic-notes-title">Примечания автора</div>
-                <div class="fic-notes-content">
-                    Фанфик для людей, которые любят простых, романтичных и немного забавных кадзускар) ау ресторанного бизнеса и просто приятная работа для разгрузки от более серьезных фанфиков)<br><br>
-                    Точного графика выхода глав пока что нет, но я постараюсь его наладить попозже 🙏 Сейчас я могу быть сильно занята с учебой, но могу с уверенностью сказать, что без продолжения этот шедевр я не оставлю 🤝
-                </div>
-            </div>
-
-            <div class="fic-notes">
-                <div class="fic-notes-title">Публикация на других ресурсах</div>
-                <div class="fic-notes-content">
-                    Уточнять у автора / переводчика
-                </div>
-            </div>
-
-            <div class="fic-tags">
-                <span class="tag">AU</span>
-                <span class="tag">Hurt/Comfort</span>
-                <span class="tag">Повседневность</span>
-                <span class="tag">Романтика</span>
-                <span class="tag">Флафф</span>
-                <span class="tag">Юмор</span>
-                <span class="tag warning">Алкоголь</span>
-                <span class="tag warning">Нецензурная лексика</span>
-                <span class="tag warning">ООС</span>
-                <button class="spoiler-btn" onclick="toggleSpoiler(this)">Ещё...</button>
-            </div>
-            <div class="spoiler-content">
-                <span class="tag warning">Отклонения от канона</span>
-                <span class="tag warning">Проблемы доверия</span>
-                <span class="tag warning">Рейтинг за секс</span>
-                <span class="tag warning">Упоминания алкоголя</span>
-                <span class="tag warning">Упоминания курения</span>
-                <span class="tag">Разница в возрасте</span>
-            </div>
-
-            <div class="fic-stats">
-                <span>📄 планируется Макси</span>
-                <span>📖 46 страниц</span>
-                <span>✍️ 15 458 слов</span>
-                <span>📑 6 частей</span>
-                <span>🔄 03.01.2026</span>
+        <header class="chapter-header">
+            <div class="chapter-label">Глава</div>
+            <div class="chapter-number">I</div>
+            <h1 class="chapter-title">Будни официантов после 9 вечера</h1>
+            <div class="chapter-date">30 сентября 2025 г., 02:21</div>
+            <div class="chapter-ornament">
+                <div class="ornament-line"></div>
+                <div class="ornament-diamond"></div>
+                <div class="ornament-line"></div>
             </div>
         </header>
 
-        <div class="progress-section">
-            <div class="progress-header">
-                <span class="progress-text">Прочитано: <span id="read-count">0</span> из <span>6</span></span>
-                <button class="mark-all-btn" id="mark-all">Отметить все</button>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+        <div class="author-note">
+            <div class="author-note-label">Примечания автора</div>
+            <div class="author-note-text">
+                Мои прекрасные, я здесь с очень спонтанной работой, которую я начала писать еще года два назад и так и не выложила. Это был период моей максимальной фикрайтерской активности и, перечитав эти две главы и подправив их чуть-чуть, я поняла, что это нужно выпускать. Это не будет серьезная или очень глубокая работа, но здесь точно будет юмор, разгрузка от тяжелых будней и небольшой флер Пошлой Молли) в общем, приятного всем прочтения! 💞
             </div>
         </div>
 
-        <h2 class="chapters-title">Главы</h2>
-
-        <div class="chapters-list">
-            <a href="five-reasons/chapter-1.html" class="chapter-item" data-chapter="1">
-                <div class="chapter-number">1</div>
-                <div class="chapter-info">
-                    <div class="chapter-title">Будни официантов после 9 вечера</div>
-                    <div class="chapter-meta">30.09.2025 · ~ 2 500 слов</div>
-                </div>
-                <input type="checkbox" class="chapter-checkbox" onclick="event.stopPropagation(); event.preventDefault(); toggleChapter(this);">
-                <span class="chapter-arrow">→</span>
-            </a>
-
-            <a href="five-reasons/chapter-2.html" class="chapter-item" data-chapter="2">
-                <div class="chapter-number">2</div>
-                <div class="chapter-info">
-                    <div class="chapter-title">Глава 2</div>
-                    <div class="chapter-meta">~ 2 600 слов</div>
-                </div>
-                <input type="checkbox" class="chapter-checkbox" onclick="event.stopPropagation(); event.preventDefault(); toggleChapter(this);">
-                <span class="chapter-arrow">→</span>
-            </a>
-
-            <a href="five-reasons/chapter-3.html" class="chapter-item" data-chapter="3">
-                <div class="chapter-number">3</div>
-                <div class="chapter-info">
-                    <div class="chapter-title">Глава 3</div>
-                    <div class="chapter-meta">~ 2 400 слов</div>
-                </div>
-                <input type="checkbox" class="chapter-checkbox" onclick="event.stopPropagation(); event.preventDefault(); toggleChapter(this);">
-                <span class="chapter-arrow">→</span>
-            </a>
-
-            <a href="five-reasons/chapter-4.html" class="chapter-item" data-chapter="4">
-                <div class="chapter-number">4</div>
-                <div class="chapter-info">
-                    <div class="chapter-title">Глава 4</div>
-                    <div class="chapter-meta">~ 2 700 слов</div>
-                </div>
-                <input type="checkbox" class="chapter-checkbox" onclick="event.stopPropagation(); event.preventDefault(); toggleChapter(this);">
-                <span class="chapter-arrow">→</span>
-            </a>
-
-            <a href="five-reasons/chapter-5.html" class="chapter-item" data-chapter="5">
-                <div class="chapter-number">5</div>
-                <div class="chapter-info">
-                    <div class="chapter-title">Глава 5</div>
-                    <div class="chapter-meta">~ 2 500 слов</div>
-                </div>
-                <input type="checkbox" class="chapter-checkbox" onclick="event.stopPropagation(); event.preventDefault(); toggleChapter(this);">
-                <span class="chapter-arrow">→</span>
-            </a>
-
-            <a href="five-reasons/chapter-6.html" class="chapter-item" data-chapter="6">
-                <div class="chapter-number">6</div>
-                <div class="chapter-info">
-                    <div class="chapter-title">Глава 6</div>
-                    <div class="chapter-meta">~ 2 700 слов</div>
-                </div>
-                <input type="checkbox" class="chapter-checkbox" onclick="event.stopPropagation(); event.preventDefault(); toggleChapter(this);">
-                <span class="chapter-arrow">→</span>
-            </a>
+        <div class="music-box">
+            <span class="music-icon">🎵</span>
+            <span class="music-label">Песенки:</span>
+            <span class="music-tracks">Пошлая молли — Порнхаб крисмас клаб · Twisted sister — Oh come all ye faithful</span>
         </div>
 
-        <footer class="footer">
-            <a href="https://ficbook.net/readfic/14068498" target="_blank">Читать на Фикбуке →</a>
-        </footer>
+        <article class="chapter-text">
+            <p>В темноте осеннего прохладного вечера, рассекаемой лишь еле-еле горящими огнями уличных фонарей, появлялись и растворялись человеческие фигуры. Удивительным для одиноких людей стало бы то, что в такой поздний час (коим окрестить десять вечера было бы глупо, но парень, почти засыпающий за рабочей сменой, так не думал) некоторые прохожие все еще наводили уличную суету.</p>
+
+            <p class="thought">Расходились тут, блин, только перед глазами маячат. Нет чтоб спать перед работой, так нет же, ходят выглядывают чето. Хотите зайти— так зайдите. Нет, блять, смотрят в окна, смеются и проходят. Идиоты…</p>
+
+            <p>Из очень глубоких философских мыслей молодого официанта вывел привычный жест от очередного посетителя. Скарамучча тут же натянул на себя притворную улыбку, коей ему по статусу обслуживающего персонала нужно было одаривать всех людей, заходящих в заведение.</p>
+
+            <p>Парень прошел мимо столиков в сторону позвавшего его мужчины, мысленно пытаясь понять, зачем его звали, если он всего пару минут назад благополучно отнес заказ.</p>
+
+            <p class="dialogue">— Да? Вам чем-то помочь?</p>
+
+            <p>Парень в своей голове уже смирился с тем, что сейчас, видимо, попросят переделать заказ, позвать администратора и бла-бла-бла. Он даже перестал удивляться тому, что самые привередливые посетители ложились именно на его хрупкие плечи.</p>
+
+            <p class="dialogue">— Да. У меня есть к вам вопрос,- мужчина вальяжно расположился в кресле, пренебрежительно рассматривая тарелку с приготовленной едой.</p>
+
+            <p>Скарамучча молча ждал, когда ему объяснят, что к чему. Его крайне раздражал факт того, что человек не просто хотел пожаловаться, а еще и всем своим видом пытался демонстрировать превосходство.</p>
+
+            <p class="thought">Ну ты вообще говорить собираешься, падла ты такая? Я, блять, тут не интерьер украшаю</p>
+
+            <p>Сдерживать злобу от этих взглядов было невыносимо сложно. Скарамучча искренне не понимал: этот еблан правда думал, что официант силой мысли поймет, что не так с блюдом, которое он даже не готовил? Парень обязательно запишется на битву экстрасенсов, но только после того, как отмотает срок за убийство надоедливого гостя.</p>
+
+            <p class="dialogue">— Да? Что-то не так?- улыбаясь, спросил Скарамучча, сверля синими, как море, глазами посетителя.</p>
+
+            <p class="dialogue">— А вы не видите?</p>
+
+            <p>Парень вздохнул глубоко-глубоко, наполняя легкие таким количеством кислорода, что становилось непонятно, а столько вообще влезет в него или нет?</p>
+
+            <p class="dialogue">— Прошу прощения, но мне, к сожалению, не довелось отведать этого блюда, чтобы понять, что с ним не так,- сквозь зубы процедил Скарамучча, недовольно стукая по полу носками своих туфель.</p>
+
+            <p class="dialogue">— Вы думаете, что тартар из говядины выглядит вот так?- и снова этот взгляд, по которому вновь, видимо, нужно было догадаться, о чем толкует гость.</p>
+
+            <p class="thought">Мне тебе таро разложить, дорогой мой? Че ты хочешь от меня? Тартар как тартар</p>
+
+            <p class="dialogue">— Тартар из говядины выглядит именно так,- подтвердил Скарамучча, кивая и взглядом обращаясь ко второй официантке, которая как раз относила заказ недалеко от парня.</p>
+
+            <p class="dialogue">— Извините,- мужчина поправил салфетку на шее, усмехаясь,- но если это французский тартар из говядины, то у меня есть уйма вопросов к вашему заведению.</p>
+
+            <p class="thought">Боже, дай мне сил и я в тебя уверую…</p>
+
+            <p class="dialogue">— Простите, но блюда готовлю не я. Если есть какие-то вопросы по блюду, то я могу позвать администратора,- не выдерживая уже этой пытки, процедил парень, когда к нему подбежала коллега.</p>
+
+            <p>Девушка аккуратно отпихнула парня, расплываясь в любезностях перед гостем.</p>
+
+            <p>Скарамучча искренне поражался тому, как людям удавалось так легко корчить из себя не пойми что, когда это было нужно. Агрессия от глупых людских выходок накрывала парня настолько, что сохранять образ вежливого официанта было невозможно.</p>
+
+            <p>Пока коллега улаживала конфликт, Скара внимательно пробегался взглядом по залу, проверяя, не было ли там еще тех, у кого никто не взял заказ (или кто хотел бы пожаловаться на качество их кухни). Глаза, под конец дня потерявшие всякий намек на блеск, метались из стороны в сторону.</p>
+
+            <p class="dialogue">— Скарамучча, унеси это и принеси новый тартар.</p>
+
+            <p>Парень и не заметил, как коллега впихнула ему в руки поднос с недоеденным блюдом и, хмыкая еле слышно, закатила глаза. Скарамучча тут же заглянул за спину девушку, видя ликующее и абсолютно самоудовлетворенное лицо посетителя.</p>
+
+            <p class="dialogue">— Мы тот час переделаем ваш заказ.</p>
+
+            <p>Скарамучча поддержал коллегу, расплываясь в такой притворной улыбке, что своим ядом она, кажется, отравила все помещение. Девушка лишь вздохнула облегченно, ухмыляясь парню в ответ.</p>
+
+            <p class="dialogue">— Посетитель отказался от заказа, нужен новый говяжий тартар,- Скарамучча без особого энтузиазма зашел на кухню, убирая поднос от глаз своих подальше.</p>
+
+            <p class="dialogue">— Опять этим диванным критикам ничего не нравится,- послышался знакомый голос Сян Лин.</p>
+
+            <p>Местный су-шеф была совершенно миловидной и приятной на вид, однако очень амбициозной и опасной на деле. Когда дело касалось готовки, она превращалась в настоящего кухонного монстра, который мог разрубить на части своими остро наточенными ножами. Любой отказ от блюда она воспринимала как личностное оскорбление вне зависимости от того, она его готовила или нет.</p>
+
+            <p class="dialogue">— Это точно,- согласился Скарамучча, устало вздыхая.</p>
+
+            <p class="dialogue">— Коротыш, отнеси заказ за меня, а? Я ж тебя от этого монстра спасла,- протянула сладко Кирара, ухмыляясь и обнажая этим свои острые клычки.</p>
+
+            <p>Скарамучча очень не любил, когда к нему обращались по этому прозвищу, но за четыре месяца работы оно стало уже таким привычным, что парень не успевал обижаться на него. Тем более, когда ты весь день на ногах, скачешь, угождая совершенно незнакомым и часто хамоватым людям, тебе уже не будет никакого дела до таких унизительных кличек.</p>
+
+            <p class="dialogue">— Тогда тому еблану тартар относишь ты,- не дожидаясь ответа, парень резво подхватил поднос с едой и понёс его в зал.</p>
+
+            <p>Кирара лишь ухмыльнулась довольно, облокачиваясь на столик с заказами и устало разминая затекшие ноги.</p>
+
+            <p>Скарамучча уверенно шел к столику почти в самом конце ресторана. Он точно помнил, что именно там заказывали очень странный набор блюд. Парень боялся даже вдумываться в то, у кого могут быть такие странные предпочтения, но, в силу своего скептического отношения к французской кухне, решил проигнорировать факт странного заказа.</p>
+
+            <p>Заказали, значит заказали. Кому это понравится? Ну, видимо, особенному ценителю невообразимой кухни, которая не поддается логическому объяснения.</p>
+
+            <p class="dialogue">— Добрый вечер, ваш заказ,- Скарамучча кивнул в сторону клиента, вначале даже не обращая внимания на него.</p>
+
+            <p class="dialogue">— Благодарю. Оплата картой,- послышался мелодичный, очень… мягкий голос.</p>
+
+            <p>Скарамучча, устало вздыхая, потянулся за терминалом и, протягивая его посетителю, наконец нашел в себе силы хотя бы взглянуть на гостя. Под конец рабочей смены, к слову, смотреть на посетителей— последнее, что хотелось делать замотавшемуся парню.</p>
+
+            <p class="dialogue">— Прикладывайте…- официант остановил свой внимательный, почти физически ощутимый взгляд на госте. И, как оказалось, очень даже не зря (или наоборот, парень пока не понял).</p>
+
+            <p>Первое, что бросилось в глаза— ответный, вкрадчивый, совсем невесомый взгляд. Будто смотрели не прямо на Скарамуччу, а чуть за него, или внутрь него. Понять было сложно. Два ярких алых глаза, которые смешали в себе, что-то между местом преступления с кровавым убийством и ярким алеющим закатом. В целом, на этих удивительно непохожих ни на что глазах можно было закончить. Но чувствовал Скарамучча, что если уж взгляд приковался к посетителю, то осмотреть его придется полностью. Зря парень шутил про карты таро, кажется, кто-то навел на него парализующую порчу. Мягкие, как ограненные морской водой камни, изгибы лица незнакомца, удивительно бледные, складывали образ нежного парня с такими же бледными, почти белыми волосами.</p>
+
+            <p>Что-то Скарамучча замечтался.</p>
+
+            <p>Послышался пикающий звук, подтверждающий завершение оплаты.</p>
+
+            <p class="dialogue">— И это вам на чай,- Кадзуха улыбнулся, протягивая официанту некрупную купюру (что, впрочем, уже было в разы щедрее, чем горстки монеток, которые иногда сбрасывали парню, будто не столько из благодарности, сколько чтобы мелочь не томилась в кошельках).</p>
+
+            <p class="dialogue">— Благодарю,- кивнул парень, потирая усталые глаза. Он, совершенно наивно, абсолютно по-детски полагал, что человек перед ним— призрак или любая другая неопасная нечесть, которая причудилась ему на фоне усталости.</p>
+
+            <p>Настолько ангелоподобно и непохоже на остальных посетителей (да что там посетителей! Просто любых других людей, которых встречал Скарамучча за свою относительно недолгую жизнь) выглядел неожиданно щедрый незнакомец.</p>
+
+            <p>Скарамучча в темпе вальса, в ритме скерцо поспешил удалиться от клиента, который своей исключительностью и удивил, и напугал. Парень давно уже не был уверен в своей адекватности и, кажется, только что убедился в том, что ему требовался перерыв от работы, потому что гость все еще больше напоминал призрачное ведение, нежели реального человека.</p>
+
+            <p class="dialogue">— Мне пора пить таблетки от шизы нахуй,- Скарамучча облокотился на барную стойку, у которой как раз не было гостей.</p>
+
+            <p class="dialogue">— Тебе бы глицинчика пропить, а то так скоро лопнешь от своей злости,- подметил Тарталья, натирающий бокальчик до идеального блеска.</p>
+
+            <p class="dialogue">— Нет, ты не понял,- Скарамучча недовольно закатил глаза и очень показательно цокнул языком,- башку свою рыжую поверни, блять, и в угол посмотри. Скажи, что ты видишь?- еле заметным жестом указал на необычного посетителя, хмурясь и щурясь.</p>
+
+            <p class="dialogue">— Пацан.</p>
+
+            <p class="dialogue">— Обычный?</p>
+
+            <p class="dialogue">— Ну, окей, допустим необычный, хорошо, и?</p>
+
+            <p class="dialogue">— Я думал Господу Богу заказ отнес,- объяснил Скарамучча, на что Тарталья покатился с хохоту.</p>
+
+            <p class="dialogue">— Перерабатывает наш коротыш,- заключил парень, загадочно вздыхая.</p>
+
+            <p class="dialogue">— Перерабатывает…- согласился, пропуская мимо своих не самых хорошо слышащих ушей неприятное прозвище.</p>
+
+            <p class="dialogue">— Иди, вон тебя подзывают,- Тарталья пихнул друга в плечо, отвлекаясь на подошедшего к стойке гостя.</p>
+
+            <p>Тарталья, как его звали лишь близкие друзья, на деле был Аяксом. А для Скарамуччи просто зазвездившимся придурком, который не умел держать свой верткий язык за зубами. Если опустить этот факт, их можно было назвать друзьями. По крайней мере, Аякс точно считал Скарамуччу другом. Для самого же Скарамуччи, чтобы назвать кого-то другом было недостаточно даже общаться с пеленок. Если пуповиной одной связаны не были, то насчет дружбы нужно еще очень хорошо подумать.</p>
+
+            <p>Аяксу от таких умозаключений близкого (самого близкого) друга было совсем не обидно. Даже наоборот, он откровенно хохотал с недовольств Скарамуччи, когда того окликали, называя другом. Слишком уж парню не нравилось такое обращение. А говоря откровенно, ему вообще никакие прозвища и ярлыки не нравились. Он предпочитал, чтоб его звали по имени. И если «Скара» парень еще терпел, то вот «Мучча» от Тартальи его знатно так выбивало из колеи.</p>
+
+            <p>Проблемы с агрессией и этим все сказано.</p>
+
+            <p>Скарамучча прищурил глаза, чтобы хоть чуть-чуть сфокусировать зрение.</p>
+
+            <p class="thought">«Вон тебя подзывают». Где блин?</p>
+
+            <p>Парень внимательно вглядывался и лишь спустя пару секунд увидел белую, как снег, руку, которая махала ему в дружелюбном жесте.</p>
+
+            <p class="thought">Да че всем, блять, сегодня от меня надо?…</p>
+
+            <p class="dialogue">— Я могу чем-то помочь?- поинтересовался Скарамучча, еле сдерживая накатившую агрессию.</p>
+
+            <p>Уже десятый раз за день его дергают после того, как свою непосредственную работу он уже выполнил. Словами не описать, какой болт он класть хотел на все претензии к блюдам. У него было одно золотое правило: если кому-то не нравится готовка повара, то это проблема повара. Самому ему очень не нравилось выслушивать жалобы даже не на его работу.</p>
+
+            <p>К счастью, прежде, чем официант успел подойти к богоподобному парню, к нему уже подбежала Кирара. Скарамучча облегченно выдохнул, что не придется снова встречаться взглядом с этой нимфой, от которого только голова болела. И это буквально не было шуткой. От одного только взгляда на это белое создание у Скарамуччи неплохо так разболелась и без того больная голова.</p>
+
+            <p>Новые посетители. И парень, молясь всем существующим богам о нормальных гостях, направился прямиком к ним.</p>
+
+            <p>Тот юноша в белом ушел, а вот голова у Скарамуччи не прошла. И это было единственной причиной, по которой щедрый незнакомец вообще ему запомнился. Любой раздражитель даже если и пропадал из поля зрения Скарамуччи, обязательно оставлял после себя неприятный осадочек.</p>
+
+            <p>Так и сейчас, под конец рабочего дня, когда людей в зале почти не осталось, Скаре заботливо искали аспирин всем составом официантов. Не то чтобы это была общая проблема, но если парню было хреново, то хреново одновременно становилось всем. Так уж повелось, что если у парня случались казусы с настроением или здоровьем, то незамедлительно можно было ожидать полного падения духа всего персонала.</p>
+
+            <p>Скарамучча в таком состоянии превращался в сгусток пассивно-агрессивного нечто, который иногда мог создать неплохие такие проблемы заведению из-за своего не самого подобающего обслуживающему персоналу поведения. И все бы ничего, уволить его к чертовой матери и все. Не был Скарамучча хорошо социально-адаптированным, да вот только благодаря нему в относительно недавно появившемся ресторанчике уже появлялась своя клиентская база. Или фанклуб Скарамуччи. К сожалению, именно так это и выглядело со стороны.</p>
+
+            <p>Официанты и бариста могли с точностью до одного перечислить всех клиентов, которые, очарованные исключительно симпатичным официантом, заведомо перетягивали на себя его внимание. Так Скарамучча, сам того не хотя, заимел немало поклонников, а вместе с ними и постоянные чаевые.</p>
+
+            <p>Так и жил небольшой французский ресторан своей спокойной жизнью с какой никакой клиентской базой и теплыми отношениями между всеми сотрудниками.</p>
+
+            <p>Если рассматривать всю ситуацию, не приукрашивая, Скарамучча сначала чуть было не сбежал с новой работенки, когда завидел, с кем ему придется работать. Первым под обстрел синеокого парня попал Тарталья, который своими шутками и двусмысленными подкатами немало раздражал. Скарамучча самолично клялся запихнуть одну из самых дорогих бутылок французского вина прямо в неугомонную задницу бариста за его выходки. Аякс же просто посмеивался с этого, наслаждаясь своим превосходством в росте, но, как оказалось, точно не в сарказме. Не прошло и трех месяцев, как эти двое научились сосуществовать. Очень даже неплохо сосуществовать.</p>
+
+            <p>Скарамучча своим опасным током подпитывал воды необузданного и очень самоуверенного Аякса, создавая гремучую смесь, к которой прикоснешься— умрешь. Просто сгоришь от раскатов электричества.</p>
+
+            <p>Впрочем, тогда, когда Скарамучча не злился, а Тарталья не пытался его подколоть, из них получался неплохой дуэт. Так считали все остальные работники ресторана, которым пусть и не удалось также искусно сыграться с характером Скарамуччи (потому что обуздать его точно было невозможно), зато удалось заметить, что коротыш точно не хотел вылететь с работы. А это неплохо играло на руку, ведь, в целом, их интересы были в большинстве своем схожи. Так и помогали друг друга. Да, иногда через силу, да, иногда со стиснутыми зубами, да, иногда желая друг другу горения в адском пламени, но помогали, а это было главным.</p>
+        </article>
+
+        <div class="end-notes">
+            <div class="author-note-label">Примечания</div>
+            <div class="author-note-text">
+                Вот такое вот начало… куда меня дальше занесет с этой работой непонятно, но я постараюсь продолжать и ее, и предыдущий фанфик. Но я могу с уверенностью сказать, что конкретно эта работа меня не просто разгружает. Она возвращает меня в мой 22 год… а там для меня был прайм фанфиков по кадзускарам 🙏<br><br>
+                Буду очень и очень рада вашим отзывам! Очень хочется узнать, что вы думаете по поводу этой работы. Как вы можете заметить, в ней присутствует стереотипно… специфическое представление о характере Скарамуччи, но здесь я смешала его характер как члена фатуи и просто человека, который задолбался работать и уже не ждет ничего хорошего от жизни 😅<br><br>
+                Всех люблю и всем хорошего настроения, берегите себя! 💞
+            </div>
+        </div>
+
+        <nav class="nav-bottom">
+            <a href="#" class="nav-btn disabled">← Предыдущая</a>
+            <a href="../five-reasons.html" class="nav-btn primary">📑 К главам</a>
+            <button class="nav-btn read-btn" id="markRead">✓ Прочитано</button>
+            <a href="chapter-2.html" class="nav-btn">Следующая →</a>
+        </nav>
     </div>
 
     <script>
         // Курсор
         const cursor = document.querySelector('.cursor');
         const follower = document.querySelector('.cursor-follower');
-        let mouseX = 0, mouseY = 0;
-        let followerX = 0, followerY = 0;
+        let mx = 0, my = 0, fx = 0, fy = 0;
 
         window.addEventListener('load', () => {
-            cursor.classList.add('loaded');
-            follower.classList.add('loaded');
+            setTimeout(() => {
+                cursor.classList.add('loaded');
+                follower.classList.add('loaded');
+            }, 100);
         });
 
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            cursor.style.left = mouseX + 'px';
-            cursor.style.top = mouseY + 'px';
+        document.addEventListener('mousemove', e => {
+            mx = e.clientX; my = e.clientY;
+            cursor.style.left = mx + 'px';
+            cursor.style.top = my + 'px';
         });
 
-        function animateFollower() {
-            followerX += (mouseX - followerX) * 0.15;
-            followerY += (mouseY - followerY) * 0.15;
-            follower.style.left = followerX + 'px';
-            follower.style.top = followerY + 'px';
-            requestAnimationFrame(animateFollower);
+        function animateF() {
+            fx += (mx - fx) * 0.12;
+            fy += (my - fy) * 0.12;
+            follower.style.left = fx + 'px';
+            follower.style.top = fy + 'px';
+            requestAnimationFrame(animateF);
         }
-        animateFollower();
+        animateF();
 
-        document.querySelectorAll('a, button, input').forEach(el => {
+        document.querySelectorAll('a, button').forEach(el => {
             el.addEventListener('mouseenter', () => follower.classList.add('hover'));
             el.addEventListener('mouseleave', () => follower.classList.remove('hover'));
         });
@@ -745,69 +754,53 @@
         // Кнопка наверх
         const scrollBtn = document.getElementById('scrollTop');
         window.addEventListener('scroll', () => {
-            scrollBtn.classList.toggle('visible', window.scrollY > 300);
+            scrollBtn.classList.toggle('visible', window.scrollY > 400);
         });
 
-        // Спойлер
-        function toggleSpoiler(btn) {
-            const content = btn.parentElement.nextElementSibling;
-            content.classList.toggle('open');
-            btn.textContent = content.classList.contains('open') ? 'Скрыть' : 'Ещё...';
-        }
+        // Прогресс чтения
+        const progress = document.getElementById('progress');
+        window.addEventListener('scroll', () => {
+            const winH = window.innerHeight;
+            const docH = document.documentElement.scrollHeight - winH;
+            const scrolled = (window.scrollY / docH) * 100;
+            progress.style.width = scrolled + '%';
+        });
 
         // Система прочитанного
-        const FIC_ID = 'five-reasons';
-        const TOTAL = 6;
+        const FIC = 'five-reasons';
+        const CH = '1';
+        const btn = document.getElementById('markRead');
 
         function getRead() {
-            const data = JSON.parse(localStorage.getItem('chaptersRead') || '{}');
-            return data[FIC_ID] || [];
+            const d = JSON.parse(localStorage.getItem('chaptersRead') || '{}');
+            return d[FIC] || [];
         }
 
-        function saveRead(chapters) {
-            const data = JSON.parse(localStorage.getItem('chaptersRead') || '{}');
-            data[FIC_ID] = chapters;
-            localStorage.setItem('chaptersRead', JSON.stringify(data));
+        function saveRead(arr) {
+            const d = JSON.parse(localStorage.getItem('chaptersRead') || '{}');
+            d[FIC] = arr;
+            localStorage.setItem('chaptersRead', JSON.stringify(d));
         }
 
-        function update() {
-            const read = getRead();
-            document.getElementById('read-count').textContent = read.length;
-            document.getElementById('progress-fill').style.width = (read.length / TOTAL * 100) + '%';
-
-            document.querySelectorAll('.chapter-item').forEach(item => {
-                const num = item.dataset.chapter;
-                const cb = item.querySelector('.chapter-checkbox');
-                if (read.includes(num)) {
-                    item.classList.add('read');
-                    cb.checked = true;
-                } else {
-                    item.classList.remove('read');
-                    cb.checked = false;
-                }
-            });
-        }
-
-        function toggleChapter(cb) {
-            const num = cb.closest('.chapter-item').dataset.chapter;
-            let read = getRead();
-            if (cb.checked) {
-                read = read.filter(c => c !== num);
+        function updateBtn() {
+            if (getRead().includes(CH)) {
+                btn.classList.add('marked');
+                btn.textContent = '✓ Прочитано';
             } else {
-                if (!read.includes(num)) read.push(num);
+                btn.classList.remove('marked');
+                btn.textContent = 'Прочитано';
             }
-            saveRead(read);
-            update();
         }
 
-        document.getElementById('mark-all').addEventListener('click', () => {
-            const read = getRead();
-            if (read.length === TOTAL) saveRead([]);
-            else saveRead(Array.from({length: TOTAL}, (_, i) => String(i + 1)));
-            update();
+        btn.addEventListener('click', () => {
+            let r = getRead();
+            if (r.includes(CH)) r = r.filter(c => c !== CH);
+            else r.push(CH);
+            saveRead(r);
+            updateBtn();
         });
 
-        update();
+        updateBtn();
     </script>
 </body>
 </html>
