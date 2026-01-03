@@ -26,7 +26,6 @@
             --text-muted: #9a9098;
         }
 
-        /* ===== КАСТОМНЫЙ КУРСОР ===== */
         *, *::before, *::after {
             cursor: none;
         }
@@ -59,7 +58,6 @@
             background: rgba(232, 160, 180, 0.1);
         }
 
-        /* ===== BODY ===== */
         body {
             font-family: 'Raleway', sans-serif;
             background: var(--black);
@@ -70,7 +68,6 @@
             font-size: 18px;
         }
 
-        /* ===== ЛЁГКАЯ ТЕКСТУРА — ТОЧКИ ===== */
         body::before {
             content: '';
             position: fixed;
@@ -84,7 +81,6 @@
             z-index: 0;
         }
 
-        /* ===== ИНТЕРАКТИВНЫЕ ЧАСТИЦЫ ===== */
         #particles {
             position: fixed;
             top: 0;
@@ -95,7 +91,7 @@
             pointer-events: none;
         }
 
-        /* ===== CSS ДЕКОР ===== */
+        /* Декор */
         .decor-line {
             position: fixed;
             background: linear-gradient(90deg, transparent, var(--pink), transparent);
@@ -139,7 +135,7 @@
 
         .decor-diamond-1 { top: 76px; left: 50%; margin-left: -5px; }
 
-        /* ===== НАВИГАЦИЯ ===== */
+        /* Навигация */
         .nav-header {
             position: fixed;
             top: 0;
@@ -184,7 +180,38 @@
             transform: scaleX(1);
         }
 
-        /* ===== КОНТЕЙНЕР ===== */
+        /* Кнопка наверх */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--black-card);
+            border: 1px solid var(--pink);
+            color: var(--pink);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            text-decoration: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 99;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            background: var(--pink);
+            color: var(--black);
+        }
+
+        /* Контейнер */
         .container {
             position: relative;
             z-index: 2;
@@ -193,7 +220,7 @@
             padding: 120px 40px 80px;
         }
 
-        /* ===== HERO СЕКЦИЯ ===== */
+        /* HERO */
         .hero {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -280,7 +307,7 @@
             margin-top: 10px;
         }
 
-        /* ===== ГАЛЕРЕЯ АРТОВ В ШАПКЕ ===== */
+        /* Галерея артов */
         .hero-gallery {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -358,17 +385,7 @@
             padding: 20px;
         }
 
-        /* Декор вокруг галереи */
-        .hero-gallery-decor {
-            position: absolute;
-            width: 80px;
-            height: 80px;
-            border: 1px solid var(--pink);
-            opacity: 0.25;
-            pointer-events: none;
-        }
-
-        /* ===== СЕКЦИЯ РАЗДЕЛИТЕЛЬ ===== */
+        /* Секция разделитель */
         .section-divider {
             display: flex;
             align-items: center;
@@ -403,7 +420,7 @@
             background: var(--pink);
         }
 
-        /* ===== ЗАГОЛОВОК СЕКЦИИ ===== */
+        /* Заголовок секции */
         .section-header {
             text-align: center;
             margin-bottom: 70px;
@@ -424,7 +441,7 @@
             text-transform: uppercase;
         }
 
-        /* ===== СЕКЦИЯ ФАНФИКОВ ===== */
+        /* Секция фанфиков */
         .fics-section {
             margin-bottom: 100px;
             scroll-margin-top: 100px;
@@ -432,26 +449,27 @@
 
         .fics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
-            gap: 45px;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 35px;
         }
 
-        /* ===== КАРТОЧКА ФАНФИКА ===== */
+        /* КАРТОЧКА ФАНФИКА — компактная */
         .fic-card {
             position: relative;
             background: var(--black-card);
             border: 1px solid rgba(232, 160, 180, 0.15);
             text-decoration: none;
             color: inherit;
-            display: block;
+            display: grid;
+            grid-template-columns: 140px 1fr;
             transition: all 0.4s ease;
             animation: fadeInUp 0.8s ease-out backwards;
         }
 
         .fic-card:nth-child(1) { animation-delay: 0.1s; }
-        .fic-card:nth-child(2) { animation-delay: 0.2s; }
-        .fic-card:nth-child(3) { animation-delay: 0.3s; }
-        .fic-card:nth-child(4) { animation-delay: 0.4s; }
+        .fic-card:nth-child(2) { animation-delay: 0.15s; }
+        .fic-card:nth-child(3) { animation-delay: 0.2s; }
+        .fic-card:nth-child(4) { animation-delay: 0.25s; }
 
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(40px); }
@@ -460,16 +478,15 @@
 
         .fic-card:hover {
             border-color: var(--pink);
-            transform: translate(8px, 8px);
-            box-shadow: -12px -12px 0 var(--pink);
+            transform: translate(6px, 6px);
+            box-shadow: -8px -8px 0 var(--pink);
         }
 
-        /* Обложка */
+        /* Обложка — маленькая боковая */
         .fic-cover {
             position: relative;
-            aspect-ratio: 16/9;
-            overflow: hidden;
             background: var(--black-light);
+            overflow: hidden;
         }
 
         .fic-cover img {
@@ -486,33 +503,25 @@
         .fic-cover-placeholder {
             width: 100%;
             height: 100%;
+            min-height: 200px;
             display: flex;
             align-items: center;
             justify-content: center;
             background: linear-gradient(135deg, var(--black-light) 0%, var(--black-card) 100%);
             color: var(--text-muted);
             font-family: 'Cormorant Garamond', serif;
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-style: italic;
-        }
-
-        .fic-cover-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(to top, var(--black-card) 0%, transparent 60%);
         }
 
         /* Статусы */
         .fic-status {
             position: absolute;
-            top: 18px;
-            left: 18px;
-            padding: 8px 18px;
-            font-size: 0.8rem;
-            letter-spacing: 2px;
+            top: 10px;
+            left: 10px;
+            padding: 4px 10px;
+            font-size: 0.65rem;
+            letter-spacing: 1px;
             text-transform: uppercase;
             background: var(--black);
             border: 1px solid var(--pink);
@@ -527,13 +536,13 @@
         .fic-status-read {
             display: none;
             position: absolute;
-            top: 18px;
-            right: 18px;
-            padding: 6px 14px;
-            font-size: 0.75rem;
+            bottom: 10px;
+            left: 10px;
+            padding: 3px 8px;
+            font-size: 0.6rem;
             letter-spacing: 1px;
             text-transform: uppercase;
-            background: rgba(74, 222, 128, 0.15);
+            background: rgba(74, 222, 128, 0.2);
             border: 1px solid #4ade80;
             color: #4ade80;
         }
@@ -543,30 +552,32 @@
         .fic-status-progress {
             display: none;
             position: absolute;
-            top: 18px;
-            right: 18px;
-            padding: 6px 14px;
-            font-size: 0.75rem;
+            bottom: 10px;
+            left: 10px;
+            padding: 3px 8px;
+            font-size: 0.6rem;
             letter-spacing: 1px;
             text-transform: uppercase;
-            background: rgba(251, 191, 36, 0.15);
+            background: rgba(251, 191, 36, 0.2);
             border: 1px solid #fbbf24;
             color: #fbbf24;
         }
 
         .fic-card.in-progress .fic-status-progress { display: block; }
 
-        /* Контент карточки */
+        /* Контент */
         .fic-content {
-            padding: 35px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
         }
 
         .fic-title {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.9rem;
+            font-size: 1.5rem;
             font-weight: 500;
             color: var(--cream);
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             line-height: 1.3;
             transition: color 0.3s;
         }
@@ -577,50 +588,51 @@
 
         .fic-pairing {
             color: var(--pink);
-            font-size: 1.05rem;
-            margin-bottom: 18px;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
             font-style: italic;
         }
 
         .fic-description {
             font-family: 'Cormorant Garamond', serif;
             color: var(--text-muted);
-            font-size: 1.15rem;
-            line-height: 1.8;
-            margin-bottom: 22px;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 15px;
             display: -webkit-box;
-            -webkit-line-clamp: 3;
+            -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            flex-grow: 1;
         }
 
-        /* ТЕГИ — раскрываются при наведении */
+        /* Теги */
         .fic-tags-wrapper {
             position: relative;
-            margin-bottom: 22px;
+            margin-bottom: 15px;
         }
 
         .fic-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            max-height: 38px;
+            gap: 6px;
+            max-height: 30px;
             overflow: hidden;
             transition: max-height 0.4s ease;
         }
 
         .fic-card:hover .fic-tags {
-            max-height: 200px;
+            max-height: 150px;
         }
 
         .fic-tags-hint {
             position: absolute;
             right: 0;
             bottom: 0;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
             background: var(--black-card);
-            padding-left: 10px;
+            padding-left: 8px;
             transition: opacity 0.3s;
         }
 
@@ -629,8 +641,8 @@
         }
 
         .fic-tag {
-            padding: 5px 14px;
-            font-size: 0.8rem;
+            padding: 3px 10px;
+            font-size: 0.7rem;
             letter-spacing: 1px;
             text-transform: uppercase;
             border: 1px solid rgba(232, 160, 180, 0.25);
@@ -651,16 +663,16 @@
 
         .fic-meta {
             display: flex;
-            justify-content: space-between;
             flex-wrap: wrap;
             gap: 15px;
-            padding-top: 22px;
+            padding-top: 15px;
             border-top: 1px solid rgba(232, 160, 180, 0.1);
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
+            margin-top: auto;
         }
 
-        /* ===== БОКОВОЙ ДЕКОР ===== */
+        /* Боковой декор */
         .side-decor {
             position: fixed;
             z-index: 1;
@@ -700,7 +712,7 @@
             transform: rotate(45deg);
         }
 
-        /* ===== ФУТЕР ===== */
+        /* Футер */
         .footer {
             text-align: center;
             padding: 70px 20px;
@@ -743,7 +755,7 @@
             transform: rotate(45deg);
         }
 
-        /* ===== АДАПТИВ ===== */
+        /* АДАПТИВ */
         @media (max-width: 1200px) {
             .hero {
                 grid-template-columns: 1fr;
@@ -751,7 +763,7 @@
             }
 
             .hero-gallery {
-                max-width: 500px;
+                max-width: 450px;
                 margin: 0 auto;
             }
 
@@ -761,6 +773,16 @@
 
             .hero-title span {
                 font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .fic-card {
+                grid-template-columns: 120px 1fr;
+            }
+
+            .fic-cover-placeholder {
+                min-height: 180px;
             }
         }
 
@@ -820,6 +842,15 @@
                 grid-template-columns: 1fr;
             }
 
+            .fic-card {
+                grid-template-columns: 100px 1fr;
+            }
+
+            .fic-cover-placeholder {
+                min-height: 150px;
+                font-size: 1.4rem;
+            }
+
             .section-title {
                 font-size: 2.2rem;
             }
@@ -827,6 +858,16 @@
             .decor-corner,
             .side-decor {
                 display: none;
+            }
+
+            /* Кнопка наверх на мобильном — слева сверху чтобы не мешала */
+            .scroll-top {
+                bottom: auto;
+                top: 80px;
+                right: 15px;
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
             }
         }
 
@@ -841,23 +882,24 @@
             }
 
             .fic-content {
-                padding: 25px;
+                padding: 18px;
             }
 
             .fic-title {
-                font-size: 1.6rem;
+                font-size: 1.3rem;
             }
 
-            .fic-meta {
-                font-size: 0.85rem;
+            .fic-card {
+                grid-template-columns: 90px 1fr;
             }
 
             .hero-gallery {
                 grid-template-columns: 1fr;
+                max-width: 280px;
             }
         }
 
-        /* ===== СКРОЛЛБАР ===== */
+        /* Скроллбар */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -874,27 +916,25 @@
             background: var(--pink);
         }
 
-        /* Плавный скролл */
         html {
             scroll-behavior: smooth;
         }
     </style>
 </head>
 <body>
-    <!-- Кастомный курсор -->
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
 
-    <!-- Частицы -->
     <canvas id="particles"></canvas>
 
-    <!-- Навигация -->
+    <!-- Кнопка наверх -->
+    <a href="#top" class="scroll-top" id="scrollTop">↑</a>
+
     <nav class="nav-header">
         <a href="#ongoing" class="nav-link">В процессе</a>
         <a href="#completed" class="nav-link">Завершённые</a>
     </nav>
 
-    <!-- CSS декор -->
     <div class="decor-line decor-line-top"></div>
     <div class="decor-corner decor-corner-tl"></div>
     <div class="decor-corner decor-corner-tr"></div>
@@ -902,7 +942,6 @@
     <div class="decor-corner decor-corner-br"></div>
     <div class="decor-diamond decor-diamond-1"></div>
 
-    <!-- Боковой декор -->
     <div class="side-decor side-decor-left">
         <div class="side-line"></div>
         <div class="side-dot"></div>
@@ -914,7 +953,7 @@
         <div class="side-line"></div>
     </div>
 
-    <div class="container">
+    <div class="container" id="top">
         <!-- HERO -->
         <section class="hero">
             <div class="hero-content">
@@ -926,7 +965,7 @@
                     <span>_2222</span>
                 </h1>
                 <p class="hero-description">
-                    Фанфики по Genshin Impact. Кадзуха и Скарамуччи, драма, романтика, флафф и всё между.
+                    Фанфики по Genshin Impact. Кадзуха и Скарамуччи — драма, романтика, флафф и всё между.
                 </p>
                 <div class="hero-stats">
                     <div class="stat">
@@ -944,24 +983,19 @@
                 </div>
             </div>
 
-            <!-- Галерея артов -->
             <div class="hero-gallery">
                 <div class="art-frame">
-                    <!-- <img src="images/decor/art1.jpg" alt=""> -->
                     <div class="art-placeholder">Арт 1<br>🌸</div>
                 </div>
                 <div class="art-frame">
-                    <!-- <img src="images/decor/art2.jpg" alt=""> -->
                     <div class="art-placeholder">Арт 2</div>
                 </div>
                 <div class="art-frame">
-                    <!-- <img src="images/decor/art3.jpg" alt=""> -->
                     <div class="art-placeholder">Арт 3</div>
                 </div>
             </div>
         </section>
 
-        <!-- РАЗДЕЛИТЕЛЬ -->
         <div class="section-divider">
             <div class="section-divider-icon"></div>
         </div>
@@ -974,20 +1008,18 @@
             </div>
 
             <div class="fics-grid">
-                <!-- Пять причин -->
                 <a href="fics/five-reasons.html" class="fic-card" data-fic-id="five-reasons">
                     <div class="fic-cover">
                         <div class="fic-cover-placeholder">I</div>
-                        <div class="fic-cover-overlay"></div>
                         <div class="fic-status">В процессе</div>
-                        <div class="fic-status-read">✓ Прочитано</div>
-                        <div class="fic-status-progress">Читаю</div>
+                        <div class="fic-status-read">✓</div>
+                        <div class="fic-status-progress">📖</div>
                     </div>
                     <div class="fic-content">
                         <h3 class="fic-title">Пять причин, почему я сплю с ножом</h3>
-                        <p class="fic-pairing">Кадзуха Каэдэхара / Странник</p>
+                        <p class="fic-pairing">Кадзуха / Странник</p>
                         <p class="fic-description">
-                            Так и жил он с постоянной готовностью к двум вещам: сесть в тюрьму за чье-нибудь убийство или умереть от паранойи. Или просто жизнь официанта, которому впервые вместо просьбы переделать заказ поступило предложение сходить на свидание.
+                            Так и жил он с постоянной готовностью к двум вещам: сесть в тюрьму за чье-нибудь убийство или умереть от паранойи.
                         </p>
                         <div class="fic-tags-wrapper">
                             <div class="fic-tags">
@@ -999,7 +1031,6 @@
                                 <span class="fic-tag">Юмор</span>
                                 <span class="fic-tag warning">NC-17</span>
                                 <span class="fic-tag warning">ООС</span>
-                                <span class="fic-tag">Разница в возрасте</span>
                             </div>
                             <span class="fic-tags-hint">+ ещё</span>
                         </div>
@@ -1011,20 +1042,18 @@
                     </div>
                 </a>
 
-                <!-- Скрипичный ключ -->
                 <a href="#" class="fic-card" data-fic-id="violin-key">
                     <div class="fic-cover">
                         <div class="fic-cover-placeholder">II</div>
-                        <div class="fic-cover-overlay"></div>
                         <div class="fic-status">В процессе</div>
-                        <div class="fic-status-read">✓ Прочитано</div>
-                        <div class="fic-status-progress">Читаю</div>
+                        <div class="fic-status-read">✓</div>
+                        <div class="fic-status-progress">📖</div>
                     </div>
                     <div class="fic-content">
                         <h3 class="fic-title">Скрипичный ключ к сердцу</h3>
-                        <p class="fic-pairing">Кадзуха Каэдэхара / Странник</p>
+                        <p class="fic-pairing">Кадзуха / Странник</p>
                         <p class="fic-description">
-                            Живя свою спокойную, даже рутинную жизнь, Кадзуха и не догадывался о том, что в нее можно было так просто вмешаться и пошатнуть некогда выверенное равновесие.
+                            Живя свою спокойную, даже рутинную жизнь, Кадзуха и не догадывался о том, что в нее можно было так просто вмешаться.
                         </p>
                         <div class="fic-tags-wrapper">
                             <div class="fic-tags">
@@ -1047,7 +1076,6 @@
             </div>
         </section>
 
-        <!-- РАЗДЕЛИТЕЛЬ -->
         <div class="section-divider">
             <div class="section-divider-icon"></div>
         </div>
@@ -1060,18 +1088,16 @@
             </div>
 
             <div class="fics-grid">
-                <!-- Горький вкус -->
                 <a href="#" class="fic-card" data-fic-id="bitter-pills">
                     <div class="fic-cover">
                         <div class="fic-cover-placeholder">III</div>
-                        <div class="fic-cover-overlay"></div>
                         <div class="fic-status complete">Завершён</div>
-                        <div class="fic-status-read">✓ Прочитано</div>
-                        <div class="fic-status-progress">Читаю</div>
+                        <div class="fic-status-read">✓</div>
+                        <div class="fic-status-progress">📖</div>
                     </div>
                     <div class="fic-content">
                         <h3 class="fic-title">Горький вкус твоих таблеток</h3>
-                        <p class="fic-pairing">Странник / Кадзуха Каэдэхара</p>
+                        <p class="fic-pairing">Странник / Кадзуха</p>
                         <p class="fic-description">
                             Психолог сказал мне: «Нужно жить дальше». Я послал его к черту…
                         </p>
@@ -1082,12 +1108,9 @@
                                 <span class="fic-tag">Ангст</span>
                                 <span class="fic-tag">Драма</span>
                                 <span class="fic-tag">Психология</span>
-                                <span class="fic-tag">Флафф</span>
                                 <span class="fic-tag warning">NC-17</span>
-                                <span class="fic-tag warning">ООС</span>
                                 <span class="fic-tag warning">Упоминания селфхарма</span>
                                 <span class="fic-tag">Инвалидность</span>
-                                <span class="fic-tag">Разница в возрасте</span>
                             </div>
                             <span class="fic-tags-hint">+ ещё</span>
                         </div>
@@ -1099,18 +1122,16 @@
                     </div>
                 </a>
 
-                <!-- Общая вина -->
                 <a href="#" class="fic-card" data-fic-id="shared-guilt">
                     <div class="fic-cover">
                         <div class="fic-cover-placeholder">IV</div>
-                        <div class="fic-cover-overlay"></div>
                         <div class="fic-status complete">Завершён</div>
-                        <div class="fic-status-read">✓ Прочитано</div>
-                        <div class="fic-status-progress">Читаю</div>
+                        <div class="fic-status-read">✓</div>
+                        <div class="fic-status-progress">📖</div>
                     </div>
                     <div class="fic-content">
                         <h3 class="fic-title">Общая вина</h3>
-                        <p class="fic-pairing">Кадзуха Каэдэхара / Странник</p>
+                        <p class="fic-pairing">Кадзуха / Странник</p>
                         <p class="fic-description">
                             Развяжет один узел — придётся перематывать весь клубок…
                         </p>
@@ -1119,13 +1140,10 @@
                                 <span class="fic-tag">AU</span>
                                 <span class="fic-tag">Hurt/Comfort</span>
                                 <span class="fic-tag">Драма</span>
-                                <span class="fic-tag">Флафф</span>
                                 <span class="fic-tag warning">NC-17</span>
                                 <span class="fic-tag warning">Жестокость</span>
-                                <span class="fic-tag warning">Упоминания изнасилования</span>
                                 <span class="fic-tag">Школа</span>
-                                <span class="fic-tag">Расстройства шизофренического спектра</span>
-                                <span class="fic-tag">Селфхарм</span>
+                                <span class="fic-tag">Шизофрения</span>
                             </div>
                             <span class="fic-tags-hint">+ ещё</span>
                         </div>
@@ -1137,32 +1155,27 @@
                     </div>
                 </a>
 
-                <!-- Когда умирают ангелы -->
                 <a href="#" class="fic-card" data-fic-id="angels">
                     <div class="fic-cover">
                         <div class="fic-cover-placeholder">V</div>
-                        <div class="fic-cover-overlay"></div>
                         <div class="fic-status complete">Завершён</div>
-                        <div class="fic-status-read">✓ Прочитано</div>
-                        <div class="fic-status-progress">Читаю</div>
+                        <div class="fic-status-read">✓</div>
+                        <div class="fic-status-progress">📖</div>
                     </div>
                     <div class="fic-content">
                         <h3 class="fic-title">Когда умирают ангелы</h3>
-                        <p class="fic-pairing">Кадзуха Каэдэхара / Странник</p>
+                        <p class="fic-pairing">Кадзуха / Странник</p>
                         <p class="fic-description">
                             Свободная душа, запертая в несвободном теле, не сможет обрести счастье.
                         </p>
                         <div class="fic-tags-wrapper">
                             <div class="fic-tags">
                                 <span class="fic-tag">AU</span>
-                                <span class="fic-tag">Hurt/Comfort</span>
                                 <span class="fic-tag">Ангст</span>
                                 <span class="fic-tag">Драма</span>
                                 <span class="fic-tag warning">NC-17</span>
-                                <span class="fic-tag warning">Смерть основных персонажей</span>
-                                <span class="fic-tag warning">Упоминания изнасилования</span>
-                                <span class="fic-tag">Синдром религиозной травмы</span>
-                                <span class="fic-tag">Мистика</span>
+                                <span class="fic-tag warning">Смерть персонажей</span>
+                                <span class="fic-tag">Религиозная травма</span>
                             </div>
                             <span class="fic-tags-hint">+ ещё</span>
                         </div>
@@ -1174,18 +1187,16 @@
                     </div>
                 </a>
 
-                <!-- Я только танцую -->
                 <a href="#" class="fic-card" data-fic-id="just-dancing">
                     <div class="fic-cover">
                         <div class="fic-cover-placeholder">VI</div>
-                        <div class="fic-cover-overlay"></div>
                         <div class="fic-status complete">Завершён</div>
-                        <div class="fic-status-read">✓ Прочитано</div>
-                        <div class="fic-status-progress">Читаю</div>
+                        <div class="fic-status-read">✓</div>
+                        <div class="fic-status-progress">📖</div>
                     </div>
                     <div class="fic-content">
                         <h3 class="fic-title">Я только танцую</h3>
-                        <p class="fic-pairing">Кадзуха Каэдэхара / Странник</p>
+                        <p class="fic-pairing">Кадзуха / Странник</p>
                         <p class="fic-description">
                             «Я стриптизер, а не проститутка», представляешь, что сказал?!
                         </p>
@@ -1193,11 +1204,9 @@
                             <div class="fic-tags">
                                 <span class="fic-tag">AU</span>
                                 <span class="fic-tag warning">NC-17</span>
-                                <span class="fic-tag warning">Попытка изнасилования</span>
                                 <span class="fic-tag">Стрип-клубы</span>
                                 <span class="fic-tag">URT</span>
                             </div>
-                            <span class="fic-tags-hint">+ ещё</span>
                         </div>
                         <div class="fic-meta">
                             <span>31 глава</span>
@@ -1207,33 +1216,26 @@
                     </div>
                 </a>
 
-                <!-- Философия бытия -->
                 <a href="#" class="fic-card" data-fic-id="dorm-philosophy">
                     <div class="fic-cover">
                         <div class="fic-cover-placeholder">VII</div>
-                        <div class="fic-cover-overlay"></div>
                         <div class="fic-status complete">Завершён</div>
-                        <div class="fic-status-read">✓ Прочитано</div>
-                        <div class="fic-status-progress">Читаю</div>
+                        <div class="fic-status-read">✓</div>
+                        <div class="fic-status-progress">📖</div>
                     </div>
                     <div class="fic-content">
                         <h3 class="fic-title">Философия бытия через призму общаги</h3>
-                        <p class="fic-pairing">Кадзуха Каэдэхара / Странник</p>
+                        <p class="fic-pairing">Кадзуха / Странник</p>
                         <p class="fic-description">
-                            — Можно тебя обнять, пожалуйста? Просто по-дружески?
-                            — ага, и спим мы просто по-дружески.
+                            — Можно тебя обнять? Просто по-дружески? — ага, и спим мы просто по-дружески.
                         </p>
                         <div class="fic-tags-wrapper">
                             <div class="fic-tags">
                                 <span class="fic-tag">AU</span>
-                                <span class="fic-tag">Hurt/Comfort</span>
-                                <span class="fic-tag">Ангст</span>
                                 <span class="fic-tag">Флафф</span>
                                 <span class="fic-tag warning">NC-17</span>
-                                <span class="fic-tag warning">Внутренняя гомофобия</span>
                                 <span class="fic-tag">Школа</span>
                             </div>
-                            <span class="fic-tags-hint">+ ещё</span>
                         </div>
                         <div class="fic-meta">
                             <span>20 глав</span>
@@ -1243,18 +1245,16 @@
                     </div>
                 </a>
 
-                <!-- Да все окей -->
                 <a href="#" class="fic-card" data-fic-id="all-okay">
                     <div class="fic-cover">
                         <div class="fic-cover-placeholder">VIII</div>
-                        <div class="fic-cover-overlay"></div>
                         <div class="fic-status complete">Завершён</div>
-                        <div class="fic-status-read">✓ Прочитано</div>
-                        <div class="fic-status-progress">Читаю</div>
+                        <div class="fic-status-read">✓</div>
+                        <div class="fic-status-progress">📖</div>
                     </div>
                     <div class="fic-content">
                         <h3 class="fic-title">Да все окей</h3>
-                        <p class="fic-pairing">Кадзуха Каэдэхара / Странник</p>
+                        <p class="fic-pairing">Кадзуха / Странник</p>
                         <p class="fic-description">
                             Рано… Ты пока не готов к этому.
                         </p>
@@ -1273,30 +1273,25 @@
                     </div>
                 </a>
 
-                <!-- Жди меня, Кадзуха -->
                 <a href="#" class="fic-card" data-fic-id="wait-for-me">
                     <div class="fic-cover">
                         <div class="fic-cover-placeholder">IX</div>
-                        <div class="fic-cover-overlay"></div>
                         <div class="fic-status complete">Завершён</div>
-                        <div class="fic-status-read">✓ Прочитано</div>
-                        <div class="fic-status-progress">Читаю</div>
+                        <div class="fic-status-read">✓</div>
+                        <div class="fic-status-progress">📖</div>
                     </div>
                     <div class="fic-content">
                         <h3 class="fic-title">Жди меня, Кадзуха…</h3>
-                        <p class="fic-pairing">Странник / Кадзуха Каэдэхара</p>
+                        <p class="fic-pairing">Странник / Кадзуха</p>
                         <p class="fic-description">
-                            Сейчас, идя по мокрому асфальту и игнорируя бегущих людей вокруг, Скара улыбался…
+                            Сейчас, идя по мокрому асфальту, Скара улыбался…
                         </p>
                         <div class="fic-tags-wrapper">
                             <div class="fic-tags">
                                 <span class="fic-tag">AU</span>
                                 <span class="fic-tag">Ангст</span>
-                                <span class="fic-tag warning">NC-17</span>
-                                <span class="fic-tag warning">Смерть основных персонажей</span>
-                                <span class="fic-tag">Смертельные заболевания</span>
+                                <span class="fic-tag warning">Смерть персонажей</span>
                             </div>
-                            <span class="fic-tags-hint">+ ещё</span>
                         </div>
                         <div class="fic-meta">
                             <span>1 глава</span>
@@ -1305,26 +1300,23 @@
                     </div>
                 </a>
 
-                <!-- Ночной пешеход -->
                 <a href="#" class="fic-card" data-fic-id="night-walker">
                     <div class="fic-cover">
                         <div class="fic-cover-placeholder">X</div>
-                        <div class="fic-cover-overlay"></div>
                         <div class="fic-status complete">Завершён</div>
-                        <div class="fic-status-read">✓ Прочитано</div>
-                        <div class="fic-status-progress">Читаю</div>
+                        <div class="fic-status-read">✓</div>
+                        <div class="fic-status-progress">📖</div>
                     </div>
                     <div class="fic-content">
                         <h3 class="fic-title">Ночной пешеход</h3>
-                        <p class="fic-pairing">Кадзуха Каэдэхара / Странник</p>
+                        <p class="fic-pairing">Кадзуха / Странник</p>
                         <p class="fic-description">
-                            Что делать, если вся жизнь кажется обманом? Если все вокруг лишь иллюзия и ложь...
+                            Что делать, если вся жизнь кажется обманом?
                         </p>
                         <div class="fic-tags-wrapper">
                             <div class="fic-tags">
                                 <span class="fic-tag">AU</span>
                                 <span class="fic-tag">Флафф</span>
-                                <span class="fic-tag warning">NC-17</span>
                                 <span class="fic-tag">Философия</span>
                             </div>
                         </div>
@@ -1335,18 +1327,16 @@
                     </div>
                 </a>
 
-                <!-- Стань частью моего сценария -->
                 <a href="#" class="fic-card" data-fic-id="my-scenario">
                     <div class="fic-cover">
                         <div class="fic-cover-placeholder">XI</div>
-                        <div class="fic-cover-overlay"></div>
                         <div class="fic-status complete">Завершён</div>
-                        <div class="fic-status-read">✓ Прочитано</div>
-                        <div class="fic-status-progress">Читаю</div>
+                        <div class="fic-status-read">✓</div>
+                        <div class="fic-status-progress">📖</div>
                     </div>
                     <div class="fic-content">
                         <h3 class="fic-title">Стань частью моего сценария</h3>
-                        <p class="fic-pairing">Странник / Кадзуха Каэдэхара</p>
+                        <p class="fic-pairing">Странник / Кадзуха</p>
                         <p class="fic-description">
                             Парень не верил, что в его жизни хоть что-то может пойти не по сценарию...
                         </p>
@@ -1356,7 +1346,6 @@
                                 <span class="fic-tag">PG-13</span>
                                 <span class="fic-tag">Русалки</span>
                                 <span class="fic-tag">Мистика</span>
-                                <span class="fic-tag">Открытый финал</span>
                             </div>
                         </div>
                         <div class="fic-meta">
@@ -1368,7 +1357,6 @@
             </div>
         </section>
 
-        <!-- ФУТЕР -->
         <footer class="footer">
             <div class="footer-decor">
                 <span></span>
@@ -1376,20 +1364,19 @@
                 <span></span>
             </div>
             <p class="footer-text">
-                Работы автора <a href="https://ficbook.net/authors/Kris_mem_2222" target="_blank">Kris_mem_2222</a> на Фикбуке
+                Работы <a href="https://ficbook.net/authors/Kris_mem_2222" target="_blank">Kris_mem_2222</a> на Фикбуке
             </p>
         </footer>
     </div>
 
     <script>
-        // ===== КАСТОМНЫЙ КУРСОР =====
+        // Курсор
         const cursor = document.querySelector('.cursor');
         const follower = document.querySelector('.cursor-follower');
 
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
-
             setTimeout(() => {
                 follower.style.left = e.clientX - 17 + 'px';
                 follower.style.top = e.clientY - 17 + 'px';
@@ -1401,7 +1388,7 @@
             el.addEventListener('mouseleave', () => follower.classList.remove('hover'));
         });
 
-        // ===== ЧАСТИЦЫ (лёгкие, розовые) =====
+        // Частицы
         const canvas = document.getElementById('particles');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -1421,10 +1408,6 @@
 
         class Particle {
             constructor() {
-                this.reset();
-            }
-
-            reset() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
                 this.size = Math.random() * 2 + 0.5;
@@ -1436,7 +1419,6 @@
             update() {
                 this.x += this.speedX;
                 this.y += this.speedY;
-
                 if (mouse.x && mouse.y) {
                     const dx = mouse.x - this.x;
                     const dy = mouse.y - this.y;
@@ -1446,7 +1428,6 @@
                         this.y -= dy * 0.015;
                     }
                 }
-
                 if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
                 if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
             }
@@ -1459,36 +1440,33 @@
             }
         }
 
-        function init() {
-            particles = [];
-            const count = Math.min(50, Math.floor((canvas.width * canvas.height) / 25000));
-            for (let i = 0; i < count; i++) {
-                particles.push(new Particle());
-            }
-        }
-        init();
+        for (let i = 0; i < 40; i++) particles.push(new Particle());
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
+            particles.forEach(p => { p.update(); p.draw(); });
             requestAnimationFrame(animate);
         }
         animate();
 
-        // ===== СИСТЕМА ПРОЧИТАННОГО =====
+        // Кнопка наверх
+        const scrollBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                scrollBtn.classList.add('visible');
+            } else {
+                scrollBtn.classList.remove('visible');
+            }
+        });
+
+        // Статусы прочитанного
         function loadReadStatus() {
             const readFics = JSON.parse(localStorage.getItem('readFics') || '{}');
             document.querySelectorAll('.fic-card').forEach(card => {
                 const id = card.dataset.ficId;
                 card.classList.remove('read', 'in-progress');
-                if (readFics[id] === 'read') {
-                    card.classList.add('read');
-                } else if (readFics[id] === 'in-progress') {
-                    card.classList.add('in-progress');
-                }
+                if (readFics[id] === 'read') card.classList.add('read');
+                else if (readFics[id] === 'in-progress') card.classList.add('in-progress');
             });
         }
         loadReadStatus();
