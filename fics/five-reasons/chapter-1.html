@@ -943,55 +943,85 @@
             });
         }
 
-        // === МУЗЫКАЛЬНЫЙ ПЛЕЕР ===
-        let currentTrack = 0;
-        let isPlaying = false;
-        const tracks = [
-            { name: 'Порнхаб крисмас клаб', artist: 'Пошлая молли' },
-            { name: 'Oh come all ye faithful', artist: 'Twisted sister' }
-        ];
+// === МУЗЫКАЛЬНЫЙ ПЛЕЕР ===
+let currentTrack = 0;
+let isPlaying = false;
 
-        function toggleMusicPanel() {
-            const panel = document.getElementById('musicPanel');
-            const btn = document.getElementById('musicToggle');
-            panel.classList.toggle('visible');
-            btn.classList.toggle('active');
+// СЮДА ПИШИ ПУТИ К СВОИМ ПЕСНЯМ! ↓↓↓
+const tracks = [
+    {
+        name: 'Порнхаб крисмас клаб',
+        artist: 'Пошлая молли',
+        src: '../../audio/pornhub-christmas.mp3'  // путь к файлу
+    },
+    {
+        name: 'Oh come all ye faithful',
+        artist: 'Twisted sister',
+        src: '../../audio/oh-come-all-ye-faithful.mp3'
+    }
+];
+
+// Создаём аудио-элемент
+const audio = new Audio();
+audio.volume = 0.7; // громкость 70%
+
+// Когда трек заканчивается — следующий
+audio.addEventListener('ended', () => {
+    nextTrack();
+});
+
+function toggleMusicPanel() {
+    const panel = document.getElementById('musicPanel');
+    const btn = document.getElementById('musicToggle');
+    panel.classList.toggle('visible');
+    btn.classList.toggle('active');
+}
+
+function playTrack(num) {
+    currentTrack = num - 1;
+    audio.src = tracks[currentTrack].src;
+    audio.play();
+    isPlaying = true;
+    updatePlayerUI();
+}
+
+function togglePlay() {
+    if (isPlaying) {
+        audio.pause();
+    } else {
+        if (!audio.src) {
+            audio.src = tracks[currentTrack].src;
         }
+        audio.play();
+    }
+    isPlaying = !isPlaying;
+    updatePlayerUI();
+}
 
-        function playTrack(num) {
-            currentTrack = num - 1;
-            isPlaying = true;
-            updatePlayerUI();
-            // Здесь будет воспроизведение реального аудио
-            // Пока просто визуальная индикация
-            console.log('Playing:', tracks[currentTrack].name);
-        }
+function nextTrack() {
+    currentTrack = (currentTrack + 1) % tracks.length;
+    audio.src = tracks[currentTrack].src;
+    audio.play();
+    isPlaying = true;
+    updatePlayerUI();
+}
 
-        function togglePlay() {
-            isPlaying = !isPlaying;
-            updatePlayerUI();
-        }
+function prevTrack() {
+    currentTrack = (currentTrack - 1 + tracks.length) % tracks.length;
+    audio.src = tracks[currentTrack].src;
+    audio.play();
+    isPlaying = true;
+    updatePlayerUI();
+}
 
-        function nextTrack() {
-            currentTrack = (currentTrack + 1) % tracks.length;
-            isPlaying = true;
-            updatePlayerUI();
-        }
+function updatePlayerUI() {
+    document.querySelectorAll('.music-track-item').forEach((item, i) => {
+        item.classList.toggle('playing', i === currentTrack && isPlaying);
+        item.querySelector('.track-play-btn').textContent = (i === currentTrack && isPlaying) ? '⏸' : '▶';
+    });
+    document.getElementById('playPauseBtn').textContent = isPlaying ? '⏸' : '▶';
+}
 
-        function prevTrack() {
-            currentTrack = (currentTrack - 1 + tracks.length) % tracks.length;
-            isPlaying = true;
-            updatePlayerUI();
-        }
-
-        function updatePlayerUI() {
-            document.querySelectorAll('.music-track-item').forEach((item, i) => {
-                item.classList.toggle('playing', i === currentTrack && isPlaying);
-                item.querySelector('.track-play-btn').textContent = (i === currentTrack && isPlaying) ? '⏸' : '▶';
-            });
-
-            document.getElementById('playPauseBtn').textContent = isPlaying ? '⏸' : '▶';
-        }
 
         // Scroll
         const scrollBtn = document.getElementById('scrollTop');
