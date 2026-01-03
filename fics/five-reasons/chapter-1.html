@@ -16,18 +16,20 @@
         :root {
             --black: #0a0a0a;
             --black-light: #111;
-            --gold: #d4af37;
-            --gold-dark: #b8942e;
-            --cream: #f5e6c8;
-            --text: #e0dcd4;
-            --text-muted: #8a8578;
+            --black-card: #18181c;
+            --pink: #e8a0b4;
+            --pink-light: #f0b8c8;
+            --pink-dark: #c4889a;
+            --cream: #faf5f7;
+            --text: #f0eaec;
+            --text-muted: #9a9098;
         }
 
         .cursor {
             position: fixed;
             width: 8px;
             height: 8px;
-            background: var(--gold);
+            background: var(--pink);
             border-radius: 50%;
             pointer-events: none;
             z-index: 10000;
@@ -38,7 +40,7 @@
             position: fixed;
             width: 35px;
             height: 35px;
-            border: 1px solid var(--gold);
+            border: 1px solid var(--pink);
             border-radius: 50%;
             pointer-events: none;
             z-index: 9999;
@@ -48,7 +50,7 @@
         .cursor-follower.hover {
             width: 50px;
             height: 50px;
-            background: rgba(212, 175, 55, 0.1);
+            background: rgba(232, 160, 180, 0.1);
         }
 
         body {
@@ -57,6 +59,7 @@
             color: var(--text);
             min-height: 100vh;
             line-height: 2;
+            font-size: 20px;
         }
 
         body::before {
@@ -66,8 +69,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E");
-            opacity: 0.02;
+            background-image: radial-gradient(rgba(232, 160, 180, 0.02) 1px, transparent 1px);
+            background-size: 25px 25px;
             pointer-events: none;
         }
 
@@ -77,6 +80,37 @@
             padding: 60px 30px 100px;
         }
 
+        /* Кнопка наверх */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 45px;
+            height: 45px;
+            background: var(--black-card);
+            border: 1px solid var(--pink);
+            color: var(--pink);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            text-decoration: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 99;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            background: var(--pink);
+            color: var(--black);
+        }
+
         /* Навигация */
         .nav {
             display: flex;
@@ -84,26 +118,26 @@
             align-items: center;
             margin-bottom: 50px;
             padding-bottom: 20px;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            border-bottom: 1px solid rgba(232, 160, 180, 0.12);
             font-family: 'Raleway', sans-serif;
         }
 
         .nav a {
             color: var(--text-muted);
             text-decoration: none;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             letter-spacing: 1px;
             text-transform: uppercase;
             transition: color 0.3s;
         }
 
         .nav a:hover {
-            color: var(--gold);
+            color: var(--pink);
         }
 
         .nav-center {
-            color: var(--gold);
-            font-size: 0.9rem;
+            color: var(--pink);
+            font-size: 0.95rem;
         }
 
         /* Заголовок главы */
@@ -114,10 +148,10 @@
 
         .chapter-label {
             font-family: 'Raleway', sans-serif;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             letter-spacing: 4px;
             text-transform: uppercase;
-            color: var(--gold);
+            color: var(--pink);
             margin-bottom: 15px;
         }
 
@@ -139,19 +173,18 @@
         .chapter-divider span {
             width: 60px;
             height: 1px;
-            background: var(--gold);
+            background: var(--pink);
         }
 
         .chapter-divider-dot {
             width: 8px;
             height: 8px;
-            border: 1px solid var(--gold);
+            border: 1px solid var(--pink);
             transform: rotate(45deg);
         }
 
         /* Текст главы */
         .chapter-content {
-            font-size: 1.2rem;
             color: var(--text);
             animation: fadeIn 1s ease;
         }
@@ -173,10 +206,10 @@
 
         .chapter-content p:first-child::first-letter {
             float: left;
-            font-size: 4rem;
+            font-size: 4.5rem;
             line-height: 0.8;
             padding-right: 15px;
-            color: var(--gold);
+            color: var(--pink);
             font-weight: 500;
         }
 
@@ -184,7 +217,7 @@
         .dialogue {
             text-indent: 0 !important;
             padding-left: 30px;
-            border-left: 2px solid var(--gold);
+            border-left: 2px solid var(--pink);
             font-style: italic;
             margin: 2em 0;
         }
@@ -193,7 +226,7 @@
         .scene-break {
             text-align: center;
             margin: 3em 0;
-            color: var(--gold);
+            color: var(--pink);
             font-size: 1.5rem;
             letter-spacing: 10px;
         }
@@ -205,8 +238,10 @@
             align-items: center;
             margin-top: 80px;
             padding-top: 40px;
-            border-top: 1px solid rgba(212, 175, 55, 0.15);
+            border-top: 1px solid rgba(232, 160, 180, 0.12);
             font-family: 'Raleway', sans-serif;
+            gap: 15px;
+            flex-wrap: wrap;
         }
 
         .chapter-nav a {
@@ -215,17 +250,17 @@
             gap: 10px;
             color: var(--text-muted);
             text-decoration: none;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             letter-spacing: 1px;
             text-transform: uppercase;
             padding: 15px 25px;
-            border: 1px solid rgba(212, 175, 55, 0.2);
+            border: 1px solid rgba(232, 160, 180, 0.2);
             transition: all 0.3s;
         }
 
         .chapter-nav a:hover {
-            border-color: var(--gold);
-            color: var(--gold);
+            border-color: var(--pink);
+            color: var(--pink);
         }
 
         .chapter-nav a.disabled {
@@ -235,35 +270,31 @@
 
         .mark-read-btn {
             background: transparent;
-            border: 1px solid var(--gold);
-            color: var(--gold);
+            border: 1px solid var(--pink);
+            color: var(--pink);
             padding: 15px 30px;
             font-family: 'Raleway', sans-serif;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             letter-spacing: 1px;
             text-transform: uppercase;
             cursor: none;
             transition: all 0.3s;
         }
 
-        .mark-read-btn:hover {
-            background: var(--gold);
-            color: var(--black);
-        }
-
+        .mark-read-btn:hover,
         .mark-read-btn.read {
-            background: var(--gold);
+            background: var(--pink);
             color: var(--black);
         }
 
         /* Адаптив */
         @media (max-width: 768px) {
-            .container {
-                padding: 40px 20px 80px;
+            body {
+                font-size: 18px;
             }
 
-            .chapter-content {
-                font-size: 1.1rem;
+            .container {
+                padding: 40px 20px 80px;
             }
 
             .chapter-content p {
@@ -276,25 +307,37 @@
 
             .chapter-nav {
                 flex-direction: column;
-                gap: 15px;
             }
 
             .chapter-nav a {
                 width: 100%;
                 justify-content: center;
             }
+
+            .scroll-top {
+                top: 80px;
+                bottom: auto;
+                right: 15px;
+                width: 38px;
+                height: 38px;
+                font-size: 0.9rem;
+            }
         }
 
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--black); }
-        ::-webkit-scrollbar-thumb { background: var(--gold-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--pink-dark); }
+
+        html { scroll-behavior: smooth; }
     </style>
 </head>
 <body>
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
 
-    <div class="container">
+    <a href="#top" class="scroll-top" id="scrollTop">↑</a>
+
+    <div class="container" id="top">
         <nav class="nav">
             <a href="../five-reasons.html">← Оглавление</a>
             <span class="nav-center">Глава 1 из 6</span>
@@ -312,13 +355,13 @@
         </header>
 
         <article class="chapter-content">
-            <p>Здесь начинается текст первой главы. Первая буква будет большой и золотой — это называется буквица, выглядит очень красиво!</p>
+            <p>Здесь начинается текст первой главы. Первая буква будет большой и розовой — это называется буквица, выглядит очень красиво и книжно!</p>
 
-            <p>Второй абзац текста. Можешь просто копировать текст из Фикбука и вставлять сюда, каждый абзац оборачивая в тег p.</p>
+            <p>Второй абзац текста. Просто копируй текст из Фикбука и вставляй сюда, каждый абзац оборачивая в тег p.</p>
 
             <p>Ещё один абзац для примера. Текст выровнен по ширине и имеет отступ первой строки — классический книжный стиль.</p>
 
-            <p class="dialogue">— Это диалог! — сказал персонаж. — Диалоги выделяются золотой линией слева и курсивом.</p>
+            <p class="dialogue">— Это диалог! — сказал персонаж. — Диалоги выделяются розовой линией слева и курсивом.</p>
 
             <p>Продолжение после диалога...</p>
 
@@ -353,6 +396,12 @@
         document.querySelectorAll('a, button').forEach(el => {
             el.addEventListener('mouseenter', () => follower.classList.add('hover'));
             el.addEventListener('mouseleave', () => follower.classList.remove('hover'));
+        });
+
+        // Кнопка наверх
+        const scrollBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            scrollBtn.classList.toggle('visible', window.scrollY > 300);
         });
 
         // Система прочитанного
