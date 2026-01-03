@@ -10,7 +10,6 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            cursor: none;
         }
 
         :root {
@@ -23,28 +22,40 @@
             --cream: #faf5f7;
             --text: #f0eaec;
             --text-muted: #9a9098;
+            --slash-blue: #7eb8da;
+        }
+
+        *, *::before, *::after {
+            cursor: none !important;
+        }
+
+        .cursor, .cursor-follower {
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        .cursor.loaded, .cursor-follower.loaded {
+            opacity: 1;
         }
 
         .cursor {
-            position: fixed;
             width: 8px;
             height: 8px;
             background: var(--pink);
             border-radius: 50%;
-            pointer-events: none;
-            z-index: 10000;
             mix-blend-mode: difference;
         }
 
         .cursor-follower {
-            position: fixed;
             width: 35px;
             height: 35px;
             border: 1px solid var(--pink);
             border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transition: all 0.15s ease;
+            transition: opacity 0.3s, width 0.2s, height 0.2s, background 0.2s;
         }
 
         .cursor-follower.hover {
@@ -59,7 +70,7 @@
             color: var(--text);
             min-height: 100vh;
             line-height: 1.7;
-            font-size: 18px;
+            font-size: 17px;
         }
 
         body::before {
@@ -75,35 +86,12 @@
             z-index: 0;
         }
 
-        #particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .decor-line {
-            position: fixed;
-            background: linear-gradient(90deg, transparent, var(--pink), transparent);
-            height: 1px;
-            left: 10%;
-            right: 10%;
-            z-index: 1;
-            pointer-events: none;
-            opacity: 0.4;
-        }
-        .decor-line-top { top: 40px; }
-        .decor-line-bottom { bottom: 40px; }
-
         .container {
             position: relative;
             z-index: 2;
             max-width: 900px;
             margin: 0 auto;
-            padding: 80px 30px;
+            padding: 60px 30px 80px;
         }
 
         /* Кнопка наверх */
@@ -149,7 +137,7 @@
             text-transform: uppercase;
             padding: 15px 0;
             transition: color 0.3s;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
         }
 
         .nav-back::before {
@@ -161,67 +149,138 @@
             color: var(--pink);
         }
 
+        /* Шапка фанфика (обложка) */
+        .fic-cover-section {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .fic-cover-img {
+            max-width: 100%;
+            max-height: 350px;
+            border: 1px solid rgba(232, 160, 180, 0.2);
+            object-fit: cover;
+        }
+
+        .fic-cover-placeholder {
+            width: 100%;
+            max-width: 600px;
+            height: 200px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, var(--black-light), var(--black-card));
+            border: 1px solid rgba(232, 160, 180, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-style: italic;
+        }
+
         /* Шапка фанфика */
         .fic-header {
-            margin-bottom: 60px;
-            padding-bottom: 50px;
+            margin-bottom: 50px;
+            padding-bottom: 40px;
             border-bottom: 1px solid rgba(232, 160, 180, 0.15);
-            animation: fadeIn 0.8s ease;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        .fic-badges {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
         }
 
-        .fic-status-badge {
-            display: inline-block;
-            padding: 8px 20px;
-            font-size: 0.8rem;
-            letter-spacing: 3px;
+        .fic-badge {
+            padding: 5px 14px;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
             text-transform: uppercase;
-            border: 1px solid var(--pink);
+            border: 1px solid;
+        }
+
+        .fic-badge.slash {
+            border-image: linear-gradient(135deg, var(--slash-blue), #b8a0d8, var(--pink)) 1;
+            color: var(--slash-blue);
+        }
+
+        .fic-badge.rating {
+            border-color: #ff6b6b;
+            color: #ff6b6b;
+        }
+
+        .fic-badge.status {
+            border-color: var(--pink);
             color: var(--pink);
-            margin-bottom: 25px;
         }
 
         .fic-title {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 3rem;
+            font-size: 2.8rem;
             font-weight: 400;
             color: var(--cream);
             line-height: 1.2;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .fic-pairing {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             color: var(--pink);
             font-style: italic;
+            margin-bottom: 8px;
+        }
+
+        .fic-characters {
+            font-size: 0.95rem;
+            color: var(--text-muted);
             margin-bottom: 25px;
         }
 
         .fic-description {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.2rem;
-            color: var(--text-muted);
+            font-size: 1.15rem;
+            color: var(--text);
             line-height: 1.9;
             padding: 25px 30px;
             border-left: 2px solid var(--pink);
             background: rgba(232, 160, 180, 0.03);
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
+        /* Примечания */
+        .fic-notes {
+            background: var(--black-card);
+            border: 1px solid rgba(232, 160, 180, 0.1);
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .fic-notes-title {
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--pink);
+            margin-bottom: 15px;
+        }
+
+        .fic-notes-content {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        /* Теги */
         .fic-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 30px;
+            gap: 8px;
+            margin-bottom: 25px;
         }
 
         .tag {
-            padding: 5px 14px;
-            font-size: 0.8rem;
+            padding: 4px 12px;
+            font-size: 0.75rem;
             letter-spacing: 1px;
             text-transform: uppercase;
             border: 1px solid rgba(232, 160, 180, 0.3);
@@ -233,11 +292,34 @@
             color: #fb923c;
         }
 
+        /* Спойлер */
+        .spoiler-btn {
+            background: none;
+            border: none;
+            color: var(--pink);
+            font-size: 0.8rem;
+            padding: 5px 10px;
+            cursor: pointer;
+            letter-spacing: 1px;
+        }
+
+        .spoiler-content {
+            display: none;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .spoiler-content.open {
+            display: flex;
+        }
+
+        /* Мета */
         .fic-stats {
             display: flex;
             flex-wrap: wrap;
-            gap: 30px;
-            font-size: 1rem;
+            gap: 25px;
+            font-size: 0.95rem;
             color: var(--text-muted);
         }
 
@@ -245,7 +327,7 @@
         .progress-section {
             background: var(--black-card);
             border: 1px solid rgba(232, 160, 180, 0.12);
-            padding: 25px 30px;
+            padding: 25px;
             margin-bottom: 50px;
         }
 
@@ -287,7 +369,7 @@
             font-size: 0.85rem;
             letter-spacing: 1px;
             text-transform: uppercase;
-            cursor: none;
+            cursor: pointer;
             transition: all 0.3s;
         }
 
@@ -299,9 +381,9 @@
         /* Список глав */
         .chapters-title {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: var(--cream);
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             display: flex;
             align-items: center;
             gap: 20px;
@@ -317,38 +399,24 @@
         .chapters-list {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
         }
 
         .chapter-item {
             display: flex;
             align-items: center;
-            gap: 20px;
-            padding: 20px 25px;
+            gap: 18px;
+            padding: 18px 22px;
             background: var(--black-card);
             border: 1px solid rgba(232, 160, 180, 0.1);
             text-decoration: none;
             color: inherit;
             transition: all 0.3s ease;
-            animation: slideIn 0.5s ease backwards;
-        }
-
-        .chapter-item:nth-child(1) { animation-delay: 0.1s; }
-        .chapter-item:nth-child(2) { animation-delay: 0.15s; }
-        .chapter-item:nth-child(3) { animation-delay: 0.2s; }
-        .chapter-item:nth-child(4) { animation-delay: 0.25s; }
-        .chapter-item:nth-child(5) { animation-delay: 0.3s; }
-        .chapter-item:nth-child(6) { animation-delay: 0.35s; }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-30px); }
-            to { opacity: 1; transform: translateX(0); }
         }
 
         .chapter-item:hover {
             border-color: var(--pink);
-            transform: translateX(10px);
-            box-shadow: -5px 0 0 var(--pink);
+            transform: translateX(8px);
         }
 
         .chapter-item.read {
@@ -362,14 +430,14 @@
         }
 
         .chapter-number {
-            width: 45px;
-            height: 45px;
+            width: 42px;
+            height: 42px;
             border: 1px solid var(--pink);
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             color: var(--pink);
             flex-shrink: 0;
             transition: all 0.3s;
@@ -386,22 +454,22 @@
 
         .chapter-title {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             color: var(--cream);
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
         .chapter-meta {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
         }
 
         .chapter-checkbox {
             appearance: none;
-            width: 22px;
-            height: 22px;
+            width: 20px;
+            height: 20px;
             border: 1px solid var(--pink);
-            cursor: none;
+            cursor: pointer;
             transition: all 0.3s;
             position: relative;
             flex-shrink: 0;
@@ -415,7 +483,7 @@
             content: '✓';
             position: absolute;
             color: var(--black);
-            font-size: 12px;
+            font-size: 11px;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -423,7 +491,7 @@
 
         .chapter-arrow {
             color: var(--text-muted);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             transition: transform 0.3s;
         }
 
@@ -435,8 +503,8 @@
         /* Футер */
         .footer {
             text-align: center;
-            padding: 50px 20px;
-            margin-top: 60px;
+            padding: 40px 20px;
+            margin-top: 50px;
             border-top: 1px solid rgba(232, 160, 180, 0.1);
         }
 
@@ -448,7 +516,7 @@
         /* Адаптив */
         @media (max-width: 768px) {
             .container {
-                padding: 60px 20px;
+                padding: 40px 20px;
             }
 
             .fic-title {
@@ -460,9 +528,9 @@
             }
 
             .chapter-number {
-                width: 38px;
-                height: 38px;
-                font-size: 1.1rem;
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
             }
 
             .progress-header {
@@ -470,17 +538,12 @@
                 align-items: flex-start;
             }
 
-            .decor-line {
-                display: none;
-            }
-
             .scroll-top {
-                top: 80px;
-                bottom: auto;
-                right: 15px;
-                width: 38px;
-                height: 38px;
-                font-size: 0.9rem;
+                bottom: 20px;
+                left: 20px;
+                right: auto;
+                width: 40px;
+                height: 40px;
             }
         }
 
@@ -494,23 +557,48 @@
 <body>
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
-    <canvas id="particles"></canvas>
-    <div class="decor-line decor-line-top"></div>
-    <div class="decor-line decor-line-bottom"></div>
 
     <a href="#top" class="scroll-top" id="scrollTop">↑</a>
 
     <div class="container" id="top">
         <a href="../index.html" class="nav-back">Ко всем работам</a>
 
+        <!-- Обложка -->
+        <div class="fic-cover-section">
+            <div class="fic-cover-placeholder">Обложка</div>
+            <!-- <img src="cover.jpg" alt="Обложка" class="fic-cover-img"> -->
+        </div>
+
         <header class="fic-header">
-            <div class="fic-status-badge">В процессе</div>
+            <div class="fic-badges">
+                <span class="fic-badge slash">Слэш</span>
+                <span class="fic-badge rating">NC-17</span>
+                <span class="fic-badge status">В процессе</span>
+            </div>
+
             <h1 class="fic-title">Пять причин, почему я сплю с ножом</h1>
             <p class="fic-pairing">Кадзуха Каэдэхара / Странник</p>
+            <p class="fic-characters">Тарталья, Юмэмидзуки Мидзуки, Кирара</p>
 
-            <p class="fic-description">
-                Так и жил он с постоянной готовностью к двум вещам: сесть в тюрьму за чье-нибудь убийство или умереть от паранойи. Или просто жизнь официанта, которому впервые вместо просьбы переделать заказ поступило предложение сходить на свидание.
-            </p>
+            <div class="fic-description">
+                Так и жил он с постоянной готовностью к двум вещам: сесть в тюрьму за чье-нибудь убийство или умереть от паранойи.<br><br>
+                Или просто жизнь официанта, которому впервые вместо просьбы переделать заказ поступило предложение сходить на свидание.
+            </div>
+
+            <div class="fic-notes">
+                <div class="fic-notes-title">Примечания автора</div>
+                <div class="fic-notes-content">
+                    Фанфик для людей, которые любят простых, романтичных и немного забавных кадзускар) ау ресторанного бизнеса и просто приятная работа для разгрузки от более серьезных фанфиков)<br><br>
+                    Точного графика выхода глав пока что нет, но я постараюсь его наладить попозже 🙏 Сейчас я могу быть сильно занята с учебой, но могу с уверенностью сказать, что без продолжения этот шедевр я не оставлю 🤝
+                </div>
+            </div>
+
+            <div class="fic-notes">
+                <div class="fic-notes-title">Публикация на других ресурсах</div>
+                <div class="fic-notes-content">
+                    Уточнять у автора / переводчика
+                </div>
+            </div>
 
             <div class="fic-tags">
                 <span class="tag">AU</span>
@@ -519,14 +607,25 @@
                 <span class="tag">Романтика</span>
                 <span class="tag">Флафф</span>
                 <span class="tag">Юмор</span>
-                <span class="tag warning">NC-17</span>
+                <span class="tag warning">Алкоголь</span>
+                <span class="tag warning">Нецензурная лексика</span>
                 <span class="tag warning">ООС</span>
+                <button class="spoiler-btn" onclick="toggleSpoiler(this)">Ещё...</button>
+            </div>
+            <div class="spoiler-content">
+                <span class="tag warning">Отклонения от канона</span>
+                <span class="tag warning">Проблемы доверия</span>
+                <span class="tag warning">Рейтинг за секс</span>
+                <span class="tag warning">Упоминания алкоголя</span>
+                <span class="tag warning">Упоминания курения</span>
+                <span class="tag">Разница в возрасте</span>
             </div>
 
             <div class="fic-stats">
-                <span>📄 46 страниц</span>
+                <span>📄 планируется Макси</span>
+                <span>📖 46 страниц</span>
                 <span>✍️ 15 458 слов</span>
-                <span>❤️ 60</span>
+                <span>📑 6 частей</span>
                 <span>🔄 03.01.2026</span>
             </div>
         </header>
@@ -547,10 +646,10 @@
             <a href="five-reasons/chapter-1.html" class="chapter-item" data-chapter="1">
                 <div class="chapter-number">1</div>
                 <div class="chapter-info">
-                    <div class="chapter-title">Глава 1</div>
-                    <div class="chapter-meta">~ 2 500 слов</div>
+                    <div class="chapter-title">Будни официантов после 9 вечера</div>
+                    <div class="chapter-meta">30.09.2025 · ~ 2 500 слов</div>
                 </div>
-                <input type="checkbox" class="chapter-checkbox" onclick="event.stopPropagation()">
+                <input type="checkbox" class="chapter-checkbox" onclick="event.stopPropagation(); event.preventDefault(); toggleChapter(this);">
                 <span class="chapter-arrow">→</span>
             </a>
 
@@ -560,7 +659,7 @@
                     <div class="chapter-title">Глава 2</div>
                     <div class="chapter-meta">~ 2 600 слов</div>
                 </div>
-                <input type="checkbox" class="chapter-checkbox" onclick="event.stopPropagation()">
+                <input type="checkbox" class="chapter-checkbox" onclick="event.stopPropagation(); event.preventDefault(); toggleChapter(this);">
                 <span class="chapter-arrow">→</span>
             </a>
 
@@ -570,7 +669,7 @@
                     <div class="chapter-title">Глава 3</div>
                     <div class="chapter-meta">~ 2 400 слов</div>
                 </div>
-                <input type="checkbox" class="chapter-checkbox" onclick="event.stopPropagation()">
+                <input type="checkbox" class="chapter-checkbox" onclick="event.stopPropagation(); event.preventDefault(); toggleChapter(this);">
                 <span class="chapter-arrow">→</span>
             </a>
 
@@ -580,7 +679,7 @@
                     <div class="chapter-title">Глава 4</div>
                     <div class="chapter-meta">~ 2 700 слов</div>
                 </div>
-                <input type="checkbox" class="chapter-checkbox" onclick="event.stopPropagation()">
+                <input type="checkbox" class="chapter-checkbox" onclick="event.stopPropagation(); event.preventDefault(); toggleChapter(this);">
                 <span class="chapter-arrow">→</span>
             </a>
 
@@ -590,7 +689,7 @@
                     <div class="chapter-title">Глава 5</div>
                     <div class="chapter-meta">~ 2 500 слов</div>
                 </div>
-                <input type="checkbox" class="chapter-checkbox" onclick="event.stopPropagation()">
+                <input type="checkbox" class="chapter-checkbox" onclick="event.stopPropagation(); event.preventDefault(); toggleChapter(this);">
                 <span class="chapter-arrow">→</span>
             </a>
 
@@ -600,7 +699,7 @@
                     <div class="chapter-title">Глава 6</div>
                     <div class="chapter-meta">~ 2 700 слов</div>
                 </div>
-                <input type="checkbox" class="chapter-checkbox" onclick="event.stopPropagation()">
+                <input type="checkbox" class="chapter-checkbox" onclick="event.stopPropagation(); event.preventDefault(); toggleChapter(this);">
                 <span class="chapter-arrow">→</span>
             </a>
         </div>
@@ -614,62 +713,47 @@
         // Курсор
         const cursor = document.querySelector('.cursor');
         const follower = document.querySelector('.cursor-follower');
+        let mouseX = 0, mouseY = 0;
+        let followerX = 0, followerY = 0;
+
+        window.addEventListener('load', () => {
+            cursor.classList.add('loaded');
+            follower.classList.add('loaded');
+        });
 
         document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            setTimeout(() => {
-                follower.style.left = e.clientX - 17 + 'px';
-                follower.style.top = e.clientY - 17 + 'px';
-            }, 50);
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursor.style.left = mouseX + 'px';
+            cursor.style.top = mouseY + 'px';
         });
+
+        function animateFollower() {
+            followerX += (mouseX - followerX) * 0.15;
+            followerY += (mouseY - followerY) * 0.15;
+            follower.style.left = followerX + 'px';
+            follower.style.top = followerY + 'px';
+            requestAnimationFrame(animateFollower);
+        }
+        animateFollower();
 
         document.querySelectorAll('a, button, input').forEach(el => {
             el.addEventListener('mouseenter', () => follower.classList.add('hover'));
             el.addEventListener('mouseleave', () => follower.classList.remove('hover'));
         });
 
-        // Частицы
-        const canvas = document.getElementById('particles');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resize();
-        window.addEventListener('resize', resize);
-
-        for (let i = 0; i < 25; i++) {
-            particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                size: Math.random() * 1.5 + 0.5,
-                speedY: Math.random() * 0.3 + 0.1,
-                opacity: Math.random() * 0.3 + 0.1
-            });
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.y -= p.speedY;
-                if (p.y < 0) { p.y = canvas.height; p.x = Math.random() * canvas.width; }
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(232, 160, 180, ${p.opacity})`;
-                ctx.fill();
-            });
-            requestAnimationFrame(animate);
-        }
-        animate();
-
         // Кнопка наверх
         const scrollBtn = document.getElementById('scrollTop');
         window.addEventListener('scroll', () => {
             scrollBtn.classList.toggle('visible', window.scrollY > 300);
         });
+
+        // Спойлер
+        function toggleSpoiler(btn) {
+            const content = btn.parentElement.nextElementSibling;
+            content.classList.toggle('open');
+            btn.textContent = content.classList.contains('open') ? 'Скрыть' : 'Ещё...';
+        }
 
         // Система прочитанного
         const FIC_ID = 'five-reasons';
@@ -684,12 +768,6 @@
             const data = JSON.parse(localStorage.getItem('chaptersRead') || '{}');
             data[FIC_ID] = chapters;
             localStorage.setItem('chaptersRead', JSON.stringify(data));
-
-            const readFics = JSON.parse(localStorage.getItem('readFics') || '{}');
-            if (chapters.length === TOTAL) readFics[FIC_ID] = 'read';
-            else if (chapters.length > 0) readFics[FIC_ID] = 'in-progress';
-            else delete readFics[FIC_ID];
-            localStorage.setItem('readFics', JSON.stringify(readFics));
         }
 
         function update() {
@@ -710,19 +788,17 @@
             });
         }
 
-        document.querySelectorAll('.chapter-checkbox').forEach(cb => {
-            cb.addEventListener('change', () => {
-                const num = cb.closest('.chapter-item').dataset.chapter;
-                let read = getRead();
-                if (cb.checked) {
-                    if (!read.includes(num)) read.push(num);
-                } else {
-                    read = read.filter(c => c !== num);
-                }
-                saveRead(read);
-                update();
-            });
-        });
+        function toggleChapter(cb) {
+            const num = cb.closest('.chapter-item').dataset.chapter;
+            let read = getRead();
+            if (cb.checked) {
+                read = read.filter(c => c !== num);
+            } else {
+                if (!read.includes(num)) read.push(num);
+            }
+            saveRead(read);
+            update();
+        }
 
         document.getElementById('mark-all').addEventListener('click', () => {
             const read = getRead();
