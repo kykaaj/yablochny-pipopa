@@ -3,441 +3,598 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Коллекция Kris_mem_2222</title>
-    <style>
-        /* --- НАСТРОЙКИ КРАСОТЫ (CSS) --- */
-        :root {
-            --primary: #b94a48; /* Цвет кленовых листьев Кадзухи */
-            --bg: #fdfbf7;      /* Цвет старой бумаги */
-            --card-bg: #ffffff;
-            --text: #333333;
-            --text-light: #666666;
-            --accent: #5e81ac;  /* Немного оттенков Скарамуччи */
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
-
-        header {
-            background: linear-gradient(135deg, var(--primary), #8b3a3a);
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        header h1 { margin: 0; font-size: 2.5rem; letter-spacing: 1px; }
-        header p { margin-top: 10px; opacity: 0.9; }
-
-        /* Сетка для карточек - чтобы было красиво и на ПК, и на телефоне */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Автоматическая подстройка */
-            gap: 25px;
-        }
-
-        /* Стиль одной карточки */
-        .fic-card {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            border-left: 5px solid var(--accent);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .fic-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-
-        /* Если фанфик в процессе - другой цвет полоски */
-        .status-process { border-left-color: #eebb00; }
-        .status-finished { border-left-color: #5fb948; }
-
-        h2 {
-            margin-top: 0;
-            font-size: 1.4rem;
-            color: var(--primary);
-            margin-bottom: 5px;
-        }
-
-        .meta {
-            font-size: 0.85rem;
-            color: var(--text-light);
-            margin-bottom: 10px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .badge {
-            background: #eee;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-weight: bold;
-        }
-
-        .tags {
-            font-size: 0.8rem;
-            color: var(--accent);
-            margin-bottom: 15px;
-            font-style: italic;
-        }
-
-        .summary {
-            font-size: 0.95rem;
-            margin-bottom: 20px;
-            flex-grow: 1; /* Растягивает текст, чтобы кнопка была внизу */
-        }
-
-        /* Кнопка читать */
-        .read-btn {
-            display: block;
-            background-color: var(--primary);
-            color: white;
-            text-align: center;
-            padding: 10px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: background 0.3s;
-        }
-
-        .read-btn:hover { background-color: #8b3a3a; }
-
-        /* Галочка "Прочитано" */
-        .read-toggle {
-            margin-top: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 0.9rem;
-            color: var(--text-light);
-            user-select: none;
-        }
-
-        .read-toggle input { display: none; } /* Спрятать стандартный чекбокс */
-
-        .checkmark {
-            width: 20px;
-            height: 20px;
-            border: 2px solid #ccc;
-            border-radius: 50%;
-            margin-right: 8px;
-            display: inline-block;
-            position: relative;
-        }
-
-        /* Когда галочка нажата */
-        .read-toggle input:checked + .checkmark {
-            background-color: #5fb948;
-            border-color: #5fb948;
-        }
-
-        .read-toggle input:checked + .checkmark::after {
-            content: '✓';
-            color: white;
-            position: absolute;
-            left: 5px;
-            top: -2px;
-            font-size: 14px;
-        }
-
-        /* Метка "Прочитано" на карточке */
-        .is-read-overlay {
-            opacity: 0.5; /* Делаем карточку бледной, если прочитано */
-        }
-
-    </style>
+    <title>Библиотека Kris_mem_2222</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Подключаем красивые шрифты -->
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,400&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<header>
-    <h1>Библиотека Kris_mem_2222</h1>
-    <p>Любимые истории про Кадзуху и Скарамуччу</p>
-</header>
+    <!-- Интерактивный фон (частицы) -->
+    <canvas id="canvas-bg"></canvas>
 
-<main class="container">
+    <!-- Шапка сайта -->
+    <header class="glass-header">
+        <div class="author-profile">
+            <!-- Сюда положишь аватарку в папку images и назовешь avatar.jpg -->
+            <img src="images/avatar.jpg" alt="Kris_mem_2222" class="avatar" onerror="this.src='https://placehold.co/100x100/5f4b8b/fff?text=K'">
+            <div class="author-info">
+                <h1>Kris_mem_2222</h1>
+                <p>Любимые истории по Genshin Impact</p>
+            </div>
+        </div>
+    </header>
 
-    <!-- КАРТОЧКА 1 -->
-    <article class="fic-card status-process" id="fic-1">
-        <h2>Пять причин, почему я сплю с ножом</h2>
-        <div class="meta">
-            <span class="badge">NC-17</span>
-            <span class="badge">В процессе</span>
-            <span>Макси</span>
-        </div>
-        <div class="tags">AU, Hurt/Comfort, Романтика, Флафф</div>
-        <div class="summary">
-            Так и жил он с постоянной готовностью к двум вещам: сесть в тюрьму или умереть от паранойи. Или просто жизнь официанта...
-        </div>
-        <!-- ВНИМАНИЕ: В href мы пишем имя файла, который создадим позже -->
-        <a href="fic1.html" class="read-btn">Читать</a>
-        <label class="read-toggle">
-            <input type="checkbox" onchange="toggleRead('fic-1')">
-            <span class="checkmark"></span>
-            Отметить прочитанным
-        </label>
-    </article>
+    <!-- Место для красивого арта с КадзуСкарами -->
+    <div class="art-banner">
+        <!-- Замени src на свой арт -->
+        <img src="images/kazuscara_banner.jpg" alt="KazuScara Art" class="hero-art" onerror="this.style.display='none'">
+    </div>
 
-    <!-- КАРТОЧКА 2 -->
-    <article class="fic-card status-finished" id="fic-2">
-        <h2>Когда умирают ангелы</h2>
-        <div class="meta">
-            <span class="badge">NC-17</span>
-            <span class="badge">Завершён</span>
-            <span>Макси (417 стр.)</span>
-        </div>
-        <div class="tags">Ангст, Драма, Психология, Hurt/Comfort</div>
-        <div class="summary">
-            Свободная душа, запертая в несвободном теле. Кадзуха стал заложником обстоятельств...
-        </div>
-        <a href="fic2.html" class="read-btn">Читать</a>
-        <label class="read-toggle">
-            <input type="checkbox" onchange="toggleRead('fic-2')">
-            <span class="checkmark"></span>
-            Отметить прочитанным
-        </label>
-    </article>
+    <!-- Список фанфиков -->
+    <main class="container">
+        <div class="grid" id="fic-list">
 
-    <!-- КАРТОЧКА 3 -->
-    <article class="fic-card status-process" id="fic-3">
-        <h2>Скрипичный ключ к сердцу</h2>
-        <div class="meta">
-            <span class="badge">NC-17</span>
-            <span class="badge">В процессе</span>
-            <span>Макси</span>
-        </div>
-        <div class="tags">AU: Школа, Флафф, Hurt/Comfort</div>
-        <div class="summary">
-            Неужели могли обычные школьные будни так сильно измениться из-за одного лишь человека?
-        </div>
-        <a href="fic3.html" class="read-btn">Читать</a>
-        <label class="read-toggle">
-            <input type="checkbox" onchange="toggleRead('fic-3')">
-            <span class="checkmark"></span>
-            Отметить прочитанным
-        </label>
-    </article>
+            <!-- Фанфик 1 -->
+            <article class="card" data-id="fic1">
+                <div class="status-badge process">В процессе</div>
+                <h2>Пять причин, почему я сплю с ножом</h2>
+                <div class="meta">NC-17 | Кадзуха/Странник | Макси</div>
+                <p class="summary">Так и жил он с постоянной готовностью к двум вещам: сесть в тюрьму или умереть от паранойи...</p>
+                <div class="tags">
+                    <span>Hurt/Comfort</span><span>Романтика</span><span>Флафф</span>
+                </div>
+                <div class="card-actions">
+                    <a href="fics/reasons.html" class="read-btn">Читать</a>
+                    <button class="mark-btn" onclick="toggleRead('fic1')">Отметить прочитанным</button>
+                </div>
+            </article>
 
-    <!-- КАРТОЧКА 4 -->
-    <article class="fic-card status-finished" id="fic-4">
-        <h2>Горький вкус твоих таблеток</h2>
-        <div class="meta">
-            <span class="badge">NC-17</span>
-            <span class="badge">Завершён</span>
-            <span>366 страниц</span>
-        </div>
-        <div class="tags">Психология, Драма, Ангст, Флафф</div>
-        <div class="summary">
-            Психолог сказал мне: «Нужно жить дальше». Я послал его к черту…
-        </div>
-        <a href="fic4.html" class="read-btn">Читать</a>
-        <label class="read-toggle">
-            <input type="checkbox" onchange="toggleRead('fic-4')">
-            <span class="checkmark"></span>
-            Отметить прочитанным
-        </label>
-    </article>
+            <!-- Фанфик 2 -->
+            <article class="card" data-id="fic2">
+                <div class="status-badge finished">Завершён</div>
+                <h2>Когда умирают ангелы</h2>
+                <div class="meta">NC-17 | Кадзуха/Странник | 417 стр.</div>
+                <p class="summary">Свободная душа, запертая в несвободном теле. Кадзуха стал заложником обстоятельств...</p>
+                <div class="tags">
+                    <span>Ангст</span><span>Драма</span><span>Смерть перс.</span>
+                </div>
+                <div class="card-actions">
+                    <a href="fics/angels.html" class="read-btn">Читать</a>
+                    <button class="mark-btn" onclick="toggleRead('fic2')">Отметить прочитанным</button>
+                </div>
+            </article>
 
-    <!-- КАРТОЧКА 5 -->
-    <article class="fic-card status-finished" id="fic-5">
-        <h2>Философия бытия через призму общаги</h2>
-        <div class="meta">
-            <span class="badge">NC-17</span>
-            <span class="badge">Завершён</span>
-            <span>Миди (110 стр.)</span>
-        </div>
-        <div class="tags">AU: Школа/Общага, Ангст, Флафф, Юмор</div>
-        <div class="summary">
-            — Можно тебя обнять, пожалуйста? Просто по-дружески? — ага, и спим мы просто по-дружески.
-        </div>
-        <a href="fic5.html" class="read-btn">Читать</a>
-        <label class="read-toggle">
-            <input type="checkbox" onchange="toggleRead('fic-5')">
-            <span class="checkmark"></span>
-            Отметить прочитанным
-        </label>
-    </article>
+            <!-- Фанфик 3 -->
+            <article class="card" data-id="fic3">
+                <div class="status-badge process">В процессе</div>
+                <h2>Скрипичный ключ к сердцу</h2>
+                <div class="meta">NC-17 | AU: Школа | Макси</div>
+                <p class="summary">Живя свою спокойную жизнь, Кадзуха и не догадывался, что в нее можно так просто вмешаться...</p>
+                <div class="tags">
+                    <span>AU: Школа</span><span>Флафф</span>
+                </div>
+                <div class="card-actions">
+                    <a href="fics/violin.html" class="read-btn">Читать</a>
+                    <button class="mark-btn" onclick="toggleRead('fic3')">Отметить прочитанным</button>
+                </div>
+            </article>
 
-    <!-- КАРТОЧКА 6 -->
-    <article class="fic-card status-finished" id="fic-6">
-        <h2>Я только танцую</h2>
-        <div class="meta">
-            <span class="badge">NC-17</span>
-            <span class="badge">Завершён</span>
-            <span>226 страниц</span>
+            <!-- Фанфик 4 -->
+            <article class="card" data-id="fic4">
+                <div class="status-badge finished">Завершён</div>
+                <h2>Горький вкус твоих таблеток</h2>
+                <div class="meta">NC-17 | Психология | 366 стр.</div>
+                <p class="summary">Психолог сказал мне: «Нужно жить дальше». Я послал его к черту…</p>
+                <div class="tags">
+                    <span>Психология</span><span>Драма</span><span>Hurt/Comfort</span>
+                </div>
+                <div class="card-actions">
+                    <a href="fics/pills.html" class="read-btn">Читать</a>
+                    <button class="mark-btn" onclick="toggleRead('fic4')">Отметить прочитанным</button>
+                </div>
+            </article>
+
+            <!-- Фанфик 5 -->
+            <article class="card" data-id="fic5">
+                <div class="status-badge finished">Завершён</div>
+                <h2>Философия бытия через призму общаги</h2>
+                <div class="meta">NC-17 | AU: Школа | 110 стр.</div>
+                <p class="summary">— Можно тебя обнять, пожалуйста? Просто по-дружески? — ага, и спим мы просто по-дружески.</p>
+                <div class="tags">
+                    <span>AU</span><span>Юмор</span><span>Флафф</span>
+                </div>
+                <div class="card-actions">
+                    <a href="fics/philosophy.html" class="read-btn">Читать</a>
+                    <button class="mark-btn" onclick="toggleRead('fic5')">Отметить прочитанным</button>
+                </div>
+            </article>
+
+             <!-- Фанфик 6 -->
+             <article class="card" data-id="fic6">
+                <div class="status-badge finished">Завершён</div>
+                <h2>Я только танцую</h2>
+                <div class="meta">NC-17 | Стрип-клуб AU | 226 стр.</div>
+                <p class="summary">«Я стриптизер, а не проститутка», представляешь, что сказал?!</p>
+                <div class="tags">
+                    <span>AU</span><span>Драма</span>
+                </div>
+                <div class="card-actions">
+                    <a href="fics/dancing.html" class="read-btn">Читать</a>
+                    <button class="mark-btn" onclick="toggleRead('fic6')">Отметить прочитанным</button>
+                </div>
+            </article>
+
+             <!-- Фанфик 7 -->
+             <article class="card" data-id="fic7">
+                <div class="status-badge finished">Завершён</div>
+                <h2>Да все окей</h2>
+                <div class="meta">NC-17 | Драббл | 4 стр.</div>
+                <p class="summary">Рано… Ты пока не готов к этому.</p>
+                <div class="tags">
+                    <span>Флафф</span><span>Драббл</span>
+                </div>
+                <div class="card-actions">
+                    <a href="fics/okay.html" class="read-btn">Читать</a>
+                    <button class="mark-btn" onclick="toggleRead('fic7')">Отметить прочитанным</button>
+                </div>
+            </article>
+
+            <!-- Остальные фанфики можно добавить по такому же шаблону, просто копируй блок <article> и меняй текст! -->
+
         </div>
-        <div class="tags">Стрип-клубы, AU, Драма</div>
-        <div class="summary">
-            «Я стриптизер, а не проститутка», представляешь, что сказал?! А я ему такие деньжища предлагал!
-        </div>
-        <a href="fic6.html" class="read-btn">Читать</a>
-        <label class="read-toggle">
-            <input type="checkbox" onchange="toggleRead('fic-6')">
-            <span class="checkmark"></span>
-            Отметить прочитанным
-        </label>
-    </article>
+    </main>
 
-    <!-- КАРТОЧКА 7 -->
-    <article class="fic-card status-finished" id="fic-7">
-        <h2>Да все окей</h2>
-        <div class="meta">
-            <span class="badge">NC-17</span>
-            <span class="badge">Завершён</span>
-            <span>Драббл</span>
-        </div>
-        <div class="tags">Флафф, Намеки на отношения</div>
-        <div class="summary">
-            Рано… Ты пока не готов к этому.
-        </div>
-        <a href="fic7.html" class="read-btn">Читать</a>
-        <label class="read-toggle">
-            <input type="checkbox" onchange="toggleRead('fic-7')">
-            <span class="checkmark"></span>
-            Отметить прочитанным
-        </label>
-    </article>
+    <script src="script.js"></script>
+</body>
+</html>
+```
 
-    <!-- КАРТОЧКА 8 -->
-    <article class="fic-card status-finished" id="fic-8">
-        <h2>Общая вина</h2>
-        <div class="meta">
-            <span class="badge">NC-17</span>
-            <span class="badge">Завершён</span>
-            <span>152 страницы</span>
-        </div>
-        <div class="tags">Школьники, Hurt/Comfort, Драма</div>
-        <div class="summary">
-            Развяжет один узел — придётся перематывать весь клубок…
-        </div>
-        <a href="fic8.html" class="read-btn">Читать</a>
-        <label class="read-toggle">
-            <input type="checkbox" onchange="toggleRead('fic-8')">
-            <span class="checkmark"></span>
-            Отметить прочитанным
-        </label>
-    </article>
+---
 
-    <!-- КАРТОЧКА 9 -->
-    <article class="fic-card status-finished" id="fic-9">
-        <h2>Жди меня, Кадзуха…</h2>
-        <div class="meta">
-            <span class="badge">NC-17</span>
-            <span class="badge">Завершён</span>
-            <span>Драббл</span>
-        </div>
-        <div class="tags">Ангст, Смерть персонажей, AU</div>
-        <div class="summary">
-            Сейчас, идя по мокрому асфальту и игнорируя бегущих людей вокруг, Скара улыбался…
-        </div>
-        <a href="fic9.html" class="read-btn">Читать</a>
-        <label class="read-toggle">
-            <input type="checkbox" onchange="toggleRead('fic-9')">
-            <span class="checkmark"></span>
-            Отметить прочитанным
-        </label>
-    </article>
+### Шаг 3: Стиль и Красота (style.css)
+Создай файл `style.css`. Здесь я настроила темную, приятную для глаз тему с цветами Анемо (бирюзовый, темный индиго).
 
-    <!-- КАРТОЧКА 10 -->
-    <article class="fic-card status-finished" id="fic-10">
-        <h2>Ночной пешеход</h2>
-        <div class="meta">
-            <span class="badge">NC-17</span>
-            <span class="badge">Завершён</span>
-            <span>Мини</span>
-        </div>
-        <div class="tags">Философия, Флафф, AU</div>
-        <div class="summary">
-            Что делать, если вся жизнь кажется обманом? Если все вокруг лишь иллюзия...
-        </div>
-        <a href="fic10.html" class="read-btn">Читать</a>
-        <label class="read-toggle">
-            <input type="checkbox" onchange="toggleRead('fic-10')">
-            <span class="checkmark"></span>
-            Отметить прочитанным
-        </label>
-    </article>
+```css
+:root {
+    /* Палитра цветов - меняй здесь, если захочешь! */
+    --bg-color: #0f111a; /* Темный фон */
+    --card-bg: #1a1d29; /* Фон карточек */
+    --text-main: #e0e6ed;
+    --text-muted: #94a3b8;
+    --accent: #5eead4; /* Светящийся бирюзовый */
+    --accent-glow: rgba(94, 234, 212, 0.3);
+    --secondary: #c084fc; /* Мягкий фиолетовый для контраста */
+}
 
-    <!-- КАРТОЧКА 11 -->
-    <article class="fic-card status-finished" id="fic-11">
-        <h2>Стань частью моего сценария</h2>
-        <div class="meta">
-            <span class="badge">PG-13</span>
-            <span class="badge">Завершён</span>
-            <span>Мини</span>
-        </div>
-        <div class="tags">Русалки, Мистика, Открытый финал</div>
-        <div class="summary">
-            Парень не верил, что в его жизни хоть что-то может пойти не по сценарию...
-        </div>
-        <a href="fic11.html" class="read-btn">Читать</a>
-        <label class="read-toggle">
-            <input type="checkbox" onchange="toggleRead('fic-11')">
-            <span class="checkmark"></span>
-            Отметить прочитанным
-        </label>
-    </article>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-</main>
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
 
-<footer>
-    <p style="text-align: center; padding: 20px; color: #888;">
-        Сделано с любовью для чтения фанфиков ❤️
-    </p>
-</footer>
+/* Фон с частицами */
+#canvas-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
 
-<script>
-    // --- МАГИЯ: Запоминаем, что прочитано ---
+/* Шапка профиля */
+.glass-header {
+    background: rgba(15, 17, 26, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+}
 
-    // Когда страничка загружается, проверяем память
-    document.addEventListener("DOMContentLoaded", () => {
-        const cards = document.querySelectorAll('.fic-card');
+.author-profile {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
 
-        cards.forEach(card => {
-            const id = card.id; // Например, "fic-1"
-            const isRead = localStorage.getItem(id); // Смотрим в память браузера
+.avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    box-shadow: 0 0 15px var(--accent-glow);
+    object-fit: cover;
+}
 
-            if (isRead === 'true') {
-                // Если прочитано - ставим галочку и меняем стиль
-                const checkbox = card.querySelector('input[type="checkbox"]');
-                if (checkbox) checkbox.checked = true;
-                card.classList.add('is-read-overlay');
-            }
-        });
-    });
+.author-info h1 {
+    font-size: 1.5rem;
+    color: var(--accent);
+}
 
-    // Функция, которая срабатывает при клике на галочку
-    function toggleRead(id) {
-        const card = document.getElementById(id);
-        const checkbox = card.querySelector('input[type="checkbox"]');
+.author-info p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
 
-        if (checkbox.checked) {
-            // Запоминаем "прочитано"
-            localStorage.setItem(id, 'true');
-            card.classList.add('is-read-overlay');
-        } else {
-            // Забываем "прочитано"
-            localStorage.removeItem(id);
-            card.classList.remove('is-read-overlay');
-        }
+/* Арт баннер */
+.art-banner {
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    max-height: 300px;
+}
+
+.hero-art {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.8;
+    transition: transform 0.5s;
+}
+
+.hero-art:hover {
+    transform: scale(1.02);
+}
+
+/* Сетка карточек */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+/* Карточка фанфика */
+.card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 25px;
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: all 0.3s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    border-color: var(--accent-glow);
+}
+
+/* Бейджики статуса */
+.status-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 0.7rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.status-badge.process { background: rgba(255, 165, 0, 0.2); color: orange; }
+.status-badge.finished { background: rgba(94, 234, 212, 0.2); color: var(--accent); }
+
+.card h2 {
+    font-family: 'Merriweather', serif;
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    line-height: 1.4;
+    color: #fff;
+}
+
+.card .meta {
+    font-size: 0.8rem;
+    color: var(--secondary);
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.card .summary {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex-grow: 1; /* Чтобы кнопки всегда были внизу */
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* Показываем только 4 строки */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.tags span {
+    font-size: 0.75rem;
+    background: rgba(255,255,255,0.05);
+    padding: 4px 8px;
+    border-radius: 6px;
+    color: var(--text-muted);
+}
+
+/* Кнопки */
+.card-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.read-btn {
+    flex: 1;
+    text-align: center;
+    background: linear-gradient(45deg, var(--accent), #2dd4bf);
+    color: #000;
+    padding: 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.read-btn:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 0 15px var(--accent-glow);
+}
+
+.mark-btn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--text-muted);
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.mark-btn:hover {
+    background: rgba(255,255,255,0.05);
+    color: #fff;
+}
+
+/* Стиль для прочитанного */
+.card.read {
+    opacity: 0.6;
+    filter: grayscale(0.5);
+    border: 1px solid var(--secondary);
+}
+
+.card.read .mark-btn {
+    background: var(--secondary);
+    color: #fff;
+    border-color: var(--secondary);
+}
+
+/* --- Стили для страницы чтения (Reader) --- */
+.reader-body {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #151823;
+    min-height: 100vh;
+    box-shadow: 0 0 50px rgba(0,0,0,0.5);
+}
+
+.reader-header {
+    padding: 40px 20px;
+    text-align: center;
+    background: linear-gradient(to bottom, #1a1d29, #151823);
+}
+
+.reader-content {
+    padding: 20px 40px 60px;
+    font-family: 'Merriweather', serif;
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #d1d5db;
+}
+
+.reader-content p {
+    margin-bottom: 20px;
+    text-indent: 20px; /* Красная строка как в книгах */
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+/* Адаптивность для телефонов */
+@media (max-width: 768px) {
+    .reader-content {
+        padding: 20px;
+        font-size: 1.05rem;
     }
-</script>
+
+    .grid {
+        grid-template-columns: 1fr; /* Одна колонка на телефоне */
+    }
+}
+```
+
+---
+
+### Шаг 4: Интерактив (script.js)
+Создай файл `script.js`. Здесь мы сделаем так, чтобы браузер запоминал, что ты прочитала, и нарисуем красивые "светлячки" на фоне.
+
+```javascript
+// --- 1. Логика "Прочитано" ---
+
+// Эта функция запускается, когда сайт загрузился
+document.addEventListener('DOMContentLoaded', () => {
+    // Проверяем каждую карточку
+    const cards = document.querySelectorAll('.card');
+
+    cards.forEach(card => {
+        const id = card.getAttribute('data-id');
+        // Если в памяти есть отметка, делаем фанфик серым
+        if (localStorage.getItem(id) === 'true') {
+            card.classList.add('read');
+            const btn = card.querySelector('.mark-btn');
+            if(btn) btn.textContent = 'Прочитано ✓';
+        }
+    });
+});
+
+// Функция, которая срабатывает при нажатии кнопки
+function toggleRead(id) {
+    const card = document.querySelector(`.card[data-id="${id}"]`);
+    const btn = card.querySelector('.mark-btn');
+
+    // Если уже прочитано - убираем отметку
+    if (localStorage.getItem(id) === 'true') {
+        localStorage.removeItem(id);
+        card.classList.remove('read');
+        btn.textContent = 'Отметить прочитанным';
+    } else {
+        // Если не прочитано - ставим отметку и сохраняем в память
+        localStorage.setItem(id, 'true');
+        card.classList.add('read');
+        btn.textContent = 'Прочитано ✓';
+    }
+}
+
+
+// --- 2. Красивые частицы на фоне (Canvas) ---
+const canvas = document.getElementById('canvas-bg');
+const ctx = canvas.getContext('2d');
+
+let particlesArray;
+
+// Растягиваем канвас на весь экран
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+// Класс для частички
+class Particle {
+    constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2; // Размер
+        this.speedX = (Math.random() * 1) - 0.5;
+        this.speedY = (Math.random() * 1) - 0.5;
+        this.color = Math.random() > 0.5 ? 'rgba(94, 234, 212,' : 'rgba(192, 132, 252,'; // Бирюзовый или фиолетовый
+    }
+    update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        // Если улетел за край, возвращаем обратно
+        if (this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
+        if (this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
+    }
+    draw() {
+        ctx.fillStyle = this.color + Math.random() + ')'; // Мерцание
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+    }
+}
+
+function init() {
+    particlesArray = [];
+    for (let i = 0; i < 100; i++) { // 100 частиц
+        particlesArray.push(new Particle());
+    }
+}
+
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = 0; i < particlesArray.length; i++) {
+        particlesArray[i].update();
+        particlesArray[i].draw();
+    }
+    requestAnimationFrame(animate);
+}
+
+// При изменении размера окна
+window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    init();
+});
+
+init();
+animate();
+```
+
+---
+
+### Шаг 5: Шаблон для самого текста (fics/reasons.html)
+Теперь самое главное! В папке, где лежит `index.html`, создай новую папку `fics`. Внутри неё будем создавать файлы для каждого фанфика.
+
+Например, для первого фанфика создай файл `reasons.html` (от "Пять причин...").
+
+Вот код, который ты вставишь. Я добавила сюда кнопку "Назад" и удобное форматирование.
+
+```html
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пять причин, почему я сплю с ножом</title>
+    <!-- Обрати внимание, здесь две точки (..), чтобы выйти из папки fics к стилям -->
+    <link rel="stylesheet" href="../style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body class="reader-body">
+
+    <header class="reader-header">
+        <a href="../index.html" class="back-link">← Вернуться в библиотеку</a>
+        <h1>Пять причин, почему я сплю с ножом</h1>
+        <p style="color: var(--accent); margin-top: 10px;">Часть 1</p>
+    </header>
+
+    <!-- СЮДА ВСТАВЛЯЕШЬ АРТ ДЛЯ ЭТОГО ФАНФИКА -->
+    <div style="text-align: center; margin-bottom: 30px;">
+        <img src="../images/art_fanfic1.jpg" style="max-width: 100%; border-radius: 10px; opacity: 0.9;" onerror="this.style.display='none'">
+    </div>
+
+    <main class="reader-content">
+        <!-- Сюда вставляешь текст фанфика! Просто копируй с фикбука -->
+        <!-- Каждый абзац заворачивай в тег <p>Текст</p> -->
+
+        <p>Так и жил он с постоянной готовностью к двум вещам: сесть в тюрьму за чье-нибудь убийство или умереть от паранойи...</p>
+
+        <p>Или просто жизнь официанта, которому впервые вместо просьбы переделать заказ поступило предложение сходить на свидание.</p>
+
+        <p>ЗДЕСЬ БУДЕТ ВЕСЬ ОСТАЛЬНОЙ ТЕКСТ...</p>
+
+        <!-- Кнопки навигации внизу -->
+        <div style="margin-top: 50px; text-align: center;">
+            <a href="../index.html" class="read-btn" style="display: inline-block; width: auto; padding: 15px 40px;">Закончить чтение</a>
+        </div>
+    </main>
 
 </body>
 </html>
