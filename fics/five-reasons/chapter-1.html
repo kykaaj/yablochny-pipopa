@@ -10,48 +10,58 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            cursor: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         :root {
             --black: #0a0a0a;
-            --black-light: #111114;
-            --black-card: #16161a;
-            --pink: #e8a0b4;
-            --pink-light: #f0b8c8;
-            --pink-dark: #c4889a;
-            --cream: #faf5f7;
-            --text: #e0dce0;
+            --black-light: #0f0f12;
+            --black-card: #131317;
+            --pink: #d4a0b0;
+            --pink-light: #e8c0cc;
+            --pink-dark: #b8889a;
+            --cream: #f8f4f6;
+            --text: #d8d4d8;
             --text-muted: #8a8690;
+        }
+
+        @media (pointer: coarse), (hover: none) {
+            * { cursor: auto !important; }
+            .cursor, .cursor-follower { display: none !important; }
+        }
+
+        @media (pointer: fine) {
+            *, *::before, *::after { cursor: none; }
         }
 
         .cursor {
             position: fixed;
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
             background: var(--pink);
             border-radius: 50%;
             pointer-events: none;
-            z-index: 10000;
+            z-index: 10001;
             will-change: transform;
+            mix-blend-mode: difference;
         }
 
         .cursor-follower {
             position: fixed;
-            width: 32px;
-            height: 32px;
-            border: 1px solid var(--pink);
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(212, 160, 176, 0.5);
             border-radius: 50%;
             pointer-events: none;
-            z-index: 9999;
+            z-index: 10000;
             will-change: transform;
-            transition: width 0.2s, height 0.2s, background 0.2s;
+            transition: width 0.3s, height 0.3s, background 0.3s;
         }
 
         .cursor-follower.hover {
-            width: 50px;
-            height: 50px;
-            background: rgba(232, 160, 180, 0.1);
+            width: 60px;
+            height: 60px;
+            background: rgba(212, 160, 176, 0.08);
         }
 
         body {
@@ -59,52 +69,92 @@
             background: var(--black);
             color: var(--text);
             min-height: 100vh;
-            line-height: 1.75;
-            font-size: 18px;
+            line-height: 1.8;
+            font-size: 16px;
+            overflow-x: hidden;
         }
 
-        /* Текстура */
-        body::before {
-            content: '';
+        #bg-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: radial-gradient(rgba(232, 160, 180, 0.025) 1px, transparent 1px);
-            background-size: 22px 22px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: radial-gradient(rgba(212, 160, 176, 0.015) 1px, transparent 1px);
+            background-size: 25px 25px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .glow-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.25;
             pointer-events: none;
             z-index: 0;
+            animation: float 25s ease-in-out infinite;
+        }
+
+        .glow-orb-1 {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(212, 160, 176, 0.1), transparent 70%);
+            top: 20%;
+            right: -80px;
+        }
+
+        .glow-orb-2 {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(126, 184, 218, 0.08), transparent 70%);
+            bottom: 30%;
+            left: -50px;
+            animation-delay: -12s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(15px, -15px); }
         }
 
         .scroll-top {
             position: fixed;
             bottom: 30px;
             right: 30px;
-            width: 46px;
-            height: 46px;
+            width: 50px;
+            height: 50px;
             background: var(--black-card);
-            border: 1px solid var(--pink);
+            border: 1px solid rgba(212, 160, 176, 0.3);
             color: var(--pink);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             text-decoration: none;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s ease;
-            z-index: 99;
+            transition: all 0.4s ease;
+            z-index: 100;
         }
+
         .scroll-top.visible { opacity: 1; visibility: visible; }
         .scroll-top:hover { background: var(--pink); color: var(--black); }
 
         .container {
             position: relative;
-            z-index: 2;
-            max-width: 900px;
+            z-index: 3;
+            max-width: 850px;
             margin: 0 auto;
-            padding: 50px 35px 100px;
+            padding: 50px 40px 100px;
         }
 
         /* Навигация верхняя */
@@ -112,44 +162,51 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 40px;
-            padding-bottom: 18px;
-            border-bottom: 1px solid rgba(232, 160, 180, 0.1);
+            margin-bottom: 50px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(212, 160, 176, 0.08);
             flex-wrap: wrap;
             gap: 15px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .nav-top a {
             color: var(--text-muted);
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             letter-spacing: 1px;
             text-transform: uppercase;
-            transition: color 0.3s;
+            transition: all 0.3s;
         }
 
         .nav-top a:hover { color: var(--pink); }
+        .nav-top a.disabled { opacity: 0.3; pointer-events: none; }
 
         .nav-top-center {
             color: var(--pink);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         /* Заголовок главы */
         .chapter-header {
             text-align: center;
-            margin-bottom: 45px;
-            animation: fadeIn 0.7s ease;
+            margin-bottom: 50px;
+            animation: fadeSlide 0.7s ease;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .chapter-label {
-            font-size: 0.85rem;
-            letter-spacing: 3px;
+            font-size: 0.8rem;
+            letter-spacing: 4px;
             text-transform: uppercase;
             color: var(--pink);
             margin-bottom: 10px;
@@ -157,7 +214,7 @@
 
         .chapter-number {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 4rem;
+            font-size: 4.5rem;
             font-weight: 300;
             color: var(--cream);
             line-height: 1;
@@ -169,11 +226,11 @@
             font-size: 2rem;
             font-weight: 400;
             color: var(--cream);
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .chapter-date {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
         }
 
@@ -182,13 +239,14 @@
             align-items: center;
             justify-content: center;
             gap: 15px;
-            margin-top: 25px;
+            margin-top: 30px;
         }
 
         .chapter-divider span {
-            width: 50px;
+            width: 60px;
             height: 1px;
             background: var(--pink);
+            opacity: 0.5;
         }
 
         .chapter-divider-dot {
@@ -196,18 +254,20 @@
             height: 8px;
             border: 1px solid var(--pink);
             transform: rotate(45deg);
+            opacity: 0.5;
         }
 
         /* Примечания автора */
         .author-note {
             background: var(--black-card);
-            border: 1px solid rgba(232, 160, 180, 0.1);
+            border: 1px solid rgba(212, 160, 176, 0.08);
             padding: 22px 28px;
             margin-bottom: 40px;
+            animation: fadeIn 0.6s ease 0.2s backwards;
         }
 
         .author-note-title {
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             letter-spacing: 2px;
             text-transform: uppercase;
             color: var(--pink);
@@ -215,25 +275,26 @@
         }
 
         .author-note-content {
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: var(--text-muted);
             line-height: 1.8;
         }
 
-        /* Музыкальный плеер */
-        .music-player {
+        /* Музыка */
+        .music-section {
             background: var(--black-card);
-            border: 1px solid rgba(232, 160, 180, 0.1);
-            padding: 18px 24px;
-            margin-bottom: 40px;
+            border: 1px solid rgba(212, 160, 176, 0.08);
+            padding: 18px 25px;
+            margin-bottom: 45px;
             display: flex;
             align-items: center;
             gap: 15px;
             flex-wrap: wrap;
+            animation: fadeIn 0.6s ease 0.3s backwards;
         }
 
         .music-label {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             letter-spacing: 1px;
             text-transform: uppercase;
             color: var(--pink);
@@ -243,14 +304,13 @@
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
-            flex: 1;
         }
 
         .music-track {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
             padding: 6px 14px;
-            border: 1px solid rgba(232, 160, 180, 0.15);
+            border: 1px solid rgba(212, 160, 176, 0.12);
             transition: all 0.2s;
         }
 
@@ -261,14 +321,14 @@
 
         /* === ТЕКСТ ГЛАВЫ === */
         .chapter-content {
-            font-size: 1.15rem;
-            line-height: 1.85;
+            font-size: 1.1rem;
+            line-height: 1.9;
             color: var(--text);
-            animation: fadeIn 0.8s ease 0.2s backwards;
+            animation: fadeIn 0.8s ease 0.4s backwards;
         }
 
         .chapter-content p {
-            margin-bottom: 1.4em;
+            margin-bottom: 1.5em;
             text-indent: 1.5em;
         }
 
@@ -280,21 +340,21 @@
         .chapter-content p:first-of-type::first-letter {
             float: left;
             font-family: 'Cormorant Garamond', serif;
-            font-size: 4rem;
-            line-height: 0.85;
+            font-size: 4.5rem;
+            line-height: 0.8;
             padding-right: 12px;
-            padding-top: 5px;
+            padding-top: 8px;
             color: var(--pink);
             font-weight: 500;
         }
 
-        /* Мысли персонажа */
+        /* Мысли */
         .thought {
             text-indent: 0 !important;
-            padding: 12px 20px;
-            margin: 1.5em 0;
+            padding: 15px 22px;
+            margin: 1.8em 0;
             border-left: 3px solid var(--pink);
-            background: rgba(232, 160, 180, 0.03);
+            background: rgba(212, 160, 176, 0.03);
             font-style: italic;
             color: var(--text-muted);
         }
@@ -303,28 +363,23 @@
         .dialogue {
             text-indent: 0 !important;
             color: var(--cream);
+            position: relative;
+            padding-left: 1.2em;
         }
 
         .dialogue::before {
-            content: '— ';
+            content: '—';
+            position: absolute;
+            left: 0;
             color: var(--pink);
-        }
-
-        /* Разделитель сцен */
-        .scene-break {
-            text-align: center;
-            margin: 2.5em 0;
-            color: var(--pink);
-            font-size: 1.3rem;
-            letter-spacing: 8px;
         }
 
         /* Примечания в конце */
         .author-note-end {
             background: var(--black-card);
-            border: 1px solid rgba(232, 160, 180, 0.1);
+            border: 1px solid rgba(212, 160, 176, 0.08);
             padding: 22px 28px;
-            margin-top: 50px;
+            margin-top: 60px;
         }
 
         /* Навигация внизу */
@@ -334,9 +389,9 @@
             align-items: center;
             margin-top: 50px;
             padding-top: 30px;
-            border-top: 1px solid rgba(232, 160, 180, 0.1);
+            border-top: 1px solid rgba(212, 160, 176, 0.08);
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 12px;
         }
 
         .chapter-nav a,
@@ -346,14 +401,17 @@
             gap: 8px;
             color: var(--text-muted);
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             letter-spacing: 1px;
             text-transform: uppercase;
             padding: 14px 22px;
-            border: 1px solid rgba(232, 160, 180, 0.2);
+            border: 1px solid rgba(212, 160, 176, 0.15);
             background: transparent;
-            cursor: none;
             transition: all 0.3s;
+        }
+
+        @media (pointer: fine) {
+            .chapter-nav a, .chapter-nav button { cursor: none; }
         }
 
         .chapter-nav a:hover,
@@ -373,46 +431,45 @@
             border-color: var(--pink);
         }
 
-        /* Адаптив */
-        @media (max-width: 768px) {
-            body { font-size: 16px; }
-            .container { padding: 30px 18px 70px; }
-            .chapter-content { font-size: 1.05rem; line-height: 1.8; }
-            .chapter-number { font-size: 3rem; }
-            .chapter-title { font-size: 1.5rem; }
+        /* АДАПТИВ */
+        @media (max-width: 700px) {
+            .container { padding: 30px 20px 70px; }
+            .chapter-content { font-size: 1rem; }
+            .chapter-number { font-size: 3.5rem; }
+            .chapter-title { font-size: 1.6rem; }
             .chapter-nav { flex-direction: column; }
             .chapter-nav a, .chapter-nav button { width: 100%; justify-content: center; }
 
             .scroll-top {
                 bottom: 20px;
-                left: 20px;
-                right: auto;
-                width: 40px;
-                height: 40px;
+                right: 20px;
+                width: 44px;
+                height: 44px;
             }
         }
 
-        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: var(--black); }
-        ::-webkit-scrollbar-thumb { background: var(--pink-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--pink-dark); border-radius: 3px; }
         html { scroll-behavior: smooth; }
     </style>
 </head>
 <body>
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
+    <canvas id="bg-canvas"></canvas>
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
 
     <a href="#top" class="scroll-top" id="scrollTop">↑</a>
 
     <div class="container" id="top">
-        <!-- Навигация верхняя -->
         <nav class="nav-top">
             <a href="../five-reasons.html">← Оглавление</a>
             <span class="nav-top-center">Глава 1 из 6</span>
             <a href="chapter-2.html">Глава 2 →</a>
         </nav>
 
-        <!-- Заголовок -->
         <header class="chapter-header">
             <div class="chapter-label">Глава</div>
             <div class="chapter-number">I</div>
@@ -425,7 +482,6 @@
             </div>
         </header>
 
-        <!-- Примечания в начале -->
         <div class="author-note">
             <div class="author-note-title">Примечания автора</div>
             <div class="author-note-content">
@@ -433,8 +489,7 @@
             </div>
         </div>
 
-        <!-- Музыка -->
-        <div class="music-player">
+        <div class="music-section">
             <span class="music-label">🎵 Песенки:</span>
             <div class="music-tracks">
                 <span class="music-track">Пошлая молли — Порнхаб крисмас клаб</span>
@@ -442,7 +497,6 @@
             </div>
         </div>
 
-        <!-- ТЕКСТ ГЛАВЫ -->
         <article class="chapter-content">
             <p>В темноте осеннего прохладного вечера, рассекаемой лишь еле-еле горящими огнями уличных фонарей, появлялись и растворялись человеческие фигуры. Удивительным для одиноких людей стало бы то, что в такой поздний час (коим окрестить десять вечера было бы глупо, но парень, почти засыпающий за рабочей сменой, так не думал) некоторые прохожие все еще наводили уличную суету.</p>
 
@@ -599,7 +653,6 @@
             <p>Впрочем, тогда, когда Скарамучча не злился, а Тарталья не пытался его подколоть, из них получался неплохой дуэт. Так считали все остальные работники ресторана, которым пусть и не удалось также искусно сыграться с характером Скарамуччи (потому что обуздать его точно было невозможно), зато удалось заметить, что коротыш точно не хотел вылететь с работы. А это неплохо играло на руку, ведь, в целом, их интересы были в большинстве своем схожи. Так и помогали друг друга. Да, иногда через силу, да, иногда со стиснутыми зубами, да, иногда желая друг другу горения в адском пламени, но помогали, а это было главным.</p>
         </article>
 
-        <!-- Примечания в конце -->
         <div class="author-note-end">
             <div class="author-note-title">Примечания автора</div>
             <div class="author-note-content">
@@ -611,7 +664,6 @@
             </div>
         </div>
 
-        <!-- Навигация внизу -->
         <nav class="chapter-nav">
             <a href="#" class="disabled">← Предыдущая</a>
             <a href="../five-reasons.html">К оглавлению</a>
@@ -621,57 +673,111 @@
     </div>
 
     <script>
-        // Курсор
-        const cursor = document.querySelector('.cursor');
-        const follower = document.querySelector('.cursor-follower');
+        // Интерактивные частицы
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
         let mouseX = 0, mouseY = 0;
-        let followerX = 0, followerY = 0;
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        for (let i = 0; i < 30; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 1.5 + 0.3,
+                speedX: (Math.random() - 0.5) * 0.15,
+                speedY: (Math.random() - 0.5) * 0.15,
+                opacity: Math.random() * 0.25 + 0.05,
+                hue: Math.random() > 0.6 ? 340 : 200
+            });
+        }
 
         document.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
             mouseY = e.clientY;
         });
 
-        function animateCursor() {
-            cursor.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
-            followerX += (mouseX - followerX) * 0.15;
-            followerY += (mouseY - followerY) * 0.15;
-            follower.style.transform = `translate(${followerX}px, ${followerY}px) translate(-50%, -50%)`;
-            requestAnimationFrame(animateCursor);
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(p => {
+                const dx = mouseX - p.x;
+                const dy = mouseY - p.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+
+                if (dist < 120) {
+                    p.x += dx * 0.01;
+                    p.y += dy * 0.01;
+                }
+
+                p.x += p.speedX;
+                p.y += p.speedY;
+
+                if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = `hsla(${p.hue}, 45%, 65%, ${p.opacity})`;
+                ctx.fill();
+            });
+
+            requestAnimationFrame(animate);
         }
-        animateCursor();
+        animate();
 
-        document.querySelectorAll('a, button').forEach(el => {
-            el.addEventListener('mouseenter', () => follower.classList.add('hover'));
-            el.addEventListener('mouseleave', () => follower.classList.remove('hover'));
-        });
+        // Курсор
+        const cursor = document.querySelector('.cursor');
+        const follower = document.querySelector('.cursor-follower');
 
-        // Кнопка наверх
+        if (window.matchMedia('(pointer: fine)').matches && cursor && follower) {
+            let cX = 0, cY = 0, fX = 0, fY = 0;
+
+            document.addEventListener('mousemove', (e) => {
+                cX = e.clientX;
+                cY = e.clientY;
+            });
+
+            function animateCursor() {
+                cursor.style.transform = `translate(${cX}px, ${cY}px) translate(-50%, -50%)`;
+                fX += (cX - fX) * 0.12;
+                fY += (cY - fY) * 0.12;
+                follower.style.transform = `translate(${fX}px, ${fY}px) translate(-50%, -50%)`;
+                requestAnimationFrame(animateCursor);
+            }
+            animateCursor();
+
+            document.querySelectorAll('a, button').forEach(el => {
+                el.addEventListener('mouseenter', () => follower.classList.add('hover'));
+                el.addEventListener('mouseleave', () => follower.classList.remove('hover'));
+            });
+        }
+
+        // Scroll top
         const scrollBtn = document.getElementById('scrollTop');
         window.addEventListener('scroll', () => {
             scrollBtn.classList.toggle('visible', window.scrollY > 300);
         });
 
-        // Прочитано
+        // Mark read
         const FIC_ID = 'five-reasons';
         const CHAPTER_NUM = '1';
         const TOTAL = 6;
 
         function getRead() {
-            const data = JSON.parse(localStorage.getItem('chaptersRead') || '{}');
-            return data[FIC_ID] || [];
+            return JSON.parse(localStorage.getItem('chaptersRead') || '{}')[FIC_ID] || [];
         }
 
         function saveRead(chapters) {
             const data = JSON.parse(localStorage.getItem('chaptersRead') || '{}');
             data[FIC_ID] = chapters;
             localStorage.setItem('chaptersRead', JSON.stringify(data));
-
-            const readFics = JSON.parse(localStorage.getItem('readFics') || '{}');
-            if (chapters.length === TOTAL) readFics[FIC_ID] = 'read';
-            else if (chapters.length > 0) readFics[FIC_ID] = 'in-progress';
-            else delete readFics[FIC_ID];
-            localStorage.setItem('readFics', JSON.stringify(readFics));
         }
 
         const btn = document.getElementById('mark-read');
