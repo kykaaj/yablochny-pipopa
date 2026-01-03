@@ -4,14 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Пять причин, почему я сплю с ножом</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
             --black: #0a0a0a;
@@ -20,10 +15,7 @@
             --pink: #d4a0b0;
             --pink-light: #e8bcc8;
             --pink-dark: #b08090;
-            --pink-glow: rgba(212, 160, 176, 0.15);
-            --blue: #7eb8da;
-            --purple: #b8a0d8;
-            --gold: #d4b896;
+            --green: #7aba7a;
             --cream: #f8f4f6;
             --text: #c8c4c6;
             --text-muted: #787478;
@@ -33,7 +25,6 @@
             *, *::before, *::after { cursor: none !important; }
             .cursor, .cursor-follower { display: block; }
         }
-
         @media (hover: none), (pointer: coarse) {
             .cursor, .cursor-follower { display: none !important; }
         }
@@ -57,7 +48,7 @@
             border-radius: 50%;
             pointer-events: none;
             z-index: 10000;
-            transition: transform 0.15s, width 0.3s, height 0.3s, background 0.3s;
+            transition: width 0.3s, height 0.3s, background 0.3s;
         }
 
         .cursor-follower.hover {
@@ -75,13 +66,10 @@
             overflow-x: hidden;
         }
 
-        /* Фон */
         #bg-particles {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             z-index: 0;
             pointer-events: none;
         }
@@ -89,95 +77,16 @@
         body::before {
             content: '';
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background-image:
-                radial-gradient(ellipse at 30% 20%, rgba(212, 160, 176, 0.03) 0%, transparent 50%),
-                radial-gradient(ellipse at 70% 80%, rgba(126, 184, 218, 0.02) 0%, transparent 50%),
-                linear-gradient(rgba(212, 160, 176, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(212, 160, 176, 0.02) 1px, transparent 1px);
-            background-size: 100% 100%, 100% 100%, 50px 50px, 50px 50px;
+                linear-gradient(rgba(212, 160, 176, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(212, 160, 176, 0.015) 1px, transparent 1px);
+            background-size: 50px 50px;
             pointer-events: none;
             z-index: 0;
-            animation: gridMove 35s linear infinite;
         }
 
-        @keyframes gridMove {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
-        }
-
-        /* Плавающие фигуры */
-        .floating-shapes {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            overflow: hidden;
-        }
-
-        .shape {
-            position: absolute;
-            border: 1px solid var(--pink);
-            opacity: 0.06;
-            animation: floatShape 25s ease-in-out infinite;
-        }
-
-        .shape:nth-child(1) { width: 100px; height: 100px; top: 15%; left: 8%; animation-delay: 0s; }
-        .shape:nth-child(2) { width: 70px; height: 70px; top: 50%; right: 12%; border-radius: 50%; animation-delay: -5s; }
-        .shape:nth-child(3) { width: 50px; height: 50px; bottom: 20%; left: 20%; transform: rotate(45deg); animation-delay: -10s; }
-
-        @keyframes floatShape {
-            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.06; }
-            50% { transform: translateY(-20px) rotate(180deg); opacity: 0.1; }
-        }
-
-        /* Углы */
-        .corner {
-            position: fixed;
-            width: 60px;
-            height: 60px;
-            border: 1px solid var(--pink);
-            pointer-events: none;
-            z-index: 2;
-            opacity: 0.12;
-        }
-
-        .corner.tl { top: 25px; left: 25px; border-right: none; border-bottom: none; }
-        .corner.tr { top: 25px; right: 25px; border-left: none; border-bottom: none; }
-        .corner.bl { bottom: 25px; left: 25px; border-right: none; border-top: none; }
-        .corner.br { bottom: 25px; right: 25px; border-left: none; border-top: none; }
-
-        /* Scroll top */
-        .scroll-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background: var(--black-card);
-            border: 1px solid var(--pink);
-            color: var(--pink);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3rem;
-            text-decoration: none;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.4s;
-            z-index: 99;
-        }
-
-        .scroll-top.visible { opacity: 1; visibility: visible; }
-        .scroll-top:hover { background: var(--pink); color: var(--black); transform: translateY(-5px); }
-
-        /* Контейнер */
         .container {
             position: relative;
             z-index: 2;
@@ -186,7 +95,6 @@
             padding: 60px 40px 100px;
         }
 
-        /* Навигация */
         .nav-back {
             display: inline-flex;
             align-items: center;
@@ -198,35 +106,14 @@
             text-transform: uppercase;
             margin-bottom: 50px;
             transition: all 0.3s;
-            position: relative;
         }
-
-        .nav-back::after {
-            content: '';
-            position: absolute;
-            bottom: -3px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: var(--pink);
-            transition: width 0.3s;
-        }
-
         .nav-back:hover { color: var(--pink); }
-        .nav-back:hover::after { width: 100%; }
 
-        /* Шапка работы */
         .fic-header {
             display: grid;
             grid-template-columns: 200px 1fr;
             gap: 40px;
             margin-bottom: 60px;
-            animation: fadeSlideUp 0.8s ease;
-        }
-
-        @keyframes fadeSlideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .fic-cover {
@@ -241,30 +128,9 @@
             font-size: 5rem;
             color: var(--pink);
             opacity: 0.3;
-            position: relative;
-            overflow: hidden;
         }
 
-        .fic-cover::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(212, 160, 176, 0.1), transparent);
-            animation: shimmer 4s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        .fic-info {
-            display: flex;
-            flex-direction: column;
-        }
+        .fic-info { display: flex; flex-direction: column; }
 
         .fic-badges {
             display: flex;
@@ -281,12 +147,8 @@
             border: 1px solid;
         }
 
-        .fic-badge.slash {
-            border-image: linear-gradient(90deg, var(--blue), var(--purple), var(--pink)) 1;
-            color: var(--blue);
-        }
-
-        .fic-badge.rating { border-color: var(--gold); color: var(--gold); }
+        .fic-badge.slash { border-image: linear-gradient(90deg, #7eb8da, #b8a0d8, var(--pink)) 1; color: #7eb8da; }
+        .fic-badge.rating { border-color: #d4b896; color: #d4b896; }
         .fic-badge.status { border-color: var(--pink); color: var(--pink); }
 
         .fic-title {
@@ -298,17 +160,8 @@
             line-height: 1.2;
         }
 
-        .fic-pairing {
-            font-size: 1.1rem;
-            color: var(--pink);
-            margin-bottom: 8px;
-        }
-
-        .fic-characters {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 20px;
-        }
+        .fic-pairing { font-size: 1.1rem; color: var(--pink); margin-bottom: 8px; }
+        .fic-characters { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px; }
 
         .fic-description {
             font-size: 1rem;
@@ -331,16 +184,7 @@
             margin-top: auto;
         }
 
-        .fic-meta span {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        /* Секции */
-        .section {
-            margin-bottom: 50px;
-        }
+        .section { margin-bottom: 50px; }
 
         .section-header {
             display: flex;
@@ -354,7 +198,6 @@
             font-size: 1.8rem;
             font-weight: 400;
             color: var(--cream);
-            white-space: nowrap;
         }
 
         .section-line {
@@ -363,7 +206,6 @@
             background: linear-gradient(90deg, var(--pink), transparent);
         }
 
-        /* Теги */
         .tags-grid {
             display: flex;
             flex-wrap: wrap;
@@ -377,16 +219,9 @@
             color: var(--text-muted);
             transition: all 0.3s;
         }
+        .tag:hover { border-color: var(--pink); color: var(--pink); }
+        .tag.warning { border-color: rgba(212, 168, 150, 0.3); color: #d4b896; }
 
-        .tag:hover {
-            border-color: var(--pink);
-            color: var(--pink);
-            transform: translateY(-2px);
-        }
-
-        .tag.warning { border-color: rgba(212, 168, 150, 0.3); color: var(--gold); }
-
-        /* Главы */
         .chapters-list {
             display: flex;
             flex-direction: column;
@@ -401,17 +236,14 @@
             padding: 20px 25px;
             background: var(--black-card);
             border: 1px solid rgba(212, 160, 176, 0.06);
-            text-decoration: none;
             transition: all 0.4s;
             position: relative;
-            overflow: hidden;
         }
 
         .chapter-item::before {
             content: '';
             position: absolute;
-            left: 0;
-            top: 0;
+            left: 0; top: 0;
             width: 3px;
             height: 0;
             background: var(--pink);
@@ -421,26 +253,10 @@
         .chapter-item:hover {
             border-color: rgba(212, 160, 176, 0.2);
             transform: translateX(8px);
-            box-shadow: -10px 0 30px rgba(212, 160, 176, 0.05);
         }
+        .chapter-item:hover::before { height: 100%; }
 
-        .chapter-item:hover::before {
-            height: 100%;
-        }
-
-        .chapter-item.read {
-            opacity: 0.6;
-        }
-
-        .chapter-item.read::after {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: 30px;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(122, 186, 122, 0.08));
-        }
+        .chapter-item.read { opacity: 0.6; }
 
         .chapter-num {
             width: 45px;
@@ -460,7 +276,10 @@
             color: var(--black);
         }
 
-        .chapter-info { min-width: 0; }
+        .chapter-info {
+            text-decoration: none;
+            min-width: 0;
+        }
 
         .chapter-title {
             font-family: 'Cormorant Garamond', serif;
@@ -470,9 +289,7 @@
             transition: color 0.3s;
         }
 
-        .chapter-item:hover .chapter-title {
-            color: var(--pink);
-        }
+        .chapter-item:hover .chapter-title { color: var(--pink); }
 
         .chapter-date {
             font-size: 0.8rem;
@@ -485,7 +302,6 @@
             white-space: nowrap;
         }
 
-        /* КНОПКА ПРОЧИТАНО — ИСПРАВЛЕННАЯ */
         .chapter-read-toggle {
             width: 32px;
             height: 32px;
@@ -499,7 +315,6 @@
             transition: all 0.3s;
             font-size: 0.9rem;
             flex-shrink: 0;
-            position: relative;
             z-index: 5;
         }
 
@@ -509,17 +324,15 @@
         }
 
         .chapter-read-toggle.checked {
-            background: #7aba7a;
-            border-color: #7aba7a;
+            background: var(--green);
+            border-color: var(--green);
             color: var(--black);
         }
 
-        /* Примечания */
         .author-note {
             background: var(--black-card);
             border: 1px solid rgba(212, 160, 176, 0.08);
             padding: 25px 30px;
-            animation: fadeSlideUp 0.8s ease 0.2s backwards;
         }
 
         .author-note-title {
@@ -536,7 +349,6 @@
             line-height: 1.8;
         }
 
-        /* Ссылки */
         .external-links {
             display: flex;
             gap: 20px;
@@ -553,7 +365,6 @@
             color: var(--text-muted);
             text-decoration: none;
             font-size: 0.85rem;
-            letter-spacing: 1px;
             transition: all 0.4s;
             position: relative;
             overflow: hidden;
@@ -575,65 +386,23 @@
             color: var(--black);
             border-color: var(--pink);
         }
+        .external-link:hover::before { left: 0; }
 
-        .external-link:hover::before {
-            left: 0;
-        }
-
-        /* Адаптив */
         @media (max-width: 800px) {
-            .fic-header {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .fic-cover {
-                margin: 0 auto;
-                width: 160px;
-                height: 220px;
-            }
-
-            .fic-badges { justify-content: center; }
-            .fic-meta { justify-content: center; }
-            .fic-description { text-align: left; }
-
+            .fic-header { grid-template-columns: 1fr; text-align: center; }
+            .fic-cover { margin: 0 auto; width: 160px; height: 220px; }
+            .fic-badges, .fic-meta { justify-content: center; }
             .container { padding: 40px 25px 80px; }
             .fic-title { font-size: 2rem; }
-
-            .chapter-item {
-                grid-template-columns: auto 1fr auto;
-                gap: 15px;
-                padding: 15px 18px;
-            }
-
+            .chapter-item { grid-template-columns: auto 1fr auto; gap: 15px; padding: 15px 18px; }
             .chapter-words { display: none; }
-            .corner { display: none; }
         }
 
-        @media (max-width: 500px) {
-            .scroll-top {
-                bottom: 20px;
-                right: 20px;
-                width: 44px;
-                height: 44px;
-                opacity: 0.7;
-                background: rgba(19, 19, 22, 0.9);
-            }
-
-            .scroll-top.visible { opacity: 0.7; }
-        }
-
-        /* Скроллбар — ПРЯМОУГОЛЬНЫЙ */
         ::-webkit-scrollbar { width: 10px; }
         ::-webkit-scrollbar-track { background: var(--black); }
         ::-webkit-scrollbar-thumb { background: var(--pink-dark); border: 2px solid var(--black); }
-        ::-webkit-scrollbar-thumb:hover { background: var(--pink); }
 
-        html {
-            scroll-behavior: smooth;
-            scrollbar-width: thin;
-            scrollbar-color: var(--pink-dark) var(--black);
-        }
+        html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--pink-dark) var(--black); }
     </style>
 </head>
 <body>
@@ -641,40 +410,23 @@
     <div class="cursor-follower"></div>
     <canvas id="bg-particles"></canvas>
 
-    <div class="floating-shapes">
-        <div class="shape"></div>
-        <div class="shape"></div>
-        <div class="shape"></div>
-    </div>
-
-    <div class="corner tl"></div>
-    <div class="corner tr"></div>
-    <div class="corner bl"></div>
-    <div class="corner br"></div>
-
-    <a href="#top" class="scroll-top" id="scrollTop">↑</a>
-
-    <div class="container" id="top">
+    <div class="container">
         <a href="../index.html" class="nav-back">← На главную</a>
 
         <header class="fic-header">
             <div class="fic-cover">✦</div>
-
             <div class="fic-info">
                 <div class="fic-badges">
                     <span class="fic-badge slash">Слэш</span>
                     <span class="fic-badge rating">NC-17</span>
                     <span class="fic-badge status">В процессе</span>
                 </div>
-
                 <h1 class="fic-title">Пять причин, почему я сплю с ножом</h1>
                 <p class="fic-pairing">Кадзуха Каэдэхара / Странник</p>
                 <p class="fic-characters">+ Тарталья, Юмэмидзуки Мидзуки, Кирара</p>
-
                 <div class="fic-description">
                     Так и жил он с постоянной готовностью к двум вещам: сесть в тюрьму за чье-нибудь убийство или умереть от паранойи. Или просто жизнь официанта, которому впервые вместо просьбы переделать заказ поступило предложение сходить на свидание.
                 </div>
-
                 <div class="fic-meta">
                     <span>📄 46 страниц</span>
                     <span>✍️ 15 458 слов</span>
@@ -689,7 +441,6 @@
                 <h2 class="section-title">Теги</h2>
                 <div class="section-line"></div>
             </div>
-
             <div class="tags-grid">
                 <span class="tag">AU</span>
                 <span class="tag">Hurt/Comfort</span>
@@ -711,7 +462,6 @@
                 <h2 class="section-title">Оглавление</h2>
                 <div class="section-line"></div>
             </div>
-
             <div class="chapters-list">
                 <div class="chapter-item" data-chapter="1">
                     <div class="chapter-num">1</div>
@@ -724,7 +474,6 @@
                         <span class="check-icon"></span>
                     </button>
                 </div>
-
                 <div class="chapter-item" data-chapter="2">
                     <div class="chapter-num">2</div>
                     <a href="five-reasons/chapter-2.html" class="chapter-info">
@@ -732,11 +481,8 @@
                         <div class="chapter-date">15 октября 2025</div>
                     </a>
                     <div class="chapter-words">2 890 слов</div>
-                    <button class="chapter-read-toggle" onclick="toggleChapterRead(event, '2')" title="Отметить как прочитанное">
-                        <span class="check-icon"></span>
-                    </button>
+                    <button class="chapter-read-toggle" onclick="toggleChapterRead(event, '2')"><span class="check-icon"></span></button>
                 </div>
-
                 <div class="chapter-item" data-chapter="3">
                     <div class="chapter-num">3</div>
                     <a href="five-reasons/chapter-3.html" class="chapter-info">
@@ -744,11 +490,8 @@
                         <div class="chapter-date">1 ноября 2025</div>
                     </a>
                     <div class="chapter-words">2 650 слов</div>
-                    <button class="chapter-read-toggle" onclick="toggleChapterRead(event, '3')" title="Отметить как прочитанное">
-                        <span class="check-icon"></span>
-                    </button>
+                    <button class="chapter-read-toggle" onclick="toggleChapterRead(event, '3')"><span class="check-icon"></span></button>
                 </div>
-
                 <div class="chapter-item" data-chapter="4">
                     <div class="chapter-num">4</div>
                     <a href="five-reasons/chapter-4.html" class="chapter-info">
@@ -756,11 +499,8 @@
                         <div class="chapter-date">20 ноября 2025</div>
                     </a>
                     <div class="chapter-words">2 400 слов</div>
-                    <button class="chapter-read-toggle" onclick="toggleChapterRead(event, '4')" title="Отметить как прочитанное">
-                        <span class="check-icon"></span>
-                    </button>
+                    <button class="chapter-read-toggle" onclick="toggleChapterRead(event, '4')"><span class="check-icon"></span></button>
                 </div>
-
                 <div class="chapter-item" data-chapter="5">
                     <div class="chapter-num">5</div>
                     <a href="five-reasons/chapter-5.html" class="chapter-info">
@@ -768,11 +508,8 @@
                         <div class="chapter-date">10 декабря 2025</div>
                     </a>
                     <div class="chapter-words">2 560 слов</div>
-                    <button class="chapter-read-toggle" onclick="toggleChapterRead(event, '5')" title="Отметить как прочитанное">
-                        <span class="check-icon"></span>
-                    </button>
+                    <button class="chapter-read-toggle" onclick="toggleChapterRead(event, '5')"><span class="check-icon"></span></button>
                 </div>
-
                 <div class="chapter-item" data-chapter="6">
                     <div class="chapter-num">6</div>
                     <a href="five-reasons/chapter-6.html" class="chapter-info">
@@ -780,9 +517,7 @@
                         <div class="chapter-date">3 января 2026</div>
                     </a>
                     <div class="chapter-words">2 500 слов</div>
-                    <button class="chapter-read-toggle" onclick="toggleChapterRead(event, '6')" title="Отметить как прочитанное">
-                        <span class="check-icon"></span>
-                    </button>
+                    <button class="chapter-read-toggle" onclick="toggleChapterRead(event, '6')"><span class="check-icon"></span></button>
                 </div>
             </div>
         </section>
@@ -791,8 +526,7 @@
             <div class="author-note">
                 <div class="author-note-title">Примечания автора</div>
                 <div class="author-note-content">
-                    Мои прекрасные, я здесь с очень спонтанной работой! Это не будет серьезная или очень глубокая работа, но здесь точно будет юмор, разгрузка от тяжелых будней и небольшой флер Пошлой Молли 💞<br><br>
-                    Работа пишется для души и обновляется когда муза приходит ✨
+                    Мои прекрасные, я здесь с очень спонтанной работой! Это не будет серьезная или очень глубокая работа, но здесь точно будет юмор, разгрузка от тяжелых будней и небольшой флер Пошлой Молли 💞
                 </div>
             </div>
         </section>
@@ -808,158 +542,103 @@
     </div>
 
     <script>
-        // === ИНТЕРАКТИВНЫЙ ФОН ===
+        // Фон
         const canvas = document.getElementById('bg-particles');
         const ctx = canvas.getContext('2d');
         let particles = [];
         let mouseX = 0, mouseY = 0;
 
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         resize();
         window.addEventListener('resize', resize);
 
-        for (let i = 0; i < 70; i++) {
+        for (let i = 0; i < 50; i++) {
             particles.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
-                size: Math.random() * 2 + 0.5,
-                speedX: (Math.random() - 0.5) * 0.3,
-                speedY: (Math.random() - 0.5) * 0.3,
-                opacity: Math.random() * 0.4 + 0.1,
+                size: Math.random() * 1.5 + 0.5,
+                speedX: (Math.random() - 0.5) * 0.2,
+                speedY: (Math.random() - 0.5) * 0.2,
+                opacity: Math.random() * 0.12 + 0.03,
                 hue: Math.random() * 30 - 15
             });
         }
 
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
+        document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-
             particles.forEach((p, i) => {
-                const dx = mouseX - p.x;
-                const dy = mouseY - p.y;
+                const dx = mouseX - p.x, dy = mouseY - p.y;
                 const dist = Math.sqrt(dx * dx + dy * dy);
-
-                if (dist < 150) {
-                    const force = (150 - dist) / 150;
-                    p.x -= dx * force * 0.02;
-                    p.y -= dy * force * 0.02;
-                }
-
-                p.x += p.speedX;
-                p.y += p.speedY;
-
+                if (dist < 100) { p.x -= dx * 0.01; p.y -= dy * 0.01; }
+                p.x += p.speedX; p.y += p.speedY;
                 if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
                 if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
-
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
                 ctx.fillStyle = `hsla(${340 + p.hue}, 50%, 70%, ${p.opacity})`;
                 ctx.fill();
-
-                for (let j = i + 1; j < particles.length; j++) {
-                    const p2 = particles[j];
-                    const d = Math.sqrt((p.x - p2.x) ** 2 + (p.y - p2.y) ** 2);
-                    if (d < 80) {
-                        ctx.beginPath();
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(p2.x, p2.y);
-                        ctx.strokeStyle = `rgba(212, 160, 176, ${0.05 * (1 - d / 80)})`;
-                        ctx.stroke();
-                    }
-                }
             });
-
             requestAnimationFrame(animate);
         }
         animate();
 
-        // === КУРСОР ===
+        // Курсор
         const isMobile = window.matchMedia('(hover: none)').matches;
-
         if (!isMobile) {
             const cursor = document.querySelector('.cursor');
             const follower = document.querySelector('.cursor-follower');
             let cX = 0, cY = 0, fX = 0, fY = 0;
-
             document.addEventListener('mousemove', (e) => { cX = e.clientX; cY = e.clientY; });
-
             function animateCursor() {
-                cursor.style.transform = `translate(${cX}px, ${cY}px) translate(-50%, -50%)`;
-                fX += (cX - fX) * 0.1;
-                fY += (cY - fY) * 0.1;
-                follower.style.transform = `translate(${fX}px, ${fY}px) translate(-50%, -50%)`;
+                cursor.style.transform = `translate(${cX - 4}px, ${cY - 4}px)`;
+                fX += (cX - fX) * 0.15; fY += (cY - fY) * 0.15;
+                follower.style.transform = `translate(${fX - 20}px, ${fY - 20}px)`;
                 requestAnimationFrame(animateCursor);
             }
             animateCursor();
-
-            document.querySelectorAll('a, button, .chapter-item, .tag').forEach(el => {
+            document.querySelectorAll('a, button, .chapter-item').forEach(el => {
                 el.addEventListener('mouseenter', () => follower.classList.add('hover'));
                 el.addEventListener('mouseleave', () => follower.classList.remove('hover'));
             });
         }
 
-        // === ПРОЧИТАННЫЕ ГЛАВЫ — ИСПРАВЛЕНО! ===
+        // ПРОЧИТАННЫЕ ГЛАВЫ
         const FIC_ID = 'five-reasons';
-
         function getReadChapters() {
             const data = JSON.parse(localStorage.getItem('chaptersRead') || '{}');
             return data[FIC_ID] || [];
         }
-
         function saveReadChapters(arr) {
             const data = JSON.parse(localStorage.getItem('chaptersRead') || '{}');
             data[FIC_ID] = arr;
             localStorage.setItem('chaptersRead', JSON.stringify(data));
         }
-
-        // ГЛАВНАЯ ФУНКЦИЯ — переключает галочку
         function toggleChapterRead(event, chapterNum) {
-            event.preventDefault();  // Не переходить по ссылке!
-            event.stopPropagation(); // Не всплывать!
-
+            event.preventDefault();
+            event.stopPropagation();
             let read = getReadChapters();
-
             if (read.includes(chapterNum)) {
-                // Уже прочитано — УБИРАЕМ
                 read = read.filter(c => c !== chapterNum);
             } else {
-                // Не прочитано — ДОБАВЛЯЕМ
                 read.push(chapterNum);
             }
-
             saveReadChapters(read);
             updateChaptersUI();
         }
-
         function updateChaptersUI() {
             const read = getReadChapters();
-
             document.querySelectorAll('.chapter-item').forEach(item => {
                 const chapter = item.dataset.chapter;
                 const btn = item.querySelector('.chapter-read-toggle');
                 const isRead = read.includes(chapter);
-
                 item.classList.toggle('read', isRead);
                 btn.classList.toggle('checked', isRead);
                 btn.querySelector('.check-icon').textContent = isRead ? '✓' : '';
             });
         }
-
-        // Инициализация при загрузке
         updateChaptersUI();
-
-        // === SCROLL TOP ===
-        const scrollBtn = document.getElementById('scrollTop');
-        window.addEventListener('scroll', () => {
-            scrollBtn.classList.toggle('visible', window.scrollY > 400);
-        });
     </script>
 </body>
 </html>
