@@ -37,8 +37,8 @@
 
         .cursor {
             position: fixed;
-            width: 6px;
-            height: 6px;
+            width: 8px;
+            height: 8px;
             background: var(--pink);
             border-radius: 50%;
             pointer-events: none;
@@ -48,19 +48,19 @@
 
         .cursor-follower {
             position: fixed;
-            width: 35px;
-            height: 35px;
+            width: 40px;
+            height: 40px;
             border: 1px solid var(--pink);
             border-radius: 50%;
             pointer-events: none;
             z-index: 10000;
-            transition: width 0.3s, height 0.3s, background 0.3s;
+            transition: transform 0.15s, width 0.3s, height 0.3s, background 0.3s;
         }
 
         .cursor-follower.hover {
             width: 60px;
             height: 60px;
-            background: var(--pink-glow);
+            background: rgba(212, 160, 176, 0.1);
         }
 
         body {
@@ -73,7 +73,8 @@
             overflow-x: hidden;
         }
 
-        .bg-canvas {
+        /* Фон */
+        #bg-particles {
             position: fixed;
             top: 0;
             left: 0;
@@ -92,20 +93,27 @@
             height: 100%;
             background-image:
                 radial-gradient(ellipse at 50% 20%, rgba(212, 160, 176, 0.025) 0%, transparent 50%),
-                radial-gradient(rgba(212, 160, 176, 0.012) 1px, transparent 1px);
-            background-size: 100% 100%, 20px 20px;
+                linear-gradient(rgba(212, 160, 176, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(212, 160, 176, 0.015) 1px, transparent 1px);
+            background-size: 100% 100%, 40px 40px, 40px 40px;
             pointer-events: none;
             z-index: 0;
+            animation: gridMove 40s linear infinite;
         }
 
-        /* Кнопка наверх */
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(40px, 40px); }
+        }
+
+        /* Кнопки */
         .scroll-top {
             position: fixed;
             bottom: 30px;
             right: 30px;
             width: 50px;
             height: 50px;
-            background: rgba(19, 19, 22, 0.9);
+            background: var(--black-card);
             border: 1px solid var(--pink);
             color: var(--pink);
             display: flex;
@@ -117,42 +125,28 @@
             visibility: hidden;
             transition: all 0.4s;
             z-index: 99;
-            backdrop-filter: blur(10px);
         }
 
         .scroll-top.visible { opacity: 1; visibility: visible; }
         .scroll-top:hover { background: var(--pink); color: var(--black); }
 
-        @media (max-width: 768px) {
-            .scroll-top {
-                background: rgba(19, 19, 22, 0.5);
-                bottom: 20px;
-                right: 20px;
-                width: 44px;
-                height: 44px;
-            }
-            .scroll-top.visible { opacity: 0.6; }
-        }
-
-        /* === МУЗЫКАЛЬНЫЙ ПЛЕЕР === */
+        /* === КРАСИВЫЙ МУЗЫКАЛЬНЫЙ ПЛЕЕР === */
         .music-float {
             position: fixed;
             bottom: 30px;
             left: 30px;
             z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
         }
 
-        @media (max-width: 768px) {
-            .music-float {
-                bottom: 20px;
-                left: 20px;
-            }
-        }
-
+        /* Кнопка вызова плеера */
         .music-toggle {
-            width: 50px;
-            height: 50px;
-            background: rgba(19, 19, 22, 0.9);
+            width: 55px;
+            height: 55px;
+            background: var(--black-card);
             border: 1px solid var(--pink);
             color: var(--pink);
             display: flex;
@@ -161,38 +155,57 @@
             font-size: 1.4rem;
             cursor: pointer;
             transition: all 0.4s;
-            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .music-toggle::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: var(--pink);
+            transform: scale(0);
+            transition: transform 0.4s;
+            border-radius: 50%;
+        }
+
+        .music-toggle:hover::before,
+        .music-toggle.active::before {
+            transform: scale(1.5);
         }
 
         .music-toggle:hover,
         .music-toggle.active {
-            background: var(--pink);
             color: var(--black);
         }
 
-        @media (max-width: 768px) {
-            .music-toggle {
-                width: 44px;
-                height: 44px;
-                background: rgba(19, 19, 22, 0.5);
-            }
-            .music-toggle:not(.active) { opacity: 0.6; }
+        .music-toggle span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Пульсация когда играет */
+        .music-toggle.playing {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(212, 160, 176, 0.4); }
+            50% { box-shadow: 0 0 0 15px rgba(212, 160, 176, 0); }
         }
 
         /* Панель плеера */
         .music-panel {
-            position: absolute;
-            bottom: 60px;
-            left: 0;
-            width: 320px;
             background: var(--black-card);
-            border: 1px solid var(--pink);
+            border: 1px solid rgba(212, 160, 176, 0.2);
+            width: 320px;
             padding: 0;
             opacity: 0;
             visibility: hidden;
             transform: translateY(20px) scale(0.95);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
         }
 
         .music-panel.visible {
@@ -201,135 +214,109 @@
             transform: translateY(0) scale(1);
         }
 
-        @media (max-width: 768px) {
-            .music-panel {
-                width: 280px;
-                bottom: 55px;
-            }
-        }
-
-        .music-panel-header {
+        /* Шапка плеера */
+        .player-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 18px 20px;
             border-bottom: 1px solid rgba(212, 160, 176, 0.1);
+            background: rgba(212, 160, 176, 0.03);
         }
 
-        .music-panel-title {
+        .player-title {
             font-size: 0.75rem;
             letter-spacing: 2px;
             text-transform: uppercase;
             color: var(--pink);
         }
 
-        .music-close {
+        .player-close {
             background: none;
             border: none;
             color: var(--text-muted);
             font-size: 1.3rem;
             cursor: pointer;
-            transition: color 0.3s;
-            line-height: 1;
-        }
-
-        .music-close:hover { color: var(--pink); }
-
-        /* Треки - В СТОЛБИК */
-        .music-tracks {
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .music-track {
+            transition: all 0.3s;
+            width: 30px;
+            height: 30px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 12px 15px;
-            border: 1px solid rgba(212, 160, 176, 0.08);
-            background: transparent;
-            cursor: pointer;
-            transition: all 0.3s;
+            justify-content: center;
         }
 
-        .music-track:hover {
-            border-color: var(--pink);
-            background: rgba(212, 160, 176, 0.03);
+        .player-close:hover {
+            color: var(--pink);
+            transform: rotate(90deg);
         }
 
-        .music-track.playing {
-            border-color: var(--pink);
-            background: rgba(212, 160, 176, 0.06);
+        /* Текущий трек */
+        .now-playing {
+            padding: 20px;
+            text-align: center;
         }
 
-        .track-play-icon {
-            width: 36px;
-            height: 36px;
+        .track-cover {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
             border: 1px solid var(--pink);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.85rem;
+            font-size: 2rem;
             color: var(--pink);
-            flex-shrink: 0;
+            background: var(--black);
             transition: all 0.3s;
         }
 
-        .music-track.playing .track-play-icon,
-        .music-track:hover .track-play-icon {
-            background: var(--pink);
-            color: var(--black);
+        .track-cover.playing {
+            animation: rotateCover 8s linear infinite;
         }
 
-        .track-info {
-            flex: 1;
-            min-width: 0;
-            text-align: left;
+        @keyframes rotateCover {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         .track-name {
-            font-size: 0.95rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
             color: var(--cream);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin-bottom: 2px;
+            margin-bottom: 5px;
         }
 
         .track-artist {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
         }
 
-        /* Прогресс трека */
-        .music-progress-section {
-            padding: 15px 20px;
-            border-top: 1px solid rgba(212, 160, 176, 0.08);
+        /* Прогресс-бар */
+        .progress-wrap {
+            padding: 0 20px;
+            margin-bottom: 15px;
         }
 
-        .music-progress-bar {
+        .progress-bar {
             width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.08);
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
             cursor: pointer;
             position: relative;
-            margin-bottom: 10px;
         }
 
-        .music-progress-fill {
+        .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, var(--pink), var(--pink-light));
             width: 0%;
-            transition: width 0.1s linear;
+            transition: width 0.1s;
             position: relative;
         }
 
-        .music-progress-fill::after {
+        .progress-fill::after {
             content: '';
             position: absolute;
-            right: -5px;
+            right: 0;
             top: 50%;
             transform: translateY(-50%);
             width: 12px;
@@ -340,100 +327,171 @@
             transition: opacity 0.2s;
         }
 
-        .music-progress-bar:hover .music-progress-fill::after {
+        .progress-bar:hover .progress-fill::after {
             opacity: 1;
         }
 
-        .music-time {
+        .time-display {
             display: flex;
             justify-content: space-between;
             font-size: 0.75rem;
             color: var(--text-muted);
-        }
-
-        /* Громкость */
-        .music-volume-section {
-            padding: 0 20px 15px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .volume-icon {
-            color: var(--text-muted);
-            font-size: 1rem;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-
-        .volume-icon:hover { color: var(--pink); }
-
-        .volume-slider {
-            flex: 1;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.08);
-            cursor: pointer;
-            position: relative;
-        }
-
-        .volume-fill {
-            height: 100%;
-            background: var(--pink);
-            width: 30%;
-            transition: width 0.1s;
-        }
-
-        .volume-percent {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            width: 35px;
-            text-align: right;
+            margin-top: 8px;
         }
 
         /* Контролы */
-        .music-controls {
+        .player-controls {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            padding: 15px 20px 20px;
-            border-top: 1px solid rgba(212, 160, 176, 0.08);
+            align-items: center;
+            gap: 20px;
+            padding: 15px 20px;
+            border-top: 1px solid rgba(212, 160, 176, 0.1);
         }
 
-        .music-ctrl-btn {
-            width: 42px;
-            height: 42px;
+        .control-btn {
+            width: 40px;
+            height: 40px;
             border: 1px solid var(--pink);
             background: transparent;
             color: var(--pink);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s;
+            font-size: 1rem;
         }
 
-        .music-ctrl-btn:hover {
+        .control-btn:hover {
             background: var(--pink);
             color: var(--black);
+            transform: scale(1.1);
         }
 
-        .music-ctrl-btn.main {
+        .control-btn.play {
             width: 50px;
             height: 50px;
             font-size: 1.2rem;
         }
 
+        /* Громкость */
+        .volume-wrap {
+            padding: 15px 20px;
+            border-top: 1px solid rgba(212, 160, 176, 0.1);
+        }
+
+        .volume-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .volume-label {
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .volume-value {
+            font-size: 0.75rem;
+            color: var(--pink);
+        }
+
+        .volume-slider {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            appearance: none;
+            cursor: pointer;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            background: var(--pink);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .volume-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        /* Список треков */
+        .tracks-list {
+            max-height: 150px;
+            overflow-y: auto;
+            border-top: 1px solid rgba(212, 160, 176, 0.1);
+        }
+
+        .track-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 1px solid rgba(212, 160, 176, 0.05);
+        }
+
+        .track-item:hover {
+            background: rgba(212, 160, 176, 0.05);
+        }
+
+        .track-item.active {
+            background: rgba(212, 160, 176, 0.08);
+        }
+
+        .track-item.active .track-item-name {
+            color: var(--pink);
+        }
+
+        .track-num {
+            width: 24px;
+            height: 24px;
+            border: 1px solid var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+
+        .track-item.active .track-num,
+        .track-item:hover .track-num {
+            border-color: var(--pink);
+            color: var(--pink);
+        }
+
+        .track-item-info { flex: 1; min-width: 0; }
+
+        .track-item-name {
+            font-size: 0.9rem;
+            color: var(--cream);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .track-item-artist {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Контейнер */
         .container {
             position: relative;
             z-index: 2;
             max-width: 900px;
             margin: 0 auto;
             padding: 50px 40px 120px;
-        }
-
-        @media (max-width: 768px) {
-            .container { padding: 30px 20px 100px; }
         }
 
         /* Навигация */
@@ -443,7 +501,7 @@
             align-items: center;
             margin-bottom: 50px;
             padding-bottom: 20px;
-            border-bottom: 1px solid rgba(212, 160, 176, 0.06);
+            border-bottom: 1px solid rgba(212, 160, 176, 0.08);
             flex-wrap: wrap;
             gap: 15px;
         }
@@ -455,17 +513,36 @@
             letter-spacing: 1.5px;
             text-transform: uppercase;
             transition: all 0.3s;
+            position: relative;
         }
 
-        .nav-top a:hover { color: var(--pink); }
+        .nav-top a::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--pink);
+            transition: width 0.3s;
+        }
+
+        .nav-top a:hover {
+            color: var(--pink);
+        }
+
+        .nav-top a:hover::after {
+            width: 100%;
+        }
+
         .nav-top a.disabled { opacity: 0.3; pointer-events: none; }
 
-        .nav-top-center {
+        .nav-center {
             color: var(--pink);
             font-size: 0.85rem;
         }
 
-        /* Заголовок */
+        /* Заголовок главы */
         .chapter-header {
             text-align: center;
             margin-bottom: 50px;
@@ -482,12 +559,12 @@
             letter-spacing: 4px;
             text-transform: uppercase;
             color: var(--pink);
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .chapter-number {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 5.5rem;
+            font-size: 5rem;
             font-weight: 300;
             color: var(--cream);
             line-height: 1;
@@ -497,7 +574,7 @@
 
         .chapter-title {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 2.4rem;
+            font-size: 2.2rem;
             font-weight: 400;
             color: var(--cream);
             margin-bottom: 12px;
@@ -512,25 +589,25 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 20px;
-            margin-top: 35px;
+            gap: 18px;
+            margin-top: 30px;
         }
 
         .chapter-divider span {
-            width: 70px;
+            width: 60px;
             height: 1px;
             background: var(--pink);
         }
 
-        .chapter-divider-dot {
-            width: 12px;
-            height: 12px;
+        .divider-diamond {
+            width: 10px;
+            height: 10px;
             border: 1px solid var(--pink);
             transform: rotate(45deg);
-            animation: spin 15s linear infinite;
+            animation: rotateDiamond 10s linear infinite;
         }
 
-        @keyframes spin {
+        @keyframes rotateDiamond {
             from { transform: rotate(45deg); }
             to { transform: rotate(405deg); }
         }
@@ -538,14 +615,14 @@
         /* Примечания */
         .author-note {
             background: var(--black-card);
-            border: 1px solid rgba(212, 160, 176, 0.06);
-            padding: 28px 32px;
+            border: 1px solid rgba(212, 160, 176, 0.08);
+            padding: 25px 30px;
             margin-bottom: 45px;
             animation: fadeSlideUp 0.8s ease 0.1s backwards;
         }
 
         .author-note-title {
-            font-size: 0.78rem;
+            font-size: 0.8rem;
             letter-spacing: 2px;
             text-transform: uppercase;
             color: var(--pink);
@@ -555,14 +632,14 @@
         .author-note-content {
             font-size: 0.95rem;
             color: var(--text-muted);
-            line-height: 1.85;
+            line-height: 1.8;
         }
 
-        /* Секция музыки */
+        /* Музыка в главе */
         .music-section {
             background: var(--black-card);
-            border: 1px solid rgba(212, 160, 176, 0.06);
-            padding: 22px 28px;
+            border: 1px solid rgba(212, 160, 176, 0.08);
+            padding: 20px 25px;
             margin-bottom: 45px;
             animation: fadeSlideUp 0.8s ease 0.15s backwards;
         }
@@ -570,88 +647,64 @@
         .music-section-header {
             display: flex;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 18px;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
-        .music-section-title {
-            font-size: 0.78rem;
-            letter-spacing: 2px;
+        .music-label {
+            font-size: 0.8rem;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
             color: var(--pink);
         }
 
-        .music-section-hint {
+        .music-hint {
             font-size: 0.75rem;
             color: var(--text-muted);
-            margin-left: auto;
         }
 
-        /* Треки в столбик */
-        .music-section-tracks {
+        .music-tracks {
             display: flex;
-            flex-direction: column;
+            flex-wrap: wrap;
             gap: 10px;
         }
 
-        .music-section-track {
+        .music-track-btn {
             display: flex;
             align-items: center;
-            gap: 15px;
-            padding: 14px 18px;
-            border: 1px solid rgba(212, 160, 176, 0.1);
+            gap: 10px;
+            padding: 10px 16px;
+            background: transparent;
+            border: 1px solid rgba(212, 160, 176, 0.15);
+            color: var(--text-muted);
+            font-size: 0.85rem;
             cursor: pointer;
             transition: all 0.3s;
         }
 
-        .music-section-track:hover {
+        .music-track-btn:hover {
             border-color: var(--pink);
-            background: rgba(212, 160, 176, 0.03);
-            transform: translateX(5px);
-        }
-
-        .section-track-icon {
-            width: 32px;
-            height: 32px;
-            border: 1px solid var(--pink);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
             color: var(--pink);
-            transition: all 0.3s;
+            background: rgba(212, 160, 176, 0.03);
         }
 
-        .music-section-track:hover .section-track-icon {
-            background: var(--pink);
-            color: var(--black);
+        .music-track-btn .icon {
+            font-size: 1rem;
         }
 
-        .section-track-info {
-            flex: 1;
-        }
-
-        .section-track-name {
-            font-size: 0.95rem;
-            color: var(--cream);
-        }
-
-        .section-track-artist {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        /* === ТЕКСТ === */
+        /* === ТЕКСТ ГЛАВЫ === */
         .chapter-content {
-            font-size: 1.18rem;
-            line-height: 1.95;
+            font-size: 1.15rem;
+            line-height: 1.9;
             color: var(--text);
             animation: fadeSlideUp 0.8s ease 0.2s backwards;
         }
 
         .chapter-content p {
-            margin-bottom: 1.6em;
-            text-indent: 2em;
+            margin-bottom: 1.5em;
+            text-indent: 1.8em;
         }
 
         .chapter-content p:first-of-type {
@@ -661,10 +714,10 @@
         .chapter-content p:first-of-type::first-letter {
             float: left;
             font-family: 'Cormorant Garamond', serif;
-            font-size: 5rem;
+            font-size: 4.5rem;
             line-height: 0.8;
-            padding-right: 18px;
-            padding-top: 10px;
+            padding-right: 15px;
+            padding-top: 8px;
             color: var(--pink);
             font-weight: 500;
         }
@@ -672,18 +725,24 @@
         .thought {
             text-indent: 0 !important;
             padding: 18px 25px;
-            margin: 2em 0;
+            margin: 1.8em 0;
             border-left: 3px solid var(--pink);
             background: rgba(212, 160, 176, 0.02);
             font-style: italic;
             color: var(--text-muted);
+            transition: all 0.3s;
+        }
+
+        .thought:hover {
+            border-left-width: 5px;
+            background: rgba(212, 160, 176, 0.04);
         }
 
         .dialogue {
             text-indent: 0 !important;
             color: var(--cream);
             position: relative;
-            padding-left: 1.8em;
+            padding-left: 1.5em;
         }
 
         .dialogue::before {
@@ -696,8 +755,8 @@
 
         .author-note-end {
             background: var(--black-card);
-            border: 1px solid rgba(212, 160, 176, 0.06);
-            padding: 28px 32px;
+            border: 1px solid rgba(212, 160, 176, 0.08);
+            padding: 25px 30px;
             margin-top: 60px;
         }
 
@@ -705,38 +764,55 @@
         .chapter-nav {
             display: flex;
             justify-content: space-between;
-            align-items: stretch;
+            align-items: center;
             margin-top: 60px;
             padding-top: 35px;
-            border-top: 1px solid rgba(212, 160, 176, 0.06);
-            gap: 15px;
+            border-top: 1px solid rgba(212, 160, 176, 0.08);
             flex-wrap: wrap;
+            gap: 15px;
         }
 
         .chapter-nav a,
         .chapter-nav button {
-            flex: 1;
-            min-width: 140px;
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 10px;
             color: var(--text-muted);
             text-decoration: none;
-            font-size: 0.82rem;
+            font-size: 0.85rem;
             letter-spacing: 1.5px;
             text-transform: uppercase;
-            padding: 16px 20px;
-            border: 1px solid rgba(212, 160, 176, 0.12);
+            padding: 15px 25px;
+            border: 1px solid rgba(212, 160, 176, 0.15);
             background: transparent;
             cursor: pointer;
-            transition: all 0.4s;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chapter-nav a::before,
+        .chapter-nav button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--pink);
+            transition: left 0.3s;
+            z-index: -1;
         }
 
         .chapter-nav a:hover,
         .chapter-nav button:hover {
+            color: var(--black);
             border-color: var(--pink);
-            color: var(--pink);
+        }
+
+        .chapter-nav a:hover::before,
+        .chapter-nav button:hover::before {
+            left: 0;
         }
 
         .chapter-nav a.disabled {
@@ -750,11 +826,13 @@
             border-color: var(--pink);
         }
 
+        /* Адаптив */
         @media (max-width: 768px) {
             body { font-size: 16px; }
-            .chapter-content { font-size: 1.1rem; line-height: 1.9; }
-            .chapter-number { font-size: 4rem; }
-            .chapter-title { font-size: 1.8rem; }
+            .container { padding: 30px 22px 100px; }
+            .chapter-content { font-size: 1.08rem; line-height: 1.85; }
+            .chapter-number { font-size: 3.5rem; }
+            .chapter-title { font-size: 1.7rem; }
 
             .chapter-nav {
                 flex-direction: column;
@@ -762,6 +840,35 @@
 
             .chapter-nav a, .chapter-nav button {
                 width: 100%;
+                justify-content: center;
+            }
+
+            .scroll-top, .music-float {
+                bottom: 20px;
+            }
+
+            .scroll-top {
+                right: 20px;
+                width: 44px;
+                height: 44px;
+                opacity: 0.7;
+                background: rgba(19, 19, 22, 0.9);
+            }
+
+            .scroll-top.visible { opacity: 0.7; }
+
+            .music-float { left: 20px; }
+
+            .music-toggle {
+                width: 44px;
+                height: 44px;
+                opacity: 0.7;
+                background: rgba(19, 19, 22, 0.9);
+            }
+
+            .music-panel {
+                width: calc(100vw - 40px);
+                max-width: 300px;
             }
         }
 
@@ -770,75 +877,86 @@
         ::-webkit-scrollbar-track { background: var(--black); }
         ::-webkit-scrollbar-thumb { background: var(--pink-dark); border: 2px solid var(--black); }
         ::-webkit-scrollbar-thumb:hover { background: var(--pink); }
-        html { scroll-behavior: smooth; }
+
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--pink-dark) var(--black);
+        }
     </style>
 </head>
 <body>
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
-    <canvas id="bg-canvas" class="bg-canvas"></canvas>
+    <canvas id="bg-particles"></canvas>
 
     <a href="#top" class="scroll-top" id="scrollTop">↑</a>
 
     <!-- === МУЗЫКАЛЬНЫЙ ПЛЕЕР === -->
     <div class="music-float">
         <div class="music-panel" id="musicPanel">
-            <div class="music-panel-header">
-                <span class="music-panel-title">🎵 Плейлист главы</span>
-                <button class="music-close" onclick="togglePanel()">✕</button>
+            <div class="player-header">
+                <span class="player-title">🎵 Плейлист главы</span>
+                <button class="player-close" onclick="togglePlayer()">✕</button>
             </div>
 
-            <div class="music-tracks">
-                <div class="music-track" data-track="0" onclick="selectTrack(0)">
-                    <div class="track-play-icon">▶</div>
-                    <div class="track-info">
-                        <div class="track-name">Порнхаб крисмас клаб</div>
-                        <div class="track-artist">Пошлая молли</div>
-                    </div>
-                </div>
-                <div class="music-track" data-track="1" onclick="selectTrack(1)">
-                    <div class="track-play-icon">▶</div>
-                    <div class="track-info">
-                        <div class="track-name">Oh come all ye faithful</div>
-                        <div class="track-artist">Twisted sister</div>
-                    </div>
-                </div>
+            <div class="now-playing">
+                <div class="track-cover" id="trackCover">♪</div>
+                <div class="track-name" id="trackName">Выбери трек</div>
+                <div class="track-artist" id="trackArtist">—</div>
             </div>
 
-            <div class="music-progress-section">
-                <div class="music-progress-bar" id="progressBar" onclick="seekTrack(event)">
-                    <div class="music-progress-fill" id="progressFill"></div>
+            <div class="progress-wrap">
+                <div class="progress-bar" id="progressBar" onclick="seekTrack(event)">
+                    <div class="progress-fill" id="progressFill"></div>
                 </div>
-                <div class="music-time">
+                <div class="time-display">
                     <span id="currentTime">0:00</span>
-                    <span id="totalTime">0:00</span>
+                    <span id="duration">0:00</span>
                 </div>
             </div>
 
-            <div class="music-volume-section">
-                <span class="volume-icon" onclick="toggleMute()">🔊</span>
-                <div class="volume-slider" onclick="setVolume(event)">
-                    <div class="volume-fill" id="volumeFill"></div>
-                </div>
-                <span class="volume-percent" id="volumePercent">30%</span>
+            <div class="player-controls">
+                <button class="control-btn" onclick="prevTrack()">⏮</button>
+                <button class="control-btn play" id="playBtn" onclick="togglePlay()">▶</button>
+                <button class="control-btn" onclick="nextTrack()">⏭</button>
             </div>
 
-            <div class="music-controls">
-                <button class="music-ctrl-btn" onclick="prevTrack()">⏮</button>
-                <button class="music-ctrl-btn main" id="mainPlayBtn" onclick="togglePlay()">▶</button>
-                <button class="music-ctrl-btn" onclick="nextTrack()">⏭</button>
+            <div class="volume-wrap">
+                <div class="volume-header">
+                    <span class="volume-label">🔊 Громкость</span>
+                    <span class="volume-value" id="volumeValue">30%</span>
+                </div>
+                <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="30" oninput="setVolume(this.value)">
+            </div>
+
+            <div class="tracks-list">
+                <div class="track-item" data-index="0" onclick="playTrack(0)">
+                    <div class="track-num">1</div>
+                    <div class="track-item-info">
+                        <div class="track-item-name">Порнхаб крисмас клаб</div>
+                        <div class="track-item-artist">Пошлая молли</div>
+                    </div>
+                </div>
+                <div class="track-item" data-index="1" onclick="playTrack(1)">
+                    <div class="track-num">2</div>
+                    <div class="track-item-info">
+                        <div class="track-item-name">Oh come all ye faithful</div>
+                        <div class="track-item-artist">Twisted sister</div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <button class="music-toggle" id="musicToggle" onclick="togglePanel()" title="Открыть плеер">
-            🎵
+        <button class="music-toggle" id="musicToggle" onclick="togglePlayer()" title="Открыть плеер">
+            <span>🎵</span>
         </button>
     </div>
 
     <div class="container" id="top">
         <nav class="nav-top">
             <a href="../five-reasons.html">← Оглавление</a>
-            <span class="nav-top-center">Глава 1 из 6</span>
+            <span class="nav-center">Глава 1 из 6</span>
             <a href="chapter-2.html">Глава 2 →</a>
         </nav>
 
@@ -846,10 +964,10 @@
             <div class="chapter-label">Глава</div>
             <div class="chapter-number">I</div>
             <h1 class="chapter-title">Будни официантов после 9 вечера</h1>
-            <div class="chapter-date">30 сентября 2025 г., 02:21</div>
+            <div class="chapter-date">30 сентября 2025 г.</div>
             <div class="chapter-divider">
                 <span></span>
-                <div class="chapter-divider-dot"></div>
+                <div class="divider-diamond"></div>
                 <span></span>
             </div>
         </header>
@@ -857,30 +975,24 @@
         <div class="author-note">
             <div class="author-note-title">Примечания автора</div>
             <div class="author-note-content">
-                Мои прекрасные, я здесь с очень спонтанной работой, которую я начала писать еще года два назад и так и не выложила. Это был период моей максимальной фикрайтерской активности и, перечитав эти две главы и подправив их чуть-чуть, я поняла, что это нужно выпускать. 💞
+                Мои прекрасные, я здесь с очень спонтанной работой! Это не будет серьезная или очень глубокая работа, но здесь точно будет юмор, разгрузка от тяжелых будней и небольшой флер Пошлой Молли 💞
             </div>
         </div>
 
         <div class="music-section">
             <div class="music-section-header">
-                <span class="music-section-title">🎵 Песенки к главе</span>
-                <span class="music-section-hint">← Нажми, чтобы включить</span>
+                <span class="music-label">🎵 Песенки к главе</span>
+                <span class="music-hint">Нажми, чтобы открыть плеер</span>
             </div>
-            <div class="music-section-tracks">
-                <div class="music-section-track" onclick="openAndPlay(0)">
-                    <div class="section-track-icon">▶</div>
-                    <div class="section-track-info">
-                        <div class="section-track-name">Пошлая молли — Порнхаб крисмас клаб</div>
-                        <div class="section-track-artist">Из плейлиста к главе</div>
-                    </div>
-                </div>
-                <div class="music-section-track" onclick="openAndPlay(1)">
-                    <div class="section-track-icon">▶</div>
-                    <div class="section-track-info">
-                        <div class="section-track-name">Twisted sister — Oh come all ye faithful</div>
-                        <div class="section-track-artist">Из плейлиста к главе</div>
-                    </div>
-                </div>
+            <div class="music-tracks">
+                <button class="music-track-btn" onclick="playTrack(0); openPlayer();">
+                    <span class="icon">▶</span>
+                    Пошлая молли — Порнхаб крисмас клаб
+                </button>
+                <button class="music-track-btn" onclick="playTrack(1); openPlayer();">
+                    <span class="icon">▶</span>
+                    Twisted sister — Oh come all ye faithful
+                </button>
             </div>
         </div>
 
@@ -891,17 +1003,23 @@
 
             <p>Из очень глубоких философских мыслей молодого официанта вывел привычный жест от очередного посетителя. Скарамучча тут же натянул на себя притворную улыбку, коей ему по статусу обслуживающего персонала нужно было одаривать всех людей, заходящих в заведение.</p>
 
-            <p>Парень прошел мимо столиков в сторону позвавшего его мужчины, мысленно пытаясь понять, зачем его звали, если он всего пару минут назад благополучно отнес заказ.</p>
-
             <p class="dialogue">Да? Вам чем-то помочь?</p>
 
-            <p>Парень в своей голове уже смирился с тем, что сейчас, видимо, попросят переделать заказ, позвать администратора и бла-бла-бла. Он даже перестал удивляться тому, что самые привередливые посетители ложились именно на его хрупкие плечи.</p>
+            <p>Парень в своей голове уже смирился с тем, что сейчас, видимо, попросят переделать заказ, позвать администратора и бла-бла-бла.</p>
 
             <p class="dialogue">Да. У меня есть к вам вопрос,- мужчина вальяжно расположился в кресле, пренебрежительно рассматривая тарелку с приготовленной едой.</p>
 
-            <p>Скарамучча молча ждал, когда ему объяснят, что к чему. Его крайне раздражал факт того, что человек не просто хотел пожаловаться, а еще и всем своим видом пытался демонстрировать превосходство.</p>
-
             <p class="thought">«Ну ты вообще говорить собираешься, падла ты такая? Я, блять, тут не интерьер украшаю»</p>
+
+            <p>Сдерживать злобу от этих взглядов было невыносимо сложно. Скарамучча искренне не понимал: этот еблан правда думал, что официант силой мысли поймет, что не так с блюдом, которое он даже не готовил?</p>
+
+            <p class="dialogue">Да? Что-то не так?- улыбаясь, спросил Скарамучча, сверля синими, как море, глазами посетителя.</p>
+
+            <p class="dialogue">А вы не видите?</p>
+
+            <p>Парень вздохнул глубоко-глубоко, наполняя легкие таким количеством кислорода, что становилось непонятно, а столько вообще влезет в него или нет?</p>
+
+            <p class="dialogue">Прошу прощения, но мне, к сожалению, не довелось отведать этого блюда, чтобы понять, что с ним не так,- сквозь зубы процедил Скарамучча.</p>
 
             <!-- Продолжение текста... -->
         </article>
@@ -909,24 +1027,24 @@
         <div class="author-note-end">
             <div class="author-note-title">Примечания автора</div>
             <div class="author-note-content">
-                Вот такое вот начало… куда меня дальше занесет с этой работой непонятно, но я постараюсь продолжать. Всех люблю! 💞
+                Вот такое вот начало… куда меня дальше занесет с этой работой непонятно, но я постараюсь продолжать! 💞
             </div>
         </div>
 
         <nav class="chapter-nav">
             <a href="#" class="disabled">← Предыдущая</a>
             <a href="../five-reasons.html">К оглавлению</a>
-            <button class="mark-read-btn" id="mark-read">Прочитано</button>
+            <button class="mark-read-btn" id="markRead" onclick="toggleRead()">Прочитано</button>
             <a href="chapter-2.html">Следующая →</a>
         </nav>
     </div>
 
     <script>
-        // Фон
-        const canvas = document.getElementById('bg-canvas');
+        // === ИНТЕРАКТИВНЫЙ ФОН ===
+        const canvas = document.getElementById('bg-particles');
         const ctx = canvas.getContext('2d');
         let particles = [];
-        let mouseX = -1000, mouseY = -1000;
+        let mouseX = 0, mouseY = 0;
 
         function resize() {
             canvas.width = window.innerWidth;
@@ -935,30 +1053,36 @@
         resize();
         window.addEventListener('resize', resize);
 
-        for (let i = 0; i < 50; i++) {
+        // Много частиц!
+        for (let i = 0; i < 80; i++) {
             particles.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
-                size: Math.random() * 1.5 + 0.5,
-                speedX: (Math.random() - 0.5) * 0.2,
-                speedY: (Math.random() - 0.5) * 0.2,
-                opacity: Math.random() * 0.3 + 0.05
+                size: Math.random() * 2 + 0.5,
+                speedX: (Math.random() - 0.5) * 0.3,
+                speedY: (Math.random() - 0.5) * 0.3,
+                opacity: Math.random() * 0.4 + 0.1,
+                hue: Math.random() * 30 - 15
             });
         }
 
-        document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            particles.forEach(p => {
+            particles.forEach((p, i) => {
                 const dx = mouseX - p.x;
                 const dy = mouseY - p.y;
                 const dist = Math.sqrt(dx * dx + dy * dy);
 
-                if (dist < 120) {
-                    p.x -= (dx / dist) * 2;
-                    p.y -= (dy / dist) * 2;
+                if (dist < 150) {
+                    const force = (150 - dist) / 150;
+                    p.x -= dx * force * 0.03;
+                    p.y -= dy * force * 0.03;
                 }
 
                 p.x += p.speedX;
@@ -969,16 +1093,30 @@
 
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(212, 160, 176, ${p.opacity})`;
+                ctx.fillStyle = `hsla(${340 + p.hue}, 50%, 70%, ${p.opacity})`;
                 ctx.fill();
+
+                // Линии
+                for (let j = i + 1; j < particles.length; j++) {
+                    const p2 = particles[j];
+                    const d = Math.sqrt((p.x - p2.x) ** 2 + (p.y - p2.y) ** 2);
+                    if (d < 80) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = `rgba(212, 160, 176, ${0.06 * (1 - d / 80)})`;
+                        ctx.stroke();
+                    }
+                }
             });
 
             requestAnimationFrame(animate);
         }
         animate();
 
-        // Курсор
+        // === КУРСОР ===
         const isMobile = window.matchMedia('(hover: none)').matches;
+
         if (!isMobile) {
             const cursor = document.querySelector('.cursor');
             const follower = document.querySelector('.cursor-follower');
@@ -995,7 +1133,7 @@
             }
             animateCursor();
 
-            document.querySelectorAll('a, button, .music-track, .music-section-track').forEach(el => {
+            document.querySelectorAll('a, button, .track-item, .music-track-btn, .progress-bar').forEach(el => {
                 el.addEventListener('mouseenter', () => follower.classList.add('hover'));
                 el.addEventListener('mouseleave', () => follower.classList.remove('hover'));
             });
@@ -1009,53 +1147,38 @@
 
         let currentTrack = 0;
         let isPlaying = false;
-        let volume = 0.3;
-
         const audio = new Audio();
-        audio.volume = volume;
+        audio.volume = 0.3;
 
-        // Обновление UI прогресса
-        audio.addEventListener('timeupdate', () => {
-            const percent = (audio.currentTime / audio.duration) * 100 || 0;
-            document.getElementById('progressFill').style.width = percent + '%';
-            document.getElementById('currentTime').textContent = formatTime(audio.currentTime);
-        });
+        // UI элементы
+        const musicToggle = document.getElementById('musicToggle');
+        const musicPanel = document.getElementById('musicPanel');
+        const playBtn = document.getElementById('playBtn');
+        const trackName = document.getElementById('trackName');
+        const trackArtist = document.getElementById('trackArtist');
+        const trackCover = document.getElementById('trackCover');
+        const progressFill = document.getElementById('progressFill');
+        const currentTimeEl = document.getElementById('currentTime');
+        const durationEl = document.getElementById('duration');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const volumeValue = document.getElementById('volumeValue');
 
-        audio.addEventListener('loadedmetadata', () => {
-            document.getElementById('totalTime').textContent = formatTime(audio.duration);
-        });
-
-        audio.addEventListener('ended', () => {
-            nextTrack();
-        });
-
-        function formatTime(sec) {
-            const m = Math.floor(sec / 60);
-            const s = Math.floor(sec % 60);
-            return m + ':' + (s < 10 ? '0' : '') + s;
+        function togglePlayer() {
+            musicPanel.classList.toggle('visible');
+            musicToggle.classList.toggle('active');
         }
 
-        function togglePanel() {
-            const panel = document.getElementById('musicPanel');
-            const btn = document.getElementById('musicToggle');
-            panel.classList.toggle('visible');
-            btn.classList.toggle('active');
+        function openPlayer() {
+            musicPanel.classList.add('visible');
+            musicToggle.classList.add('active');
         }
 
-        function selectTrack(index) {
+        function playTrack(index) {
             currentTrack = index;
-            audio.src = tracks[currentTrack].src;
+            audio.src = tracks[index].src;
             audio.play().catch(() => {});
             isPlaying = true;
             updateUI();
-        }
-
-        function openAndPlay(index) {
-            const panel = document.getElementById('musicPanel');
-            const btn = document.getElementById('musicToggle');
-            panel.classList.add('visible');
-            btn.classList.add('active');
-            selectTrack(index);
         }
 
         function togglePlay() {
@@ -1071,105 +1194,101 @@
 
         function nextTrack() {
             currentTrack = (currentTrack + 1) % tracks.length;
-            audio.src = tracks[currentTrack].src;
-            audio.play().catch(() => {});
-            isPlaying = true;
-            updateUI();
+            playTrack(currentTrack);
         }
 
         function prevTrack() {
             currentTrack = (currentTrack - 1 + tracks.length) % tracks.length;
-            audio.src = tracks[currentTrack].src;
-            audio.play().catch(() => {});
-            isPlaying = true;
-            updateUI();
+            playTrack(currentTrack);
+        }
+
+        function setVolume(val) {
+            audio.volume = val / 100;
+            volumeValue.textContent = val + '%';
         }
 
         function seekTrack(e) {
-            const bar = document.getElementById('progressBar');
-            const rect = bar.getBoundingClientRect();
+            const rect = e.target.getBoundingClientRect();
             const percent = (e.clientX - rect.left) / rect.width;
             audio.currentTime = percent * audio.duration;
         }
 
-        function setVolume(e) {
-            const slider = e.currentTarget;
-            const rect = slider.getBoundingClientRect();
-            volume = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-            audio.volume = volume;
-            updateVolumeUI();
-        }
-
-        function toggleMute() {
-            if (audio.volume > 0) {
-                audio.volume = 0;
-            } else {
-                audio.volume = volume || 0.3;
-            }
-            updateVolumeUI();
-        }
-
-        function updateVolumeUI() {
-            document.getElementById('volumeFill').style.width = (audio.volume * 100) + '%';
-            document.getElementById('volumePercent').textContent = Math.round(audio.volume * 100) + '%';
+        function formatTime(sec) {
+            if (isNaN(sec)) return '0:00';
+            const m = Math.floor(sec / 60);
+            const s = Math.floor(sec % 60);
+            return m + ':' + (s < 10 ? '0' : '') + s;
         }
 
         function updateUI() {
-            document.querySelectorAll('.music-track').forEach((t, i) => {
-                t.classList.toggle('playing', i === currentTrack && isPlaying);
-                t.querySelector('.track-play-icon').textContent = (i === currentTrack && isPlaying) ? '⏸' : '▶';
+            trackName.textContent = tracks[currentTrack].name;
+            trackArtist.textContent = tracks[currentTrack].artist;
+            playBtn.textContent = isPlaying ? '⏸' : '▶';
+            musicToggle.classList.toggle('playing', isPlaying);
+            trackCover.classList.toggle('playing', isPlaying);
+
+            document.querySelectorAll('.track-item').forEach((el, i) => {
+                el.classList.toggle('active', i === currentTrack);
             });
-            document.getElementById('mainPlayBtn').textContent = isPlaying ? '⏸' : '▶';
         }
 
-        updateVolumeUI();
-
-        // Scroll
-        const scrollBtn = document.getElementById('scrollTop');
-        window.addEventListener('scroll', () => {
-            scrollBtn.classList.toggle('visible', window.scrollY > 400);
+        audio.addEventListener('timeupdate', () => {
+            const percent = (audio.currentTime / audio.duration) * 100;
+            progressFill.style.width = percent + '%';
+            currentTimeEl.textContent = formatTime(audio.currentTime);
         });
 
-        // Прочитано
+        audio.addEventListener('loadedmetadata', () => {
+            durationEl.textContent = formatTime(audio.duration);
+        });
+
+        audio.addEventListener('ended', nextTrack);
+
+        // === ПРОЧИТАНО ===
         const FIC_ID = 'five-reasons';
-        const CHAPTER_NUM = '1';
+        const CHAPTER = '1';
 
         function getRead() {
             const data = JSON.parse(localStorage.getItem('chaptersRead') || '{}');
             return data[FIC_ID] || [];
         }
 
-        function saveRead(chapters) {
+        function saveRead(arr) {
             const data = JSON.parse(localStorage.getItem('chaptersRead') || '{}');
-            data[FIC_ID] = chapters;
+            data[FIC_ID] = arr;
             localStorage.setItem('chaptersRead', JSON.stringify(data));
         }
 
-        const markBtn = document.getElementById('mark-read');
-
-        function updateReadBtn() {
-            const read = getRead();
-            if (read.includes(CHAPTER_NUM)) {
-                markBtn.classList.add('read');
-                markBtn.textContent = '✓ Прочитано';
-            } else {
-                markBtn.classList.remove('read');
-                markBtn.textContent = 'Прочитано';
-            }
-        }
-
-        markBtn.addEventListener('click', () => {
+        function toggleRead() {
             let read = getRead();
-            if (read.includes(CHAPTER_NUM)) {
-                read = read.filter(c => c !== CHAPTER_NUM);
+            if (read.includes(CHAPTER)) {
+                read = read.filter(c => c !== CHAPTER);
             } else {
-                read.push(CHAPTER_NUM);
+                read.push(CHAPTER);
             }
             saveRead(read);
             updateReadBtn();
-        });
+        }
+
+        function updateReadBtn() {
+            const btn = document.getElementById('markRead');
+            const read = getRead();
+            if (read.includes(CHAPTER)) {
+                btn.classList.add('read');
+                btn.textContent = '✓ Прочитано';
+            } else {
+                btn.classList.remove('read');
+                btn.textContent = 'Прочитано';
+            }
+        }
 
         updateReadBtn();
+
+        // Scroll
+        const scrollBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            scrollBtn.classList.toggle('visible', window.scrollY > 400);
+        });
     </script>
 </body>
 </html>
