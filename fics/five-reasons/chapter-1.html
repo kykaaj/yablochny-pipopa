@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Глава 1: Будни официантов после 9 вечера — Пять причин</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>Глава 1 — Пять причин, почему я сплю с ножом</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,62 +14,65 @@
 
         :root {
             --black: #0a0a0a;
-            --black-light: #111;
-            --black-card: #18181c;
-            --pink: #e8a0b4;
-            --pink-light: #f0b8c8;
-            --pink-dark: #c4889a;
-            --cream: #faf5f7;
-            --text: #e8e4e6;
-            --text-muted: #9a9098;
+            --black-light: #0e0e10;
+            --black-card: #141418;
+            --pink: #d4a0b0;
+            --pink-light: #e8c4d0;
+            --pink-dark: #b8889a;
+            --pink-glow: rgba(212, 160, 176, 0.1);
+            --cream: #f8f4f5;
+            --text: #e0dada;
+            --text-soft: #c8c0c2;
+            --text-muted: #8a8085;
+            --dialogue: #d8c8c0;
         }
 
-        *, *::before, *::after {
-            cursor: none !important;
-        }
-
-        .cursor, .cursor-follower {
-            position: fixed;
-            pointer-events: none;
-            z-index: 10000;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            transform: translate(-50%, -50%);
-        }
-
-        .cursor.loaded, .cursor-follower.loaded {
-            opacity: 1;
-        }
+        /* КУРСОР */
+        *, *::before, *::after { cursor: none !important; }
 
         .cursor {
-            width: 8px;
-            height: 8px;
+            position: fixed;
+            width: 6px;
+            height: 6px;
             background: var(--pink);
             border-radius: 50%;
-            mix-blend-mode: difference;
+            pointer-events: none;
+            z-index: 10001;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.3s;
         }
+
+        .cursor.loaded { opacity: 1; }
 
         .cursor-follower {
-            width: 35px;
-            height: 35px;
-            border: 1px solid var(--pink);
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(212, 160, 176, 0.5);
             border-radius: 50%;
-            transition: opacity 0.3s, width 0.2s, height 0.2s, background 0.2s;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background 0.3s, opacity 0.3s;
+            opacity: 0;
         }
 
+        .cursor-follower.loaded { opacity: 1; }
         .cursor-follower.hover {
-            width: 50px;
-            height: 50px;
-            background: rgba(232, 160, 180, 0.1);
+            width: 55px;
+            height: 55px;
+            background: rgba(212, 160, 176, 0.08);
         }
 
+        /* BODY */
         body {
             font-family: 'Cormorant Garamond', serif;
             background: var(--black);
             color: var(--text);
             min-height: 100vh;
-            line-height: 1.8;
-            font-size: 19px;
+            font-size: 22px;
+            line-height: 2;
         }
 
         body::before {
@@ -79,35 +82,354 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: radial-gradient(rgba(232, 160, 180, 0.025) 1px, transparent 1px);
-            background-size: 25px 25px;
+            background:
+                radial-gradient(ellipse at 30% 0%, rgba(212, 160, 176, 0.02) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 100%, rgba(212, 160, 176, 0.02) 0%, transparent 50%);
             pointer-events: none;
         }
 
-        .container {
-            max-width: 850px;
-            margin: 0 auto;
-            padding: 50px 35px 100px;
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(rgba(212, 160, 176, 0.02) 1px, transparent 1px);
+            background-size: 35px 35px;
+            pointer-events: none;
         }
 
-        /* Кнопка наверх */
+        /* КОНТЕЙНЕР */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 50px 120px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* НАВИГАЦИЯ */
+        .nav-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0 40px;
+            border-bottom: 1px solid rgba(212, 160, 176, 0.1);
+            margin-bottom: 60px;
+            font-family: 'Raleway', sans-serif;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-top a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-top a:hover {
+            color: var(--pink);
+        }
+
+        .nav-center {
+            color: var(--pink);
+            font-size: 0.85rem;
+        }
+
+        /* ЗАГОЛОВОК ГЛАВЫ */
+        .chapter-header {
+            text-align: center;
+            margin-bottom: 70px;
+            position: relative;
+        }
+
+        .chapter-label {
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--pink);
+            margin-bottom: 20px;
+        }
+
+        .chapter-number {
+            font-size: 6rem;
+            font-weight: 300;
+            color: var(--cream);
+            line-height: 1;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .chapter-title {
+            font-size: 2.2rem;
+            font-weight: 500;
+            font-style: italic;
+            color: var(--cream);
+            margin-bottom: 15px;
+        }
+
+        .chapter-date {
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        .chapter-ornament {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .ornament-line {
+            width: 80px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--pink), transparent);
+        }
+
+        .ornament-diamond {
+            width: 10px;
+            height: 10px;
+            border: 1px solid var(--pink);
+            transform: rotate(45deg);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; transform: rotate(45deg) scale(1); }
+            50% { opacity: 1; transform: rotate(45deg) scale(1.1); }
+        }
+
+        /* ПРИМЕЧАНИЯ АВТОРА */
+        .author-note {
+            background: var(--black-card);
+            border: 1px solid rgba(212, 160, 176, 0.1);
+            padding: 35px 40px;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .author-note::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--pink);
+        }
+
+        .author-note-label {
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--pink);
+            margin-bottom: 20px;
+        }
+
+        .author-note-text {
+            color: var(--text-soft);
+            font-size: 1.1rem;
+            line-height: 1.9;
+        }
+
+        /* МУЗЫКА */
+        .music-box {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px 30px;
+            background: var(--black-light);
+            border: 1px solid rgba(212, 160, 176, 0.08);
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+        }
+
+        .music-icon {
+            font-size: 1.5rem;
+        }
+
+        .music-label {
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--pink);
+        }
+
+        .music-tracks {
+            flex: 1;
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* ТЕКСТ ГЛАВЫ */
+        .chapter-text {
+            color: var(--text);
+        }
+
+        .chapter-text p {
+            margin-bottom: 1.8em;
+            text-indent: 2em;
+        }
+
+        .chapter-text p:first-of-type {
+            text-indent: 0;
+        }
+
+        /* Буквица */
+        .chapter-text p:first-of-type::first-letter {
+            float: left;
+            font-size: 5rem;
+            line-height: 0.8;
+            padding-right: 15px;
+            padding-top: 5px;
+            color: var(--pink);
+            font-weight: 400;
+        }
+
+        /* ДИАЛОГИ - ВЫДЕЛЕНЫ! */
+        .chapter-text p.dialogue {
+            text-indent: 0;
+            padding-left: 2em;
+            border-left: 2px solid rgba(212, 160, 176, 0.3);
+            color: var(--dialogue);
+            font-style: normal;
+            margin-left: 0;
+            background: linear-gradient(90deg, rgba(212, 160, 176, 0.03), transparent);
+        }
+
+        /* МЫСЛИ */
+        .chapter-text p.thought {
+            text-indent: 0;
+            font-style: italic;
+            color: var(--text-muted);
+            padding-left: 2em;
+            position: relative;
+        }
+
+        .chapter-text p.thought::before {
+            content: '«';
+            position: absolute;
+            left: 0.5em;
+            color: var(--pink);
+            opacity: 0.5;
+        }
+
+        /* РАЗДЕЛИТЕЛЬ СЦЕН */
+        .scene-break {
+            text-align: center;
+            margin: 3em 0;
+            font-size: 1.5rem;
+            letter-spacing: 15px;
+            color: var(--pink);
+            opacity: 0.5;
+        }
+
+        /* ПРИМЕЧАНИЯ В КОНЦЕ */
+        .end-notes {
+            background: var(--black-card);
+            border: 1px solid rgba(212, 160, 176, 0.1);
+            padding: 35px 40px;
+            margin-top: 70px;
+            position: relative;
+        }
+
+        .end-notes::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--pink);
+        }
+
+        /* НАВИГАЦИЯ ВНИЗУ */
+        .nav-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 70px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(212, 160, 176, 0.1);
+            font-family: 'Raleway', sans-serif;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 25px;
+            background: transparent;
+            border: 1px solid rgba(212, 160, 176, 0.3);
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-btn:hover {
+            border-color: var(--pink);
+            color: var(--pink);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.disabled {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .nav-btn.primary {
+            background: var(--pink);
+            border-color: var(--pink);
+            color: var(--black);
+        }
+
+        .nav-btn.primary:hover {
+            background: var(--pink-light);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.read-btn.marked {
+            background: rgba(120, 200, 152, 0.2);
+            border-color: #78c898;
+            color: #78c898;
+        }
+
+        /* КНОПКА НАВЕРХ */
         .scroll-top {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 45px;
-            height: 45px;
+            bottom: 40px;
+            right: 40px;
+            width: 50px;
+            height: 50px;
             background: var(--black-card);
             border: 1px solid var(--pink);
             color: var(--pink);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             text-decoration: none;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
             z-index: 99;
         }
 
@@ -121,326 +443,79 @@
             color: var(--black);
         }
 
-        /* Навигация верхняя */
-        .nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(232, 160, 180, 0.12);
-            font-family: 'Raleway', sans-serif;
-            flex-wrap: wrap;
-            gap: 15px;
+        /* ПРОГРЕСС ЧТЕНИЯ */
+        .reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--pink-dark), var(--pink), var(--pink-light));
+            z-index: 1000;
+            transition: width 0.1s;
         }
 
-        .nav a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            transition: color 0.3s;
-        }
-
-        .nav a:hover {
-            color: var(--pink);
-        }
-
-        .nav-center {
-            color: var(--pink);
-            font-size: 0.9rem;
-        }
-
-        /* Заголовок главы */
-        .chapter-header {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .chapter-label {
-            font-family: 'Raleway', sans-serif;
-            font-size: 0.8rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--pink);
-            margin-bottom: 10px;
-        }
-
-        .chapter-number {
-            font-size: 4rem;
-            font-weight: 300;
-            color: var(--cream);
-            line-height: 1;
-            margin-bottom: 15px;
-        }
-
-        .chapter-title {
-            font-size: 1.8rem;
-            font-weight: 500;
-            color: var(--cream);
-            font-style: italic;
-            margin-bottom: 10px;
-        }
-
-        .chapter-date {
-            font-family: 'Raleway', sans-serif;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 20px;
-        }
-
-        .chapter-divider {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        .chapter-divider span {
-            width: 50px;
-            height: 1px;
-            background: var(--pink);
-        }
-
-        .chapter-divider-dot {
-            width: 6px;
-            height: 6px;
-            border: 1px solid var(--pink);
-            transform: rotate(45deg);
-        }
-
-        /* Примечания автора */
-        .author-notes {
-            background: var(--black-card);
-            border: 1px solid rgba(232, 160, 180, 0.1);
-            padding: 25px;
-            margin-bottom: 40px;
-        }
-
-        .author-notes-title {
-            font-family: 'Raleway', sans-serif;
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--pink);
-            margin-bottom: 15px;
-        }
-
-        .author-notes-content {
-            color: var(--text-muted);
-            font-size: 1rem;
-            line-height: 1.8;
-        }
-
-        /* Мини-плеер */
-        .music-section {
-            background: var(--black-light);
-            border: 1px solid rgba(232, 160, 180, 0.1);
-            padding: 15px 20px;
-            margin-bottom: 40px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .music-label {
-            font-family: 'Raleway', sans-serif;
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--pink);
-        }
-
-        .music-list {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            flex: 1;
-        }
-
-        .music-toggle {
-            background: transparent;
-            border: 1px solid var(--pink);
-            color: var(--pink);
-            padding: 8px 15px;
-            font-size: 0.75rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .music-toggle:hover {
-            background: var(--pink);
-            color: var(--black);
-        }
-
-        /* Текст главы */
-        .chapter-content {
-            color: var(--text);
-        }
-
-        .chapter-content p {
-            margin-bottom: 1.5em;
-            text-indent: 1.5em;
-        }
-
-        .chapter-content p:first-of-type {
-            text-indent: 0;
-        }
-
-        .chapter-content p:first-of-type::first-letter {
-            float: left;
-            font-size: 4rem;
-            line-height: 0.85;
-            padding-right: 12px;
-            color: var(--pink);
-            font-weight: 500;
-        }
-
-        /* Мысли персонажа */
-        .thought {
-            font-style: italic;
-            color: var(--text-muted);
-            padding-left: 1.5em;
-        }
-
-        /* Диалоги */
-        .dialogue {
-            text-indent: 0 !important;
-        }
-
-        /* Разделитель сцен */
-        .scene-break {
-            text-align: center;
-            margin: 2.5em 0;
-            color: var(--pink);
-            font-size: 1.2rem;
-            letter-spacing: 8px;
-        }
-
-        /* Навигация внизу */
-        .chapter-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 60px;
-            padding-top: 30px;
-            border-top: 1px solid rgba(232, 160, 180, 0.12);
-            font-family: 'Raleway', sans-serif;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .chapter-nav a, .chapter-nav button {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            padding: 12px 20px;
-            border: 1px solid rgba(232, 160, 180, 0.2);
-            background: transparent;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .chapter-nav a:hover, .chapter-nav button:hover {
-            border-color: var(--pink);
-            color: var(--pink);
-        }
-
-        .chapter-nav a.disabled {
-            opacity: 0.3;
-            pointer-events: none;
-        }
-
-        .mark-read-btn.read {
-            background: var(--pink);
-            color: var(--black);
-            border-color: var(--pink);
-        }
-
-        .nav-to-chapters {
-            background: var(--pink) !important;
-            color: var(--black) !important;
-            border-color: var(--pink) !important;
-        }
-
-        /* Примечания в конце */
-        .end-notes {
-            background: var(--black-card);
-            border: 1px solid rgba(232, 160, 180, 0.1);
-            padding: 25px;
-            margin-top: 50px;
-        }
-
-        /* Адаптив */
+        /* АДАПТИВ */
         @media (max-width: 768px) {
             body {
-                font-size: 17px;
-                line-height: 1.75;
+                font-size: 19px;
+                line-height: 1.9;
             }
 
             .container {
-                padding: 35px 20px 80px;
-            }
-
-            .chapter-content p {
-                text-indent: 1em;
+                padding: 40px 25px 100px;
             }
 
             .chapter-number {
-                font-size: 3rem;
+                font-size: 4rem;
             }
 
             .chapter-title {
-                font-size: 1.4rem;
+                font-size: 1.6rem;
             }
 
-            .chapter-nav {
+            .chapter-text p:first-of-type::first-letter {
+                font-size: 3.5rem;
+            }
+
+            .nav-bottom {
                 flex-direction: column;
             }
 
-            .chapter-nav a, .chapter-nav button {
+            .nav-btn {
                 width: 100%;
                 justify-content: center;
             }
 
             .scroll-top {
                 bottom: 20px;
-                left: 20px;
-                right: auto;
-                width: 40px;
-                height: 40px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
             }
 
-            .music-section {
-                flex-direction: column;
-                align-items: flex-start;
+            .author-note, .end-notes {
+                padding: 25px 30px;
             }
         }
 
-        ::-webkit-scrollbar { width: 8px; }
+        /* СКРОЛЛБАР */
+        ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: var(--black); }
-        ::-webkit-scrollbar-thumb { background: var(--pink-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--pink-dark); border-radius: 3px; }
 
         html { scroll-behavior: smooth; }
     </style>
 </head>
 <body>
+    <div class="reading-progress" id="progress"></div>
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
-
     <a href="#top" class="scroll-top" id="scrollTop">↑</a>
 
     <div class="container" id="top">
-        <nav class="nav">
-            <a href="../five-reasons.html">← Оглавление</a>
+        <nav class="nav-top">
+            <a href="../five-reasons.html">← К оглавлению</a>
             <span class="nav-center">Глава 1 из 6</span>
             <a href="chapter-2.html">Глава 2 →</a>
         </nav>
@@ -450,32 +525,30 @@
             <div class="chapter-number">I</div>
             <h1 class="chapter-title">Будни официантов после 9 вечера</h1>
             <div class="chapter-date">30 сентября 2025 г., 02:21</div>
-            <div class="chapter-divider">
-                <span></span>
-                <div class="chapter-divider-dot"></div>
-                <span></span>
+            <div class="chapter-ornament">
+                <div class="ornament-line"></div>
+                <div class="ornament-diamond"></div>
+                <div class="ornament-line"></div>
             </div>
         </header>
 
-        <!-- Примечания в начале -->
-        <div class="author-notes">
-            <div class="author-notes-title">Примечания автора</div>
-            <div class="author-notes-content">
+        <div class="author-note">
+            <div class="author-note-label">Примечания автора</div>
+            <div class="author-note-text">
                 Мои прекрасные, я здесь с очень спонтанной работой, которую я начала писать еще года два назад и так и не выложила. Это был период моей максимальной фикрайтерской активности и, перечитав эти две главы и подправив их чуть-чуть, я поняла, что это нужно выпускать. Это не будет серьезная или очень глубокая работа, но здесь точно будет юмор, разгрузка от тяжелых будней и небольшой флер Пошлой Молли) в общем, приятного всем прочтения! 💞
             </div>
         </div>
 
-        <!-- Музыка -->
-        <div class="music-section">
-            <span class="music-label">🎵 Песенки:</span>
-            <span class="music-list">Пошлая молли — Порнхаб крисмас клаб · Twisted sister — Oh come all ye faithful</span>
-            <button class="music-toggle" onclick="alert('Здесь можно добавить плеер!')">▶ Плеер</button>
+        <div class="music-box">
+            <span class="music-icon">🎵</span>
+            <span class="music-label">Песенки:</span>
+            <span class="music-tracks">Пошлая молли — Порнхаб крисмас клаб · Twisted sister — Oh come all ye faithful</span>
         </div>
 
-        <article class="chapter-content">
+        <article class="chapter-text">
             <p>В темноте осеннего прохладного вечера, рассекаемой лишь еле-еле горящими огнями уличных фонарей, появлялись и растворялись человеческие фигуры. Удивительным для одиноких людей стало бы то, что в такой поздний час (коим окрестить десять вечера было бы глупо, но парень, почти засыпающий за рабочей сменой, так не думал) некоторые прохожие все еще наводили уличную суету.</p>
 
-            <p class="thought">«Расходились тут, блин, только перед глазами маячат. Нет чтоб спать перед работой, так нет же, ходят выглядывают чето. Хотите зайти— так зайдите. Нет, блять, смотрят в окна, смеются и проходят. Идиоты…»</p>
+            <p class="thought">Расходились тут, блин, только перед глазами маячат. Нет чтоб спать перед работой, так нет же, ходят выглядывают чето. Хотите зайти— так зайдите. Нет, блять, смотрят в окна, смеются и проходят. Идиоты…</p>
 
             <p>Из очень глубоких философских мыслей молодого официанта вывел привычный жест от очередного посетителя. Скарамучча тут же натянул на себя притворную улыбку, коей ему по статусу обслуживающего персонала нужно было одаривать всех людей, заходящих в заведение.</p>
 
@@ -489,7 +562,7 @@
 
             <p>Скарамучча молча ждал, когда ему объяснят, что к чему. Его крайне раздражал факт того, что человек не просто хотел пожаловаться, а еще и всем своим видом пытался демонстрировать превосходство.</p>
 
-            <p class="thought">«Ну ты вообще говорить собираешься, падла ты такая? Я, блять, тут не интерьер украшаю»</p>
+            <p class="thought">Ну ты вообще говорить собираешься, падла ты такая? Я, блять, тут не интерьер украшаю</p>
 
             <p>Сдерживать злобу от этих взглядов было невыносимо сложно. Скарамучча искренне не понимал: этот еблан правда думал, что официант силой мысли поймет, что не так с блюдом, которое он даже не готовил? Парень обязательно запишется на битву экстрасенсов, но только после того, как отмотает срок за убийство надоедливого гостя.</p>
 
@@ -503,13 +576,13 @@
 
             <p class="dialogue">— Вы думаете, что тартар из говядины выглядит вот так?- и снова этот взгляд, по которому вновь, видимо, нужно было догадаться, о чем толкует гость.</p>
 
-            <p class="thought">«Мне тебе таро разложить, дорогой мой? Че ты хочешь от меня? Тартар как тартар».</p>
+            <p class="thought">Мне тебе таро разложить, дорогой мой? Че ты хочешь от меня? Тартар как тартар</p>
 
             <p class="dialogue">— Тартар из говядины выглядит именно так,- подтвердил Скарамучча, кивая и взглядом обращаясь ко второй официантке, которая как раз относила заказ недалеко от парня.</p>
 
             <p class="dialogue">— Извините,- мужчина поправил салфетку на шее, усмехаясь,- но если это французский тартар из говядины, то у меня есть уйма вопросов к вашему заведению.</p>
 
-            <p class="thought">«Боже, дай мне сил и я в тебя уверую…»</p>
+            <p class="thought">Боже, дай мне сил и я в тебя уверую…</p>
 
             <p class="dialogue">— Простите, но блюда готовлю не я. Если есть какие-то вопросы по блюду, то я могу позвать администратора,- не выдерживая уже этой пытки, процедил парень, когда к нему подбежала коллега.</p>
 
@@ -597,11 +670,11 @@
 
             <p>Скарамучча прищурил глаза, чтобы хоть чуть-чуть сфокусировать зрение.</p>
 
-            <p class="thought">«"Вон тебя подзывают". Где блин?»</p>
+            <p class="thought">«Вон тебя подзывают». Где блин?</p>
 
             <p>Парень внимательно вглядывался и лишь спустя пару секунд увидел белую, как снег, руку, которая махала ему в дружелюбном жесте.</p>
 
-            <p class="thought">«Да че всем, блять, сегодня от меня надо?…»</p>
+            <p class="thought">Да че всем, блять, сегодня от меня надо?…</p>
 
             <p class="dialogue">— Я могу чем-то помочь?- поинтересовался Скарамучча, еле сдерживая накатившую агрессию.</p>
 
@@ -628,21 +701,20 @@
             <p>Впрочем, тогда, когда Скарамучча не злился, а Тарталья не пытался его подколоть, из них получался неплохой дуэт. Так считали все остальные работники ресторана, которым пусть и не удалось также искусно сыграться с характером Скарамуччи (потому что обуздать его точно было невозможно), зато удалось заметить, что коротыш точно не хотел вылететь с работы. А это неплохо играло на руку, ведь, в целом, их интересы были в большинстве своем схожи. Так и помогали друг друга. Да, иногда через силу, да, иногда со стиснутыми зубами, да, иногда желая друг другу горения в адском пламени, но помогали, а это было главным.</p>
         </article>
 
-        <!-- Примечания в конце -->
         <div class="end-notes">
-            <div class="author-notes-title">Примечания</div>
-            <div class="author-notes-content">
+            <div class="author-note-label">Примечания</div>
+            <div class="author-note-text">
                 Вот такое вот начало… куда меня дальше занесет с этой работой непонятно, но я постараюсь продолжать и ее, и предыдущий фанфик. Но я могу с уверенностью сказать, что конкретно эта работа меня не просто разгружает. Она возвращает меня в мой 22 год… а там для меня был прайм фанфиков по кадзускарам 🙏<br><br>
                 Буду очень и очень рада вашим отзывам! Очень хочется узнать, что вы думаете по поводу этой работы. Как вы можете заметить, в ней присутствует стереотипно… специфическое представление о характере Скарамуччи, но здесь я смешала его характер как члена фатуи и просто человека, который задолбался работать и уже не ждет ничего хорошего от жизни 😅<br><br>
                 Всех люблю и всем хорошего настроения, берегите себя! 💞
             </div>
         </div>
 
-        <nav class="chapter-nav">
-            <a href="#" class="disabled">← Предыдущая</a>
-            <a href="../five-reasons.html" class="nav-to-chapters">📑 К главам</a>
-            <button class="mark-read-btn" id="mark-read">Прочитано</button>
-            <a href="chapter-2.html">Следующая →</a>
+        <nav class="nav-bottom">
+            <a href="#" class="nav-btn disabled">← Предыдущая</a>
+            <a href="../five-reasons.html" class="nav-btn primary">📑 К главам</a>
+            <button class="nav-btn read-btn" id="markRead">✓ Прочитано</button>
+            <a href="chapter-2.html" class="nav-btn">Следующая →</a>
         </nav>
     </div>
 
@@ -650,29 +722,29 @@
         // Курсор
         const cursor = document.querySelector('.cursor');
         const follower = document.querySelector('.cursor-follower');
-        let mouseX = 0, mouseY = 0;
-        let followerX = 0, followerY = 0;
+        let mx = 0, my = 0, fx = 0, fy = 0;
 
         window.addEventListener('load', () => {
-            cursor.classList.add('loaded');
-            follower.classList.add('loaded');
+            setTimeout(() => {
+                cursor.classList.add('loaded');
+                follower.classList.add('loaded');
+            }, 100);
         });
 
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            cursor.style.left = mouseX + 'px';
-            cursor.style.top = mouseY + 'px';
+        document.addEventListener('mousemove', e => {
+            mx = e.clientX; my = e.clientY;
+            cursor.style.left = mx + 'px';
+            cursor.style.top = my + 'px';
         });
 
-        function animateFollower() {
-            followerX += (mouseX - followerX) * 0.15;
-            followerY += (mouseY - followerY) * 0.15;
-            follower.style.left = followerX + 'px';
-            follower.style.top = followerY + 'px';
-            requestAnimationFrame(animateFollower);
+        function animateF() {
+            fx += (mx - fx) * 0.12;
+            fy += (my - fy) * 0.12;
+            follower.style.left = fx + 'px';
+            follower.style.top = fy + 'px';
+            requestAnimationFrame(animateF);
         }
-        animateFollower();
+        animateF();
 
         document.querySelectorAll('a, button').forEach(el => {
             el.addEventListener('mouseenter', () => follower.classList.add('hover'));
@@ -682,46 +754,49 @@
         // Кнопка наверх
         const scrollBtn = document.getElementById('scrollTop');
         window.addEventListener('scroll', () => {
-            scrollBtn.classList.toggle('visible', window.scrollY > 300);
+            scrollBtn.classList.toggle('visible', window.scrollY > 400);
+        });
+
+        // Прогресс чтения
+        const progress = document.getElementById('progress');
+        window.addEventListener('scroll', () => {
+            const winH = window.innerHeight;
+            const docH = document.documentElement.scrollHeight - winH;
+            const scrolled = (window.scrollY / docH) * 100;
+            progress.style.width = scrolled + '%';
         });
 
         // Система прочитанного
-        const FIC_ID = 'five-reasons';
-        const CHAPTER_NUM = '1';
-        const TOTAL = 6;
+        const FIC = 'five-reasons';
+        const CH = '1';
+        const btn = document.getElementById('markRead');
 
         function getRead() {
-            const data = JSON.parse(localStorage.getItem('chaptersRead') || '{}');
-            return data[FIC_ID] || [];
+            const d = JSON.parse(localStorage.getItem('chaptersRead') || '{}');
+            return d[FIC] || [];
         }
 
-        function saveRead(chapters) {
-            const data = JSON.parse(localStorage.getItem('chaptersRead') || '{}');
-            data[FIC_ID] = chapters;
-            localStorage.setItem('chaptersRead', JSON.stringify(data));
+        function saveRead(arr) {
+            const d = JSON.parse(localStorage.getItem('chaptersRead') || '{}');
+            d[FIC] = arr;
+            localStorage.setItem('chaptersRead', JSON.stringify(d));
         }
-
-        const btn = document.getElementById('mark-read');
 
         function updateBtn() {
-            const read = getRead();
-            if (read.includes(CHAPTER_NUM)) {
-                btn.classList.add('read');
+            if (getRead().includes(CH)) {
+                btn.classList.add('marked');
                 btn.textContent = '✓ Прочитано';
             } else {
-                btn.classList.remove('read');
+                btn.classList.remove('marked');
                 btn.textContent = 'Прочитано';
             }
         }
 
         btn.addEventListener('click', () => {
-            let read = getRead();
-            if (read.includes(CHAPTER_NUM)) {
-                read = read.filter(c => c !== CHAPTER_NUM);
-            } else {
-                read.push(CHAPTER_NUM);
-            }
-            saveRead(read);
+            let r = getRead();
+            if (r.includes(CH)) r = r.filter(c => c !== CH);
+            else r.push(CH);
+            saveRead(r);
             updateBtn();
         });
 
