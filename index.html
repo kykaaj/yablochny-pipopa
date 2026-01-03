@@ -1,1958 +1,983 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <title>Фанфики Kris_mem_2222 — уютная читалка</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <!-- ШРИФТЫ -->
-  <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      /* Цвета — можно поменять под арты */
-      --bg-main: #050810;
-      --bg-card: rgba(10, 16, 30, 0.9);
-      --bg-card-alt: rgba(13, 21, 40, 0.9);
-      --accent: #f2c37b;
-      --accent-soft: rgba(242, 195, 123, 0.2);
-      --accent-strong: #f7d9a4;
-      --text-main: #e9edf5;
-      --text-muted: #9aa2ba;
-      --danger: #ff6b81;
-      --tag-bg: rgba(120, 150, 255, 0.12);
-      --tag-text: #d4ddff;
-      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.7);
-      --radius-lg: 18px;
-      --radius-md: 12px;
-      --radius-pill: 999px;
-      --blur-bg: 18px;
-      --transition-fast: 0.18s ease-out;
-      --transition-med: 0.3s ease-out;
-      --header-height: 64px;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html, body {
-      height: 100%;
-    }
-
-    body {
-      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      color: var(--text-main);
-      background: radial-gradient(circle at 0% 0%, #101631 0, #050810 45%, #020309 100%);
-      overflow: hidden;
-    }
-
-    /* ===== Глобальный фон с частицами/волнами ===== */
-    .bg-layer {
-      position: fixed;
-      inset: 0;
-      overflow: hidden;
-      z-index: -2;
-      background:
-        radial-gradient(circle at 10% 10%, rgba(167, 209, 255, 0.14) 0, transparent 45%),
-        radial-gradient(circle at 90% 80%, rgba(255, 209, 170, 0.11) 0, transparent 50%);
-    }
-
-    .bg-orb {
-      position: absolute;
-      width: 420px;
-      height: 420px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.85), rgba(158, 207, 255, 0.1));
-      opacity: 0.28;
-      filter: blur(2px);
-      mix-blend-mode: screen;
-      animation: floatOrb 28s infinite alternate ease-in-out;
-    }
-
-    .bg-orb.orb-1 { top: -120px; left: -80px; animation-delay: -4s; }
-    .bg-orb.orb-2 { bottom: -160px; right: -40px; animation-delay: -10s; width: 500px; height: 500px; opacity: 0.22; }
-
-    @keyframes floatOrb {
-      0% { transform: translate3d(0,0,0) scale(1); }
-      50% { transform: translate3d(40px, 30px, 0) scale(1.07); }
-      100% { transform: translate3d(-25px, -35px, 0) scale(0.96); }
-    }
-
-    .bg-lines {
-      position: absolute;
-      inset: -20%;
-      background-image:
-        linear-gradient(120deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-        linear-gradient(300deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-      background-size: 120px 120px;
-      opacity: 0.45;
-      mix-blend-mode: soft-light;
-      animation: moveLines 40s linear infinite;
-    }
-
-    @keyframes moveLines {
-      from { transform: translate3d(0, 0, 0); }
-      to { transform: translate3d(-60px, -40px, 0); }
-    }
-
-    /* Маленькие «звёздочки» */
-    .bg-stars {
-      position: absolute;
-      inset: 0;
-      background-image:
-        radial-gradient(2px 2px at 20% 30%, rgba(255, 255, 255, 0.65), transparent),
-        radial-gradient(2px 2px at 78% 18%, rgba(255, 255, 255, 0.5), transparent),
-        radial-gradient(1.5px 1.5px at 40% 82%, rgba(255, 255, 255, 0.4), transparent),
-        radial-gradient(1.5px 1.5px at 64% 55%, rgba(255, 255, 255, 0.5), transparent);
-      opacity: 0.7;
-      animation: twinkle 8s ease-in-out infinite;
-    }
-
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.4; }
-      50% { opacity: 0.9; }
-    }
-
-    /* ===== Layout ===== */
-    .app-shell {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-      max-width: 1240px;
-      margin: 0 auto;
-      padding: 10px 12px 14px;
-    }
-
-    @media (min-width: 768px) {
-      .app-shell {
-        padding: 16px 20px 20px;
-      }
-    }
-
-    /* ===== Верхняя панель (без огромной шапки) ===== */
-    .top-bar {
-      height: var(--header-height);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-radius: 999px;
-      padding: 6px 14px;
-      background: rgba(5, 8, 16, 0.85);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.65);
-      border: 1px solid rgba(242, 195, 123, 0.16);
-      gap: 10px;
-    }
-
-    .top-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 0;
-    }
-
-    /* Аватар автора */
-    .author-avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background-position: center;
-      background-size: cover;
-      background-repeat: no-repeat;
-      border: 2px solid rgba(242, 195, 123, 0.9);
-      box-shadow: 0 0 0 1px rgba(10, 16, 30, 0.9), 0 0 16px rgba(242, 195, 123, 0.45);
-      flex-shrink: 0;
-    }
-
-    /* ВОТ СЮДА вставишь ссылку на аватар автора */
-    .author-avatar {
-      background-image: url("avatar-placeholder.jpg"); /* ЗАМЕНИ на свой файл, например img/avatar.jpg */
-    }
-
-    .author-info {
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
-    }
-
-    .author-name {
-      font-family: "Marcellus", serif;
-      font-size: 15px;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--accent-strong);
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
-    }
-
-    .author-meta {
-      font-size: 12px;
-      color: var(--text-muted);
-      opacity: 0.9;
-    }
-
-    .top-actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .badge-pill {
-      border-radius: var(--radius-pill);
-      padding: 4px 10px;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      border: 1px solid rgba(242, 195, 123, 0.4);
-      color: var(--accent-strong);
-      background: radial-gradient(circle at 0 0, rgba(242, 195, 123, 0.22), transparent 52%);
-      backdrop-filter: blur(14px);
-      white-space: nowrap;
-    }
-
-    .progress-chip {
-      border-radius: var(--radius-pill);
-      padding: 4px 9px;
-      font-size: 11px;
-      color: var(--text-muted);
-      background: rgba(15, 23, 42, 0.95);
-      border: 1px solid rgba(118, 136, 210, 0.35);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .progress-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #7dd3fc, #a5b4fc);
-      box-shadow: 0 0 6px rgba(129, 140, 248, 0.9);
-    }
-
-    /* ===== Основной контент ===== */
-    .main-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 320px) minmax(0, 1.7fr);
-      gap: 16px;
-      margin-top: 14px;
-      height: calc(100vh - var(--header-height) - 40px);
-      min-height: 0;
-    }
-
-    @media (max-width: 880px) {
-      .main-layout {
-        grid-template-columns: 1fr;
-        grid-template-rows: minmax(260px, auto) minmax(0, 1.2fr);
-        height: auto;
-        max-height: none;
-      }
-
-      body {
-        overflow: auto;
-      }
-    }
-
-    /* ===== Панель списка фанфиков слева ===== */
-    .sidebar {
-      border-radius: var(--radius-lg);
-      background: linear-gradient(145deg, rgba(8, 13, 26, 0.96), rgba(10, 16, 32, 0.98));
-      backdrop-filter: blur(var(--blur-bg));
-      box-shadow: var(--shadow-soft);
-      border: 1px solid rgba(148, 163, 255, 0.22);
-      padding: 12px 12px 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      min-height: 0;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .sidebar::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 0 0, rgba(118, 169, 250, 0.22), transparent 58%);
-      opacity: 0.55;
-      pointer-events: none;
-    }
-
-    .sidebar-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .sidebar-title {
-      font-family: "Marcellus", serif;
-      font-size: 16px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--accent-strong);
-    }
-
-    .sidebar-subtitle {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    /* Поисковая строка / фильтр */
-    .search-row {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .search-input {
-      flex: 1;
-      border-radius: var(--radius-pill);
-      border: 1px solid rgba(148, 163, 255, 0.45);
-      background: rgba(4, 7, 20, 0.96);
-      color: var(--text-main);
-      font-size: 13px;
-      padding: 7px 28px 7px 26px;
-      outline: none;
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.8);
-    }
-
-    .search-input::placeholder {
-      color: rgba(148, 163, 255, 0.75);
-    }
-
-    .search-icon {
-      position: absolute;
-      left: 9px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 12px;
-      color: rgba(148, 163, 255, 0.85);
-      pointer-events: none;
-    }
-
-    .filter-chip {
-      font-size: 11px;
-      border-radius: var(--radius-pill);
-      padding: 4px 9px;
-      color: var(--text-muted);
-      background: rgba(15, 23, 42, 0.96);
-      border: 1px solid rgba(148, 163, 255, 0.4);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      white-space: nowrap;
-      transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
-    }
-
-    .filter-chip.active {
-      color: var(--accent-strong);
-      border-color: rgba(242, 195, 123, 0.9);
-      background: radial-gradient(circle at 0 0, rgba(242, 195, 123, 0.18), rgba(15, 23, 42, 0.98));
-      transform: translateY(-1px);
-    }
-
-    .filter-chip-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #f97316, #facc15);
-      box-shadow: 0 0 6px rgba(248, 250, 252, 0.6);
-    }
-
-    /* Список фанфиков */
-    .fanfic-list {
-      position: relative;
-      flex: 1;
-      min-height: 0;
-      padding-right: 4px;
-      margin-top: 6px;
-      z-index: 1;
-    }
-
-    .fanfic-list-scroll {
-      height: 100%;
-      overflow-y: auto;
-      padding-right: 2px;
-      scroll-behavior: smooth;
-    }
-
-    .fanfic-list-scroll::-webkit-scrollbar {
-      width: 6px;
-    }
-    .fanfic-list-scroll::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    .fanfic-list-scroll::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, rgba(148, 163, 255, 0.6), rgba(248, 250, 252, 0.35));
-      border-radius: 999px;
-    }
-
-    .fanfic-card {
-      border-radius: var(--radius-md);
-      background: radial-gradient(circle at 0 0, rgba(148, 163, 255, 0.26), rgba(15, 23, 42, 0.98));
-      border: 1px solid rgba(148, 163, 255, 0.6);
-      padding: 9px 10px;
-      margin-bottom: 7px;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      transform-origin: left center;
-      transition:
-        background var(--transition-med),
-        border-color var(--transition-med),
-        transform var(--transition-med),
-        box-shadow var(--transition-med),
-        opacity var(--transition-fast);
-    }
-
-    .fanfic-card:nth-child(even) {
-      background: radial-gradient(circle at 100% 0, rgba(250, 204, 21, 0.2), rgba(15, 23, 42, 0.97));
-      border-color: rgba(250, 204, 21, 0.4);
-    }
-
-    .fanfic-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(120deg, rgba(255, 255, 255, 0.16), transparent 60%);
-      opacity: 0;
-      transform: translateX(-30%);
-      transition: opacity 0.35s ease-out, transform 0.45s ease-out;
-      pointer-events: none;
-    }
-
-    .fanfic-card:hover::before {
-      opacity: 1;
-      transform: translateX(0%);
-    }
-
-    .fanfic-card:hover {
-      transform: translateX(3px) scale(1.01);
-      box-shadow: 0 14px 36px rgba(15, 23, 42, 0.9);
-      border-color: rgba(242, 195, 123, 0.9);
-    }
-
-    .fanfic-card.active {
-      background: radial-gradient(circle at 0 0, rgba(242, 195, 123, 0.24), rgba(7, 11, 22, 0.98));
-      border-color: rgba(242, 195, 123, 0.95);
-      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.9);
-    }
-
-    .fanfic-main-row {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .fanfic-left {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .fanfic-title {
-      font-family: "Marcellus", serif;
-      font-size: 14px;
-      line-height: 1.3;
-      margin-bottom: 4px;
-      color: #fefce8;
-    }
-
-    .fanfic-meta {
-      font-size: 11px;
-      color: var(--text-muted);
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      align-items: center;
-    }
-
-    .pill {
-      border-radius: var(--radius-pill);
-      padding: 2px 8px;
-      border: 1px solid rgba(148, 163, 255, 0.5);
-      background: rgba(15, 23, 42, 0.96);
-      font-size: 10px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #e5e7eb;
-      white-space: nowrap;
-    }
-
-    .pill.rating {
-      border-color: rgba(248, 113, 113, 0.8);
-      color: #fecaca;
-    }
-
-    .pill.status {
-      border-color: rgba(45, 212, 191, 0.8);
-      color: #a7f3d0;
-    }
-
-    .pill.fandom {
-      border-color: rgba(129, 140, 248, 0.9);
-      color: #c7d2fe;
-    }
-
-    .fanfic-right {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 4px;
-      flex-shrink: 0;
-    }
-
-    .stat-number {
-      font-size: 11px;
-      color: var(--accent-strong);
-    }
-
-    .stat-label {
-      font-size: 10px;
-      color: var(--text-muted);
-    }
-
-    .read-indicator {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 10px;
-      border-radius: var(--radius-pill);
-      padding: 2px 7px;
-      background: rgba(22, 163, 74, 0.12);
-      border: 1px solid rgba(74, 222, 128, 0.7);
-      color: #bbf7d0;
-      cursor: default;
-    }
-
-    .read-indicator-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #bbf7d0, #22c55e);
-      box-shadow: 0 0 6px rgba(22, 163, 74, 0.9);
-    }
-
-    .unread-indicator {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 40% 40%, #f97316, #facc15);
-      box-shadow: 0 0 9px rgba(250, 204, 21, 0.85);
-    }
-
-    .fanfic-tags-row {
-      margin-top: 6px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-      font-size: 10px;
-      color: var(--text-muted);
-    }
-
-    .tag-chip-small {
-      border-radius: var(--radius-pill);
-      padding: 2px 7px;
-      background: rgba(15, 23, 42, 0.94);
-      border: 1px solid rgba(148, 163, 255, 0.35);
-      color: var(--tag-text);
-      white-space: nowrap;
-    }
-
-    /* ===== Правая часть — зона чтения ===== */
-    .reader-panel {
-      border-radius: var(--radius-lg);
-      background:
-        linear-gradient(135deg, rgba(10, 16, 32, 0.98), rgba(8, 12, 24, 0.99)),
-        radial-gradient(circle at 100% 0, rgba(242, 195, 123, 0.16), transparent 55%);
-      backdrop-filter: blur(var(--blur-bg));
-      box-shadow: var(--shadow-soft);
-      border: 1px solid rgba(148, 163, 255, 0.2);
-      padding: 12px 14px 12px;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
-    }
-
-    .reader-panel::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 80% 0, rgba(242, 195, 123, 0.18), transparent 60%);
-      opacity: 0.7;
-      mix-blend-mode: soft-light;
-      pointer-events: none;
-    }
-
-    /* Место под фоновый арт справа (полупрозрачный) */
-    .reader-art-overlay {
-      position: absolute;
-      inset: 0;
-      background-position: center right;
-      background-size: contain;
-      background-repeat: no-repeat;
-      opacity: 0.14;
-      mix-blend-mode: screen;
-      pointer-events: none;
-    }
-
-    /* ВОТ СЮДА вставишь арт с Кадзухой/Скарой для фона читателя */
-    .reader-art-overlay {
-      background-image: url("art-placeholder-right.png"); /* замени на свой файл, например img/kazuha-scara-right.png */
-    }
-
-    .reader-header {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 10px;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-
-    .reader-title-block {
-      max-width: 100%;
-    }
-
-    .reader-title {
-      font-family: "Marcellus", serif;
-      font-size: 20px;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: #fefce8;
-      margin-bottom: 4px;
-    }
-
-    .reader-subtitle {
-      font-size: 13px;
-      color: var(--text-muted);
-    }
-
-    .reader-controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      align-items: center;
-    }
-
-    .btn {
-      border-radius: var(--radius-pill);
-      padding: 5px 10px;
-      font-size: 11px;
-      border: 1px solid rgba(148, 163, 255, 0.6);
-      background: rgba(8, 11, 24, 0.98);
-      color: var(--text-main);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
-    }
-
-    .btn:hover {
-      background: radial-gradient(circle at 0 0, rgba(148, 163, 255, 0.2), rgba(8, 11, 24, 0.98));
-      border-color: rgba(242, 195, 123, 0.8);
-      transform: translateY(-1px);
-      box-shadow: 0 0 12px rgba(148, 163, 255, 0.7);
-    }
-
-    .btn.primary {
-      background: linear-gradient(135deg, #4f46e5, #f97316);
-      border-color: rgba(248, 250, 252, 0.9);
-      color: #fefce8;
-      box-shadow: 0 0 16px rgba(248, 250, 252, 0.45);
-    }
-
-    .btn.primary:hover {
-      filter: brightness(1.05);
-    }
-
-    .btn-icon {
-      font-size: 12px;
-    }
-
-    .toggle-group {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .toggle-label {
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-
-    .toggle {
-      width: 32px;
-      height: 18px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 255, 0.7);
-      background: rgba(10, 16, 32, 0.98);
-      position: relative;
-      cursor: pointer;
-      flex-shrink: 0;
-    }
-
-    .toggle-knob {
-      position: absolute;
-      top: 1px;
-      left: 2px;
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #e5e7eb, #64748b);
-      box-shadow: 0 0 10px rgba(148, 163, 255, 0.75);
-      transition: transform var(--transition-fast), background var(--transition-fast);
-    }
-
-    .toggle.on .toggle-knob {
-      transform: translateX(12px);
-      background: radial-gradient(circle at 30% 20%, #bbf7d0, #22c55e);
-    }
-
-    /* Панель метаданных фанфика */
-    .meta-bar {
-      position: relative;
-      z-index: 1;
-      border-radius: var(--radius-md);
-      background: rgba(8, 11, 24, 0.94);
-      border: 1px solid rgba(148, 163, 255, 0.35);
-      padding: 7px 10px;
-      font-size: 11px;
-      color: var(--text-muted);
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px 10px;
-      align-items: center;
-      margin-bottom: 9px;
-    }
-
-    .meta-item {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      white-space: nowrap;
-    }
-
-    .meta-label {
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      font-size: 10px;
-      color: rgba(156, 163, 175, 0.95);
-    }
-
-    .meta-value {
-      color: #e5e7eb;
-    }
-
-    /* Основное поле чтения */
-    .reader-body-wrap {
-      position: relative;
-      z-index: 1;
-      flex: 1;
-      min-height: 0;
-      margin-top: 2px;
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      border: 1px solid rgba(30, 64, 175, 0.7);
-      background: radial-gradient(circle at 0 0, rgba(15, 23, 42, 0.98), rgba(2, 6, 23, 0.98));
-      display: flex;
-      flex-direction: column;
-    }
-
-    .reader-body-inner {
-      position: relative;
-      padding: 12px 14px 14px;
-      overflow-y: auto;
-      scroll-behavior: smooth;
-    }
-
-    .reader-body-inner::-webkit-scrollbar {
-      width: 7px;
-    }
-    .reader-body-inner::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    .reader-body-inner::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, rgba(148, 163, 255, 0.7), rgba(56, 189, 248, 0.7));
-      border-radius: 999px;
-    }
-
-    /* Фон внутри текста, можно потом сюда арт очень слабый положить, если захочешь */
-    .reader-body-inner::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-    }
-
-    .reader-text {
-      max-width: 720px;
-      margin: 0 auto;
-      font-size: 15px;
-      line-height: 1.7;
-      color: #e5e7eb;
-    }
-
-    body.serif .reader-text {
-      font-family: "Marcellus", serif;
-      letter-spacing: 0.01em;
-    }
-
-    .reader-text p {
-      margin-bottom: 10px;
-    }
-
-    .reader-text p:last-child {
-      margin-bottom: 0;
-    }
-
-    .reader-section-title {
-      font-family: "Marcellus", serif;
-      font-size: 13px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--accent-strong);
-      margin-bottom: 8px;
-    }
-
-    .reader-tags-block {
-      margin-top: 12px;
-      padding-top: 10px;
-      border-top: 1px dashed rgba(148, 163, 255, 0.45);
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      font-size: 11px;
-    }
-
-    .tag-pill {
-      border-radius: var(--radius-pill);
-      padding: 3px 8px;
-      border: 1px solid rgba(148, 163, 255, 0.45);
-      background: rgba(15, 23, 42, 0.95);
-      color: var(--tag-text);
-      white-space: nowrap;
-    }
-
-    .tag-pill.warn {
-      border-color: rgba(248, 113, 113, 0.8);
-      color: #fecaca;
-      background: rgba(127, 29, 29, 0.75);
-    }
-
-    /* Панель навигации по частям/страницам */
-    .reader-footer {
-      border-top: 1px solid rgba(30, 64, 175, 0.7);
-      background: radial-gradient(circle at 0 100%, rgba(15, 23, 42, 0.96), rgba(2, 6, 23, 0.98));
-      padding: 6px 10px 7px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-
-    .pager-buttons {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      flex-wrap: wrap;
-    }
-
-    .pager-btn {
-      border-radius: var(--radius-pill);
-      border: 1px solid rgba(148, 163, 255, 0.5);
-      padding: 2px 7px;
-      background: rgba(15, 23, 42, 0.95);
-      color: #e5e7eb;
-      cursor: pointer;
-      font-size: 11px;
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
-      transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
-    }
-
-    .pager-btn:hover {
-      background: radial-gradient(circle at 0 0, rgba(148, 163, 255, 0.35), rgba(15, 23, 42, 0.97));
-      border-color: rgba(242, 195, 123, 0.9);
-      transform: translateY(-1px);
-    }
-
-    .pager-btn.disabled {
-      opacity: 0.5;
-      pointer-events: none;
-    }
-
-    .pager-page-indicator {
-      font-size: 11px;
-      color: #e5e7eb;
-    }
-
-    /* Небольшой индикатор «прочитано до главы» */
-    .progress-info {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 10px;
-      color: var(--text-muted);
-    }
-
-    .progress-bar {
-      width: 72px;
-      height: 4px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      overflow: hidden;
-      border: 1px solid rgba(148, 163, 255, 0.55);
-    }
-
-    .progress-fill {
-      height: 100%;
-      width: 0%;
-      border-radius: 999px;
-      background: linear-gradient(90deg, #22c55e, #a3e635, #fef9c3);
-      transition: width 0.35s ease-out;
-    }
-
-    /* Для мобильных */
-    @media (max-width: 600px) {
-      .top-bar {
-        padding-inline: 10px;
-      }
-
-      .author-name {
-        font-size: 13px;
-      }
-
-      .author-meta {
-        font-size: 11px;
-      }
-
-      .badge-pill {
-        display: none;
-      }
-
-      .main-layout {
-        margin-top: 10px;
-      }
-
-      .reader-title {
-        font-size: 17px;
-      }
-
-      .reader-body-inner {
-        padding-inline: 10px;
-      }
-
-      .reader-text {
-        font-size: 14px;
-      }
-    }
-
-    /* Простенькая анимация появления текста при смене фанфика/страницы */
-    .fade-in {
-      animation: fadeIn 0.3s ease-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(4px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Фанфики Kris_mem_2222 ✨</title>
+
+    <style>
+        /* === ОСНОВНЫЕ СТИЛИ === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* === ИНТЕРАКТИВНЫЙ ФОН С ЧАСТИЦАМИ === */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        /* === АНИМИРОВАННЫЕ БЛОБЫ НА ФОНЕ === */
+        .blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.4;
+            animation: float 20s infinite ease-in-out;
+            z-index: -1;
+        }
+
+        .blob1 {
+            width: 400px;
+            height: 400px;
+            background: #ff6b6b;
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .blob2 {
+            width: 300px;
+            height: 300px;
+            background: #4ecdc4;
+            bottom: -50px;
+            right: -50px;
+            animation-delay: 5s;
+        }
+
+        .blob3 {
+            width: 350px;
+            height: 350px;
+            background: #ffe66d;
+            top: 50%;
+            left: 50%;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+
+        /* === КОНТЕЙНЕР === */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* === ШАПКА С АВТОРОМ === */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .author-section {
+            display: inline-flex;
+            align-items: center;
+            gap: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px 40px;
+            border-radius: 50px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .author-section:hover {
+            transform: translateY(-5px);
+        }
+
+        .author-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .author-info h1 {
+            font-size: 24px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+
+        .author-stats {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* === ФИЛЬТРЫ И ПОИСК === */
+        .controls {
+            margin-bottom: 30px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            animation: fadeIn 1s ease-out 0.3s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .search-box {
+            flex: 1;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            border: none;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+            transform: translateY(-2px);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .filter-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .filter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(0,0,0,0.15);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        /* === СЕТКА ФАНФИКОВ === */
+        .fanfics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        /* === КАРТОЧКА ФАНФИКА === */
+        .fanfic-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            animation: cardAppear 0.6s ease-out;
+            backdrop-filter: blur(10px);
+        }
+
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .fanfic-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .fanfic-card.read {
+            opacity: 0.7;
+        }
+
+        .read-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #4ecdc4;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            z-index: 2;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .card-header {
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .card-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .rating {
+            display: inline-block;
+            padding: 2px 8px;
+            background: #ff6b6b;
+            color: white;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .status.complete {
+            background: #4ecdc4;
+            color: white;
+        }
+
+        .status.ongoing {
+            background: #ffe66d;
+            color: #333;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .description {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            font-size: 14px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .tag {
+            padding: 4px 10px;
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            border-radius: 12px;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            background: #667eea;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .card-footer {
+            padding: 15px 20px;
+            background: rgba(102, 126, 234, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .read-btn {
+            padding: 10px 25px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .read-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .stats {
+            display: flex;
+            gap: 15px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        /* === ДЕКОРАТИВНЫЕ ЭЛЕМЕНТЫ === */
+        .floating-art {
+            position: fixed;
+            width: 150px;
+            height: 150px;
+            opacity: 0.1;
+            z-index: 0;
+            animation: floatArt 30s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        .art1 {
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .art2 {
+            top: 60%;
+            right: 5%;
+            animation-delay: 10s;
+        }
+
+        .art3 {
+            bottom: 10%;
+            left: 10%;
+            animation-delay: 20s;
+        }
+
+        @keyframes floatArt {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(50px, -30px) rotate(90deg); }
+            50% { transform: translate(-30px, 50px) rotate(180deg); }
+            75% { transform: translate(30px, 30px) rotate(270deg); }
+        }
+
+        /* === МОДАЛЬНОЕ ОКНО === */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 25px;
+            padding: 40px;
+            animation: slideUp 0.4s ease;
+            position: relative;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 30px;
+            height: 30px;
+            border: none;
+            background: #f0f0f0;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            background: #ff6b6b;
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        /* === АДАПТИВНОСТЬ === */
+        @media (max-width: 768px) {
+            .fanfics-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .search-box {
+                max-width: 100%;
+            }
+
+            .filter-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .author-section {
+                flex-direction: column;
+                padding: 20px;
+            }
+
+            .modal-content {
+                padding: 20px;
+            }
+        }
+
+        /* === СЧЕТЧИК ПРОЧИТАННОГО === */
+        .progress-bar {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 25px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 100;
+            animation: slideInRight 0.5s ease;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .progress-text {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            width: 200px;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill-inner {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
-  <!-- ФОН -->
-  <div class="bg-layer">
-    <div class="bg-lines"></div>
-    <div class="bg-orb orb-1"></div>
-    <div class="bg-orb orb-2"></div>
-    <div class="bg-stars"></div>
-  </div>
+    <!-- Интерактивный фон с частицами -->
+    <canvas id="particles-canvas"></canvas>
 
-  <div class="app-shell">
-    <!-- ВЕРХНЯЯ ПАНЕЛЬ -->
-    <header class="top-bar">
-      <div class="top-left">
-        <div class="author-avatar"></div>
-        <div class="author-info">
-          <div class="author-name">Kris_mem_2222</div>
-          <div class="author-meta">Фанфики по Genshin Impact · Кадзуха/Странник</div>
-        </div>
-      </div>
-      <div class="top-actions">
-        <span class="badge-pill">11 фанфиков · NC-17 / PG-13</span>
-        <div class="progress-chip">
-          <div class="progress-dot"></div>
-          <span id="read-count-label">0 / 11 прочитано</span>
-        </div>
-      </div>
-    </header>
+    <!-- Анимированные блобы -->
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
 
-    <!-- ОСНОВНОЙ КОНТЕНТ -->
-    <main class="main-layout">
-      <!-- ЛЕВАЯ КОЛОНКА: СПИСОК ФАНФИКОВ -->
-      <aside class="sidebar">
-        <div class="sidebar-header">
-          <div>
-            <div class="sidebar-title">Фанфики</div>
-            <div class="sidebar-subtitle">Выбери историю, чтобы начать читать</div>
-          </div>
-        </div>
+    <!-- Декоративные арты (тут можешь вставить свои картинки!) -->
+    <div class="floating-art art1">🌸</div>
+    <div class="floating-art art2">🍃</div>
+    <div class="floating-art art3">⭐</div>
 
-        <div class="search-row">
-          <div style="position:relative; flex:1;">
-            <span class="search-icon">⌕</span>
-            <input id="searchInput" type="text" class="search-input" placeholder="Поиск по названию, жанру, фэндому..." />
-          </div>
-          <button id="filterUnread" class="filter-chip">
-            <span class="filter-chip-dot"></span>
-            Непрочитанное
-          </button>
-        </div>
-
-        <div class="fanfic-list">
-          <div id="fanficList" class="fanfic-list-scroll">
-            <!-- Сюда JS положит карточки фанфиков -->
-          </div>
-        </div>
-      </aside>
-
-      <!-- ПРАВАЯ КОЛОНКА: ЧИТАЛКА -->
-      <section class="reader-panel">
-        <div class="reader-art-overlay"></div>
-
-        <header class="reader-header">
-          <div class="reader-title-block">
-            <h1 class="reader-title" id="readerTitle">Выбери фанфик слева</h1>
-            <div class="reader-subtitle" id="readerSubtitle">И он появится здесь в виде уютной читалки ♥</div>
-          </div>
-          <div class="reader-controls">
-            <button id="markReadBtn" class="btn primary" disabled>
-              <span class="btn-icon">★</span> Отметить как прочитанный
-            </button>
-            <div class="toggle-group">
-              <span class="toggle-label">Серийный шрифт</span>
-              <div id="fontToggle" class="toggle">
-                <div class="toggle-knob"></div>
-              </div>
+    <div class="container">
+        <!-- Шапка с информацией об авторе -->
+        <header class="header">
+            <div class="author-section">
+                <div class="author-avatar">K</div>
+                <div class="author-info">
+                    <h1>Kris_mem_2222</h1>
+                    <div class="author-stats">11 фанфиков • 1000+ страниц магии</div>
+                </div>
             </div>
-          </div>
         </header>
 
-        <div class="meta-bar" id="metaBar" style="display:none;">
-          <div class="meta-item">
-            <span class="meta-label">Рейтинг</span>
-            <span class="meta-value" id="metaRating"></span>
-          </div>
-          <div class="meta-item">
-            <span class="meta-label">Статус</span>
-            <span class="meta-value" id="metaStatus"></span>
-          </div>
-          <div class="meta-item">
-            <span class="meta-label">Размер</span>
-            <span class="meta-value" id="metaSize"></span>
-          </div>
-          <div class="meta-item">
-            <span class="meta-label" id="metaDateLabel">Обновление</span>
-            <span class="meta-value" id="metaDate"></span>
-          </div>
+        <!-- Поиск и фильтры -->
+        <div class="controls">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" placeholder="Найти фанфик...">
+            </div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">Все</button>
+                <button class="filter-btn" data-filter="complete">Завершённые</button>
+                <button class="filter-btn" data-filter="ongoing">В процессе</button>
+                <button class="filter-btn" data-filter="read">Прочитанные</button>
+            </div>
         </div>
 
-        <div class="reader-body-wrap">
-          <div id="readerBody" class="reader-body-inner">
-            <div class="reader-text fade-in" id="readerText">
-              <p>Выбери фанфик из списка слева. Ааанд вот здесь появится:</p>
-              <p>— его название;<br>
-                — описание и короткий отрывок;<br>
-                — теги и предупреждения;<br>
-                — и удобные кнопочки для перелистывания частей (как «страницы» внутри репозитория).</p>
-              <p>Браузер будет запоминать, что ты уже читала: прогресс по главам и какие фанфики отмечены как прочитанные — прямо в кэше (localStorage).</p>
-              <p>Попробуй кликнуть по любому названию слева!</p>
-            </div>
-          </div>
+        <!-- Сетка с фанфиками -->
+        <div class="fanfics-grid" id="fanficsGrid"></div>
+    </div>
 
-          <footer class="reader-footer">
-            <div class="pager-buttons">
-              <button id="prevPageBtn" class="pager-btn disabled">
-                ‹ Предыдущая часть
-              </button>
-              <span class="pager-page-indicator" id="pageIndicator">— / —</span>
-              <button id="nextPageBtn" class="pager-btn disabled">
-                Следующая часть ›
-              </button>
-            </div>
-            <div class="progress-info">
-              <span id="progressLabel">Прогресс: 0%</span>
-              <div class="progress-bar">
-                <div id="progressFill" class="progress-fill"></div>
-              </div>
-            </div>
-          </footer>
+    <!-- Прогресс чтения -->
+    <div class="progress-bar">
+        <div class="progress-text">Прочитано: <span id="readCount">0</span> из 11</div>
+        <div class="progress-fill">
+            <div class="progress-fill-inner" id="progressFill"></div>
         </div>
-      </section>
-    </main>
-  </div>
+    </div>
 
-  <script>
-    // ===== ДАННЫЕ О ФАНФИКАХ =====
-    // Смотри, всё в одном месте. Потом сможешь менять текст, если захочешь.
+    <!-- Модальное окно для чтения -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">✕</button>
+            <div id="modalContent"></div>
+        </div>
+    </div>
 
-    const fanfics = [
-      {
-        id: "knife",
-        title: "Пять причин, почему я сплю с ножом",
-        rating: "NC-17",
-        status: "В процессе",
-        fandom: "Genshin Impact",
-        pairing: "Кадзуха Каэдэхара/Странник",
-        size: "планируется Макси · 46 страниц · 15 458 слов · 6 частей",
-        dateLabel: "Обновление",
-        date: "03.01.2026",
-        genres: ["AU", "Hurt/Comfort", "Повседневность", "Романтика", "Флафф", "Юмор"],
-        warnings: [
-          "Алкоголь",
-          "Нецензурная лексика",
-          "ООС",
-          "Отклонения от канона",
-          "Проблемы доверия",
-          "Рейтинг за секс",
-          "Счастливый финал",
-          "Упоминания алкоголя",
-          "Упоминания курения"
-        ],
-        tags: ["Разница в возрасте"],
-        blurb: "Так и жил он с постоянной готовностью к двум вещам: сесть в тюрьму за чье-нибудь убийство или умереть от паранойи. Или просто жизнь официанта, которому впервые вместо просьбы переделать заказ поступило предложение сходить на свидание.",
-        parts: [
-          {
-            title: "Часть 1",
-            text: [
-              "Так и жил он с постоянной готовностью к двум вещам: сесть в тюрьму за чье-нибудь убийство или умереть от паранойи.",
-              "Жизнь официанта редко бывает спокойной, но в его личной версии вселенной тревога стала чем-то вроде постоянного фона. Каждый новый гость — как потенциальная угроза, каждый странный взгляд — как повод еще раз оглянуться через плечо.",
-              "А потом в заведение зашёл он. Не самый примечательный посетитель на первый взгляд, но с таким спокойствием во взгляде, что Кадзуха впервые за долгое время усомнился: а всё ли он о людях знает?",
-              "Первое, что тот сделал — не попросил меню. Он внимательно посмотрел на него, чуть прищурился, словно оценивая, и только потом заговорил. Как будто Кадзуха был не официантом, а каким-то важным выбором, который нельзя делать вслепую."
-            ]
-          },
-          {
-            title: "Часть 2",
-            text: [
-              "«Обычная смена», — убеждал себя Кадзуха, пока пальцы нервно теребили край блокнота для заказов. Обычная смена, обычный зал, обычная музыка фоном… и совершенно не обычный гость за третьим столиком у окна.",
-              "— У вас руки трясутся, — заметил он, когда Кадзуха в третий раз переправлял ручку из одной ладони в другую.",
-              "— Это от кофе, — соврал тот автоматически. — И недосыпа.",
-              "— Или от страха, — мягко уточнил гость и улыбнулся. — Интересно, чего именно ты боишься?",
-              "Кадзуха решил, что ненавидит этот вопрос. Потому что честный ответ на него звучал бы куда страшнее любой выдуманной отговорки."
-            ]
-          },
-          {
-            title: "Часть 3",
-            text: [
-              "Он привык спать с ножом под подушкой. Это было не прихотью и не позой, а чем-то само собой разумеющимся — вроде будильника на телефоне или закрытой на щеколду двери.",
-              "Нож не спасал от кошмаров, но давал чувство контроля. Если кто-то решит ворваться в его маленький мир, он хотя бы не встретит это с пустыми руками.",
-              "— Пять причин, почему ты не можешь просто убрать его, — шёпотом перечислял он сам себе, проводя пальцем по холодной рукояти: — привычка, страх, память, инстинкт, и… ты.",
-              "Последнее слово прозвучало особенно тихо — почти неслышно даже для него самого."
-            ]
-          },
-          {
-            title: "Часть 4",
-            text: [
-              "— Ты всё время смотришь по сторонам, — заметил гость, когда они вышли из кафе почти одновременно. — Даже когда нет повода.",
-              "Кадзуха хотел ответить, что поводы есть всегда, просто остальные их не видят. Но вместо этого только пожал плечами.",
-              "— Некоторым проще жить, когда они ничего не замечают, — продолжил тот. — Ты к таким явно не относишься.",
-              "— Я просто… не люблю сюрпризы, — пробормотал Кадзуха.",
-              "— А свидания тоже считаются сюрпризом? — невинно уточнил он.",
-              "И вот тут привычный мир Кадзухи впервые по-настоящему дал трещину."
-            ]
-          },
-          {
-            title: "Часть 5",
-            text: [
-              "Он не помнил, когда в последний раз позволял себе смеяться по-настоящему — так, чтобы от этого хотелось спрятать лицо в ладонях и сделать вид, что это всё не серьёзно.",
-              "— Ты ведёшь себя так, будто любое счастье — это ошибка системы, — сказал однажды гость, лениво помешивая трубочкой лёд в стакане. — Как будто тебе случайно выдали то, чего ты не заказывал.",
-              "— Так и есть, — вздохнул Кадзуха. — Обычно за это приходится платить.",
-              "— Знаешь, — он наклонился ближе, — иногда расплачиваться всё равно выгоднее, чем жить в вечном дефиците."
-            ]
-          },
-          {
-            title: "Часть 6",
-            text: [
-              "Ночь казалась тише обычного. Кадзуха лежал на спине, глядя в темноту потолка, и чувствовал, как под подушкой привычно упирается в ладонь рукоять ножа.",
-              "— Пять причин, почему я сплю с ним, — шептал он, будто считающую мантру. — Страх, память, инстинкт, привязанность… и ты.",
-              "Разница была только в том, что теперь это «ты» не относилось к воображаемому врагу за дверью.",
-              "Где-то в телефоне сохранялись непрочитанные сообщения. Предложение встретиться. Нежданное «доброй ночи». И — впервые за долгое время — невыносимо тёплое, пугающе честное чувство, что, может быть, завтра он проснётся и не захочет первым делом проверять, на месте ли нож."
-            ]
-          }
-        ]
-      },
-
-      {
-        id: "angels",
-        title: "Когда умирают ангелы",
-        rating: "NC-17",
-        status: "Завершён",
-        fandom: "Genshin Impact",
-        pairing: "Кадзуха Каэдэхара/Странник",
-        size: "417 страниц · 139 838 слов · 54 части",
-        dateLabel: "Завершено",
-        date: "18.08.2025",
-        genres: ["AU", "Hurt/Comfort", "Ангст", "Драма"],
-        warnings: [
-          "Алкоголь",
-          "Внутренняя гомофобия",
-          "Курение",
-          "ООС",
-          "Смерть основных персонажей",
-          "Счастливый финал",
-          "Упоминания изнасилования",
-          "Упоминания наркотиков",
-          "Упоминания насилия",
-          "Упоминания религии",
-          "Упоминания самоубийства"
-        ],
-        tags: [
-          "Анальный секс",
-          "Боязнь привязанности",
-          "Заболевания",
-          "Защищенный секс",
-          "Кризис ориентации",
-          "Минет",
-          "Нежный секс",
-          "Синдром религиозной травмы",
-          "Смертельные заболевания",
-          "Элементы мистики"
-        ],
-        blurb: "Свободная душа, запертая в несвободном теле, не сможет обрести счастье. Кадзуха стал заложником обстоятельств, которые перечеркнули его жизнь, не оставляя и капли надежды на хоть какое-то будущее.",
-        parts: [
-          {
-            title: "Часть 1",
-            text: [
-              "Свободная душа, запертая в несвободном теле, не сможет обрести счастье. Об этом Кадзуха знал слишком хорошо — не из книг, не из чужих рассказов, а из собственного, болезненно подробного опыта.",
-              "Его тело принадлежало миру, который он больше не признавал своим. Доктора, священники, случайные прохожие — все они, казалось, имели больше прав на его жизнь, чем он сам.",
-              "— Грех, — говорили одни. — Болезнь, — твердили другие. — Испытание, — шептал кто-то особенно благочестивый.",
-              "Только никто не спросил: а сколько ещё можно жить, если каждый вдох кажется долгом, который ты не брал?"
-            ]
-          },
-          {
-            title: "Часть 2",
-            text: [
-              "Он давно перестал ждать чудес. Ангелы, в которых его учили верить с детства, казались теперь чем-то вроде детской сказки — красивой, но жестокой своим несоответствием.",
-              "В храм он заходил по инерции: так проще было, чем отвечать на вопросы. Проще, чем объяснять, почему он не чувствует в себе того сияния, которым должны якобы гореть все «праведные души».",
-              "— Ты слишком много думаешь, — однажды сказала Нахида, заглянув в его палату. — Может быть, подумать стоит не о том, «что» ты должен чувствовать, а о том, «кому» ты позволяешь решать это за тебя?",
-              "Кадзуха тогда только усмехнулся. Но её слова почему-то зацепились где-то глубоко, отказавшись раствориться, как все прочие утешения."
-            ]
-          },
-          {
-            title: "Часть 3",
-            text: [
-              "Он появился внезапно — как те самые чудеса, в которые Кадзуха разучился верить. Не в ореоле света и не под звуки небесного хора, а в простом больничном коридоре, пахнущем лекарствами и хлоркой.",
-              "— Ты смотришь так, будто уже умер, — спокойно произнёс он, остановившись напротив. — Но, знаешь, мёртвые обычно не морщатся от запаха антисептика.",
-              "Кадзуха приподнял бровь: слишком дерзкий тон для человека, которого он видел впервые.",
-              "— А ты кто? Новый ангел-хранитель? — язвительно спросил он.",
-              "— Сомнительный, но давай пока остановимся на этом варианте, — ухмыльнулся незнакомец. — Хотя, если честно, я вообще-то куда больше похож на того, от кого ангелам обычно велят бежать."
-            ]
-          }
-          // Далее можно добавить ещё части по мере надобности
-        ]
-      },
-
-      {
-        id: "violin",
-        title: "Скрипичный ключ к сердцу",
-        rating: "NC-17",
-        status: "В процессе",
-        fandom: "Genshin Impact",
-        pairing: "Кадзуха Каэдэхара/Странник",
-        size: "планируется Макси · 12 страниц · 4 163 слова · 2 части",
-        dateLabel: "Обновление",
-        date: "26.07.2025",
-        genres: ["AU", "Hurt/Comfort", "Флафф"],
-        warnings: [
-          "Внутренняя гомофобия",
-          "Проблемы доверия",
-          "Рейтинг за секс",
-          "Счастливый финал",
-          "Упоминания алкоголя",
-          "Упоминания курения",
-          "Частичный ООС"
-        ],
-        tags: ["AU: Школа"],
-        blurb: "Живя свою спокойную, даже рутинную жизнь, Кадзуха и не догадывался о том, что в нее можно было так просто вмешаться и пошатнуть некогда выверенное равновесие.",
-        parts: [
-          {
-            title: "Часть 1",
-            text: [
-              "Школьные будни Кадзухи были выверены почти до секунды. Одно и то же расписание, одни и те же маршруты, одни и те же лица в коридорах.",
-              "Музыка была единственным, что ещё оставалось его личным пространством. Скрипка — тем самым ключом, который открывал тихие комнаты внутри, куда никто не мог войти без приглашения.",
-              "Он приходил в пустой класс музыки раньше всех, чтобы успеть хотя бы несколько минут побыть наедине с инструментом. Скрипичный смычок знал больше его тетрадей, а струны принимали больше признаний, чем когда-либо услышат люди."
-            ]
-          },
-          {
-            title: "Часть 2",
-            text: [
-              "Дверь в кабинет открылась в самый неподходящий момент — как раз тогда, когда он думал, что наконец здесь один.",
-              "— Ты фальшивишь, — спокойно заметил вошедший, прислонившись плечом к дверному косяку.",
-              "Кадзуха едва не выронил смычок.",
-              "— Я не… — начал он, но незнакомец поднял ладонь.",
-              "— Не в ноте, — пояснил тот. — В настроении. Ты играешь так, будто тебе запрещают быть искренним даже наедине с самим собой.",
-              "Это было, пожалуй, самое точное замечание, которое кто-либо когда-либо делал о его музыке."
-            ]
-          }
-        ]
-      },
-
-      {
-        id: "bitter-pills",
-        title: "Горький вкус твоих таблеток",
-        rating: "NC-17",
-        status: "Завершён",
-        fandom: "Genshin Impact",
-        pairing: "Странник/Кадзуха Каэдэхара",
-        size: "366 страниц · 120 200 слов · 55 частей",
-        dateLabel: "Завершено",
-        date: "31.10.2024",
-        genres: ["AU", "Hurt/Comfort", "Ангст", "Драма", "Психология", "Флафф"],
-        warnings: [
-          "Курение",
-          "ООС",
-          "Психологические травмы",
-          "Счастливый финал",
-          "Упоминания алкоголя",
-          "Упоминания селфхарма",
-          "Упоминания смертей",
-          "Частичный ООС"
-        ],
-        tags: [
-          "Громкий секс",
-          "Заболевания",
-          "Защищенный секс",
-          "Инвалидность",
-          "Кинк на похвалу",
-          "Мастурбация",
-          "Минет",
-          "Нежный секс",
-          "Разница в возрасте",
-          "Римминг",
-          "Секс-игрушки",
-          "Сексуальная неопытность",
-          "Стимуляция руками",
-          "Эротические фантазии"
-        ],
-        blurb: "Психолог сказал мне: «Нужно жить дальше». Я послал его к черту…",
-        parts: [
-          {
-            title: "Часть 1",
-            text: [
-              "Психолог сказал мне: «Нужно жить дальше». Я послал его к черту.",
-              "Не потому что он был неправ — наоборот, слишком уж был прав. Просто слышать это из уст человека, который вечером пойдёт домой, выпьет чай и уснёт без кошмаров, было… невыносимо.",
-              "— Вы отказываетесь от терапии, — вздохнул он, откидываясь в кресле.",
-              "— Я отказываюсь от иллюзии, что пару таблеток и разговоров хватит, чтобы починить то, что ломали годами, — огрызнулся я.",
-              "Он сделал пометку в карте. Я отметил про себя, что этим жестом он похож на врача, который уже заранее знает: пациент всё равно не будет соблюдать предписания."
-            ]
-          }
-          // ...
-        ]
-      },
-
-      {
-        id: "dorm-philosophy",
-        title: "Философия бытия через призму общаги",
-        rating: "NC-17",
-        status: "Завершён",
-        fandom: "Genshin Impact",
-        pairing: "Кадзуха Каэдэхара/Странник",
-        size: "110 страниц · 32 999 слов · 20 частей",
-        dateLabel: "Завершено",
-        date: "24.06.2024",
-        genres: ["AU", "Hurt/Comfort", "Ангст", "Флафф"],
-        warnings: [
-          "Алкоголь",
-          "Внутренняя гомофобия",
-          "Курение",
-          "Частичный ООС",
-          "Спойлеры ..."
-        ],
-        tags: [
-          "AU: Школа",
-          "Защищенный секс",
-          "Нежный секс",
-          "Незащищенный секс",
-          "Сексуальная неопытность",
-          "Стимуляция руками"
-        ],
-        blurb: "— Можно тебя обнять, пожалуйста? Просто по-дружески? — ага, и спим мы просто по-дружески.",
-        parts: [
-          {
-            title: "Часть 1",
-            text: [
-              "Общежитие жило по своим законам. Здесь никто не спрашивал, откуда ты и кем собираешься быть через десять лет. Зато все прекрасно знали, кто с кем ушёл в душ, кто кому занимал деньги и кто в который раз забывал купить туалетную бумагу.",
-              "На фоне этого хаоса Кадзуха умудрялся сохранять какое-то странное достоинство. Будто в его комнате существовал отдельный мир, куда общажный шум имел доступ только по предварительной записи.",
-              "— Можно тебя обнять, пожалуйста? Просто по-дружески? — прозвучало однажды из темноты.",
-              "Он фыркнул:",
-              "— Ага, и спим мы тоже просто по-дружески.",
-              "Ответом был тихий смешок и слишком тёплые руки, осторожно обнимающие за талию."
-            ]
-          }
-        ]
-      },
-
-      {
-        id: "i-only-dance",
-        title: "Я только танцую",
-        rating: "NC-17",
-        status: "Завершён",
-        fandom: "Genshin Impact",
-        pairing: "Кадзуха Каэдэхара/Странник",
-        size: "226 страниц · 69 145 слов · 31 часть",
-        dateLabel: "Завершено",
-        date: "09.06.2024",
-        genres: ["AU"],
-        warnings: [
-          "URT",
-          "Курение",
-          "ООС",
-          "Попытка изнасилования",
-          "Упоминания алкоголя",
-          "Упоминания курения",
-          "Упоминания наркотиков",
-          "Частичный ООС",
-          "Спойлеры ..."
-        ],
-        tags: [
-          "Защищенный секс",
-          "Нежный секс",
-          "Неловкий секс",
-          "Приватный танец",
-          "Сексуальная неопытность",
-          "Стрип-клубы",
-          "Универсалы"
-        ],
-        blurb: "«Я стриптизер, а не проститутка», представляешь, что сказал?! А я ему такие деньжища за продолжение приятного вечера предлагал!",
-        parts: [
-          {
-            title: "Часть 1",
-            text: [
-              "«Я стриптизер, а не проститутка», — эта фраза почему-то особенно крепко засела в голове. Сказана она была, конечно, с усмешкой, но взгляд при этом оставался удивительно серьёзным.",
-              "Музыка гремела так, что вибрировал пол. Свет резал глаза неоновой мешаниной, а дым от сигарет и пар от коктейлей смешивались в сладко-горькую пелену.",
-              "Он выходил на сцену как в бой — только вместо оружия у него было собственное тело, а вместо брони — хрупкая маска уверенности, за которой он прятал то, что никому не должен был видеть."
-            ]
-          }
-        ]
-      },
-
-      {
-        id: "its-okay",
-        title: "Да все окей",
-        rating: "NC-17",
-        status: "Завершён",
-        fandom: "Genshin Impact",
-        pairing: "Кадзуха Каэдэхара/Странник",
-        size: "4 страницы · 1 659 слов · 1 часть",
-        dateLabel: "Завершено",
-        date: "09.07.2023",
-        genres: ["Флафф"],
-        warnings: [
-          "Намеки на отношения",
-          "Намеки на секс"
-        ],
-        tags: ["Драббл"],
-        blurb: "Рано… Ты пока не готов к этому.",
-        parts: [
-          {
-            title: "Единственная часть",
-            text: [
-              "— Да всё окей, — сказал он в третий раз за вечер, и каждый раз это звучало одинаково неправдоподобно.",
-              "Кадзуха знал, как выглядят люди, у которых «всё окей». У них не дрожат пальцы, когда они пытаются зажечь сигарету. Они не смеются слишком громко на пустом месте и не замолкают посреди фразы, будто кто-то выключил звук.",
-              "— Ты не обязан сейчас… — начал он, но тот только махнул рукой.",
-              "— Рано, — усмехнулся он, опуская взгляд. — Ты пока не готов к этому.",
-              "И в этих словах было слишком много нежности для обычной, ничего не значащей фразы."
-            ]
-          }
-        ]
-      },
-
-      {
-        id: "shared-guilt",
-        title: "Общая вина",
-        rating: "NC-17",
-        status: "Завершён",
-        fandom: "Genshin Impact",
-        pairing: "Кадзуха Каэдэхара/Странник",
-        size: "152 страницы · 66 408 слов · 35 частей",
-        dateLabel: "Завершено",
-        date: "31.05.2023",
-        genres: ["AU", "Hurt/Comfort", "Драма", "Флафф"],
-        warnings: [
-          "Алкоголь",
-          "Жестокость",
-          "Курение",
-          "ООС",
-          "Счастливый финал",
-          "Упоминания изнасилования"
-        ],
-        tags: [
-          "Боязнь привязанности",
-          "Дружба",
-          "Заболевания",
-          "Любовь/Ненависть",
-          "Расстройства шизофренического спектра",
-          "Селфхарм",
-          "Школьники",
-          "Элементы гета"
-        ],
-        blurb: "Развяжет один узел — придётся перематывать весь клубок… Жди меня, Кадзуха…",
-        parts: [
-          {
-            title: "Часть 1",
-            text: [
-              "Иногда достаточно одного неверного шага, чтобы вся жизнь превратилась в клубок узлов, которые невозможно распутать без боли.",
-              "Кадзуха давно перестал верить в «случайности». Любая встреча, любое слово — всё казалось частью какого-то странного сценария, в котором его роль была прописана заранее, но текст никто не удосужился выдать.",
-              "— Развяжешь один узел — придётся перематывать весь клубок, — сказала как-то бабушка, ловко разматывая старую пряжу.",
-              "Тогда он не понял, о чём она. Сейчас — слишком хорошо понимал."
-            ]
-          }
-        ]
-      },
-
-      {
-        id: "wait-for-me",
-        title: "Жди меня, Кадзуха…",
-        rating: "NC-17",
-        status: "Завершён",
-        fandom: "Genshin Impact",
-        pairing: "Странник/Кадзуха Каэдэхара",
-        size: "3 страницы · 856 слов · 1 часть",
-        dateLabel: "Завершено",
-        date: "23.05.2023",
-        genres: ["AU", "Ангст"],
-        warnings: [
-          "Курение",
-          "ООС",
-          "Смерть основных персонажей",
-          "Упоминания смертей"
-        ],
-        tags: [
-          "Заболевания",
-          "Смертельные заболевания"
-        ],
-        blurb: "Сейчас, идя по мокрому асфальту и игнорируя бегущих людей вокруг, Скара улыбался…",
-        parts: [
-          {
-            title: "Единственная часть",
-            text: [
-              "Сейчас, идя по мокрому асфальту и игнорируя бегущих людей вокруг, Скара улыбался.",
-              "Дождь хлестал по лицу, смывая с кожи всё лишнее. Смывал усталость, страх, привычную злость на мир и на самого себя.",
-              "Он кашлянул, прикрыв рот тыльной стороной ладони, и не стал смотреть на алые разводы. Как будто, если не смотреть, этого не существует.",
-              "— Жди меня, Кадзуха… — почти беззвучно прошептал он, и слова растворились в шуме ливня.",
-              "Иногда единственное, что остаётся — это обещание, которое не факт, что получится сдержать. Но он всё равно цеплялся за него, как утопающий за обломок корабля."
-            ]
-          }
-        ]
-      },
-
-      {
-        id: "night-walker",
-        title: "Ночной пешеход",
-        rating: "NC-17",
-        status: "Завершён",
-        fandom: "Genshin Impact",
-        pairing: "Кадзуха Каэдэхара/Странник",
-        size: "9 страниц · 2 694 слова · 3 части",
-        dateLabel: "Завершено",
-        date: "27.02.2023",
-        genres: ["AU", "Флафф"],
-        warnings: [
-          "Курение",
-          "Намеки на отношения",
-          "Намеки на секс",
-          "Упоминания смертей",
-          "Спойлеры ..."
-        ],
-        tags: ["Философия"],
-        blurb: "Что делать, если вся жизнь кажется обманом? Если всё вокруг лишь иллюзия и ложь…",
-        parts: [
-          {
-            title: "Часть 1",
-            text: [
-              "Город ночью становился другим. Вывески теряли яркость, стеклянные витрины отражали темноту вместо лиц прохожих, а звуки казались глуше, словно кто-то накрыл улицы невидимым одеялом.",
-              "Кадзуха любил такие часы. В них было меньше ожиданий и больше честности. Люди, которые выходят на улицу ночью, редко делают это просто так.",
-              "— Ты снова ходишь кругами, — раздался рядом спокойный голос.",
-              "Он не вздрогнул — привык. Ночной пешеход, казалось, всегда находил его, как только Кадзуха начинал думать, что в этот раз останется наедине с собой."
-            ]
-          }
-        ]
-      },
-
-      {
-        id: "script-part",
-        title: "Стань частью моего сценария",
-        rating: "PG-13",
-        status: "Завершён",
-        fandom: "Genshin Impact",
-        pairing: "Странник/Кадзуха Каэдэхара",
-        size: "8 страниц · 2 647 слов · 1 часть",
-        dateLabel: "Завершено",
-        date: "07.01.2023",
-        genres: ["AU"],
-        warnings: [
-          "Открытый финал"
-        ],
-        tags: [
-          "Боязнь привязанности",
-          "Русалки",
-          "Философия",
-          "Элементы мистики",
-          "Элементы флаффа"
-        ],
-        blurb: "Парень не верил, что в его жизни хоть что-то может пойти не по сценарию…",
-        parts: [
-          {
-            title: "Единственная часть",
-            text: [
-              "Парень не верил, что в его жизни хоть что-то может пойти не по сценарию. Не потому, что он был особенно суеверным, а потому что так было проще — считать, что всё уже кем-то прописано.",
-              "— Если всё уже решено, — говорил он, глядя на чёрную гладь воды, — значит, я хотя бы не виноват в том, что чувствую.",
-              "Волны лениво плескались о берег, словно поддакивая ему.",
-              "— А если сценарий можно переписать? — прозвучал вдруг голос, слишком тихий и слишком близкий.",
-              "Он обернулся — и увидел глаза, в которых отражалось сразу слишком многое: море, луна… и что-то, от чего хотелось отвести взгляд, но не получалось."
-            ]
-          }
-        ]
-      }
-    ];
-
-    // ===== Работа с localStorage для запоминания прочитанного =====
-    const STORAGE_KEY_FANFIC_READ = "kris_fanfics_read";
-    const STORAGE_KEY_FANFIC_PROGRESS = "kris_fanfics_progress";
-    const STORAGE_KEY_FONT_MODE = "kris_font_serif";
-
-    function loadReadState() {
-      const raw = localStorage.getItem(STORAGE_KEY_FANFIC_READ);
-      try {
-        return raw ? JSON.parse(raw) : {};
-      } catch {
-        return {};
-      }
-    }
-
-    function saveReadState(state) {
-      localStorage.setItem(STORAGE_KEY_FANFIC_READ, JSON.stringify(state));
-    }
-
-    function loadProgressState() {
-      const raw = localStorage.getItem(STORAGE_KEY_FANFIC_PROGRESS);
-      try {
-        return raw ? JSON.parse(raw) : {};
-      } catch {
-        return {};
-      }
-    }
-
-    function saveProgressState(state) {
-      localStorage.setItem(STORAGE_KEY_FANFIC_PROGRESS, JSON.stringify(state));
-    }
-
-    function loadFontMode() {
-      return localStorage.getItem(STORAGE_KEY_FONT_MODE) === "1";
-    }
-
-    function saveFontMode(on) {
-      localStorage.setItem(STORAGE_KEY_FONT_MODE, on ? "1" : "0");
-    }
-
-    let readState = loadReadState();      // { fanficId: true/false }
-    let progressState = loadProgressState(); // { fanficId: lastPartIndexNumber }
-
-    let currentFanficId = null;
-    let currentPartIndex = 0;
-
-    const fanficListEl = document.getElementById("fanficList");
-    const readerTitleEl = document.getElementById("readerTitle");
-    const readerSubtitleEl = document.getElementById("readerSubtitle");
-    const readerTextEl = document.getElementById("readerText");
-    const metaBarEl = document.getElementById("metaBar");
-    const metaRatingEl = document.getElementById("metaRating");
-    const metaStatusEl = document.getElementById("metaStatus");
-    const metaSizeEl = document.getElementById("metaSize");
-    const metaDateEl = document.getElementById("metaDate");
-    const metaDateLabelEl = document.getElementById("metaDateLabel");
-    const prevPageBtn = document.getElementById("prevPageBtn");
-    const nextPageBtn = document.getElementById("nextPageBtn");
-    const pageIndicatorEl = document.getElementById("pageIndicator");
-    const progressFillEl = document.getElementById("progressFill");
-    const progressLabelEl = document.getElementById("progressLabel");
-    const markReadBtn = document.getElementById("markReadBtn");
-    const readCountLabelEl = document.getElementById("read-count-label");
-    const filterUnreadBtn = document.getElementById("filterUnread");
-    const searchInputEl = document.getElementById("searchInput");
-    const fontToggleEl = document.getElementById("fontToggle");
-
-    function getReadCount() {
-      return fanfics.filter(f => readState[f.id]).length;
-    }
-
-    function updateReadCountLabel() {
-      const count = getReadCount();
-      readCountLabelEl.textContent = count + " / " + fanfics.length + " прочитано";
-    }
-
-    // Создание карточек слева
-    function createFanficCard(fanfic) {
-      const card = document.createElement("div");
-      card.className = "fanfic-card";
-      card.dataset.id = fanfic.id;
-
-      const isRead = !!readState[fanfic.id];
-
-      const partsCount = fanfic.parts.length;
-      const genresShort = fanfic.genres.slice(0, 3).join(" · ");
-
-      card.innerHTML = `
-        <div class="fanfic-main-row">
-          <div class="fanfic-left">
-            <div class="fanfic-title">${fanfic.title}</div>
-            <div class="fanfic-meta">
-              <span class="pill rating">${fanfic.rating}</span>
-              <span class="pill status">${fanfic.status}</span>
-              <span class="pill fandom">${fanfic.fandom}</span>
-            </div>
-          </div>
-          <div class="fanfic-right">
-            <div style="text-align:right;">
-              <div class="stat-number">${partsCount} ч.</div>
-              <div class="stat-label">частей</div>
-            </div>
-            ${isRead
-              ? `<div class="read-indicator"><span class="read-indicator-dot"></span>прочитано</div>`
-              : `<div class="unread-indicator" title="Ещё не прочитано"></div>`
+    <script>
+        // === ДАННЫЕ ФАНФИКОВ ===
+        const fanfics = [
+            {
+                id: 1,
+                title: "Пять причин, почему я сплю с ножом",
+                status: "ongoing",
+                rating: "NC-17",
+                pages: 46,
+                words: "15 458",
+                chapters: 6,
+                updated: "03.01.2026",
+                genres: ["AU", "Hurt/Comfort", "Повседневность", "Романтика", "Флафф", "Юмор"],
+                description: "Так и жил он с постоянной готовностью к двум вещам: сесть в тюрьму за чье-нибудь убийство или умереть от паранойи. Или просто жизнь официанта, которому впервые вместо просьбы переделать заказ поступило предложение сходить на свидание.",
+                pairing: "Кадзуха/Странник"
+            },
+            {
+                id: 2,
+                title: "Когда умирают ангелы",
+                status: "complete",
+                rating: "NC-17",
+                pages: 417,
+                words: "139 838",
+                chapters: 54,
+                updated: "18.08.2025",
+                genres: ["AU", "Hurt/Comfort", "Ангст", "Драма"],
+                description: "Свободная душа, запертая в несвободном теле, не сможет обрести счастье. Кадзуха стал заложником обстоятельств, которые перечеркнули его жизнь...",
+                pairing: "Кадзуха/Странник"
+            },
+            {
+                id: 3,
+                title: "Скрипичный ключ к сердцу",
+                status: "ongoing",
+                rating: "NC-17",
+                pages: 12,
+                words: "4 163",
+                chapters: 2,
+                updated: "26.07.2025",
+                genres: ["AU", "Hurt/Comfort", "Флафф"],
+                description: "Живя свою спокойную, даже рутинную жизнь, Кадзуха и не догадывался о том, что в нее можно было так просто вмешаться...",
+                pairing: "Кадзуха/Странник"
+            },
+            {
+                id: 4,
+                title: "Горький вкус твоих таблеток",
+                status: "complete",
+                rating: "NC-17",
+                pages: 366,
+                words: "120 200",
+                chapters: 55,
+                updated: "31.10.2024",
+                genres: ["AU", "Hurt/Comfort", "Ангст", "Драма", "Психология", "Флафф"],
+                description: "Психолог сказал мне: «Нужно жить дальше». Я послал его к черту…",
+                pairing: "Странник/Кадзуха"
+            },
+            {
+                id: 5,
+                title: "Философия бытия через призму общаги",
+                status: "complete",
+                rating: "NC-17",
+                pages: 110,
+                words: "32 999",
+                chapters: 20,
+                updated: "24.06.2024",
+                genres: ["AU", "Hurt/Comfort", "Ангст", "Флафф"],
+                description: "— Можно тебя обнять, пожалуйста? Просто по-дружески?- ага, и спим мы просто по-дружески.",
+                pairing: "Кадзуха/Странник"
+            },
+            {
+                id: 6,
+                title: "Я только танцую",
+                status: "complete",
+                rating: "NC-17",
+                pages: 226,
+                words: "69 145",
+                chapters: 31,
+                updated: "09.06.2024",
+                genres: ["AU"],
+                description: "«Я стриптизер, а не проститутка», представляешь, что сказал?! А я ему такие деньжища за продолжение приятного вечера предлагал!",
+                pairing: "Кадзуха/Странник"
+            },
+            {
+                id: 7,
+                title: "Да все окей",
+                status: "complete",
+                rating: "NC-17",
+                pages: 4,
+                words: "1 659",
+                chapters: 1,
+                updated: "09.07.2023",
+                genres: ["Флафф"],
+                description: "Рано… Ты пока не готов к этому.",
+                pairing: "Кадзуха/Странник"
+            },
+            {
+                id: 8,
+                title: "Общая вина",
+                status: "complete",
+                rating: "NC-17",
+                pages: 152,
+                words: "66 408",
+                chapters: 35,
+                updated: "31.05.2023",
+                genres: ["AU", "Hurt/Comfort", "Драма", "Флафф"],
+                description: "Развяжет один узел— придётся перематывать весь клубок…",
+                pairing: "Кадзуха/Странник"
+            },
+            {
+                id: 9,
+                title: "Жди меня, Кадзуха…",
+                status: "complete",
+                rating: "NC-17",
+                pages: 3,
+                words: "856",
+                chapters: 1,
+                updated: "23.05.2023",
+                genres: ["AU", "Ангст"],
+                description: "Сейчас, идя по мокрому асфальту и игнорируя бегущих людей вокруг, Скара улыбался…",
+                pairing: "Странник/Кадзуха"
+            },
+            {
+                id: 10,
+                title: "Ночной пешеход",
+                status: "complete",
+                rating: "NC-17",
+                pages: 9,
+                words: "2 694",
+                chapters: 3,
+                updated: "27.02.2023",
+                genres: ["AU", "Флафф"],
+                description: "Что делать, если вся жизнь кажется обманом? Если все вокруг лишь иллюзия и ложь...",
+                pairing: "Кадзуха/Странник"
+            },
+            {
+                id: 11,
+                title: "Стань частью моего сценария",
+                status: "complete",
+                rating: "PG-13",
+                pages: 8,
+                words: "2 647",
+                chapters: 1,
+                updated: "07.01.2023",
+                genres: ["AU"],
+                description: "Парень не верил, что в его жизни хоть что-то может пойти не по сценарию...",
+                pairing: "Странник/Кадзуха"
             }
-          </div>
-        </div>
-        <div class="fanfic-tags-row">
-          <span class="tag-chip-small">${fanfic.pairing}</span>
-          <span class="tag-chip-small">${genresShort}</span>
-        </div>
-      `;
+        ];
 
-      card.addEventListener("click", () => {
-        openFanfic(fanfic.id);
-      });
+        // === ИНИЦИАЛИЗАЦИЯ ===
+        let readFanfics = JSON.parse(localStorage.getItem('readFanfics')) || [];
+        let currentFilter = 'all';
 
-      return card;
-    }
+        // === ФУНКЦИЯ РЕНДЕРА КАРТОЧЕК ===
+        function renderFanfics(filter = 'all', searchQuery = '') {
+            const grid = document.getElementById('fanficsGrid');
+            grid.innerHTML = '';
 
-    function renderFanficList() {
-      fanficListEl.innerHTML = "";
-      const query = searchInputEl.value.trim().toLowerCase();
-      const filterUnread = filterUnreadBtn.classList.contains("active");
+            let filteredFanfics = fanfics;
 
-      fanfics.forEach(f => {
-        const textForSearch = [
-          f.title,
-          f.fandom,
-          f.pairing,
-          f.genres.join(" "),
-          (f.tags || []).join(" ")
-        ].join(" ").toLowerCase();
+            // Фильтрация по статусу
+            if (filter === 'complete') {
+                filteredFanfics = fanfics.filter(f => f.status === 'complete');
+            } else if (filter === 'ongoing') {
+                filteredFanfics = fanfics.filter(f => f.status === 'ongoing');
+            } else if (filter === 'read') {
+                filteredFanfics = fanfics.filter(f => readFanfics.includes(f.id));
+            }
 
-        if (query && !textForSearch.includes(query)) {
-          return;
+            // Фильтрация по поиску
+            if (searchQuery) {
+                filteredFanfics = filteredFanfics.filter(f =>
+                    f.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    f.description.toLowerCase().includes(searchQuery.toLowerCase())
+                );
+            }
+
+            // Создание карточек
+            filteredFanfics.forEach((fanfic, index) => {
+                const card = document.createElement('div');
+                card.className = 'fanfic-card';
+                if (readFanfics.includes(fanfic.id)) {
+                    card.className += ' read';
+                }
+                card.style.animationDelay = `${index * 0.1}s`;
+
+                card.innerHTML = `
+                    ${readFanfics.includes(fanfic.id) ? '<div class="read-badge">✓ Прочитано</div>' : ''}
+                    <div class="card-header">
+                        <div class="card-title">${fanfic.title}</div>
+                        <div class="card-meta">
+                            <span class="rating">${fanfic.rating}</span>
+                            <span class="status ${fanfic.status}">${fanfic.status === 'complete' ? 'Завершён' : 'В процессе'}</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="description">${fanfic.description}</div>
+                        <div class="tags">
+                            ${fanfic.genres.slice(0, 3).map(g => `<span class="tag">${g}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <span>📖 ${fanfic.pages} стр.</span>
+                            <span>📝 ${fanfic.chapters} глав</span>
+                        </div>
+                        <button class="read-btn" onclick="openFanfic(${fanfic.id})">Читать</button>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+
+            updateProgress();
         }
-        if (filterUnread && readState[f.id]) {
-          return;
+
+        // === ОТКРЫТИЕ ФАНФИКА ===
+        function openFanfic(id) {
+            const fanfic = fanfics.find(f => f.id === id);
+            const modal = document.getElementById('modal');
+            const modalContent = document.getElementById('modalContent');
+
+            modalContent.innerHTML = `
+                <h2 style="margin-bottom: 20px; color: #333;">${fanfic.title}</h2>
+                <div style="margin-bottom: 20px; color: #666;">
+                    <p><strong>Пейринг:</strong> ${fanfic.pairing}</p>
+                    <p><strong>Рейтинг:</strong> ${fanfic.rating}</p>
+                    <p><strong>Статус:</strong> ${fanfic.status === 'complete' ? 'Завершён' : 'В процессе'}</p>
+                    <p><strong>Объём:</strong> ${fanfic.pages} страниц, ${fanfic.words} слов, ${fanfic.chapters} глав</p>
+                    <p><strong>Последнее обновление:</strong> ${fanfic.updated}</p>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <strong>Жанры:</strong>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px;">
+                        ${fanfic.genres.map(g => `<span class="tag">${g}</span>`).join('')}
+                    </div>
+                </div>
+                <div style="line-height: 1.8; color: #444;">
+                    <p>${fanfic.description}</p>
+                    <br>
+                    <p style="text-align: center; color: #999;">
+                        [Здесь будет полный текст фанфика]<br>
+                        Ты можешь добавить сюда текст или ссылку на отдельную страницу!
+                    </p>
+                </div>
+                <button onclick="markAsRead(${fanfic.id})" style="margin-top: 20px; padding: 10px 30px; background: #4ecdc4; color: white; border: none; border-radius: 20px; cursor: pointer;">
+                    Отметить как прочитанное
+                </button>
+            `;
+
+            modal.classList.add('active');
         }
-        const card = createFanficCard(f);
-        if (f.id === currentFanficId) {
-          card.classList.add("active");
+
+        // === ЗАКРЫТИЕ МОДАЛЬНОГО ОКНА ===
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
         }
-        fanficListEl.appendChild(card);
-      });
 
-      if (!fanficListEl.children.length) {
-        const empty = document.createElement("div");
-        empty.style.padding = "10px";
-        empty.style.fontSize = "12px";
-        empty.style.color = "var(--text-muted)";
-        empty.textContent = "Ничего не нашлось. Попробуй изменить фильтр или поиск.";
-        fanficListEl.appendChild(empty);
-      }
+        // === ОТМЕТКА КАК ПРОЧИТАННОЕ ===
+        function markAsRead(id) {
+            if (!readFanfics.includes(id)) {
+                readFanfics.push(id);
+                localStorage.setItem('readFanfics', JSON.stringify(readFanfics));
+                renderFanfics(currentFilter);
+            }
+        }
 
-      updateReadCountLabel();
-    }
+        // === ОБНОВЛЕНИЕ ПРОГРЕССА ===
+        function updateProgress() {
+            const count = readFanfics.length;
+            document.getElementById('readCount').textContent = count;
+            document.getElementById('progressFill').style.width = `${(count / 11) * 100}%`;
+        }
 
-    // Открываем конкретный фанфик
-    function openFanfic(id) {
-      const fanfic = fanfics.find(f => f.id === id);
-      if (!fanfic) return;
+        // === ЧАСТИЦЫ НА ФОНЕ ===
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-      currentFanficId = id;
-      const savedIndex = progressState[id] ?? 0;
-      currentPartIndex = Math.min(savedIndex, fanfic.parts.length - 1);
+        const particles = [];
+        for (let i = 0; i < 50; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5,
+                size: Math.random() * 3 + 1
+            });
+        }
 
-      // Обновляем выделение в списке
-      document.querySelectorAll(".fanfic-card").forEach(card => {
-        card.classList.toggle("active", card.dataset.id === id);
-      });
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Обновляем правую часть
-      renderCurrentFanfic();
-      markReadBtn.disabled = false;
-    }
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
 
-    // Отрисовка текста и метаданных выбранного фанфика
-    function renderCurrentFanfic() {
-      const fanfic = fanfics.find(f => f.id === currentFanficId);
-      if (!fanfic) return;
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
 
-      const part = fanfic.parts[currentPartIndex];
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+                ctx.fill();
+            });
 
-      readerTitleEl.textContent = fanfic.title;
-      readerSubtitleEl.textContent = fanfic.pairing + " · " + fanfic.fandom;
+            requestAnimationFrame(animateParticles);
+        }
 
-      metaBarEl.style.display = "flex";
-      metaRatingEl.textContent = fanfic.rating;
-      metaStatusEl.textContent = fanfic.status;
-      metaSizeEl.textContent = fanfic.size;
-      metaDateEl.textContent = fanfic.date;
-      metaDateLabelEl.textContent = fanfic.dateLabel;
+        animateParticles();
 
-      const tagsHtml =
-        (fanfic.genres && fanfic.genres.length
-          ? fanfic.genres.map(g => `<span class="tag-pill">${g}</span>`).join("")
-          : "") +
-        (fanfic.warnings && fanfic.warnings.length
-          ? fanfic.warnings.map(w => `<span class="tag-pill warn">${w}</span>`).join("")
-          : "") +
-        (fanfic.tags && fanfic.tags.length
-          ? fanfic.tags.map(t => `<span class="tag-pill">${t}</span>`).join("")
-          : "");
+        // === ОБРАБОТЧИКИ СОБЫТИЙ ===
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
 
-      const textHtml = part.text
-        .map(p => `<p>${p}</p>`)
-        .join("");
+        // Фильтры
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                renderFanfics(currentFilter, document.getElementById('searchInput').value);
+            });
+        });
 
-      readerTextEl.innerHTML = `
-        <div class="reader-section-title">${part.title}</div>
-        <p><em>${fanfic.blurb}</em></p>
-        <br>
-        ${textHtml}
-        <div class="reader-tags-block">
-          ${tagsHtml}
-        </div>
-      `;
-      readerTextEl.classList.remove("fade-in");
-      // Перезапускаем анимацию
-      void readerTextEl.offsetWidth;
-      readerTextEl.classList.add("fade-in");
+        // Поиск
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            renderFanfics(currentFilter, e.target.value);
+        });
 
-      // Обновляем навигацию по частям
-      const totalParts = fanfic.parts.length;
-      pageIndicatorEl.textContent = (currentPartIndex + 1) + " / " + totalParts;
-      prevPageBtn.classList.toggle("disabled", currentPartIndex === 0);
-      nextPageBtn.classList.toggle("disabled", currentPartIndex >= totalParts - 1);
+        // Закрытие модального окна по клику вне его
+        document.getElementById('modal').addEventListener('click', (e) => {
+            if (e.target.id === 'modal') {
+                closeModal();
+            }
+        });
 
-      // Обновляем прогресс
-      const progress = Math.round(((currentPartIndex + 1) / totalParts) * 100);
-      progressFillEl.style.width = progress + "%";
-      progressLabelEl.textContent = "Прогресс: " + progress + "%";
-
-      // Сохраняем прогресс в localStorage
-      progressState[currentFanficId] = currentPartIndex;
-      saveProgressState(progressState);
-
-      // Если дошли до конца — автоматически помечаем как прочитанный
-      if (currentPartIndex === totalParts - 1) {
-        readState[currentFanficId] = true;
-        saveReadState(readState);
-      }
-
-      renderFanficList();
-    }
-
-    // Кнопки «следующая/предыдущая часть»
-    prevPageBtn.addEventListener("click", () => {
-      if (!currentFanficId) return;
-      const fanfic = fanfics.find(f => f.id === currentFanficId);
-      if (!fanfic) return;
-      if (currentPartIndex > 0) {
-        currentPartIndex--;
-        renderCurrentFanfic();
-      }
-    });
-
-    nextPageBtn.addEventListener("click", () => {
-      if (!currentFanficId) return;
-      const fanfic = fanfics.find(f => f.id === currentFanficId);
-      if (!fanfic) return;
-      if (currentPartIndex < fanfic.parts.length - 1) {
-        currentPartIndex++;
-        renderCurrentFanfic();
-      }
-    });
-
-    // Кнопка «Отметить как прочитанный»
-    markReadBtn.addEventListener("click", () => {
-      if (!currentFanficId) return;
-      const isNowRead = !readState[currentFanficId];
-      readState[currentFanficId] = isNowRead;
-      saveReadState(readState);
-
-      // Если ставим как прочитанный — запишем прогресс в конец
-      const fanfic = fanfics.find(f => f.id === currentFanficId);
-      if (fanfic && isNowRead) {
-        currentPartIndex = fanfic.parts.length - 1;
-        progressState[currentFanficId] = currentPartIndex;
-        saveProgressState(progressState);
-      }
-
-      renderCurrentFanfic();
-      updateReadCountLabel();
-    });
-
-    // Фильтр «непрочитанное»
-    filterUnreadBtn.addEventListener("click", () => {
-      filterUnreadBtn.classList.toggle("active");
-      renderFanficList();
-    });
-
-    // Поиск
-    searchInputEl.addEventListener("input", () => {
-      renderFanficList();
-    });
-
-    // Переключение шрифта (серийный / обычный)
-    function applyFontMode() {
-      const serifOn = loadFontMode();
-      document.body.classList.toggle("serif", serifOn);
-      fontToggleEl.classList.toggle("on", serifOn);
-    }
-
-    fontToggleEl.addEventListener("click", () => {
-      const serifOn = !loadFontMode();
-      saveFontMode(serifOn);
-      applyFontMode();
-    });
-
-    // Инициализация
-    applyFontMode();
-    renderFanficList();
-    updateReadCountLabel();
-
-  </script>
+        // === ПЕРВОНАЧАЛЬНЫЙ РЕНДЕР ===
+        renderFanfics();
+    </script>
 </body>
 </html>
