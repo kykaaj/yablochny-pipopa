@@ -293,9 +293,10 @@
     animation: scrollLeft 50s linear infinite;
 }
 
-/* Нижняя — едет ВПРАВО */
+/* Нижняя — тоже влево, но НАЧИНАЕТ с середины анимации */
 .gallery-track.bottom {
-    animation: scrollRight 65s linear infinite;
+    animation: scrollLeft 50s linear infinite;
+    animation-delay: -25s; /* Стартует с середины — визуально едет "навстречу" */
 }
 
 @keyframes scrollLeft {
@@ -307,15 +308,6 @@
     }
 }
 
-@keyframes scrollRight {
-    0% {
-        transform: translateX(calc(-50% - 10px));
-    }
-    100% {
-        transform: translateX(0);
-    }
-}
-
 .gallery-item {
     flex-shrink: 0;
     width: 160px;
@@ -323,7 +315,7 @@
     border: 1px solid rgba(212, 160, 176, 0.1);
     background: var(--black-card);
     overflow: hidden;
-    opacity: 0.15; /* Более прозрачные */
+    opacity: 0.15;
     transition: opacity 0.5s, transform 0.5s, border-color 0.5s;
 }
 
