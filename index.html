@@ -293,10 +293,9 @@
     animation: scrollLeft 50s linear infinite;
 }
 
-/* Нижняя — тоже влево, но НАЧИНАЕТ с середины анимации */
+/* Нижняя — едет ВПРАВО */
 .gallery-track.bottom {
-    animation: scrollLeft 50s linear infinite;
-    animation-delay: -25s; /* Стартует с середины — визуально едет "навстречу" */
+    animation: scrollRight 60s linear infinite;
 }
 
 @keyframes scrollLeft {
@@ -307,6 +306,16 @@
         transform: translateX(calc(-50% - 10px));
     }
 }
+
+@keyframes scrollRight {
+    0% {
+        transform: translateX(-60%);
+    }
+    100% {
+        transform: translateX(-10%);
+    }
+}
+
 
 .gallery-item {
     flex-shrink: 0;
@@ -1033,30 +1042,42 @@ body {
         <div class="gallery-item"><img src="images/gallery/9.jpg" alt=""></div>
         <div class="gallery-item"><img src="images/gallery/10.jpg" alt=""></div>
     </div>
-    <div class="gallery-track bottom">
-        <!-- Первый набор -->
-        <div class="gallery-item"><img src="images/gallery/11.jpg" alt=""></div>
-        <div class="gallery-item"><img src="images/gallery/12.jpg" alt=""></div>
-        <div class="gallery-item"><img src="images/gallery/13.jpg" alt=""></div>
-        <div class="gallery-item"><img src="images/gallery/14.jpg" alt=""></div>
-        <div class="gallery-item"><img src="images/gallery/15.jpg" alt=""></div>
-        <div class="gallery-item"><img src="images/gallery/16.jpg" alt=""></div>
-        <div class="gallery-item"><img src="images/gallery/17.jpg" alt=""></div>
-        <div class="gallery-item"><img src="images/gallery/18.jpg" alt=""></div>
-        <div class="gallery-item"><img src="images/gallery/19.jpg" alt=""></div>
-        <div class="gallery-item"><img src="images/gallery/20.jpg" alt=""></div>
-        <!-- Дубликат для бесшовности -->
-        <div class="gallery-item"><img src="images/gallery/11.jpg" alt=""></div>
-        <div class="gallery-item"><img src="images/gallery/12.jpg" alt=""></div>
-        <div class="gallery-item"><img src="images/gallery/13.jpg" alt=""></div>
-        <div class="gallery-item"><img src="images/gallery/14.jpg" alt=""></div>
-        <div class="gallery-item"><img src="images/gallery/15.jpg" alt=""></div>
-        <div class="gallery-item"><img src="images/gallery/16.jpg" alt=""></div>
-        <div class="gallery-item"><img src="images/gallery/17.jpg" alt=""></div>
-        <div class="gallery-item"><img src="images/gallery/18.jpg" alt=""></div>
-        <div class="gallery-item"><img src="images/gallery/19.jpg" alt=""></div>
-        <div class="gallery-item"><img src="images/gallery/20.jpg" alt=""></div>
-    </div>
+<div class="gallery-track bottom">
+    <!-- Набор 1 -->
+    <div class="gallery-item"><img src="images/gallery/11.jpg" alt=""></div>
+    <div class="gallery-item"><img src="images/gallery/12.jpg" alt=""></div>
+    <div class="gallery-item"><img src="images/gallery/13.jpg" alt=""></div>
+    <div class="gallery-item"><img src="images/gallery/14.jpg" alt=""></div>
+    <div class="gallery-item"><img src="images/gallery/15.jpg" alt=""></div>
+    <div class="gallery-item"><img src="images/gallery/16.jpg" alt=""></div>
+    <div class="gallery-item"><img src="images/gallery/17.jpg" alt=""></div>
+    <div class="gallery-item"><img src="images/gallery/18.jpg" alt=""></div>
+    <div class="gallery-item"><img src="images/gallery/19.jpg" alt=""></div>
+    <div class="gallery-item"><img src="images/gallery/20.jpg" alt=""></div>
+    <!-- Набор 2 -->
+    <div class="gallery-item"><img src="images/gallery/11.jpg" alt=""></div>
+    <div class="gallery-item"><img src="images/gallery/12.jpg" alt=""></div>
+    <div class="gallery-item"><img src="images/gallery/13.jpg" alt=""></div>
+    <div class="gallery-item"><img src="images/gallery/14.jpg" alt=""></div>
+    <div class="gallery-item"><img src="images/gallery/15.jpg" alt=""></div>
+    <div class="gallery-item"><img src="images/gallery/16.jpg" alt=""></div>
+    <div class="gallery-item"><img src="images/gallery/17.jpg" alt=""></div>
+    <div class="gallery-item"><img src="images/gallery/18.jpg" alt=""></div>
+    <div class="gallery-item"><img src="images/gallery/19.jpg" alt=""></div>
+    <div class="gallery-item"><img src="images/gallery/20.jpg" alt=""></div>
+    <!-- Набор 3 (дополнительный для ширины) -->
+    <div class="gallery-item"><img src="images/gallery/11.jpg" alt=""></div>
+    <div class="gallery-item"><img src="images/gallery/12.jpg" alt=""></div>
+    <div class="gallery-item"><img src="images/gallery/13.jpg" alt=""></div>
+    <div class="gallery-item"><img src="images/gallery/14.jpg" alt=""></div>
+    <div class="gallery-item"><img src="images/gallery/15.jpg" alt=""></div>
+    <div class="gallery-item"><img src="images/gallery/16.jpg" alt=""></div>
+    <div class="gallery-item"><img src="images/gallery/17.jpg" alt=""></div>
+    <div class="gallery-item"><img src="images/gallery/18.jpg" alt=""></div>
+    <div class="gallery-item"><img src="images/gallery/19.jpg" alt=""></div>
+    <div class="gallery-item"><img src="images/gallery/20.jpg" alt=""></div>
+</div>
+
 </div>
 
 
