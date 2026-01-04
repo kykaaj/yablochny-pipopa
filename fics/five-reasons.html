@@ -222,6 +222,38 @@
             border-top: 1px solid rgba(212, 160, 176, 0.08);
             margin-top: auto;
         }
+        /* === КНОПКА НАВЕРХ === */
+.scroll-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: var(--black-card);
+    border: 1px solid var(--pink);
+    color: var(--pink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    text-decoration: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s;
+    z-index: 99;
+}
+
+.scroll-top.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.scroll-top:hover {
+    background: var(--pink);
+    color: var(--black);
+    transform: translateY(-5px);
+}
+
 
         .section {
             margin-bottom: 50px;
@@ -551,6 +583,7 @@ body {
         <div class="shape"></div>
         <div class="shape"></div>
     </div>
+    <a href="#" class="scroll-top" id="scrollTop">↑</a>
 
     <div class="container">
         <a href="../index.html" class="nav-back">← На главную</a>
@@ -846,6 +879,17 @@ document.querySelector('.custom-scrollbar').addEventListener('click', (e) => {
     const clickPercent = e.clientY / window.innerHeight;
     const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
     window.scrollTo({ top: clickPercent * scrollHeight, behavior: 'smooth' });
+});
+// === КНОПКА НАВЕРХ ===
+const scrollBtn = document.getElementById('scrollTop');
+
+window.addEventListener('scroll', () => {
+    scrollBtn.classList.toggle('visible', window.scrollY > 500);
+});
+
+scrollBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
     </script>
