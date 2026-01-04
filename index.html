@@ -265,45 +265,45 @@
             z-index: 2;
         }
 
-        .hero-gallery {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 5% 0;
-            opacity: 0.4;
-        }
+/* === HERO ГАЛЕРЕЯ === */
+.hero-gallery {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5% 0;
+    pointer-events: none;
+}
 
 .gallery-track {
     display: flex;
     gap: 20px;
-    width: max-content;
+    width: fit-content;
+    will-change: transform;
 }
 
 .gallery-track.top {
-    animation: scrollLeft 80s linear infinite;
+    animation: scrollTrack 50s linear infinite;
 }
 
 .gallery-track.bottom {
-    animation: scrollRight 80s linear infinite;
+    animation: scrollTrack 65s linear infinite;
 }
 
-@keyframes scrollLeft {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+@keyframes scrollTrack {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(-50% - 10px));
+    }
 }
-
-@keyframes scrollRight {
-    0% { transform: translateX(-50%); }
-    100% { transform: translateX(0); }
-}
-
 
 .gallery-item {
     flex-shrink: 0;
@@ -313,33 +313,22 @@
     background: var(--black-card);
     overflow: hidden;
     opacity: 0.35;
-    transition: all 0.5s;
+    transition: opacity 0.5s, transform 0.5s, border-color 0.5s;
 }
 
-        .gallery-item img {
+.gallery-item:hover {
+    opacity: 0.6;
+    transform: scale(1.05);
+    border-color: var(--pink);
+}
+
+.gallery-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: inherit;
+    display: block;
 }
 
-        .gallery-item:hover {
-            opacity: 0.5;
-            transform: scale(1.05);
-            border-color: var(--pink);
-        }
-
-        .gallery-placeholder {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.5rem;
-            color: var(--pink);
-            opacity: 0.3;
-        }
 
 .hero-content {
     position: relative;
@@ -1015,53 +1004,57 @@ body {
     <a href="#top" class="scroll-top" id="scrollTop">↑</a>
 
 <section class="hero" id="top">
-    <div class="hero-gallery">
-        <div class="gallery-track top">
-            <div class="gallery-item"><img src="images/gallery/1.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/2.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/3.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/4.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/5.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/6.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/7.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/8.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/9.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/10.jpg" alt=""></div>
-            <!-- Повтор для бесконечной анимации -->
-            <div class="gallery-item"><img src="images/gallery/1.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/2.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/3.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/4.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/5.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/6.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/7.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/8.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/9.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/10.jpg" alt=""></div>
-        </div>
-        <div class="gallery-track bottom">
-            <div class="gallery-item"><img src="images/gallery/11.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/12.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/13.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/14.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/15.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/16.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/17.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/18.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/19.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/20.jpg" alt=""></div>
-            <!-- Повтор для бесконечной анимации -->
-            <div class="gallery-item"><img src="images/gallery/11.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/12.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/13.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/14.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/15.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/16.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/17.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/18.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/19.jpg" alt=""></div>
-            <div class="gallery-item"><img src="images/gallery/20.jpg" alt=""></div>
-        </div>
+<div class="hero-gallery">
+    <div class="gallery-track top">
+        <!-- Первый набор -->
+        <div class="gallery-item"><img src="images/gallery/1.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/2.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/3.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/4.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/5.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/6.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/7.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/8.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/9.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/10.jpg" alt=""></div>
+        <!-- Дубликат для бесшовности -->
+        <div class="gallery-item"><img src="images/gallery/1.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/2.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/3.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/4.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/5.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/6.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/7.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/8.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/9.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/10.jpg" alt=""></div>
+    </div>
+    <div class="gallery-track bottom">
+        <!-- Первый набор -->
+        <div class="gallery-item"><img src="images/gallery/11.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/12.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/13.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/14.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/15.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/16.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/17.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/18.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/19.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/20.jpg" alt=""></div>
+        <!-- Дубликат для бесшовности -->
+        <div class="gallery-item"><img src="images/gallery/11.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/12.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/13.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/14.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/15.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/16.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/17.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/18.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/19.jpg" alt=""></div>
+        <div class="gallery-item"><img src="images/gallery/20.jpg" alt=""></div>
+    </div>
+</div>
+
 
         </div>
 
