@@ -222,15 +222,17 @@
             border-top: 1px solid rgba(212, 160, 176, 0.08);
             margin-top: auto;
         }
-        /* === КНОПКА НАВЕРХ === */
+ /* === КНОПКА НАВЕРХ === */
 .scroll-top {
     position: fixed;
     bottom: 30px;
     right: 30px;
     width: 50px;
     height: 50px;
-    background: var(--black-card);
-    border: 1px solid var(--pink);
+    background: rgba(19, 19, 22, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(212, 160, 176, 0.3);
     color: var(--pink);
     display: flex;
     align-items: center;
@@ -251,10 +253,8 @@
 .scroll-top:hover {
     background: var(--pink);
     color: var(--black);
-    transform: translateY(-5px);
+    border-color: var(--pink);
 }
-
-
         .section {
             margin-bottom: 50px;
             opacity: 0;
