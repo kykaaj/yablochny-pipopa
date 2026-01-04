@@ -495,15 +495,54 @@
             .floating-shapes { display: none; }
         }
 
-        ::-webkit-scrollbar { width: 10px; }
-        ::-webkit-scrollbar-track { background: var(--black); }
-::-webkit-scrollbar-thumb { background: var(--pink-dark); border: 2px solid var(--black); border-radius: 0; }
+/* === СКРЫВАЕМ РОДНОЙ СКРОЛЛБАР === */
+html {
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* Firefox */
+}
+
+body::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+}
+
+body {
+    -ms-overflow-style: none; /* IE */
+}
+
+/* === КАСТОМНЫЙ СКРОЛЛБАР === */
+.custom-scrollbar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 6px;
+    height: 100vh;
+    background: #0a0a0a;
+    z-index: 9999;
+}
+
+.scrollbar-thumb {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 6px;
+    background: #b08090;
+    transition: background 0.3s;
+    /* Прямоугольный! */
+}
+
+.scrollbar-thumb:hover {
+    background: #d4a0b0;
+}
 
 
         html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--pink-dark) var(--black); }
     </style>
 </head>
 <body>
+        <!-- Кастомный скроллбар -->
+    <div class="custom-scrollbar">
+        <div class="scrollbar-thumb" id="scrollThumb"></div>
+    </div>
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
     <canvas id="bg-particles"></canvas>
@@ -767,6 +806,30 @@
             });
         }
         updateChaptersUI();
+        // === КАСТОМНЫЙ СКРОЛЛБАР ===
+const scrollThumb = document.getElementById('scrollThumb');
+
+function updateScrollbar() {
+    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = window.scrollY / scrollHeight;
+    const thumbHeight = Math.max((window.innerHeight / document.documentElement.scrollHeight) * window.innerHeight, 50);
+    const thumbTop = scrollPercent * (window.innerHeight - thumbHeight);
+
+    scrollThumb.style.height = thumbHeight + 'px';
+    scrollThumb.style.top = thumbTop + 'px';
+}
+
+window.addEventListener('scroll', updateScrollbar);
+window.addEventListener('resize', updateScrollbar);
+updateScrollbar();
+
+// Клик по скроллбару для прокрутки
+document.querySelector('.custom-scrollbar').addEventListener('click', (e) => {
+    const clickPercent = e.clientY / window.innerHeight;
+    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    window.scrollTo({ top: clickPercent * scrollHeight, behavior: 'smooth' });
+});
+
     </script>
 </body>
 </html>
