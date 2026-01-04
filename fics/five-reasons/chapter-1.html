@@ -1297,6 +1297,17 @@ document.querySelector('.custom-scrollbar').addEventListener('click', (e) => {
     const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
     window.scrollTo({ top: clickPercent * scrollHeight, behavior: 'smooth' });
 });
+// === КНОПКА НАВЕРХ ===
+const scrollBtn = document.getElementById('scrollTop');
+
+window.addEventListener('scroll', () => {
+    scrollBtn.classList.toggle('visible', window.scrollY > 500);
+});
+
+scrollBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+});
 
     </script>
 </body>
