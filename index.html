@@ -950,22 +950,40 @@
             .scroll-top { width: 44px; height: 44px; bottom: 20px; right: 20px; }
         }
 
-        /* === СКРОЛЛБАР === */
+/* === СКРОЛЛБАР === */
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 12px !important;
+    background: #0a0a0a !important;
 }
 
 ::-webkit-scrollbar-track {
-    background: #0a0a0a;
+    background: #0a0a0a !important;
+    border-radius: 0 !important;
+    -webkit-border-radius: 0 !important;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #b08090;
-    border-radius: 0 !important; /* !important чтобы точно применилось */
+    background: #b08090 !important;
+    border: 3px solid #0a0a0a !important;
+    border-radius: 0 !important;
+    -webkit-border-radius: 0 !important;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #d4a0b0;
+    background: #d4a0b0 !important;
+}
+
+::-webkit-scrollbar-corner {
+    background: #0a0a0a !important;
+}
+
+::-webkit-scrollbar-button {
+    display: none !important;
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #b08090 #0a0a0a;
 }
 
 html {
@@ -973,6 +991,7 @@ html {
     scrollbar-width: thin;
     scrollbar-color: #b08090 #0a0a0a;
 }
+
 
     </style>
 </head>
