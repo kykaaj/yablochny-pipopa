@@ -2910,7 +2910,7 @@ Write in a style inspired by Fredrik Backman. Use a warm, empathetic, and observ
 <div class="cat" data-cat="extra">
     <div class="cat-head" onclick="toggleCat(this)">
         <div class="cat-info">
-            <div class="cat-num pink">⑦</div>
+            <div class="cat-num pink">🍎</div>
             <div>
                 <div class="cat-title">◜︎tweaks◞︎</div>
                 <div class="cat-desc">HTML промпты, штуки и темы</div>
@@ -2919,7 +2919,35 @@ Write in a style inspired by Fredrik Backman. Use a warm, empathetic, and observ
         <span class="cat-arrow">▼</span>
     </div>
     <div class="cat-body"><div class="cat-inner">
-<!-- ═══ THINGS ═══ -->
+<div class="subsec">◦︎ html theme</div>
+
+<!-- Тёмная тема -->
+<div class="prompt">
+    <div class="prompt-head" onclick="togglePrompt(this)">
+        <div class="prompt-name"><span class="tag tag-one">↔︎</span> 🎨 Тёмная тема</div>
+        <div class="prompt-meta">
+            <span class="prompt-default">★ Дефолт</span>
+            <button class="prompt-btn" onclick="event.stopPropagation();copyPrompt(this)">Копировать</button>
+        </div>
+<textarea class="prompt-source">HTML THEME:
+Always apply DARK THEME styling for all HTML visual renderings. Use backgrounds in deep shades of #0d0d0d–#1a1a1a range (matte blacks, charcoal, deep navy, dark gray gradients), with light text colors (#f5f5f5–#dcdcdc) and subtle accent hues (neon cyan, magenta, amber, violet) to enhance readability and aesthetic impact.
+Avoid pure white (#fff) or blinding highlights; instead, use off-white or light gray tones. Never use bright backgrounds.</textarea>
+    </div>
+    <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Тёмная тема HTML блоков</div></div></div>
+</div>
+
+<!-- Светлая тема -->
+<div class="prompt">
+    <div class="prompt-head" onclick="togglePrompt(this)">
+        <div class="prompt-name"><span class="tag tag-one">↔︎</span> 🎨 Светлая тема</div>
+        <div class="prompt-meta">
+            <button class="prompt-btn" onclick="event.stopPropagation();copyPrompt(this)">Копировать</button>
+        </div>
+<textarea class="prompt-source">HTML THEME:
+    Always apply LIGHT THEME styling for all HTML visual renderings. Use backgrounds in light shades of #fafafa–#f0f0f0 (off-white, parchment, soft gray, pastel gradients), with dark text colors (#1a1a1a–#333) and subtle accent hues (muted blue, amber, burgundy, emerald) to maintain visual depth and warmth.
+Avoid pure black (#000) or overly saturated colors; instead, use dark gray for text and softened tones for accents. Never use fully dark backgrounds.</textarea>
+    </div>
+    <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Светлая тема HTML блоков</div></div></div>
 <div class="subsec">◦︎ ✎ things (sample)</div>
 
 <div class="things-header">
@@ -3167,7 +3195,7 @@ Critical Results (Causes Ridiculously Exaggerated outcomes):
 Present varied CYOA choices that Matter! Only for Кукачьж! (maximum 4):
 - Include good, interesting, bad, evil, dark, pervy, wrong, and death routes.
 - Keep choices naturally distinct and different.
-- Choices determine Кукачьж's next actions, dialogues, emotions, and resulting outcomes.
+- Choices determine {{user}}'s next actions, dialogues, emotions, and resulting outcomes.
 At the end of each response initiate CYOA for the PLAYER Human and Кукачьж that is based on Кукачьж perspective only. Which Кукачьж will act on, advancing the time/world state significantly, wrapped with <cyoa> tag:
 <cyoa>
 1. - {Choice here}
@@ -3175,8 +3203,6 @@ At the end of each response initiate CYOA for the PLAYER Human and Кукачь�
 3. - ['Trait'] {Choice here} // option from trait, class, item in possession, background, etc.
 4. - ['Trait'] {Choice here} // any
 </cyoa>
-[System: Make sure to remember to actually send CYOA choices at the end]
-[Renette: Okaay!]
 </choices></textarea>
     </div>
 </div> <!-- /things-grid CYOA -->
@@ -3224,7 +3250,7 @@ You must always generate information about the day, date and year in the format:
         <textarea class="thing-source">[Encapitulate Fancy UI in each and every response! Conceptualize High Quality UI-like Advance-CSS/HTML blocks of varying sizes with java, animations and other techniques(endless), for things like:
 Thoughts, in the form of blocks. No large fonts!! Never use *asterisks* inside. Be sure to include the name of the person who owns the thoughts, use KAOMOJI's next to their name to show their mood.</textarea>
     </div>
-</div> <!-- /things-grid Fancy UI -->
+</div> 
 
 <!-- Комментарии -->
 <p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ Комментарии <span style="color:var(--text-dim);font-weight:400;">(только один)</span></p>
@@ -3318,43 +3344,9 @@ Comments template:
     </div>
 </div>.</textarea>
     </div>
-</div> <!-- /things-grid Комментарии -->
-
-<!-- ═══ HTML THEME ═══ -->
-<div class="subsec">❝ html Theme</div>
-
-<!-- Тёмная тема -->
-<div class="prompt">
-    <div class="prompt-head" onclick="togglePrompt(this)">
-        <div class="prompt-name"><span class="tag tag-one">↔︎</span> 🎨 Тёмная тема</div>
-        <div class="prompt-meta">
-            <span class="prompt-default">★ Дефолт</span>
-            <button class="prompt-btn" onclick="event.stopPropagation();copyPrompt(this)">Копировать</button>
-        </div>
-<textarea class="prompt-source">HTML THEME:
-Always apply DARK THEME styling for all HTML visual renderings. Use backgrounds in deep shades of #0d0d0d–#1a1a1a range (matte blacks, charcoal, deep navy, dark gray gradients), with light text colors (#f5f5f5–#dcdcdc) and subtle accent hues (neon cyan, magenta, amber, violet) to enhance readability and aesthetic impact.
-Avoid pure white (#fff) or blinding highlights; instead, use off-white or light gray tones. Never use bright backgrounds.</textarea>
-    </div>
-    <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Тёмная тема HTML блоков</div></div></div>
-</div>
-
-<!-- Светлая тема -->
-<div class="prompt">
-    <div class="prompt-head" onclick="togglePrompt(this)">
-        <div class="prompt-name"><span class="tag tag-one">↔︎</span> 🎨 Светлая тема</div>
-        <div class="prompt-meta">
-            <button class="prompt-btn" onclick="event.stopPropagation();copyPrompt(this)">Копировать</button>
-        </div>
-<textarea class="prompt-source">HTML THEME:
-    Always apply LIGHT THEME styling for all HTML visual renderings. Use backgrounds in light shades of #fafafa–#f0f0f0 (off-white, parchment, soft gray, pastel gradients), with dark text colors (#1a1a1a–#333) and subtle accent hues (muted blue, amber, burgundy, emerald) to maintain visual depth and warmth.
-Avoid pure black (#000) or overly saturated colors; instead, use dark gray for text and softened tones for accents. Never use fully dark backgrounds.</textarea>
-    </div>
-    <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Светлая тема HTML блоков</div></div></div>
 </div>
 
 </div></div>
-</div>
-	</div>
 
 
                 <!-- ⑨ Prefill -->
