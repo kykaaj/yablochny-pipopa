@@ -2967,6 +2967,54 @@ For worded textual use! Signature Styled Embedded Micro-Text: Unique font/stylin
     </div>
 </div> <!-- /things-grid "Можно смешивать" -->
 
+<!-- ═══ THINGS ═══ -->
+<div class="subsec">◦︎ ✎ things (sample)</div>
+
+<div class="things-header">
+    <div class="things-title">📋 Выбрано: <span class="things-count" id="thingsCount">0</span></div>
+    <button class="things-copy-btn" id="thingsCopyBtn" onclick="copySelectedThings()" disabled>
+        📋 Скопировать выбранное
+    </button>
+</div>
+
+<div class="things-note">
+    💡 По дефолту пусто — выбери нужные штуки и скопируй в тогл Things Sample
+</div>
+
+<!-- Можно смешивать -->
+<p style="color:var(--green);font-weight:600;margin:1rem 0 0.5rem;">◇ Можно смешивать:</p>
+<div class="things-grid">
+
+    <div class="thing-item" onclick="toggleThing(this)">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">✒️</span>
+        <span class="thing-name">Стиль веб-главы</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('webchapter')">👁</button>
+        <textarea class="thing-source">[WEB-CHAPTER]
+Mimick the textual formatting-style of popular webnovels and official or unofficial sites(such as fan-translation).
+Make use of chapter headings, separators, and other known elements that makes up real webby chappy! At the start of the every response, ensure a new proper chapter heading is used each time.</textarea>
+    </div>
+
+    <div class="thing-item" onclick="toggleThing(this)">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">📢</span>
+        <span class="thing-name">Интервью с Актерами</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('interview')">👁</button>
+        <textarea class="thing-source">[ACTOR INTERVIEW]
+At the end of the response, add a brief Behind the Scenes section at the end where the actors break out of character and share their real thoughts about the scene they just performed.
+Formatting Criterias: Keep it short (2-3 lines per character maximum). Genuine reaction to what just happened, their feelings on the character and scene.</textarea>
+    </div>
+
+    <div class="thing-item" onclick="toggleThing(this)">
+        <div class="thing-checkbox"></div>
+        <span class="thing-icon">🔰</span>
+        <span class="thing-name">Типографика</span>
+        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('typography')">👁</button>
+        <textarea class="thing-source">[TYPOGRAPHICS]
+For worded textual use! Signature Styled Embedded Micro-Text: Unique font/styling for physical elements observed in the environment and embedded directly within the prose (e.g., an engraved word on a weapon, a single line of graffiti, a short warning label on a container, words etched in walls, a name tag, etc.). Subsume more distinct font-family, color, and/or font-style to provide a quick visual cue about the text's nature, age, and origin. Use Google Font family libraries.</textarea>
+    </div>
+</div> <!-- /things-grid "Можно смешивать" -->
+
 <!-- Скрытые Блоки -->
 <p style="color:var(--green);font-weight:600;margin:1.5rem 0 0.5rem;">👁 Скрытые Блоки:</p>
 <div class="things-grid">
@@ -3271,8 +3319,6 @@ Comments template:
 </div>.</textarea>
     </div>
 </div> <!-- /things-grid Комментарии -->
-
-
 
 <!-- ═══ HTML THEME ═══ -->
 <div class="subsec">❝ html Theme</div>
