@@ -2155,13 +2155,15 @@
         </div>
     </div>
 
-    <div class="content-wrap">
-        <!-- Header -->
-        <header class="header" id="home">
-    <video class="header-video" autoplay muted loop playsinline>
-        <source src="headerorange.png" type="image/png">
-    </video>
-    <div class="header-overlay"></div>
+<div class="content-wrap">
+    <!-- Header -->
+    <header class="header" id="home">
+        <!-- Убрали video, поставили img -->
+        <img class="header-image" src="headerorange.png" alt="Background">
+        
+        <div class="header-overlay"></div>
+    </header>
+</div>
 
             <canvas id="headerCanvas"></canvas>
             <button class="music-toggle" id="musicToggle" onclick="toggleMusic()">
