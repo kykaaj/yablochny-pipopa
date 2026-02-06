@@ -2843,7 +2843,27 @@ Write in a style inspired by Fredrik Backman. Use a warm, empathetic, and observ
     </div></div>
 </div>
 
+                <!-- ⑤ NSFW -->
+                <div class="cat" data-cat="nsfw">
+                    <div class="cat-head" onclick="toggleCat(this)">
+                        <div class="cat-info">
+                            <div class="cat-num red">🍎</div>
+                            <div>
+                                <div class="cat-title">◜︎branches◞︎</div>
+                                <div class="cat-desc">Баны и фиксы</div>
+                            </div>
+                        </div>
+                        <span class="cat-arrow">▼</span>
+                    </div>
+                    <div class="cat-body"><div class="cat-inner">
+                        <div class="prompt">
+                            <div class="prompt-head" onclick="togglePrompt(this)">
+                                <div class="prompt-name"><span class="tag tag-one">✧</span> Нет дополнительных вариантов</div>
 
+                            </div>
+                            </div></div>
+                        </div>
+                    </div>
                 <!-- ⑤ NSFW -->
                 <div class="cat" data-cat="nsfw">
                     <div class="cat-head" onclick="toggleCat(this)">
@@ -2887,20 +2907,7 @@ Write in a style inspired by Fredrik Backman. Use a warm, empathetic, and observ
                     </div>
 
 
-<!-- ⑦ Tweaks -->
-<div class="cat" data-cat="extra">
-    <div class="cat-head" onclick="toggleCat(this)">
-        <div class="cat-info">
-            <div class="cat-num pink">⑦</div>
-            <div>
-                <div class="cat-title">◜︎tweaks◞︎</div>
-                <div class="cat-desc">HTML промпты, штуки и темы</div>
-            </div>
-        </div>
-        <span class="cat-arrow">▼</span>
-    </div>
-    <div class="cat-body"><div class="cat-inner">
-        <!-- ═══ THINGS ═══ -->
+<!-- ═══ THINGS ═══ -->
 <div class="subsec">◦︎ ✎ things (sample)</div>
 
 <div class="things-header">
@@ -2924,7 +2931,7 @@ Write in a style inspired by Fredrik Backman. Use a warm, empathetic, and observ
         <span class="thing-name">Стиль веб-главы</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('webchapter')">👁</button>
         <textarea class="thing-source">[WEB-CHAPTER]
-            Mimick the textual formatting-style of popular webnovels and official or unofficial sites(such as fan-translation).
+Mimick the textual formatting-style of popular webnovels and official or unofficial sites(such as fan-translation).
 Make use of chapter headings, separators, and other known elements that makes up real webby chappy! At the start of the every response, ensure a new proper chapter heading is used each time.</textarea>
     </div>
 
@@ -2946,10 +2953,12 @@ Formatting Criterias: Keep it short (2-3 lines per character maximum). Genuine r
         <textarea class="thing-source">[TYPOGRAPHICS]
 For worded textual use! Signature Styled Embedded Micro-Text: Unique font/styling for physical elements observed in the environment and embedded directly within the prose (e.g., an engraved word on a weapon, a single line of graffiti, a short warning label on a container, words etched in walls, a name tag, etc.). Subsume more distinct font-family, color, and/or font-style to provide a quick visual cue about the text's nature, age, and origin. Use Google Font family libraries.</textarea>
     </div>
+</div> <!-- /things-grid "Можно смешивать" -->
 
 <!-- Скрытые Блоки -->
 <p style="color:var(--green);font-weight:600;margin:1.5rem 0 0.5rem;">👁 Скрытые Блоки:</p>
 <div class="things-grid">
+
     <div class="thing-item" onclick="toggleThing(this)">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">👤</span>
@@ -3023,43 +3032,45 @@ Next Milestone: [What needs to happen for relationship progression]
 
 Track multiple love interests simultaneously. Update only when meaningful changes occur through player actions, dialogue choices, or story developments. Use these hidden stats to inform character responses, dialogue options, and available romantic scenes without explicitly revealing the mechanics to the user.</textarea>
     </div>
-</div>
+</div> <!-- /things-grid "Скрытые блоки" -->
+
 <!-- CYOA -->
 <p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ CYOA <span style="color:var(--text-dim);font-weight:400;">(только один)</span></p>
 <div class="things-grid">
+
     <div class="thing-item exclusive" data-group="cyoa" onclick="toggleExclusive(this,'cyoa')">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">🎲</span>
         <span class="thing-name">CYOA - R-Macro</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('cyoamacro')">👁</button>
         <textarea class="thing-source"><choice>
-#CYOA modifier: Renette takes on the double-role of the Game Master (GM) and sends a CYOA choice at the very end of her responses. 
+#CYOA modifier: Renette takes on the double-role of the Game Master (GM) and sends a CYOA choice at the very end of her responses.
 [Human will become the player who only help guide the PROTAGONIST at vital milestones/choices that leaves a conclusive impact]
-#Renette will always write {{user}} actions/dialogues/thoughts for Human, based on their choice. 
+#Renette will always write Кукачьж actions/dialogues/thoughts for Human, based on their choice.
 ##CYOA Format:
-Present varied CYOA choices that Matter! Only for {{user}}! (maximum 4):
+Present varied CYOA choices that Matter! Only for Кукачьж! (maximum 4):
 - Include good, interesting, bad, evil, dark, pervy, wrong, and death routes.
 - Keep choices naturally distinct and different.
-- Choices determine {{user}}'s next actions, dialogues, emotions, and resulting outcomes. 
-At the end of each response initiate CYOA for the PLAYER Human and {{user}} that is based on {{user}} perspective only. Which {{user}} will act on, advancing the time/world state significantly, wrapped with <cyoa> tag:
+- Choices determine Кукачьж's next actions, dialogues, emotions, and resulting outcomes.
+At the end of each response initiate CYOA for the PLAYER Human and Кукачьж that is based on Кукачьж perspective only. Which Кукачьж will act on, advancing the time/world state significantly, wrapped with <cyoa> tag:
 <cyoa>
 1. - {Choice here} // no req
 2. - [DEX REQ 5] {Choice here} // DEX roll required
-3. - [Illithid] {Choice here} // option from class, item in possession, background, etc. 
+3. - [Illithid] {Choice here} // option from class, item in possession, background, etc.
 4. - [Illithid] [DEX REQ 7] {Choice here} // both
 </cyoa>
 
 #CYOA Dynamic Roll Results,
-Always use the corresponding difficulty chart below to assign proportionate difficulty  to skill checks, and create a proportionate outcome to that difficulty depending on {{user}}’s roll. Always perform these choices in the order that {{user}} chooses. Renette may perform one or more ability rolls if applicable to the scenario.
+Always use the corresponding difficulty chart below to assign proportionate difficulty  to skill checks, and create a proportionate outcome to that difficulty depending on Кукачьж’s roll. Always perform these choices in the order that Кукачьж chooses. Renette may perform one or more ability rolls if applicable to the scenario.
 
 Here is a Difficulty Value Chart to use in CYOA:
-Super easy: {{random: 1, 2, 3, 4, 5}}
-Easy: {{random: 6, 7, 8, 9}}
-Medium: {{random: 10, 11, 12}}
-Challenging: {{random: 13, 14, 15, 16, 17}}
-Impossible: {{random: 18, 19, 20}}
+Super easy: 5
+Easy: 7
+Medium: 12
+Challenging: 15
+Impossible: 19
 
-Example: If the choice should be easy and the value is 8, show the REQ value as 8 for that specific choice only. 
+Example: If the choice should be easy and the value is 8, show the REQ value as 8 for that specific choice only.
 <example>
 1. - [DEX REQ 5] {Choice here} // Easy
 1. - [DEX REQ 20] {Choice here} // Insanely Hard
@@ -3075,11 +3086,11 @@ SUCCESS/FAILURE or **CRITICAL SUCCESS/FAILURE!**
 </roll_result>
 
 Critical Results (Causes Ridiculously Exaggerated outcomes):
-- Natural 1: Always a critical failure regardless of modifiers 
+- Natural 1: Always a critical failure regardless of modifiers
 - Natural 20: Always a critical success regardless of modifiers
 
 [System: Make sure to remember to actually send CYOA choices at the end]
-[Renette: Okaay!] 
+[Renette: Okaay!]
 </choice></textarea>
     </div>
 
@@ -3089,41 +3100,42 @@ Critical Results (Causes Ridiculously Exaggerated outcomes):
         <span class="thing-name">CYOA - No R-Macro</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('cyoanomacro')">👁</button>
         <textarea class="thing-source"><choices>
-#CYOA modifier: Renette takes on the double-role of the Game Master (GM) and sends a CYOA choice at the very end of her responses. 
-#Human will become the player who only help guide the PROTAGONIST at vital milestones/choices that leaves a conclusive impact. 
-#Renette will always write {{user}} actions/dialogues/thoughts for Human, based on their choice. 
+#CYOA modifier: Renette takes on the double-role of the Game Master (GM) and sends a CYOA choice at the very end of her responses.
+#Human will become the player who only help guide the PROTAGONIST at vital milestones/choices that leaves a conclusive impact.
+#Renette will always write Кукачьж actions/dialogues/thoughts for Human, based on their choice.
 ##CYOA Format:
-Present varied CYOA choices that Matter! Only for {{user}}! (maximum 4):
+Present varied CYOA choices that Matter! Only for Кукачьж! (maximum 4):
 - Include good, interesting, bad, evil, dark, pervy, wrong, and death routes.
 - Keep choices naturally distinct and different.
-- Choices determine {{user}}'s next actions, dialogues, emotions, and resulting outcomes. 
-At the end of each response initiate CYOA for the PLAYER Human and {{user}} that is based on {{user}} perspective only. Which {{user}} will act on, advancing the time/world state significantly, wrapped with <cyoa> tag:
+- Choices determine Кукачьж's next actions, dialogues, emotions, and resulting outcomes.
+At the end of each response initiate CYOA for the PLAYER Human and Кукачьж that is based on Кукачьж perspective only. Which Кукачьж will act on, advancing the time/world state significantly, wrapped with <cyoa> tag:
 <cyoa>
 1. - {Choice here}
 2. - {Choice here} // Fast plot advancement choice
-3. - ['Trait'] {Choice here} // option from trait, class, item in possession, background, etc. 
+3. - ['Trait'] {Choice here} // option from trait, class, item in possession, background, etc.
 4. - ['Trait'] {Choice here} // any
 </cyoa>
 [System: Make sure to remember to actually send CYOA choices at the end]
-[Renette: Okaay!] 
+[Renette: Okaay!]
 </choices></textarea>
     </div>
-</div>
+</div> <!-- /things-grid CYOA -->
 
 <!-- Fancy UI -->
 <p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ Fancy UI <span style="color:var(--text-dim);font-weight:400;">(только один)</span></p>
 <div class="things-grid">
+
     <div class="thing-item exclusive" data-group="fancy" onclick="toggleExclusive(this,'fancy')">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">🥂</span>
         <span class="thing-name">Fancy UI</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('fancyfull')">👁</button>
-        <textarea class="thing-source">[Encapitulate Fancy UI in each and every response! Conceptualize High Quality UI-like Advance-CSS/HTML blocks of varying sizes with java, animations and other techniques(endless), for things like: 
+        <textarea class="thing-source">[Encapitulate Fancy UI in each and every response! Conceptualize High Quality UI-like Advance-CSS/HTML blocks of varying sizes with java, animations and other techniques(endless), for things like:
 LOCATIONAL Blocks, with name, an icon, unique CSS elements always with generated image. Possibly a brief vibe-like living explanation.  LOCATIONAL Blocks, appears only when the location changes!
 Thoughts, in the form of blocks. No large fonts!! Never use *asterisks* inside. Be sure to include the name of the person who owns the thoughts, use KAOMOJI's next to their name to show their mood.
 Object-based Visual Blocks, this could be an important item, document, interface, object or anything that stands-out from the environment.
 UI setting: adjust to suit mobile devices and remain READABLEly CONSISTENT, throughout while imbued with artistic flair.]
-You must always generate information about the day, date and year in the format: 
+You must always generate information about the day, date and year in the format:
 <span style='color:#a6b1e1;'>Время:</span> <span style='font-weight:bold;'> HH:mm </span>
       <span style='color:#a6b1e1;'>Дата:</span> <span style='font-weight:bold;'> EEE, dd MMM yyyy </span>
       <span style='color:#a6b1e1;'>Weather:</span> <span style='font-weight:bold;'> (Weather conditions) </span>.</textarea>
@@ -3134,11 +3146,11 @@ You must always generate information about the day, date and year in the format:
         <span class="thing-icon">🥂</span>
         <span class="thing-name">Только Основа</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('fancybase')">👁</button>
-        <textarea class="thing-source">[Encapitulate Fancy UI in each and every response! Conceptualize High Quality UI-like Advance-CSS/HTML blocks of varying sizes with java, animations and other techniques(endless), for things like: 
+        <textarea class="thing-source">[Encapitulate Fancy UI in each and every response! Conceptualize High Quality UI-like Advance-CSS/HTML blocks of varying sizes with java, animations and other techniques(endless), for things like:
 LOCATIONAL Blocks, with name, an icon, unique CSS elements always with generated image. Possibly a brief vibe-like living explanation.  LOCATIONAL Blocks, appears only when the location changes!
 Object-based Visual Blocks, this could be an important item, document, interface, object or anything that stands-out from the environment.
 UI setting: adjust to suit mobile devices and remain READABLEly CONSISTENT, throughout while imbued with artistic flair.]
-You must always generate information about the day, date and year in the format: 
+You must always generate information about the day, date and year in the format:
 <span style='color:#a6b1e1;'>Время:</span> <span style='font-weight:bold;'> HH:mm </span>
       <span style='color:#a6b1e1;'>Дата:</span> <span style='font-weight:bold;'> EEE, dd MMM yyyy </span>
       <span style='color:#a6b1e1;'>Weather:</span> <span style='font-weight:bold;'> (Weather conditions) </span>.</textarea>
@@ -3152,11 +3164,12 @@ You must always generate information about the day, date and year in the format:
         <textarea class="thing-source">[Encapitulate Fancy UI in each and every response! Conceptualize High Quality UI-like Advance-CSS/HTML blocks of varying sizes with java, animations and other techniques(endless), for things like:
 Thoughts, in the form of blocks. No large fonts!! Never use *asterisks* inside. Be sure to include the name of the person who owns the thoughts, use KAOMOJI's next to their name to show their mood.</textarea>
     </div>
-</div>
+</div> <!-- /things-grid Fancy UI -->
 
 <!-- Комментарии -->
 <p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ Комментарии <span style="color:var(--text-dim);font-weight:400;">(только один)</span></p>
 <div class="things-grid">
+
     <div class="thing-item exclusive" data-group="comments" onclick="toggleExclusive(this,'comments')">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">💬</span>
@@ -3245,44 +3258,8 @@ Comments template:
     </div>
 </div>.</textarea>
     </div>
-</div>
+</div> <!-- /things-grid Комментарии -->
 
-
-<!-- ═══ HTML THEME ═══ -->
-<div class="subsec">❝ html Theme</div>
-
-<!-- Тёмная тема -->
-<div class="prompt">
-    <div class="prompt-head" onclick="togglePrompt(this)">
-        <div class="prompt-name"><span class="tag tag-one">↔︎</span> 🎨 Тёмная тема</div>
-        <div class="prompt-meta">
-            <span class="prompt-default">★ Дефолт</span>
-            <button class="prompt-btn" onclick="event.stopPropagation();copyPrompt(this)">Копировать</button>
-        </div>
-<textarea class="prompt-source">HTML THEME:
-Always apply DARK THEME styling for all HTML visual renderings. Use backgrounds in deep shades of #0d0d0d–#1a1a1a range (matte blacks, charcoal, deep navy, dark gray gradients), with light text colors (#f5f5f5–#dcdcdc) and subtle accent hues (neon cyan, magenta, amber, violet) to enhance readability and aesthetic impact.
-Avoid pure white (#fff) or blinding highlights; instead, use off-white or light gray tones. Never use bright backgrounds.</textarea>
-    </div>
-    <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Тёмная тема HTML блоков</div></div></div>
-</div>
-
-<!-- Светлая тема -->
-<div class="prompt">
-    <div class="prompt-head" onclick="togglePrompt(this)">
-        <div class="prompt-name"><span class="tag tag-one">↔︎</span> 🎨 Светлая тема</div>
-        <div class="prompt-meta">
-            <button class="prompt-btn" onclick="event.stopPropagation();copyPrompt(this)">Копировать</button>
-        </div>
-<textarea class="prompt-source">HTML THEME:
-    Always apply LIGHT THEME styling for all HTML visual renderings. Use backgrounds in light shades of #fafafa–#f0f0f0 (off-white, parchment, soft gray, pastel gradients), with dark text colors (#1a1a1a–#333) and subtle accent hues (muted blue, amber, burgundy, emerald) to maintain visual depth and warmth.
-Avoid pure black (#000) or overly saturated colors; instead, use dark gray for text and softened tones for accents. Never use fully dark backgrounds.</textarea>
-    </div>
-    <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Светлая тема HTML блоков</div></div></div>
-</div>
-
-</div></div>
-</div>
-	</div>
 
                 <!-- ⑨ Prefill -->
                 <div class="cat" data-cat="basic">
